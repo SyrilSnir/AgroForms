@@ -3,6 +3,7 @@
 namespace app\models\Forms\Manage\Forms;
 
 use app\core\traits\Lists\GetFieldGroupTrait;
+use app\core\traits\Lists\GetFormsListTrait;
 use app\core\traits\Lists\GetUnitsTrait;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
@@ -29,6 +30,7 @@ class FieldForm extends MultiForm
     public $defaultValue;
 
     use GetFieldGroupTrait;
+    use GetFormsListTrait;
     use GetUnitsTrait;
     
     public function __construct(
@@ -83,12 +85,6 @@ class FieldForm extends MultiForm
             'order' => 'Позиция на экране',
             'defaultValue' => 'Значение по умолчанию',
         ];
-    }
-
-    public function formsList():array
-    {
-        return ArrayHelper::map(Form::find()->orderBy('id')->asArray()->all(),'id','name');    
-
     }
  
     public function elementTypesList():array
