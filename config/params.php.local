@@ -1,0 +1,12 @@
+return [
+    'rootUsers' => ['admin'], /* Не изменяемые системные типы учетных записей */
+    'bsVersion' => '4.x',      /* Версия Bootstrap */
+    'mailSettings' => [
+        'smtpServer' => 'smtp.test.ru',
+        'smtpPort' => 25,
+        'userName' => 'support',
+        'password' => '123',
+        'senderName' => 'Поддержка',
+        'senderEmail' => 'support@test.ru'
+    ]
+];
