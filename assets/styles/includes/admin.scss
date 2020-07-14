@@ -1,0 +1,74 @@
+.create-form, .update-form, .dynamic-form {
+    width: 100%;
+    .nav-tabs {
+        margin-bottom: 2rem;
+    }
+    .form-group.required label::after {
+        color: red;
+        padding-left: 2px;
+    }
+}
+.agrosalon-logo, .full-view {
+    width: 100%;
+}
+
+.form-group.has-error {
+    .form-control {
+        border: 1px solid red;        
+    }
+    .help-block {
+        color: red;
+        font-size: 10px;
+    }
+}
+.sidebar {
+    .user-panel {
+        overflow: visible;
+    }
+    .user-dropdown.dropdown-item:hover {
+        background-color: #E4461E;
+    } 
+}
+.dynamic-form {
+    .price {
+        margin: 0 5px;
+    }
+    margin: 0 20%;
+    > .card-body {
+        padding: 0 20px;
+    }
+    .help-block {
+        color: red;
+        font-size: 10px;
+    } 
+    .important {
+        margin: 20px 20%;
+        padding: 20px;
+        border: 1px solid red;
+        text-align: center;
+    }
+    .proposal-summary {
+        width: 100%;
+        padding: 50px 0 0 6px;
+        box-sizing: border-box;
+    }    
+    .proposal-summary__title {
+        padding: 0;
+        font-size: 24px;
+        line-height: 24px;
+        clear: both;        
+    }
+    .proposal-summary__total {
+        font-size: 24px;
+        line-height: 16px;
+        font-family: MyriadPro-Semibold;
+        margin-bottom: 2rem;
+        margin-right: 2rem;
+        float: right;
+        text-align: right;        
+    } 
+    hr {
+        display: block; 
+        clear: both;
+    }
+}
