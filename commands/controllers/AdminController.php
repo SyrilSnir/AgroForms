@@ -3,6 +3,7 @@
 namespace app\commands\controllers;
 
 use app\core\repositories\readModels\Forms\FieldGroupReadRepository;
+use app\core\traits\Db\QueryTrait;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\FieldGroup;
@@ -13,7 +14,6 @@ use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\db\ActiveRecord;
-use yii\db\QueryTrait;
 use yii\helpers\Console;
 
 

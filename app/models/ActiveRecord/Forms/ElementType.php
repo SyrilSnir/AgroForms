@@ -23,8 +23,8 @@ class ElementType extends ActiveRecord
     const ELEMENT_NUMBER_INPUT = 7;
     const ELEMENT_CHECK_NUMBER_INPUT = 8;
     const ELEMENT_TEXT_INPUT = 9;    
-    const ELEMENT_FILE = 10;  
-    const ELEMENT_FILE_MULTIPLE = 11;  
+    const ELEMENT_FILE = 10;                // Don't used in current project
+    const ELEMENT_FILE_MULTIPLE = 11;       // Don't used in current project
     const ELEMENT_INFORMATION_IMPORTANT = 12;  
     const ELEMENT_INFORMATION = 13;  
     const ELEMENT_HEADER = 14;
