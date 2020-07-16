@@ -46,9 +46,7 @@ if (!$model->imageFile) {
                 ],
 
             ]); 
-    ?>
-    <?= $form->field($model, 'freeDigits')->textInput() ?>    
-    <?= $form->field($model, 'digitPrice')->textInput() ?>    
+    ?> 
     <?= $form->field($model, 'photo')->widget(FileInput::class, 
         [
             'options' => [

@@ -53,6 +53,7 @@ class FormsForm extends Model
         return [
             [['title', 'name', 'slug', 'formType'], 'required'],
             [['order', 'formType','basePrice'],'integer'],
+            [['order','basePrice'],'default','value' => 0],
             [['title', 'name', 'slug', 'description','titleEng', 'nameEng', 'descriptionEng'], 'string', 'max' => 255],
         ];
     } 

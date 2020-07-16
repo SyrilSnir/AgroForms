@@ -31,9 +31,7 @@ class StandService
         $stand = Stand::create(
                 $form->name,
                 $form->description, 
-                $form->price,
-                $form->digitPrice, 
-                $form->freeDigits
+                $form->price
                 );
         if ($form->photo) {
             $stand->setPhoto($form->photo);
@@ -47,9 +45,24 @@ class StandService
         return $stand;           
     }
     
+    public function edit(int $id, StandForm $form) 
+    {
+        /** @var Stand $stand */
+        $stand = $this->stands->get($id);
+        $stand->edit(
+                $form->name,
+                $form->description, 
+                $form->price
+                );
+        if ($form->photo) {
+            $stand->setPhoto($form->photo);
+        }        
+        $this->stands->save($stand);        
+    }
+
     public function remove ($id) 
     {        
-        /* @var $stand Unit */
+        /* @var Stand $stand */
          $stand = $this->stands->get($id);
          $this->stands->remove($stand);
     }    

@@ -3,8 +3,9 @@
 namespace app\core\services\operations\Forms;
 
 use app\core\repositories\manage\Forms\FieldRepository;
-use app\models\Forms\Manage\Forms\FieldForm;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Forms\FieldEnum;
+use app\models\Forms\Manage\Forms\FieldForm;
 use function GuzzleHttp\json_encode;
 
 /**
@@ -20,12 +21,23 @@ class FieldService
      */
     protected $fieldRepository;
     
-    public function __construct(FieldRepository $fieldRepository)
+    /**
+     *
+     * @var FieldEnumService
+     */
+    protected $fieldEnumService;
+
+
+    public function __construct(
+            FieldRepository $fieldRepository,
+            FieldEnumService $fieldEnumService
+            )
     {
         $this->fieldRepository = $fieldRepository;
+        $this->fieldEnumService = $fieldEnumService;
     }
     
-    public function create(FieldForm $form)
+    public function create(FieldForm $form): Field
     {
         $parameters = json_encode($form->parameters);
         
@@ -67,6 +79,17 @@ class FieldService
         return $field;       
     }
 
-    
+    public function addEnums(Field $field,array $enumsList)
+    {
+        $this->fieldEnumService->clearForField($field->id);
+        foreach ($enumsList as $enum) {
+            $enumModel = FieldEnum::create(
+                    $field->id, 
+                    $enum['name'], 
+                    $enum['value']
+                    );
+            $enumModel->save();            
+        }
+    }     
     
 }

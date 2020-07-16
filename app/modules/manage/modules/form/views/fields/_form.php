@@ -29,6 +29,7 @@ if ($formId) {
         data-required="<?php echo json_encode(ElementType::HAS_REQUIRED)?>"
         data-number="<?php echo json_encode(ElementType::NUMBER_PARAMS)?>"
         data-computed="<?php echo json_encode(ElementType::COMPUTED_FIELDS)?>"
+        data-enums="<?php echo json_encode(ElementType::HAS_ENUM_ATTRIBUTES)?>""
         >
         <div class="container-fluid">
             <div class="card card-default">
@@ -91,7 +92,9 @@ if ($formId) {
         ?>
                 
         <div id="computed-params__container"<?php if(!$model->parameters->isComputed): ?> class="hide"<?php endif ?>>
-            <?= $form->field($model->parameters, 'unitPrice')->textInput() ?>            
+            <div id="unit-price__container"<?php if ($model->hasEnums ):?> style="display: none;"<?php endif; ?>>
+            <?= $form->field($model->parameters, 'unitPrice')->textInput() ?>
+                </div>
         </div>
     </div>                
                             
@@ -129,6 +132,11 @@ if ($formId) {
     <?php ActiveForm::end(); ?>
                             
                         </div>
+                        <div id="attribute-enums-wrapper" class="col-md-6<?php if (!$model->hasEnums ):?> hide<?php endif; ?>"> 
+                            <?php echo $this->render('enum-elements-table.php',[
+                                'enumsList' => $enumsList
+                            ]) ?>
+                        </div>                        
                     </div>
                 </div>
             </div>

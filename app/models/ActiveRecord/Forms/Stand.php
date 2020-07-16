@@ -18,8 +18,6 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property string|null $image_url Url файла с изображением
  * @property string|null $plan_path Путь к файлу с планом стенда
  * @property int $price Цена за м2
- * @property int $digit_price Стоимость символа
- * @property int|null $free_digits Количество бесплатных знаков
  */
 class Stand extends ActiveRecord
 {
@@ -50,33 +48,25 @@ class Stand extends ActiveRecord
     public static function create(
             string $name,
             string $description,
-            int $price,
-            int $digitPrice,
-            int $freeDigits = null
+            int $price
             ): self
     {
         $stand = new self();
         $stand->name = $name;
         $stand->description = $description;
         $stand->price = $price;
-        $stand->free_digits = $freeDigits;
-        $stand->digit_price = $digitPrice;
         return $stand;
     }
 
     public function edit(
             string $name,
             string $description,
-            int $price,
-            int $freeDigits,
-            int $digitPrice = null     
+            int $price   
             ):void
     {
         $this->name = $name;
         $this->description = $description;
-        $this->price = $price;
-        $this->free_digits = $freeDigits;
-        $this->digit_price = $digitPrice;        
+        $this->price = $price;       
     }
 
     public function setPhoto(UploadedFile $photo): void

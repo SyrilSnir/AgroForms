@@ -47,7 +47,7 @@ class m200626_130734_change_form_type_column_in_requests_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('fk-requests-form_id', 'requests');        
+        $this->dropForeignKey('fk-requests-form_id', '{{%requests}}');        
         $this->dropIndex(
             'idx-requests-form_id',
             '{{%requests}}'

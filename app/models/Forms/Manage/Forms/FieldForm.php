@@ -28,7 +28,14 @@ class FieldForm extends MultiForm
     public $fieldGroupId;
     public $order;
     public $defaultValue;
-
+    
+    
+    /**
+     *
+     * @var bool
+     */
+    public $hasEnums = false;
+    
     use GetFieldGroupTrait;
     use GetFormsListTrait;
     use GetUnitsTrait;
@@ -51,6 +58,7 @@ class FieldForm extends MultiForm
             $this->order = $model->order;
             $this->defaultValue = $model->default_value;
             $this->parameters = new FieldParametersForm($model);
+            $this->hasEnums = $model->hasEnums();
         } else {
             $this->parameters = new FieldParametersForm();
         }
@@ -65,6 +73,7 @@ class FieldForm extends MultiForm
             [['formId', 'elementTypeId', 'fieldGroupId', 'order'], 'integer'],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'string', 'max' => 255],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'default','value' => ''],
+            [['order'], 'default','value' => 0],
         ];
     }
 

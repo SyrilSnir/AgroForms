@@ -15,7 +15,9 @@ $this->title = 'Новое поле';
     
 <?php echo $this->render('_form', [
         'model' => $model,
-        'formId' => $formId
+        'formId' => $formId,
+        'enumsList' => $enumsList
+        
 ]) ?>
 
 </div>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import FieldParams from './components/manage/FieldParams';
+import EnumList from './components/manage/EnumList';
 
 const $ = window.$;
 const managerActivateLink = document.getElementById('get-activare-link');
@@ -8,6 +9,8 @@ const fieldsConfig = document.getElementById('fields-config');
 
 if (fieldsConfig) {
     const fieldParams = new FieldParams(); 
+    const enumList = new EnumList('#attributes-enum-list');
+    enumList.init();    
 }
 
 if (managerActivateLink) {

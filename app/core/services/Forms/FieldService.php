@@ -3,8 +3,10 @@
 namespace app\core\services\Forms;
 
 use app\core\helpers\Utils\StringHelper;
+use app\core\providers\Data\FieldEnumProvider;
 use app\core\repositories\manage\Forms\FieldRepository;
 use app\core\repositories\readModels\Nomenclature\UnitReadRepository;
+use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Nomenclature\Unit;
 use function GuzzleHttp\json_decode;
@@ -23,18 +25,27 @@ class FieldService
     private $unitRepository;
     
     /**
-     * FieldRepository
-     * @var type 
+     *
+     * @var  FieldRepository
      */
     private $fieldRepository;
-    
+
+    /**
+     *
+     * @var FieldEnumProvider
+     */
+    private $fieldEnumProvider;
+
+
     public function __construct(
             UnitReadRepository $unitRepository,
-            FieldRepository $fieldReopsitory
+            FieldRepository $fieldReopsitory,
+            FieldEnumProvider $fieldEnumProvider
             )
     {
         $this->unitRepository = $unitRepository;
         $this->fieldRepository = $fieldReopsitory;
+        $this->fieldEnumProvider = $fieldEnumProvider;
     }
     
      public function postProcessFields(array &$fields, array $valuesList)
@@ -89,6 +100,7 @@ class FieldService
      private function postProcessElement(array &$element, array $valuesList)
      {
          $id = (int) $element['id'];
+         $defaultValue = '';
          /** @var Unit $unit */
         if ($element['parameters']) {
             $params = &$element['parameters'];
@@ -100,13 +112,21 @@ class FieldService
             $unit = $this->unitRepository->findById($unitId);            
             $unit ? $params['unitName'] = $unit->short_name : '';            
         }
+        if (in_array($element['element_type_id'], ElementType::HAS_ENUM_ATTRIBUTES)) {
+            /** @var Field $field */
+            $field = $this->fieldRepository->get($element['id']);
+            $element['enumsList'] = $this->fieldEnumProvider->getEnumsList($field);
+            if (count($element['enumsList']) > 0) {
+                $defaultValue = $element['enumsList'][0]['value'];
+            }
+        }
         if (key_exists($id, $valuesList)) {
             $element['value'] = $valuesList[$id]['value'];
             if (key_exists('checked', $valuesList[$id])) {
                 $element['checked'] = $valuesList[$id]['checked'];                
             }
         } else {
-            $element['value'] = '';
+            $element['value'] = $defaultValue;
         }
         $element['postprocess'] = true;        
      }

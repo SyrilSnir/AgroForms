@@ -10,6 +10,10 @@ import CheckBoxBlock from './Units/CheckBoxBlock';
 import TextInputBlock from './Units/TextInputBlock';
 import NumberInputBlock from './Units/NumberInputBlock';
 import CheckNumberInput from './Units/CheckNumberInput';
+import SelectBlock from './Units/SelectBlock';
+import MultiSelectBlock from './Units/MultiSelectBlock';
+import UndefinedBlock from './Units/UndefinedBlock';
+import RadioBlock from './Units/RadioBlock';
 export default {
     props: [
         'unitData'
@@ -20,12 +24,19 @@ export default {
         'text-input': TextInputBlock,
         'number-input': NumberInputBlock,
         'check-number-input': CheckNumberInput,
-        'checkbox': CheckBoxBlock
+        'checkbox': CheckBoxBlock,
+        'select-input': SelectBlock,
+        'multi-select-input': MultiSelectBlock,
+        'radio': RadioBlock,
+        'undefined': UndefinedBlock
     },    
     data() {
         return {
             typesList: {
                 blockCheckbox: 1,
+                blockSelect: 2,
+                blockMultiSelect: 3,
+                blockRadio: 6,
                 blockNumberInput: 7,
                 blockCheckNumber: 8,
                 blockTextInput: 9,
@@ -42,6 +53,12 @@ export default {
     computed: {
         currentElement() {
             switch (parseInt(this.unitData.element_type_id)) {
+                case this.typesList.blockSelect:
+                    return 'select-input';
+                case this.typesList.blockRadio:
+                    return 'radio';                    
+                case this.typesList.blockMultiSelect:
+                    return 'multi-select-input';                    
                 case this.typesList.blockCheckbox:
                     return 'checkbox';
                 case this.typesList.blockNumberInput:
@@ -53,7 +70,7 @@ export default {
                 case this.typesList.blockImportant:
                     return 'important';
                 case this.typesList.blockHeader:
-                    return 'header-blck';
+                    return 'header-blck';                
                 default:
                     return 'undefined';
             }
