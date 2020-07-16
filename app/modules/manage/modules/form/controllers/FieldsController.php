@@ -2,9 +2,12 @@
 
 namespace app\modules\manage\modules\form\controllers;
 
+use app\core\providers\Data\FieldEnumProvider;
 use app\core\repositories\readModels\Forms\FieldReadRepository;
 use app\core\services\operations\Forms\FieldService;
 use app\models\ActiveRecord\Forms\ElementType;
+use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Forms\FieldEnum;
 use app\models\Forms\Manage\Forms\FieldForm;
 use app\models\Forms\Manage\Forms\FieldParametersForm;
 use app\models\SearchModels\Forms\FieldSearch;
@@ -25,17 +28,25 @@ class FieldsController extends BaseAdminController
      */
     protected $service;
     
+    /**
+     *
+     * @var FieldEnumProvider
+     */
+    protected $fieldEnumProvider;
+    
      public function __construct(
             $id, 
             $module, 
             FieldReadRepository $repository,
             FieldService $service,
+            FieldEnumProvider $fieldEnumProvider,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
+        $this->fieldEnumProvider = $fieldEnumProvider;
     }  
 
     public function actionIndex() 
@@ -55,33 +66,57 @@ class FieldsController extends BaseAdminController
         $loadFormData = $form->load(Yii::$app->request->post());
         if ($loadFormData) {
             $this->setFieldParamsScenario($form);
+        } else {
+            Yii::$app->session->remove(FieldEnum::SESSION_IDENTIFIER);
         }
+        $enumsList = Yii::$app->session->get(FieldEnum::SESSION_IDENTIFIER, []);        
         if ($loadFormData && $form->validate()) {
             try {
-                $post = $this->service->create($form);
-                return $this->redirect(['view', 'id' => $post->id]);
+                $field = $this->service->create($form);
+                if ($field->hasEnums()) {
+                    $this->service->addEnums($field, $enumsList);
+                }
+                return $this->redirect(['view', 'id' => $field->id]);
             } catch (DomainException $e) {
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
         return $this->render('create', [
             'model' => $form,
-            'formId' => $formId 
+            'formId' => $formId,
+            'enumsList' => $enumsList            
         ]);
     }
 
     public function actionUpdate($id)
     {
+        /** @var Field $model */
         $model = $this->findModel($id);
         $form = new FieldForm($model);
         $loadFormData = $form->load(Yii::$app->request->post());
-        $this->setFieldParamsScenario($form);        
+        $this->setFieldParamsScenario($form); 
+        $enumsPresent = $model->hasEnums();
+        if (!$enumsPresent) {
+            Yii::$app->session->remove(FieldEnum::SESSION_IDENTIFIER); 
+            $enumsList = [];            
+        } else {
+            if (!$loadFormData) {
+                $enumsList = $this->fieldEnumProvider->getEnumsList($model);
+                Yii::$app->session->set(FieldEnum::SESSION_IDENTIFIER, $enumsList);                
+            } else {
+                $enumsList = Yii::$app->session->get(FieldEnum::SESSION_IDENTIFIER, []);                
+            }
+        }
         if ($loadFormData && $form->validate()) {
             $this->service->edit($id, $form);
+            if ($enumsPresent) {
+                $this->service->addEnums($model, $enumsList);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update', [
             'model' => $form,
+            'enumsList' => $enumsList             
         ]);                        
     }
 

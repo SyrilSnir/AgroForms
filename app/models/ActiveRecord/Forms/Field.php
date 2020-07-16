@@ -20,9 +20,10 @@ use yii\db\ActiveRecord;
  * @property string|null $default_value Значение по умолчанию
  * @property string|null $parameters Параметры
  * 
- * @property ElementType $elementType Позиция на экране
+ * @property ElementType $elementType Тип элемента
  * @property FieldGroup $fieldGroup Позиция на экране
  * @property Form $form Форма
+ * @property FieldEnum[] $enums Перечисляемые аттрибуты
  * @property FieldParametersForm $fieldParams Параметры
  */
 class Field extends ActiveRecord
@@ -126,6 +127,16 @@ class Field extends ActiveRecord
     public function getForm()
     {
         return $this->hasOne(Form::class, ['id' => 'form_id']);
+    }
+    
+    public function getEnums()
+    {
+        return $this->hasMany(FieldEnum::class, ['field_id' => 'id']);
+    }
+    
+    public function hasEnums():bool
+    {
+        return in_array($this->element_type_id, ElementType::HAS_ENUM_ATTRIBUTES);
     }
 
     public function getFieldParams(): FieldParametersForm

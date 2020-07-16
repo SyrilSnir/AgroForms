@@ -18,10 +18,6 @@ class StandForm extends Model
     public $description;
     
     public $price;
-    
-    public $digitPrice;
-    
-    public $freeDigits;
 
     public $imageFile;
     
@@ -35,8 +31,6 @@ class StandForm extends Model
             $this->description = $model->description;
             $this->price = $model->price;
             $this->imageFile = $model->image_url;
-            $this->freeDigits = $model->free_digits;
-            $this->digitPrice = $model->digit_price;
         }
         parent::__construct($config);
     }
@@ -48,8 +42,8 @@ class StandForm extends Model
     {
         return [
             ['description', 'string'],
-            [['price', 'digitPrice'], 'required'],
-            [['price', 'digitPrice', 'freeDigits'], 'integer'],
+            [['price'], 'required'],
+            [['price'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['imageFile','photo'], 'image'],
         ];
@@ -68,9 +62,7 @@ class StandForm extends Model
             'image_path' => 'Путь к файлу с изображением',
             'image_url' => 'Url файла с изображением',
             'plan_path' => 'Путь к файлу с планом стенда',
-            'price' => 'Цена за м2',
-            'freeDigits' => 'Количество бесплатных знаков во фризовой надписи',
-            'digitPrice' => 'Стоимость символа фризовой надписи',
+            'price' => 'Цена за м2'
         ];
     }
     public function beforeValidate(): bool

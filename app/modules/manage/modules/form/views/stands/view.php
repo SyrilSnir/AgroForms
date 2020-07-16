@@ -36,8 +36,6 @@ $this->title = $model->name;
                     'name:text:Наимменование',
                     'description:html:Описание',
                     'price:text:Стоимость',
-                    'free_digits:text:Число бесплатных символа для фризовой надписи',
-                    'digit_price:text:Стоимость символа для фризовой надписи'
                 ],
             ]); ?>
     <?php if ($model->image_url) :?>

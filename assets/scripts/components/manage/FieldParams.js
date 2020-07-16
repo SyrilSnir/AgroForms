@@ -3,12 +3,14 @@ export default class FieldParams {
     constructor() {
         const fieldsConfig = $('#fields-config');
         this.$elementTypeSelector = $('#element-type-selector'); 
+        this.$enumWrapper = $('#attribute-enums-wrapper');        
         this.$elementTypeSelector.on('change',this.elementTypeSelectorChangeHandler.bind(this));       
         this.textType = fieldsConfig.data('text');
         this.htmlType = fieldsConfig.data('html');
         this.numberType = fieldsConfig.data('number');
         this.computedType = fieldsConfig.data('computed');
         this.requiredType = fieldsConfig.data('required');
+        this.enumValues = fieldsConfig.data('enums');        
         this.$htmlParamsBlock = $('#html-params');
         this.$numberParamsBlock = $('#number-params');
         this.$requiredBlock = $('#required-block');
@@ -18,6 +20,15 @@ export default class FieldParams {
     elementTypeSelectorChangeHandler(e) {
         const value = parseInt(e.target.value);
         console.log(value,this.textType,this.htmlType);
+
+        if(this.enumValues.indexOf(value) !== -1) {
+            this.$enumWrapper.removeClass('hide');
+            $('#unit-price__container').hide();
+        } else {
+            this.$enumWrapper.addClass('hide');
+            $('#unit-price__container').show();
+        }
+                        
         (this.textType.indexOf(value) !== -1) ?
             this.textParamsShow(true) :
             this.textParamsShow(false);
@@ -37,26 +48,26 @@ export default class FieldParams {
     computedParamsShow( isShow ) {
         isShow ? 
             this.$computedBlock.removeClass('hide') :
-            this.$computedBlock.addClass('hide')
+            this.$computedBlock.addClass('hide');           
     }     
     numberParamsShow( isShow ) {
         isShow ? 
             this.$numberParamsBlock.removeClass('hide') :
-            this.$numberParamsBlock.addClass('hide')
+            this.$numberParamsBlock.addClass('hide');
     }    
     textParamsShow( isShow ) {
         isShow ? 
             this.$textParamsBlock.removeClass('hide') :
-            this.$textParamsBlock.addClass('hide')
+            this.$textParamsBlock.addClass('hide');
     }
     requiredShow( isShow ) {
         isShow ? 
             this.$requiredBlock.removeClass('hide') :
-            this.$requiredBlock.addClass('hide')
+            this.$requiredBlock.addClass('hide');
     }    
     htmlParamsShow( isShow ) {
         isShow ? 
             this.$htmlParamsBlock.removeClass('hide') :
-            this.$htmlParamsBlock.addClass('hide')
+            this.$htmlParamsBlock.addClass('hide');
     }    
 }

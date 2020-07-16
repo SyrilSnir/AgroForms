@@ -7,5 +7,6 @@ $this->title = 'Редактирование поля';
 <div class="update-form">
     <?php echo $this->render('_form', [
         'model' => $model,
+        'enumsList' => $enumsList
     ]) ?>
 </div>
