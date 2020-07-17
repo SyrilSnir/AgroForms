@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $field_id Поле
  * @property string $name Название группы аттрибутов
+ * @property string $name_eng Название группы аттрибутов
  * @property string $value Значение
  *
  * @property Fields $field
@@ -29,13 +30,15 @@ class FieldEnum extends ActiveRecord
     public static function create(
             $fieldId,
             $name,
-            $value
+            $value,
+            $nameEng = ''
             ):self
     {
         $model = new self();
         $model->field_id = $fieldId;
         $model->name = $name;
         $model->value = $value;
+        $model->name_eng = $nameEng;
         return $model;
     }
 

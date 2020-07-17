@@ -1,5 +1,7 @@
 <template>
-   <h2>Неизвестный тип блока</h2> 
+   <div class="block__undefined">
+      <h2>Неизвестный тип блока</h2>
+   </div> 
 </template>
 <script>
 export default {
@@ -7,7 +9,7 @@ export default {
 }
 </script>
 <style scope>
-   h2 {
+   .block__undefined h2 {
       color: red;
    }
 </style>

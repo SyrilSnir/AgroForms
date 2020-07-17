@@ -14,6 +14,7 @@ import SelectBlock from './Units/SelectBlock';
 import MultiSelectBlock from './Units/MultiSelectBlock';
 import UndefinedBlock from './Units/UndefinedBlock';
 import RadioBlock from './Units/RadioBlock';
+import EquipmentBlock from './Units/EquipmentBlock';
 export default {
     props: [
         'unitData'
@@ -28,6 +29,7 @@ export default {
         'select-input': SelectBlock,
         'multi-select-input': MultiSelectBlock,
         'radio': RadioBlock,
+        'equipment': EquipmentBlock,
         'undefined': UndefinedBlock
     },    
     data() {
@@ -41,7 +43,8 @@ export default {
                 blockCheckNumber: 8,
                 blockTextInput: 9,
                 blockImportant: 13,
-                blockHeader: 14
+                blockHeader: 14,
+                blockEquipment: 15
             }
         }
     },
@@ -70,7 +73,9 @@ export default {
                 case this.typesList.blockImportant:
                     return 'important';
                 case this.typesList.blockHeader:
-                    return 'header-blck';                
+                    return 'header-blck';    
+                case this.typesList.blockEquipment:
+                    return 'equipment';                               
                 default:
                     return 'undefined';
             }

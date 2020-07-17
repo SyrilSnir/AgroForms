@@ -14,6 +14,7 @@ use yii\helpers\Html;
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Название элемента</th>
+                      <th>Название элемента (ENG)</th>
                       <th>Значение</th>
                       <th style="width: 10px"></th>
                     </tr>
@@ -24,6 +25,7 @@ use yii\helpers\Html;
                       <tr data-number="<?php echo $enumIndex ?>">
                             <td><?php echo $enumIndex ?></td>
                             <td class="attribute-enum-name"><?php echo $enum['name'] ?></td>
+                            <td class="attribute-enum-name"><?php echo $enum['name_eng'] ?></td>
                             <td class="attribute-enum-value"><?php echo $enum['value'] ?></td>
                             <td>    
                                 <a class="btn btn-app delete-enum-field">
@@ -40,18 +42,24 @@ use yii\helpers\Html;
               <div class="card-footer clearfix">
                   <div class="container">
                       <div class="row align-items-end">
-                          <div class="col-5">
+                          <div class="col-4">
                               <div class="field">Имя поля: </div>
                               <?php echo Html::input('text', 'enum-name', '', [
                                   'class' => 'form-control enum-field-name',
                               ]);?>
                           </div>
                           <div class="col-4">
+                            <div class="field">Имя поля (eng): </div>
+                              <?php echo Html::input('text', 'enum-name_eng', '', [
+                                  'class' => 'form-control enum-field-name-eng',
+                              ]);?>
+                          </div>                            
+                          <div class="col-4">
                             <div class="field">Значение: </div>
                               <?php echo Html::input('text', 'enum-name', '', [
                                   'class' => 'form-control enum-field-value',
                               ]);?>
-                          </div>
+                          </div>                        
                           <div class="col-3 align-items-end">
                               <button type="button" class="btn btn-block btn-success enum-field-add-button">Добавить</button>
                           </div>

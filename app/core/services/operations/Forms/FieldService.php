@@ -86,7 +86,8 @@ class FieldService
             $enumModel = FieldEnum::create(
                     $field->id, 
                     $enum['name'], 
-                    $enum['value']
+                    $enum['value'],
+                    $enum['name_eng']
                     );
             $enumModel->save();            
         }

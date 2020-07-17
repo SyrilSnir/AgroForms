@@ -24,7 +24,9 @@ class FieldEnumProvider
         {
             $enumsArray[] = [
                 'name' => $enum->name,
-                'value' => $enum->value
+                'value' => $enum->value,
+                'name_eng' => $enum->name_eng
+                    
             ];
         }
         return $enumsArray;

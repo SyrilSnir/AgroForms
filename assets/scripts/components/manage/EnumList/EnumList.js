@@ -5,6 +5,7 @@ export default class EnumList {
         this.$addEnumFieldButton = $container.find('.enum-field-add-button');
         this.$enumList = $container.find('.attributes-enum-table tbody');
         this.$enumFieldName = $container.find('.enum-field-name');
+        this.$enumFieldNameEng = $container.find('.enum-field-name-eng');
         this.$enumFieldValue = $container.find('.enum-field-value');
         this.enumsArray = [];
     }
@@ -15,11 +16,13 @@ export default class EnumList {
     }
     addEnumeFieldHandler() {
         const name = this.$enumFieldName.val();
+        const nameEng = this.$enumFieldNameEng.val();
         const value = this.$enumFieldValue.val();
         const index = this.$enumList.find('tr').length + 1;
         const template = `<tr data-number="${index}">
                             <td>${index}.</td>
                             <td class="attribute-enum-name">${name}</td>
+                            <td class="attribute-enum-name">${nameEng}</td>
                             <td class="attribute-enum-value">${value}</td>
                             <td>    
                                 <a class="btn btn-app delete-enum-field">
@@ -33,6 +36,7 @@ export default class EnumList {
             ) {
             this.enumsArray.push({
                 'name': name,
+                'name_eng': nameEng,
                 'value': value,
             });
             this.saveToSession();
@@ -61,6 +65,7 @@ export default class EnumList {
 
             return {                
                 'name' : $(row).find('.attribute-enum-name').text(),
+                'name_eng' : $(row).find('.attribute-enum-name-eng').text(),
                 'value' : $(row).find('.attribute-enum-value').text()                
             }
         }).get();

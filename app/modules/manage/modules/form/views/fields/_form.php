@@ -29,7 +29,8 @@ if ($formId) {
         data-required="<?php echo json_encode(ElementType::HAS_REQUIRED)?>"
         data-number="<?php echo json_encode(ElementType::NUMBER_PARAMS)?>"
         data-computed="<?php echo json_encode(ElementType::COMPUTED_FIELDS)?>"
-        data-enums="<?php echo json_encode(ElementType::HAS_ENUM_ATTRIBUTES)?>""
+        data-enums="<?php echo json_encode(ElementType::HAS_ENUM_ATTRIBUTES)?>"
+        data-equipment="<?php echo json_encode(ElementType::ELEMET_ADDITIONAL_EQUIPMENT)?>"
         >
         <div class="container-fluid">
             <div class="card card-default">
@@ -57,7 +58,7 @@ if ($formId) {
             ->dropDownList($model->elementTypesList()) ?>                        
     <?= $form->field($model, 'fieldGroupId')->dropDownList($model->fieldGroupList()) ?>
     <?= $form->field($model, 'order')->textInput() ?>
-            <div class="card card-default">
+            <div id="field-options" class="card card-default"<?php if ($model->elementTypeId == ElementType::ELEMET_ADDITIONAL_EQUIPMENT): ?> style="display: none;"<?php endif; ?>>
                 <div class="card-header">
                     <h3 class="card-title">Дополнительные параметры</h3>
                 </div>

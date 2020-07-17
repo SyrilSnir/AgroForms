@@ -15,4 +15,5 @@ return [
     ['id' => ElementType::ELEMENT_INFORMATION, 'name' => 'Блок "Информация"'],
     ['id' => ElementType::ELEMENT_INFORMATION_IMPORTANT, 'name' => 'Блок "Важно"'],
     ['id' => ElementType::ELEMENT_HEADER, 'name' => 'Блок "Заголовок"'],
+    ['id' => ElementType::ELEMET_ADDITIONAL_EQUIPMENT, 'name' => 'Блок "Дополнительное оборудование"'],
 ];

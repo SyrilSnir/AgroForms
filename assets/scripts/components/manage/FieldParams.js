@@ -10,7 +10,8 @@ export default class FieldParams {
         this.numberType = fieldsConfig.data('number');
         this.computedType = fieldsConfig.data('computed');
         this.requiredType = fieldsConfig.data('required');
-        this.enumValues = fieldsConfig.data('enums');        
+        this.enumValues = fieldsConfig.data('enums'); 
+        this.equipment = fieldsConfig.data('equipment');     
         this.$htmlParamsBlock = $('#html-params');
         this.$numberParamsBlock = $('#number-params');
         this.$requiredBlock = $('#required-block');
@@ -28,7 +29,11 @@ export default class FieldParams {
             this.$enumWrapper.addClass('hide');
             $('#unit-price__container').show();
         }
-                        
+        if (value == this.equipment) {
+            $('#field-options').hide();
+        } else {
+            $('#field-options').show();
+        }
         (this.textType.indexOf(value) !== -1) ?
             this.textParamsShow(true) :
             this.textParamsShow(false);
