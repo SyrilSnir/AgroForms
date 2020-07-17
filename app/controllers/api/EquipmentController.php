@@ -3,6 +3,7 @@
 namespace app\controllers\api;
 
 use app\controllers\JsonController;
+use app\core\providers\Data\Nomenclature\EquipmentGroupProvider;
 /**
  * Description of EquipmentController
  *
@@ -10,11 +11,27 @@ use app\controllers\JsonController;
  */
 class EquipmentController extends JsonController
 {
-    public function actionGetCategories():array
+    /**
+     *
+     * @var EquipmentGroupProvider
+     */
+    private $equipmentGroupProvider;
+    
+    public function __construct(
+            $id, 
+            $module, 
+            EquipmentGroupProvider $equipmentGroupProvider,
+            $config = array()
+            )
     {
-        return [
-            1 => 'Превед',
-            2 => 'Медвед'
-        ];
+        parent::__construct($id, $module, $config);
+        $this->equipmentGroupProvider = $equipmentGroupProvider;
+    }
+   
+        
+    
+    public function actionGetCategories():array
+    {        
+        return $this->equipmentGroupProvider->getList();
     }
 }
