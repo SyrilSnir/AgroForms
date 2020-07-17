@@ -77,26 +77,29 @@ class DynamicFormController extends FormController
     {
         /** @var Form $form */
         $formId = Yii::$app->session->get('OPENED_FORM_ID');
+        $userId = Yii::$app->user->getId();
         $valuesList = [];
         if (!$formId) {
             throw new DomainException('Запрашиваемая форма не найдена на сервере');
         }
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
-        if ($formChangeType === Request::FORM_UPDATE) {
-            $requestId = Yii::$app->session->get('REQUEST_ID');            
-            /** @var Request $request */
-           $request = $this->requestRepository->get($requestId);
-           $valuesList = $this->dynamicFormViewService->getValuesList($request->requestForm);
-        }        
         $form = $this->formRepository->get($formId);
         
         $baseConfiguration = [
           'title' => $form->headerName,
-          'userId' => Yii::$app->user->getId(),
+          'userId' => $userId,
           'formType' => $form->form_type_id,
           'formId' => $form->id,
           'hasFile' => (bool) $form->has_file
-        ];
+        ]; 
+        
+        if ($formChangeType === Request::FORM_UPDATE) {
+            $requestId = Yii::$app->session->get('REQUEST_ID');            
+            /** @var Request $request */
+           $request = $this->requestRepository->getForUser($requestId,$userId);
+           $valuesList = $this->dynamicFormViewService->getValuesList($request->requestForm);
+           $baseConfiguration['fileName'] = $request->requestForm->file;
+        }               
         if ($form->form_type_id == FormType::DYNAMIC_ORDER_FORM) {
             $baseConfiguration['computed'] = true;
             $baseConfiguration['basePrice'] = $form->base_price;

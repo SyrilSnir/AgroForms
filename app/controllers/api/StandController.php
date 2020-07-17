@@ -64,19 +64,20 @@ class StandController extends FormController
     public function actionGetForm()
     {
         /** @var Form $stand */
+        $userId = Yii::$app->user->getId();
         $stand = $this->formRepository->get(FormType::SPECIAL_STAND_FORM);
         $standsList = StandsHelper::standsList();
         $baseConfiguration = [
           'title' => $stand->headerName,
           'stands' => $standsList,
-          'userId' => Yii::$app->user->getId()              
+          'userId' => $userId              
         ];
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
         if ($formChangeType === Request::FORM_UPDATE) {
             $requestId = Yii::$app->session->get('REQUEST_ID');
             /** @var Request $request */
             /** @var RequestStand $requestStand */
-           $request = $this->requestRepository->get($requestId);
+           $request = $this->requestRepository->getForUser($requestId, $userId);
            $requestStand = $request->requestForm;
            $baseConfiguration['update'] = true;
            $baseConfiguration['frizeName'] = $requestStand->frizeName;
@@ -84,6 +85,7 @@ class StandController extends FormController
            $baseConfiguration['length'] = $requestStand->length;
            $baseConfiguration['square'] = $requestStand->square;
            $baseConfiguration['standId'] = $requestStand->stand_id;
+           $baseConfiguration['fileName'] = $request->requestForm->file;           
         } else {
             $baseConfiguration['update'] = false;
         }

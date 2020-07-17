@@ -2,7 +2,10 @@
 
 namespace app\models\ActiveRecord\Requests;
 
+use Yii;
 use yii\db\ActiveQuery;
+use yii\web\UploadedFile;
+use yiidreamteam\upload\FileUploadBehavior;
 
 /**
  * This is the model class for table "request_dynamic_forms".
@@ -16,6 +19,18 @@ use yii\db\ActiveQuery;
  */
 class RequestDynamicForm extends BaseRequest
 {
+    public function __construct($config = array())
+    {
+        parent::__construct($config);
+        $this->attachBehavior('fileUploadBehavior',
+                [
+                    'class' => FileUploadBehavior::class,
+                    'attribute' => 'file',
+                    'filePath' => Yii::getAlias('@formsUploadPath') . DIRECTORY_SEPARATOR . '[[id]]_[[filename]].[[extension]]',
+                    'fileUrl' => '@formsUploadUrl/[[id]]_[[filename]].[[extension]]' 
+                ] 
+            );
+    }    
     /**
      * {@inheritdoc}
      */
@@ -96,5 +111,5 @@ class RequestDynamicForm extends BaseRequest
     public function getRequest()
     {
         return $this->hasOne(Request::className(), ['id' => 'request_id']);
-    }
+    }  
 }

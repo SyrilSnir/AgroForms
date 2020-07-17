@@ -21,5 +21,11 @@ Yii::setAlias('@standUploadPath', dirname(__DIR__)
         . DIRECTORY_SEPARATOR . 'upload'
         . DIRECTORY_SEPARATOR . 'stand'
         );
+Yii::setAlias('@formsUploadPath', dirname(__DIR__)
+        . DIRECTORY_SEPARATOR . 'web' 
+        . DIRECTORY_SEPARATOR . 'upload'
+        . DIRECTORY_SEPARATOR . 'forms'
+        );
 Yii::setAlias('@uploadUrl','/upload');
 Yii::setAlias('@standUploadUrl','/upload/stand');
+Yii::setAlias('@formsUploadUrl','/upload/forms');

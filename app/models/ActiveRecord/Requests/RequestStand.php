@@ -20,7 +20,6 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property int $frize_price Стоимость фризовой надписи
  * @property string|null $frizeName Фризовая надпись
  * @property int $amount Стоимость
- * @property string|null $file Файл, приложенный к форме
  *
  * @property Stand $stand
  */
@@ -146,10 +145,5 @@ class RequestStand extends BaseRequest
     public function getStand()
     {
         return $this->hasOne(Stand::className(), ['id' => 'stand_id']);
-    }
-    
-    public function setFile(UploadedFile $file) 
-    {
-        $this->file = $file;
-    }
+    }    
 }

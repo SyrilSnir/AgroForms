@@ -12,7 +12,7 @@ class m200717_073132_add_file_name_column_to_request_dynamic_forms_table extends
      */
     public function safeUp()
     {
-        $this->addColumn('{{%request_dynamic_forms}}', 'file_name', $this->string());
+        $this->addColumn('{{%request_dynamic_forms}}', 'file', $this->string());
     }
 
     /**
@@ -20,6 +20,6 @@ class m200717_073132_add_file_name_column_to_request_dynamic_forms_table extends
      */
     public function safeDown()
     {
-        $this->dropColumn('{{%request_dynamic_forms}}', 'file_name');
+        $this->dropColumn('{{%request_dynamic_forms}}', 'file');
     }
 }

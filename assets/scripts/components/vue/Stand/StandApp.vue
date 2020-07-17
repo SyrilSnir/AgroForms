@@ -27,9 +27,13 @@
             <div class="input-group">
                 <div class="custom-file">
                     <input @change="fileLoad" ref="userFile" type="file" class="custom-file-input" id="userFile">
-                    <label class="custom-file-label"  data-browse="Обзор" for="exampleInputFile">Выбрать файл</label>
+                    <label class="custom-file-label" data-browse="Обзор" for="userFile">Выбрать файл</label>
                 </div>
             </div>
+                <div v-if="addedFile" class="file__added">
+                    <i class="fa fa-file" aria-hidden="true"></i>
+                    {{ addedFile }}
+                </div>            
         </div>      
     </div>  
     <div class="card card-info">
@@ -117,6 +121,7 @@ export default {
             userId : null,
             draft: false,
             formData : new FormData(),
+            addedFile: false,            
             stands: [],
             bus: new Vue()
         }
@@ -201,6 +206,7 @@ export default {
         this.frizeFreeDigits = response.data.frizeFreeDigits;
         this.userId = response.data.userId;
         this.update = response.data.update;
+        this.addedFile = response.data.fileName;
         if (Object.prototype.hasOwnProperty.call(response.data,'frizeName')) {
             this.frizeName = response.data.frizeName;
         }

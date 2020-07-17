@@ -43,7 +43,7 @@ class RequestDynamicFormService
     {
         $this->requestDynamicForms = $requestDynamicForms;        
         $this->requests = $requests;
-        $this->fieldService = $fieldService;
+        $this->fieldService = $fieldService;                
     }
     
     public function create(DynamicForm $form)
@@ -55,7 +55,8 @@ class RequestDynamicFormService
         } else 
         {
             $total = 0;
-        }                    
+        }  
+        /** @var Request $request */   
         $request = Request::create($form->userId, $form->formId, $form->draft);
         $this->requests->save($request);
         $dynamicForm = RequestDynamicForm::create(
@@ -63,6 +64,9 @@ class RequestDynamicFormService
                 $serializedFields, 
                 $total
                 );
+        if ($form->loadedFile) {
+           $dynamicForm->setFile($form->loadedFile);
+        }
         $this->requestDynamicForms->save($dynamicForm);
         return $dynamicForm;        
     }
@@ -85,5 +89,10 @@ class RequestDynamicFormService
         $this->requests->save($request);        
         $dynamicForm = $request->requestForm;
         $dynamicForm->edit($request->id, $serializedFields, $total);
-        $this->requestDynamicForms->save($dynamicForm);    }
+        if ($form->loadedFile) {
+           $dynamicForm->setFile($form->loadedFile);
+        }        
+        $this->requestDynamicForms->save($dynamicForm);    
+        
+    }
 }

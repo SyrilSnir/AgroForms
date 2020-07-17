@@ -14,6 +14,21 @@
                 >
                 </group>
             </template>
+            <div v-show="hasFile" class="form-group clr">
+                <p class="d-flex flex-column">
+                    <span>Добавить вложение</span>
+                </p>             
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input @change="fileLoad" ref="userFile" type="file" class="custom-file-input" id="userFile">
+                        <label class="custom-file-label" data-browse="Обзор" for="userFile">Выбрать файл</label>
+                    </div>
+                </div>
+                <div v-if="addedFile" class="file__added">
+                    <i class="fa fa-file" aria-hidden="true"></i>
+                    {{ addedFile }}</div>
+            </div>
+
             <computed v-if="isComputed" :total="totalPrice"></computed>
             <div class="card-footer">
                 <button type="button" @click="saveDraft" class="btn btn-primary">Сохранить черновик</button>
@@ -48,7 +63,9 @@ export default {
             isComputed: false,
             userId : null,            
             basePrice: 0,
-            totalPrice: 0                   
+            totalPrice: 0,
+            hasFile: false,
+            addedFile: false                
         }
     },
    beforeCreate: function() {
@@ -62,10 +79,19 @@ export default {
             this.basePrice = response.data.basePrice;
             this.totalPrice = this.basePrice;
             this.formId = response.data.formId;
+            this.hasFile = response.data.hasFile;
+            if (this.hasFile) {
+                this.addedFile = response.data.fileName;
+            }
 
         })
   },
   methods: {
+        fileLoad: function() {
+            console.log('Файл загружен');
+            this.formData.append('DynamicForm[loadedFile]', this.$refs.userFile.files[0]);
+            this.addedFile = '';
+        },      
         saveDraft: function() {
             this.draft = true;
             this.formSubmit();
@@ -158,4 +184,5 @@ export default {
   }
 }
 </script>
-<style></style>
+<style scoped>
+</style>

@@ -24,4 +24,12 @@ class RequestRepository implements RepositoryInterface
         }
         return $model;
     }
+    
+    public function getForUser(int $id, int $userId)
+    {
+        if (!$model = Request::findOne(['id' => $id, 'user_id' => $userId])) {
+                   throw new NotFoundException('Заявка не найдена');
+               }
+               return $model;        
+    }
 }

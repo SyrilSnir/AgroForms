@@ -28,7 +28,9 @@ class RequestService
         /** @var Request $request */
         $request = $this->requests->get($id);
         $form = $request->requestForm;
-        $form->delete();
+        if ($form) {
+            $form->delete();
+        }
         $this->requests->remove($request);
     }
 }
