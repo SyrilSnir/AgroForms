@@ -84,7 +84,6 @@ if ($formId) {
                         'offText' => 'Нет',
                     ],
                 'pluginEvents' => [
-                    "init.bootstrapSwitch" => "function(e) { console.log('aaaa'); }",
                     "switchChange.bootstrapSwitch" => 
                         "function(e) { e.target.checked ? $('#computed-params__container').removeClass('hide') :
                             $('#computed-params__container').addClass('hide'); }",

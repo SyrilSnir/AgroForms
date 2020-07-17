@@ -40,6 +40,7 @@ class FormService
                 $form->formType, 
                 $form->order, 
                 $form->basePrice,
+                $form->hasFile,
                 Yii::$app->user->getId()
                 );
         $this->forms->save($model);
@@ -60,7 +61,8 @@ class FormService
                 $form->descriptionEng,                
                 $form->formType, 
                 $form->order,           
-                $form->basePrice
+                $form->basePrice,
+                $form->hasFile
                 );
         $this->forms->save($model);        
     }

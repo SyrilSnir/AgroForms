@@ -21,6 +21,7 @@ class FormsForm extends Model
     public $formType;
     public $order;
     public $basePrice;
+    public $hasFile;
 
 
     public $nameEng;
@@ -41,6 +42,7 @@ class FormsForm extends Model
            $this->nameEng = $model->name_eng;
            $this->titleEng = $model->title_eng;
            $this->descriptionEng = $model->description_eng;
+           $this->hasFile = $model->has_file;
        }
        parent::__construct($config);
    }
@@ -53,6 +55,7 @@ class FormsForm extends Model
         return [
             [['title', 'name', 'slug', 'formType'], 'required'],
             [['order', 'formType','basePrice'],'integer'],
+            [['hasFile'],'boolean'],
             [['order','basePrice'],'default','value' => 0],
             [['title', 'name', 'slug', 'description','titleEng', 'nameEng', 'descriptionEng'], 'string', 'max' => 255],
         ];
@@ -72,7 +75,8 @@ class FormsForm extends Model
             'descriptionEng' => 'Описание (ENG)',
             'formType' => 'Тип формы',
             'order' => 'Порядковый номер',
-            'basePrice' => 'Базовая стоимость'
+            'basePrice' => 'Базовая стоимость',
+            'hasFile' => 'Доступно вложение файла'
         ];
     }
     

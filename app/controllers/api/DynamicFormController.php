@@ -94,7 +94,8 @@ class DynamicFormController extends FormController
           'title' => $form->headerName,
           'userId' => Yii::$app->user->getId(),
           'formType' => $form->form_type_id,
-          'formId' => $form->id
+          'formId' => $form->id,
+          'hasFile' => (bool) $form->has_file
         ];
         if ($form->form_type_id == FormType::DYNAMIC_ORDER_FORM) {
             $baseConfiguration['computed'] = true;

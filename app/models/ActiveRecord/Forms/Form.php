@@ -22,6 +22,7 @@ use yii\db\ActiveRecord;
  * @property int|null $created_at Дата создания
  * @property int|null $updated_at Дата модификации
  * @property int $order Порядок
+ * @property boolean $has_file Может содержать вложенный файл
  * @property int $base_price Базовая стоимость
  * @property int $form_type_id Id типа формы
  * 
@@ -53,6 +54,7 @@ class Form extends ActiveRecord
  * @param int $formTypeId
  * @param int $order
  * @param int $basePrice
+ * @param bool $hasFile
  * @param int $created
  * @return \self
  */
@@ -67,6 +69,7 @@ class Form extends ActiveRecord
             int $formTypeId,
             int $order,
             int $basePrice,
+            bool $hasFile,
             int $created = null
             ):self
     {
@@ -81,6 +84,7 @@ class Form extends ActiveRecord
         $form->base_price = $basePrice;
         $form->name_eng = $nameEng;
         $form->title_eng = $titleEng;
+        $form->has_file = $hasFile;
         $form->description_eng = $descriptionEng;
         
         return $form;
@@ -98,6 +102,7 @@ class Form extends ActiveRecord
  * @param int $formTypeId
  * @param int $order
  * @param int $basePrice
+ * @param bool $hasFile
  */
     public function edit(
             string $title,
@@ -109,7 +114,8 @@ class Form extends ActiveRecord
             string $descriptionEng,             
             int $formTypeId,
             int $order,
-            int $basePrice            
+            int $basePrice,
+            bool $hasFile
             )
     {
         $this->name = $name;
@@ -121,7 +127,8 @@ class Form extends ActiveRecord
         $this->name_eng = $nameEng;
         $this->description_eng = $descriptionEng;
         $this->base_price = $basePrice;
-        $this->order = $order;       
+        $this->order = $order;
+        $this->has_file = $hasFile;
     }
     
     public function getFormType() : ActiveQuery

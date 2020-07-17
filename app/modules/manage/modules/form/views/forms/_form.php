@@ -2,6 +2,7 @@
 
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\Forms\Manage\Forms\FormsForm;
+use kartik\switchinput\SwitchInput;
 use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\web\View;
@@ -58,6 +59,13 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
 </div>                            
 <?= $form->field($model, 'order')->textInput() ?>
 
+<?= $form->field($model, 'hasFile')->widget(SwitchInput::class,[
+                'pluginOptions' => [
+                        'onText' => 'Да',
+                        'offText' => 'Нет',
+                    ]
+    ]);
+    ?>
 <div class="form-group">
     <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
     <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>
