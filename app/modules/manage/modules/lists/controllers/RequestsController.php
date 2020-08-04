@@ -6,6 +6,7 @@ use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\Forms\Requests\ChangeStatusForm;
 use app\models\SearchModels\Requests\RequestSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
 use kartik\mpdf\Pdf;
@@ -49,23 +50,50 @@ class RequestsController extends BaseAdminController
         ]);
     }
     
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        /** @var Request $model */
+        $model = $this->findModel($id);
+        $statusForm = new ChangeStatusForm($model->id, $model->status);
+        if ($statusForm->load(\Yii::$app->request->post()) && $statusForm->validate()) {
+            $model = $this->service->changeStatus($statusForm);
+            \Yii::$app->session->setFlash('success','Статус заявки успешно изменен');            
+        }
+        return $this->render('view', [
+            'model' => $model,
+            'statusForm' => $statusForm
+        ]);
+    }    
+    
     public function actionExport(int $id)
     {
         /** @var Request $request */
         $request = $this->readRepository->findById($id);
         $template = null;
         $formTitle = '';
-        switch ($request->form_type_id)
+        switch ($request->form->form_type_id)
         {
             case FormType::SPECIAL_STAND_FORM:
                 $template = 'stand';
                 $formTitle = 'Заявка №2 : Стандартный стенд';
+                $content = $this->renderPartial('@pdf/requests/'. $template,[
+                    'request' => $request 
+                ]);                
+                break;
+            case FormType::DYNAMIC_INFORMATION_FORM:
+            case FormType::DYNAMIC_ORDER_FORM:
+                $template = 'dynamic-form';
+                $formTitle = $request->form->title .' : '. $request->form->name;
+                $content = $this->renderPartial('@pdf/requests/'. $template,[
+                    'request' => $request 
+                ]);                  
                 break;
         }
     // get your HTML raw content without any layouts or scripts
-       $content = $this->renderPartial('@pdf/requests/stand',[
-           'request' => $request 
-       ]);
        
        $cssInline = <<<CSS
 .kv-heading-1

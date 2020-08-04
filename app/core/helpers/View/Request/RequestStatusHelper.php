@@ -41,7 +41,9 @@ class RequestStatusHelper extends StatusHelper
             $statusList[Request::STATUS_DRAFT] = 'Черновик';
         }
         $statusList[Request::STATUS_PAID] = 'Оплачена';
-        $statusList[Request::STATUS_REJECTED] = 'Отменена';
+        $statusList[Request::STATUS_PARTIAL_PAID] = 'Оплачена частично';
+        $statusList[Request::STATUS_CHANGED] = 'Изменена';
+        $statusList[Request::STATUS_REJECTED] = 'Отклонена';
         return $statusList;
     }
 

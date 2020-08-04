@@ -50,8 +50,8 @@ class m200427_075544_create_requests_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('fk-requests-user_id', 'requests');
-        $this->dropForeignKey('fk-requests-form_type_id', 'requests');
+        $this->dropForeignKey('fk-requests-user_id', '{{%requests}}');
+        $this->dropForeignKey('fk-requests-form_type_id', '{{%requests}}');
         $this->dropIndex(
             'idx-requests-user_id',
             '{{%requests}}'

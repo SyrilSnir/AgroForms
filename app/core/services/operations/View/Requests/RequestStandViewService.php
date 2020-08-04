@@ -2,7 +2,7 @@
 
 namespace app\core\services\operations\View\Requests;
 
-use app\models\Forms\Requests\StandForm;
+use app\models\ActiveRecord\Requests\RequestStand;
 
 /**
  * Description of RequestStandViewService
@@ -11,32 +11,32 @@ use app\models\Forms\Requests\StandForm;
  */
 class RequestStandViewService
 {
-    public function getFieldAttributes(StandForm $requestForm): array
+    public function getFieldAttributes(RequestStand $requestStand): array
     {
         return [
             [
                 'label' => 'Тип стенда',
-                'value' => $requestForm->stand->name
+                'value' => $requestStand->stand->name
             ],
             [
                 'label' => 'Длинна, м.',
-                'value' => $requestForm->length
+                'value' => $requestStand->length
             ],
             [
                 'label' => 'Ширина, м.',
-                'value' => $requestForm->width
+                'value' => $requestStand->width
             ], 
             [
                 'label' => 'Площадь, м2',
-                'value' => $requestForm->square
+                'value' => $requestStand->square
             ],
             [
                 'label' => 'Фризовая надпись',
-                'value' => $requestForm->frizeName
+                'value' => $requestStand->frizeName
             ],         
             [
                 'label' => 'Стоимость',
-                'value' => $requestForm->amount . ' USD'
+                'value' => $requestStand->amount . ' USD'
             ]
         ];        
     }

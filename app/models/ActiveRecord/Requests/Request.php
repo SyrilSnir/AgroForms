@@ -29,9 +29,12 @@ use yii\db\ActiveQuery;
  */
 class Request extends FormManipulation
 {
-    const STATUS_NEW = 0;
-    const STATUS_PAID = 1;
-    const STATUS_REJECTED = 2;
+    const STATUS_NEW = 0; // Новая
+    const STATUS_PAID = 1; // Оплачена
+    const STATUS_PARTIAL_PAID = 6; // Частично оплачена 
+    const STATUS_REJECTED = 2; // Отклонена
+    const STATUS_CHANGED = 4; // Изменена
+    const STATUS_DELETE = 5; // Удалена
     const STATUS_DRAFT = 3; // Черновик
     
     use CreatedTimestampTrait;
