@@ -148,6 +148,14 @@ use yii\widgets\ActiveForm;
                                     </div>
 
                                 </div> 
+                                <div class="card card-info">
+                                    <div class="card-header">Подписант (используется в заявках)</div>
+                                    <div class="card-body">
+                                        <?= $form->field($model->contacts, 'proposalSignaturePost')->textInput() ?>
+                                        <?= $form->field($model->contacts, 'proposalSignatureName')->textInput() ?>
+                                    </div>
+
+                                </div>                                 
                             </div>
 
                             <div class="tab-pane fade" id="bank" role="tabpanel" aria-labelledby="home-tab">

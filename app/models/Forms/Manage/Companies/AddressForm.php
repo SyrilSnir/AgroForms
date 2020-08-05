@@ -17,6 +17,8 @@ use yii\base\Model;
  */
 abstract class AddressForm extends Model
 {
+    const SCENARIO_PROFILE_UPDATE = 'profileUpdate';
+    
     public $id;
     /** @var string Почтовый индекс */    
     public $index;
@@ -80,5 +82,12 @@ abstract class AddressForm extends Model
             'regionId' => 'Регион',
             'address' => 'Улица, дом',
         ];
+    } 
+    
+    public function scenarios():array
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_PROFILE_UPDATE] = $scenarios[self::SCENARIO_DEFAULT];
+        return $scenarios;
     }    
 }

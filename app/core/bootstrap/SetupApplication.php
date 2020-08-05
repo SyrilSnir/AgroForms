@@ -6,7 +6,10 @@ use app\core\helpers\Data\ConfigurationHelper;
 use app\core\manage\Auth\RoleManager;
 use app\core\manage\Configuration\ConfigurationManager;
 use app\core\services\Mail\MailService;
+use app\core\services\operations\Profile\CompanyService;
+use app\core\services\operations\Profile\UserService;
 use app\models\ActiveRecord\Configuration;
+use app\models\ActiveRecord\Users\User;
 use app\models\Configuration\MailParameters;
 use app\models\Forms\Manage\Configuration\MailConfigurationForm;
 use Swift_SmtpTransport;
@@ -33,7 +36,16 @@ class SetupApplication implements BootstrapInterface
             $normalizers = [new ObjectNormalizer()];
             return new Serializer($normalizers, $encoders); 
         });
-        
+        $container->set(UserService::class, function ($container, $params, $args) {
+            return new UserService(
+            User::find()->where(['id' => Yii::$app->user->id])->one()
+                    );
+        } );
+        $container->set(CompanyService::class, function ($container, $params, $args) {
+            /** @var User $user */
+            $user = User::find()->where(['id' => Yii::$app->user->id])->one();
+            return new CompanyService($user->company);
+        } );        
         $container->set(ConfigurationManager::class,function ($container, $params, $args) {
             return ConfigurationManager::getInstance();
         });

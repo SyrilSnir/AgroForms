@@ -18,7 +18,9 @@ use yii\db\ActiveRecord;
  * @property string $manager_phone Телефон менеджера
  * @property string $manager_fax Факс менеджера
  * @property string $manager_email Email менеджера
- *
+ * @property string|null $proposal_signature_post Должность подписанта
+ * @property string|null $proposal_signature_name ФИО подписанта 
+ * 
  * @property Company $company
  */
 class Contact extends ActiveRecord
@@ -44,6 +46,8 @@ class Contact extends ActiveRecord
      * @param string $managerPhone
      * @param string $managerEmail
      * @param string $managerFax
+     * @param string $proposalSignaturePost
+     * @param string $proposalSignatureName
      * @return \self
      */
     public static function create(
@@ -55,7 +59,9 @@ class Contact extends ActiveRecord
             string $managerFio,
             string $managerPhone,
             string $managerEmail,
-            string $managerFax = ''
+            string $managerFax,
+            string $proposalSignaturePost,
+            string $proposalSignatureName
             ):self
     {
         $contact = new self();
@@ -69,6 +75,10 @@ class Contact extends ActiveRecord
         $contact->manager_email = $managerEmail;        
         $contact->manager_phone = $managerPhone;
         $contact->manager_fax = $managerFax;
+        
+        $this->proposal_signature_name = $proposalSignatureName;
+        $this->proposal_signature_post = $proposalSignaturePost;
+        
         return $contact;
     }
     
@@ -83,6 +93,8 @@ class Contact extends ActiveRecord
      * @param string $managerPhone
      * @param string $managerEmail
      * @param string $managerFax
+     * @param string $proposalSignaturePost
+     * @param string $proposalSignatureName     
      */
     public function edit(
             string $chiefPosition,
@@ -93,7 +105,9 @@ class Contact extends ActiveRecord
             string $managerFio,
             string $managerPhone,
             string $managerEmail,
-            string $managerFax = ''            
+            string $managerFax,
+            string $proposalSignaturePost,
+            string $proposalSignatureName           
             )
     {
         $this->chief_position = $chiefPosition;
@@ -105,7 +119,11 @@ class Contact extends ActiveRecord
         $this->manager_fio = $managerFio;
         $this->manager_email = $managerEmail;        
         $this->manager_phone = $managerPhone;
-        $this->manager_fax = $managerFax;        
+        $this->manager_fax = $managerFax;   
+        
+        $this->proposal_signature_name = $proposalSignatureName;
+        $this->proposal_signature_post = $proposalSignaturePost;
+                
     }
 
     /**

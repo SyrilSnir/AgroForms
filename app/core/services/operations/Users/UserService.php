@@ -40,8 +40,7 @@ class UserService
     
     public function __construct(
             UserRepository $userRepository,
-            RoleManager $roleManager,
-            MemberProfileRepository $memberProfileRepository
+            RoleManager $roleManager
             )
     {
         $this->users = $userRepository;
@@ -59,7 +58,8 @@ class UserService
                 $form->email, 
                 $form->phone, 
                 $form->birthday, 
-                $form->genre, 
+                $form->position,
+                $form->gender, 
                 $form->language
                 );
         $this->users->save($user);  
@@ -77,18 +77,11 @@ class UserService
                 $form->email, 
                 $form->phone, 
                 $form->birthday, 
-                $form->genre, 
+                $form->position,
+                $form->gender, 
                 $form->language
                 );
-        $this->users->save($user);
-        $profile = MemberProfile::create(
-                $user->id, 
-                $form->member->position, 
-                $form->member->activities, 
-                $form->member->proposalSignaturePost, 
-                $form->member->proposalSignatureName
-                );  
-        $this->memberProfiles->save($profile);
+        $this->users->save($user);  
         $this->roleManager->setRole(UserType::MEMBER_USER_TYPE, $user->id);
         return $user;
     }
@@ -107,16 +100,10 @@ class UserService
                 $form->email, 
                 $form->phone, 
                 $form->birthday, 
-                $form->genre, 
+                $form->position,
+                $form->gender,                 
                 $form->language
                 );
-        if ($user->user_type_id == UserType::MEMBER_USER_ID) {
-            $profile = MemberProfileReadRepository::findById($id);
-            if (!$profile) {
-                $profile = MemberProfile::create($user->id);
-                $this->memberProfiles->save($profile);                
-            }
-        }
         $this->roleManager->revokeRoles($user->id);
         switch ($user->user_type_id) {
             case UserType::ROOT_USER_ID:

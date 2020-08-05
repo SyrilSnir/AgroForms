@@ -11,11 +11,11 @@ use yii\helpers\ArrayHelper;
 /**
  * Description of MemberForm
  *
- * @property MemberProfileForm $member
  * @author kotov
  */
 class MemberForm extends UserManageForm
 {
+    const SCENARIO_PROFILE_UPDATE = 'profileUpdate';
     
     public function __construct(User $user = null, $config = array())
     {     
@@ -27,13 +27,21 @@ class MemberForm extends UserManageForm
             $this->email = $user->email;
             $this->company = $user->company_id;
             $this->userType = UserType::MEMBER_USER_ID;
-            $this->genre = $user->genre;
+            $this->gender = $user->gender;
+            $this->position = $user->position;
+            $this->language = $user->language;
             $this->userId = $user->id;
-            $this->member = new MemberProfileForm($user->profile);  
-        } else {
-            $this->member = new MemberProfileForm();
         }
         
+    }
+    
+    public function scenarios():array
+    {
+        return ArrayHelper::merge([
+            self::SCENARIO_PROFILE_UPDATE => [
+                'phone', 'birthday', 'gender', 'position'
+            ]
+        ], parent::scenarios());
     }
 
     public function rules()
@@ -62,16 +70,11 @@ class MemberForm extends UserManageForm
             'email' => 'Email',
             'phone' => 'Номер телефона',
             'birthday' => 'Дата рождения',
-            'gengre' => 'Пол',
             'language' => 'Язык',
             'description' => 'Description',
             'active' => 'Active',
-            'genre' => 'Пол'
+            'gender' => 'Пол',
+            'position' => \Yii::t('app/user','Position')
         ];
-    }
-
-        public function internalForms(): array
-    {
-        return ['member'];
     }
 }

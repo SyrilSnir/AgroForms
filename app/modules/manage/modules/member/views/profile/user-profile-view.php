@@ -20,11 +20,12 @@ $this->title = $profile->login;
 
 $attributes = [
                     'id',
-                    'login:text:Логин',
-                    'fio:text:ФИО',
+                    'login:text:'.Yii::t('app/user','Login'),
+                    'fio:text:'.Yii::t('app/user','Full name'),
                     'email:text:E-mail',
                     'phone:text:Номер телефона',
                     'company.name:text:Компания',
+                    'position:text:'.Yii::t('app/user', 'Position'),
                     'userType.name:text:Тип учетной записи',
                     [
                         'attribute' => 'active',
@@ -33,19 +34,11 @@ $attributes = [
                         'value' => UserStatusHelper::getStatusLabel($profile->active)
                     ]
                 ];
-switch ($profile->user_type_id) {
-    case UserType::MEMBER_USER_ID:
-        $dopAttributes = [
-            'profile.position:text:Должность',
-            'profile.activities:text:Сфера деятельности компании',
-            'profile.proposal_signature_name:text:ФИО подписанта',
-            'profile.proposal_signature_post:text:Должность подписанта',
-        ];
-        $attributes = ArrayHelper::merge($attributes, $dopAttributes);
-        break;
-}
 ?>
 <div class="full-view">
+        <p>
+        <?= Html::a(Yii::t('app','Change'), ['update-user'], ['class' => 'btn btn-primary']) ?>
+    </p>
     <div class="row">
         <div class="col-md-12">
             <div class="card card-primary">

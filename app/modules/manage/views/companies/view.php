@@ -133,6 +133,19 @@ $this->title = $model->name;
                     ], 
                     [
                         'group'=>true,
+                        'label'=>'Подписант (используется в заявках)',
+                        'rowOptions'=>['class'=>'table-success']
+                    ], 
+                    [
+                        'value' => $profile->contacts->proposal_signature_name,
+                        'label' => 'ФИО подписанта'
+                    ],                    
+                    [
+                        'value' => $profile->contacts->proposal_signature_post,
+                        'label' => 'Должность подписанта'
+                    ],                    
+                    [
+                        'group'=>true,
                         'label'=>'Банковские реквизиты',
                         'rowOptions'=>['class'=>'table-info']
                     ],

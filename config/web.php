@@ -42,6 +42,21 @@ return [
         ]
     ],
     'components' => [
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    //'basePath' => '@app/messages',
+                    //'sourceLanguage' => 'en-US',
+                    'fileMap' => [
+                        'app'       => 'app.php',
+                        'app/error' => 'error.php',
+                        'app/user' => 'user.php',
+                        'app/company' => 'company.php',
+                    ],
+                ],
+            ],
+        ],        
         'formatter' => [
             'locale' => 'ru-RU',
             'thousandSeparator' => ' ',
@@ -61,6 +76,11 @@ return [
                     'depends' => [
                         YiiAsset::class
                     ]
+                ],
+                kartik\select2\Select2Asset::class => [
+                    'depends' => [
+                        YiiAsset::class
+                    ]                    
                 ],
                 GridViewAsset::class => [
                     'depends' => [
@@ -132,5 +152,6 @@ return [
                 ],
             ],
         ],
+        
     ],
 ];

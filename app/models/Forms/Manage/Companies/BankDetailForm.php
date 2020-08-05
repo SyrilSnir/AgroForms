@@ -12,6 +12,8 @@ use yii\base\Model;
  */
 class BankDetailForm extends Model
 {  
+    const SCENARIO_PROFILE_UPDATE = 'profileUpdate';
+    
     /** @var int */    
     public $id;
     /** @var string */
@@ -41,7 +43,8 @@ class BankDetailForm extends Model
     public function rules()
     {
         return [
-            [['rsSchet', 'bankInfo', 'ksSchet', 'bik'], 'safe'],
+            [['rsSchet', 'bankInfo', 'ksSchet', 'bik'], 'safe','on' => self::SCENARIO_DEFAULT],
+            [['rsSchet', 'bankInfo', 'ksSchet', 'bik'], 'required', 'on' => self::SCENARIO_PROFILE_UPDATE],
             [['rsSchet', 'bankInfo', 'ksSchet', 'bik'], 'string', 'max' => 255],
             [['id'],'integer']
         ];

@@ -4,7 +4,7 @@ namespace app\models\Forms\Manage\Users;
 
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Users\UserType;
-use app\models\Forms\MultiForm;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
  *
  * @author kotov
  */
-class UserManageForm extends MultiForm
+class UserManageForm extends ActiveRecord
 {
     public $fio;
     public $login;
@@ -21,7 +21,8 @@ class UserManageForm extends MultiForm
     public $email;
     public $userType;
     public $company;
-    public $genre;
+    public $gender;
+    public $position;
     public $language;
     public $userId;
 
@@ -29,7 +30,9 @@ class UserManageForm extends MultiForm
     {
         return [
             ['email','email'],
-            [['userType','company', 'genre','language'],'integer'],
+            [['position'],'string'],
+            [['position'],'default' ,'value' => ''],
+            [['userType','company', 'gender','language'],'integer'],
             [['phone','fio'], 'string', 'max' => 255],
             [['birthday'], 'safe'],
         ];

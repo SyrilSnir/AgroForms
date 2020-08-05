@@ -42,8 +42,8 @@ $action = $update ? Url::to(['/manage/users/update', 'id' => $model->userId ]) :
         <?= $form->field($model, 'userType')->dropDownList($model->typeList()) ?>             
     <?php endif; ?>    
                             
-    <?= $form->field($model->member, 'position')->textInput() ?>                              
-    <?= $form->field($model, 'genre')->dropDownList([
+    <?= $form->field($model, 'position')->textInput() ?>                              
+    <?= $form->field($model, 'gender')->dropDownList([
         0 => 'Не задано',
         1 => 'Мужской',
         2 => 'Женский'
@@ -54,7 +54,7 @@ $action = $update ? Url::to(['/manage/users/update', 'id' => $model->userId ]) :
             'value' => $model->birthday,
             'removeButton' => false,
             'pickerIcon' => false,
-           'pluginOptions' => [
+            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'
            ]
@@ -69,10 +69,7 @@ $action = $update ? Url::to(['/manage/users/update', 'id' => $model->userId ]) :
                             <br>
     <?= $form->field($model, 'company')->widget(Select2::class,[
         'data' => $model->organizationList()
-            ]) ?>                               
-    <?= $form->field($model->member, 'activities')->hiddenInput()->label(false) ?>                     
-    <?= $form->field($model->member, 'proposalSignaturePost')->textInput() ?>                     
-    <?= $form->field($model->member, 'proposalSignatureName')->textInput() ?>                     
+            ]) ?>                                
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>

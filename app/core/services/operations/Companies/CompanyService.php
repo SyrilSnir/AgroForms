@@ -83,7 +83,9 @@ class CompanyService
                 $form->contacts->managerFio, 
                 $form->contacts->managerPhone, 
                 $form->contacts->managerEmail,
-                $form->contacts->managerFax
+                $form->contacts->managerFax,
+                $form->contacts->proposalSignaturePost,
+                $form->contacts->proposalSignatureName
                 );
         $bankDetail = BankDetail::create(
                 $form->bankDetails->rsSchet, 
@@ -141,7 +143,9 @@ class CompanyService
                 $form->contacts->managerFio, 
                 $form->contacts->managerPhone, 
                 $form->contacts->managerEmail,
-                $form->contacts->managerFax
+                $form->contacts->managerFax,
+                $form->contacts->proposalSignaturePost,
+                $form->contacts->proposalSignatureName
                 );
         $bankDetail->edit(
                 $form->bankDetails->rsSchet, 

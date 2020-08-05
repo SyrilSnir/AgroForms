@@ -21,10 +21,11 @@ use yii\db\ActiveRecord;
  * @property string|null $password_reset_token
  * @property int $user_type_id Тип пользователя
  * @property int $company_id Id компании
- * @property int $genre Пол
+ * @property int $gender Пол
  * @property int $language Язык
  * @property UserProfileInterface $profile Профиль
  * @property string|null $fio ФИО
+ * @property string|null $position ФИО
  * @property string|null $email Электронная почта
  * @property string|null $phone Номер телефона
  * @property string|null $birthday Дата рождения
@@ -52,6 +53,20 @@ class User extends ActiveRecord
         return '{{%users}}';
     }
     
+    /**
+     * 
+     * @param string $login
+     * @param int $userTypeId
+     * @param int $companyId
+     * @param string $fio
+     * @param string $email
+     * @param string $phone
+     * @param string $birthday
+     * @param string $position
+     * @param int $gender
+     * @param int $language
+     * @return \self
+     */
     public static function create(
             string $login,
             int $userTypeId,
@@ -60,7 +75,8 @@ class User extends ActiveRecord
             string $email,
             string $phone,
             string $birthday,
-            int $genre,
+            string $position,
+            int $gender,
             int $language
             ):self
     {
@@ -75,11 +91,25 @@ class User extends ActiveRecord
             $user->birthday = DateTime::createFromFormat('d.m.Y',$birthday)->format('Y-m-d');
         }
         $user->language = $language;
-        $user->genre = $genre;
+        $user->gender = $gender;
+        $user->position = $position;
         $user->active = self::STATUS_NEW;
         return $user;  
     }
-    
+     
+    /**
+     * 
+     * @param string $login
+     * @param int $userTypeId
+     * @param int $companyId
+     * @param string $fio
+     * @param string $email
+     * @param string $phone
+     * @param string $birthday
+     * @param string $position
+     * @param int $gender
+     * @param int $language
+     */
     public function edit(
             string $login,
             int $userTypeId,
@@ -88,7 +118,8 @@ class User extends ActiveRecord
             string $email,
             string $phone,
             string $birthday,
-            int $genre,
+            string $position,
+            int $gender,
             int $language            
             ) 
     {
@@ -102,8 +133,9 @@ class User extends ActiveRecord
             $this->birthday = DateTime::createFromFormat('d.m.Y',$birthday)->format('Y-m-d');
         }
         $this->language = $language;
-        $this->genre = $genre;
-        $this->active = self::STATUS_NEW;        
+        $this->gender = $gender;
+        $this->active = self::STATUS_NEW;    
+        $this->position = $position;
     }
 
      public function setPassword($password) :self
@@ -146,7 +178,7 @@ class User extends ActiveRecord
     {
         switch ($this->user_type_id) {
             case UserType::MEMBER_USER_ID:
-                $profile = MemberProfileReadRepository::findById($this->id);
+                $profile = new Profile\MemberProfile();
                 break;
             default :
                 $profile = new DefaultProfile();

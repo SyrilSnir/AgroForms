@@ -14,6 +14,9 @@ use yii\web\View;
 $this->title = $profile->name;
 ?>
 <div class="category-view full-view">
+    <p>
+    <?= Html::a(Yii::t('app','Change'), ['update-company'], ['class' => 'btn btn-primary']) ?>
+    </p>    
 <div class="card">
   <div class="card-header">
     <h3 class="card-title"><?php echo $this->title ?></h3>
@@ -24,12 +27,12 @@ $this->title = $profile->name;
                 'attributes' => [
                     [
                         'group'=>true,
-                        'label'=>'О компании',
+                        'label'=> Yii::t('app/company', 'About company'),
                         'rowOptions'=>['class'=>'table-info']
                     ],
                     'id',
-                    'name:text:Название',
-                    'full_name:text:Полное наименование',
+                    'name:text:'.Yii::t('app/company','Name'),
+                    'full_name:text:' . Yii::t('app/company','Full name'),
                     'inn:text:ИНН',
                     'kpp:text:КПП',
                     'phone:text:Телефон',
@@ -125,6 +128,19 @@ $this->title = $profile->name;
                         'value' => $profile->contacts->manager_email,
                         'label' => 'Email менеджера'
                     ], 
+                    [
+                        'group'=>true,
+                        'label'=>'Подписант (используется в заявках)',
+                        'rowOptions'=>['class'=>'table-success']
+                    ], 
+                    [
+                        'value' => $profile->contacts->proposal_signature_name,
+                        'label' => 'ФИО подписанта'
+                    ],                    
+                    [
+                        'value' => $profile->contacts->proposal_signature_post,
+                        'label' => 'Должность подписанта'
+                    ],                     
                     [
                         'group'=>true,
                         'label'=>'Банковские реквизиты',

@@ -19,6 +19,8 @@ use app\models\Forms\MultiForm;
 class CompanyForm extends MultiForm
 {
     
+    const SCENARIO_PROFILE_UPDATE = 'profileUpdate';
+    
     /** @var string */
     public $name;    
     /** @var string */
@@ -33,14 +35,34 @@ class CompanyForm extends MultiForm
     public $fax;
     /** @var string */    
     public $site;       
-
+    
     public function transactions()
     {
         return [
             self::SCENARIO_DEFAULT => self::OP_ALL,
         ];
+    }    
+    
+    public function setScenario($value) 
+    {
+        if ($value == self::SCENARIO_PROFILE_UPDATE) {
+            $this->legalAddressForm->setScenario($value);
+            $this->postalAddressForm->setScenario($value);
+            $this->bankDetails->setScenario($value);
+            $this->contacts->setScenario($value);
+        }
+      //  parent::setScenario($value);
     }
     
+    public function scenarios():array
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_PROFILE_UPDATE] = $scenarios[self::SCENARIO_DEFAULT];
+        return $scenarios;
+    }
+
+
+
     public function __construct(Company $model = null, $config = array())
     {
         if ($model) {

@@ -12,6 +12,8 @@ use yii\base\Model;
  */
 class ContactForm extends Model
 {
+    const SCENARIO_PROFILE_UPDATE = 'profileUpdate';
+    
     /** @var int */    
     public $id;    
     /** @var string */       
@@ -32,6 +34,10 @@ class ContactForm extends Model
     public $managerEmail;
     /** @var string */       
     public $managerFax;
+    /** @var string */     
+     public $proposalSignaturePost;
+    /** @var string */              
+     public $proposalSignatureName;   
     
     public function __construct(Contact $model = null, $config = array())
     {
@@ -44,8 +50,11 @@ class ContactForm extends Model
             $this->managerEmail = $model->manager_email;
             $this->managerFax = $model->manager_fax;
             $this->managerFio = $model->manager_fio;
-            $this->managerPhone = $model->manager_phone;
+            $this->managerPhone = $model->manager_phone;                        
             $this->managerPosition = $model->manager_position;
+            
+            $this->proposalSignatureName = $model->proposal_signature_name;
+            $this->proposalSignaturePost = $model->proposal_signature_post;
             
             $this->id = $model->id;
         }
@@ -58,10 +67,12 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-         //   [['chiefPosition', 'chiefFio', 'chiefPhone', 'chiefEmail', 'managerPosition', 'managerFio', 'managerPhone'],'safe'],
-            [['managerEmail'], 'required'],
-            [['chiefPosition', 'chiefFio', 'chiefPhone', 'chiefEmail', 'managerPosition', 'managerFio', 'managerPhone', 'managerFax', 'managerEmail'], 'string', 'max' => 255],
-            [['id'],'integer']            
+                   [['managerEmail'], 'required'],
+                   [['proposalSignatureName','proposalSignaturePost'],'required', 'on' => [self::SCENARIO_PROFILE_UPDATE]
+                ],
+                   [['managerFax'], 'default','value' => ''],
+                   [['chiefPosition', 'chiefFio', 'chiefPhone', 'chiefEmail', 'managerPosition', 'managerFio', 'managerPhone', 'managerFax', 'managerEmail','proposalSignatureName','proposalSignaturePost'], 'string', 'max' => 255],
+                   [['id'],'integer']            
         ];
     }
 
@@ -81,6 +92,8 @@ class ContactForm extends Model
             'managerPhone' => 'Телефон менеджера',
             'managerFax' => 'Факс менеджера',
             'managerEmail' => 'Email менеджера',
+            'proposalSignaturePost' => 'Должность подписанта',
+            'proposalSignatureName' => 'ФИО подписанта',
         ];
     }    
 }
