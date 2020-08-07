@@ -36,6 +36,13 @@ class ElementType extends ActiveRecord
         self::ELEMENT_RADIO_BUTTON
     ];
     
+    const HAS_ENUM_VALUES = [
+        self::ELEMENT_SELECT,
+        self::ELEMENT_SELECT_MULTIPLE,
+        self::ELEMENT_RADIO_BUTTON,
+        self::ELEMET_ADDITIONAL_EQUIPMENT
+    ];
+    
     const HTML_BLOCKS = [
         self::ELEMENT_INFORMATION,
         self::ELEMENT_INFORMATION_IMPORTANT
