@@ -6,7 +6,7 @@ use yii\gii\Module as GiiModule;
 use yii\swiftmailer\Mailer;
 
 return [
-    'bootstrap' => [SetupApplication::class, 'log','debug','gii'],
+    'bootstrap' => [SetupApplication::class, 'log','debug','gii','languagepicker'],
     'modules' => [
         'gii' => [
             'class' => GiiModule::class,

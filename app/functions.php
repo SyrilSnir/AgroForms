@@ -34,3 +34,16 @@ function f($number)
     return Yii::$app->formatter->asInteger($number);
 }
 
+/**
+ * 
+ * @param string $text Текст для перевода
+ * @param string $section Раздел, например ('app\messages')
+ */
+function t(string $text, string $section = null)
+{
+    if ($section === null) {
+        $section = 'app';
+    }
+    return Yii::t($section,$text);
+}
+

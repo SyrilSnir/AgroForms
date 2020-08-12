@@ -27,7 +27,8 @@
         "symfony/property-access": "^4.4",
         "kartik-v/yii2-detail-view": "^1.8",
         "kartik-v/yii2-mpdf": "^1.0",
-        "2amigos/yii2-multi-select-widget": "^1.0"
+        "2amigos/yii2-multi-select-widget": "^1.0",
+        "lajax/yii2-language-picker": "^1.2"
     },
     "autoload": {
         "psr-4": {

@@ -56,6 +56,11 @@ return [
                     ],
                 ],
             ],
+        ],  
+        'languagepicker' => [
+            'class' => 'lajax\languagepicker\Component',
+            // List of available languages (icons and text)
+            'languages' => ['en' => 'English', 'ru-RU' => 'Russian']
         ],        
         'formatter' => [
             'locale' => 'ru-RU',

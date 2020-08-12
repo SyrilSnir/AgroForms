@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b958347882d67ace408eaabf27dde82",
+    "content-hash": "4b5b21b9d72eb0f714b2d7abc0c1cf94",
     "packages": [
         {
             "name": "2amigos/yii2-multi-select-widget",
@@ -1395,6 +1395,54 @@
                 "yii2"
             ],
             "time": "2019-06-22T13:36:08+00:00"
+        },
+        {
+            "name": "lajax/yii2-language-picker",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lajax/yii2-language-picker.git",
+                "reference": "350948b2ce866a6bca30b701922e6b97efad8f1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lajax/yii2-language-picker/zipball/350948b2ce866a6bca30b701922e6b97efad8f1f",
+                "reference": "350948b2ce866a6bca30b701922e6b97efad8f1f",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.11"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "lajax\\languagepicker\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Lajos Molnar",
+                    "email": "lajax.m@gmail.com"
+                }
+            ],
+            "description": "Yii2 Language Picker Widget",
+            "keywords": [
+                "extension",
+                "languagepicker",
+                "multilanguage",
+                "sample",
+                "translate",
+                "widget",
+                "yii2"
+            ],
+            "time": "2018-03-25T10:14:10+00:00"
         },
         {
             "name": "masterexploder/phpthumb",
