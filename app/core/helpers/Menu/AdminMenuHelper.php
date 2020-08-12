@@ -29,13 +29,14 @@ class AdminMenuHelper implements MenuHelperInterface
 
                             ]
                         ],
+                        ['label' => 'Управление выставками', 'icon' => 'truck', 'url' => ['/manage/lists/exhibitions'],],                        
                         [
                             'label' => 'Управление заявкими',
                             'icon' => 'share',
                             'items' => [
                                 ['label' => 'Список заявок', 'icon' => 'tasks', 'url' => ['/manage/lists/requests'],],
                             ]
-                        ],                        
+                        ],                         
                         [
                             'label' => 'Управление формами',
                             'icon' => 'share',
@@ -76,7 +77,8 @@ class AdminMenuHelper implements MenuHelperInterface
                                         ['label' => 'Доп. оборудование', 'icon' => 'gift', 'url' => ['/manage/lists/equipments'],],
                                         ['label' => 'Единицы измерения', 'icon' => 'thermometer', 'url' => ['/manage/lists/units'],],
                                     ]
-                                ],                               
+                                ], 
+                                ['label' => 'Справочник валют', 'icon' => 'money', 'url' => ['/manage/lists/valutes'],],
                             ],
                         ],
                         [

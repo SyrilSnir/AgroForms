@@ -44,6 +44,7 @@ $this->title = $model->name;
                     'description:raw:Описание',
                     'formType.name:text:Тип формы',
                     'order:text:Порядковый номер',
+                    'valute.name:text:Валюта',
                     
                 ],
             ]); ?>

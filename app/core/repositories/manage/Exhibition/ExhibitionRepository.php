@@ -1,27 +1,27 @@
 <?php
 
-namespace app\core\repositories\manage\Nomenclature;
+namespace app\core\repositories\manage\Exhibition;
 
 use app\core\repositories\exceptions\NotFoundException;
 use app\core\repositories\manage\DataManipulationTrait;
 use app\core\repositories\manage\RepositoryInterface;
-use app\models\ActiveRecord\Nomenclature\EquipmentGroup;
+use app\models\ActiveRecord\Exhibition\Exhibition;
 use yii\db\ActiveRecord;
 
 /**
- * Description of EquipmentGroupRepository
+ * Description of ExhibitionRepository
  *
  * @author kotov
  */
-class EquipmentGroupRepository implements RepositoryInterface
+class ExhibitionRepository implements RepositoryInterface
 {
     use DataManipulationTrait;
     
     
     public function get(int $id): ActiveRecord
     {
-        if (!$model = EquipmentGroup::findOne($id)) {
-            throw new NotFoundException('Категория не найдена');
+        if (!$model = Exhibition::findOne($id)) {
+            throw new NotFoundException('Выставка не найдена');
         }
         return $model;
     }

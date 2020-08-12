@@ -16,15 +16,23 @@ class FormService
 {
     /**
      *
+     * @var FormExhibitionService 
+     */
+    protected $formExhibitionService;
+    /**
+     *
      * @var FormRepository
      */
     protected $forms;
     
     public function __construct(
-            FormRepository $repository
+            FormRepository $repository,
+            FormExhibitionService $formExhibitionService
             )
     {
         $this->forms = $repository;
+        $this->formExhibitionService = $formExhibitionService;
+        
     }
     
     public function create(FormsForm $form):Form
@@ -41,9 +49,11 @@ class FormService
                 $form->order, 
                 $form->basePrice,
                 $form->hasFile,
+                $form->valute,
                 Yii::$app->user->getId()
                 );
         $this->forms->save($model);
+        $this->postProcess($model, $form);
         return $model;
     }
     
@@ -62,9 +72,16 @@ class FormService
                 $form->formType, 
                 $form->order,           
                 $form->basePrice,
-                $form->hasFile
+                $form->hasFile,
+                $form->valute
                 );
-        $this->forms->save($model);        
+        $this->forms->save($model);  
+        $this->postProcess($model, $form);
+    }
+    
+    private function postProcess(Form $model,FormsForm $form)
+    {
+        $this->formExhibitionService->setExhibitions($model->id, $form->exhibitionsList);
     }
     
     

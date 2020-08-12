@@ -2,6 +2,8 @@
 
 namespace app\models\Forms\Manage\Forms;
 
+use app\core\traits\Lists\GetExhibitionsTrait;
+use app\core\traits\Lists\GetValutesListTrait;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use yii\base\Model;
@@ -22,14 +24,23 @@ class FormsForm extends Model
     public $order;
     public $basePrice;
     public $hasFile;
-
+    public $valute;
 
     public $nameEng;
     public $titleEng;
     public $descriptionEng;
     
+    /**
+     *
+     * @var array
+     */
+    public $exhibitionsList;
+    
+    use GetExhibitionsTrait, GetValutesListTrait;
 
-   public function __construct(Form $model = null, $config = array())
+
+
+    public function __construct(Form $model = null, $config = array())
    {
        if ($model) {
            $this->title = $model->title;
@@ -43,6 +54,8 @@ class FormsForm extends Model
            $this->titleEng = $model->title_eng;
            $this->descriptionEng = $model->description_eng;
            $this->hasFile = $model->has_file;
+           $this->exhibitionsList = $model->exhibitions;
+           $this->valute = $model->valute_id;
        }
        parent::__construct($config);
    }
@@ -54,10 +67,11 @@ class FormsForm extends Model
     {
         return [
             [['title', 'name', 'slug', 'formType'], 'required'],
-            [['order', 'formType','basePrice'],'integer'],
+            [['order', 'formType','basePrice','valute'],'integer'],
             [['hasFile'],'boolean'],
             [['order','basePrice'],'default','value' => 0],
             [['title', 'name', 'slug', 'description','titleEng', 'nameEng', 'descriptionEng'], 'string', 'max' => 255],
+            [['exhibitionsList'],'each', 'rule' => ['integer']],
         ];
     } 
     /**
@@ -76,7 +90,9 @@ class FormsForm extends Model
             'formType' => 'Тип формы',
             'order' => 'Порядковый номер',
             'basePrice' => 'Базовая стоимость',
-            'hasFile' => 'Доступно вложение файла'
+            'hasFile' => 'Доступно вложение файла',
+            'exhibitionsList' => 'Доступна для выставок',
+            'valute' => 'Валюта'
         ];
     }
     

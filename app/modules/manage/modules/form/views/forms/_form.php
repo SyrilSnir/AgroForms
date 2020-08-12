@@ -2,6 +2,7 @@
 
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\Forms\Manage\Forms\FormsForm;
+use dosamigos\multiselect\MultiSelectListBox;
 use kartik\switchinput\SwitchInput;
 use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
@@ -14,6 +15,7 @@ use yii\widgets\ActiveForm;
 /** @var ActiveForm $form */
 /** @var FormsForm $model */
 $dynamicFormId = FormType::DYNAMIC_ORDER_FORM;
+$exhibitions = $model->getExhibitionsList();
 ?>
 <section class="content">
     <div class="container-fluid">
@@ -66,6 +68,17 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
                     ]
     ]);
     ?>
+<?php if (!empty($exhibitions)):?>
+<?php  echo $form->field($model, 'exhibitionsList')->widget(MultiSelectListBox::className(),[
+    'data' => $exhibitions,
+    'options' => [
+        'multiple'=>"multiple"
+    ],
+    'clientOptions' => [
+    ]
+])  ?> 
+<?= $form->field($model, 'valute')->dropDownList($model->getValutesList()) ?>                        
+<?php endif; ?>                        
 <div class="form-group">
     <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
     <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>

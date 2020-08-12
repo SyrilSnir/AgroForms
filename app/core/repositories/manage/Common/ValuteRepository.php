@@ -1,27 +1,27 @@
 <?php
 
-namespace app\core\repositories\manage\Nomenclature;
+namespace app\core\repositories\manage\Common;
 
 use app\core\repositories\exceptions\NotFoundException;
 use app\core\repositories\manage\DataManipulationTrait;
 use app\core\repositories\manage\RepositoryInterface;
-use app\models\ActiveRecord\Nomenclature\EquipmentGroup;
+use app\models\ActiveRecord\Common\Valute;
 use yii\db\ActiveRecord;
 
 /**
- * Description of EquipmentGroupRepository
+ * Description of ValuteRepository
  *
  * @author kotov
  */
-class EquipmentGroupRepository implements RepositoryInterface
+class ValuteRepository implements RepositoryInterface
 {
     use DataManipulationTrait;
     
     
     public function get(int $id): ActiveRecord
     {
-        if (!$model = EquipmentGroup::findOne($id)) {
-            throw new NotFoundException('Категория не найдена');
+        if (!$model = Valute::findOne($id)) {
+            throw new NotFoundException('Валюта не найдена');
         }
         return $model;
     }

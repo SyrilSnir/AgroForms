@@ -2,6 +2,8 @@
 
 namespace app\models\ActiveRecord\Forms;
 
+use app\models\ActiveRecord\Common\Valute;
+use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\AddSlugTrait;
 use app\models\TimestampTrait;
 use yii\db\ActiveQuery;
@@ -25,10 +27,15 @@ use yii\db\ActiveRecord;
  * @property boolean $has_file Может содержать вложенный файл
  * @property int $base_price Базовая стоимость
  * @property int $form_type_id Id типа формы
+ * @property int $valute_id Id валюты
  * 
  * @property string $headerName Заголовок
  * 
  * @property FormType $formType Тип формы
+ * @property Valute $valute Валюта
+ * @property FormExhibitions[] $formExhibitions Выставки
+ * @property Exhibition[] $exhibitions Выставки
+ * 
  */
 class Form extends ActiveRecord
 {
@@ -42,7 +49,7 @@ class Form extends ActiveRecord
         return '{{%forms}}';
     }
     
-/**
+    /**
  * 
  * @param string $title
  * @param string $name
@@ -55,6 +62,7 @@ class Form extends ActiveRecord
  * @param int $order
  * @param int $basePrice
  * @param bool $hasFile
+ * @param int $valute
  * @param int $created
  * @return \self
  */
@@ -70,6 +78,7 @@ class Form extends ActiveRecord
             int $order,
             int $basePrice,
             bool $hasFile,
+            int $valute = Valute::RUB,
             int $created = null
             ):self
     {
@@ -86,6 +95,7 @@ class Form extends ActiveRecord
         $form->title_eng = $titleEng;
         $form->has_file = $hasFile;
         $form->description_eng = $descriptionEng;
+        $form->valute_id = $valute;
         
         return $form;
     }
@@ -103,6 +113,7 @@ class Form extends ActiveRecord
  * @param int $order
  * @param int $basePrice
  * @param bool $hasFile
+ * @param int $valute
  */
     public function edit(
             string $title,
@@ -115,7 +126,8 @@ class Form extends ActiveRecord
             int $formTypeId,
             int $order,
             int $basePrice,
-            bool $hasFile
+            bool $hasFile,
+            int $valute = Valute::RUB
             )
     {
         $this->name = $name;
@@ -129,6 +141,7 @@ class Form extends ActiveRecord
         $this->base_price = $basePrice;
         $this->order = $order;
         $this->has_file = $hasFile;
+        $this->valute_id = $valute;
     }
     
     public function getFormType() : ActiveQuery
@@ -140,4 +153,20 @@ class Form extends ActiveRecord
     {
         return $this->title . ' : ' . mb_convert_case($this->name, MB_CASE_UPPER);
     }
+    
+    public function getValute() : ActiveQuery
+    {
+        return $this->hasOne(Valute::class, ['id' => 'valute_id']);
+    }
+    
+    public function getFormExhibitions()
+    {
+        return $this->hasMany(FormExhibitions::class, ['forms_id' => 'id']);
+    }
+    
+    public function getExhibitions()
+    {
+        return $this->hasMany(Exhibition::class, ['id' => 'exhibitions_id'])->via('formExhibitions');
+    }
+    
 }

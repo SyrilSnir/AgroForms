@@ -4,6 +4,7 @@ namespace app\commands\controllers;
 
 use app\core\repositories\readModels\Forms\FieldGroupReadRepository;
 use app\core\traits\Db\QueryTrait;
+use app\models\ActiveRecord\Common\Valute;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\FieldGroup;
@@ -105,10 +106,12 @@ class AdminController extends Controller
     {
        // $this->addData(FormType::class, './../fixtures/form/forms.php');
         $prefix = Yii::$app->db->tablePrefix;
-        $sql = 'DELETE FROM '.$prefix.'element_type;'  .
+        $sql = 'DELETE FROM '.$prefix.'element_type;' .
+               'DELETE FROM '.$prefix.'valutes;' .
                'DELETE FROM '.$prefix.'form_types;';  
         $this->query($sql);
         $this->addData(ElementType::class, './../fixtures/directory/form-elements.php');
+        $this->addData(Valute::class, './../fixtures/directory/valutes.php');
         $this->addData(FormType::class, './../fixtures/directory/form-types.php');
         $defaultGroup = FieldGroupReadRepository::findById(0);
         if (!$defaultGroup) {

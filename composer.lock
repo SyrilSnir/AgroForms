@@ -4,8 +4,67 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f124b84cfc6820485d643a2bb97ad53f",
+    "content-hash": "8b958347882d67ace408eaabf27dde82",
     "packages": [
+        {
+            "name": "2amigos/yii2-multi-select-widget",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-multi-select-widget.git",
+                "reference": "e9ae0b23aa5a96230f26a37b121efc726b635ed1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-multi-select-widget/zipball/e9ae0b23aa5a96230f26a37b121efc726b635ed1",
+                "reference": "e9ae0b23aa5a96230f26a37b121efc726b635ed1",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap-multiselect": "0.9.*",
+                "bower-asset/multiselect": "0.9.*",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "~6.0",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\multiselect\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "2amigOS! Consulting Group",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Multiselect Bootstrap widget for Yii2.",
+            "homepage": "https://github.com/2amigos/yii2-multi-select-widget",
+            "keywords": [
+                "extension",
+                "multiselect",
+                "widget",
+                "yii"
+            ],
+            "time": "2017-12-10T12:35:01+00:00"
+        },
         {
             "name": "almasaeed2010/adminlte",
             "version": "v3.0.5",
@@ -44,6 +103,102 @@
                 "web"
             ],
             "time": "2020-05-19T20:41:11+00:00"
+        },
+        {
+            "name": "bower-asset/bootstrap",
+            "version": "v3.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twbs/bootstrap.git",
+                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/68b0d231a13201eb14acd3dc84e51543d16e5f7e",
+                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.9.1,<4.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "less/bootstrap.less",
+                    "dist/js/bootstrap.js"
+                ],
+                "bower-asset-ignore": [
+                    "/.*",
+                    "_config.yml",
+                    "CNAME",
+                    "composer.json",
+                    "CONTRIBUTING.md",
+                    "docs",
+                    "js/tests",
+                    "test-infra"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+            "keywords": [
+                "css",
+                "framework",
+                "front-end",
+                "js",
+                "less",
+                "mobile-first",
+                "responsive",
+                "web"
+            ],
+            "time": "2019-02-13T15:55:38+00:00"
+        },
+        {
+            "name": "bower-asset/bootstrap-multiselect",
+            "version": "v0.9.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/davidstutz/bootstrap-multiselect.git",
+                "reference": "4749da211e6d39644ef164cd709cfeae5ccba579"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/davidstutz/bootstrap-multiselect/zipball/4749da211e6d39644ef164cd709cfeae5ccba579",
+                "reference": "4749da211e6d39644ef164cd709cfeae5ccba579",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap": ">=2.3.2",
+                "bower-asset/jquery": ">=1.11.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./dist/js/bootstrap-multiselect.js",
+                    "./dist/css/bootstrap-multiselect.css",
+                    "./dist/less/bootstrap-multiselect.less"
+                ],
+                "bower-asset-ignore": [
+                    "docs/.*",
+                    "tests/.*",
+                    "*.html",
+                    "*.git*",
+                    "*.md",
+                    "*.png",
+                    "*.php"
+                ]
+            },
+            "description": "Twitter Bootstrap plugin to make selects user friendly.",
+            "keywords": [
+                "bootstrap",
+                "css",
+                "jquery",
+                "js",
+                "less",
+                "multiselect"
+            ],
+            "time": "2018-03-04T00:05:19+00:00"
         },
         {
             "name": "bower-asset/inputmask",
@@ -136,6 +291,37 @@
                 "library"
             ],
             "time": "2019-05-01T21:19:28+00:00"
+        },
+        {
+            "name": "bower-asset/multiselect",
+            "version": "0.9.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lou/multi-select.git",
+                "reference": "344dc6cfe0f9c3b3ee66e88bed7bfc7cc1adbb3a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lou/multi-select/zipball/344dc6cfe0f9c3b3ee66e88bed7bfc7cc1adbb3a",
+                "reference": "344dc6cfe0f9c3b3ee66e88bed7bfc7cc1adbb3a",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.7.1"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./css/multi-select.css",
+                    "./img/switch.png",
+                    "./js/jquery.multi-select.js"
+                ]
+            },
+            "license": [
+                "WTFPL"
+            ],
+            "description": "A user-friendlier drop-in replacement for the standard select with multiple attribute activated.",
+            "time": "2014-07-16T16:18:28+00:00"
         },
         {
             "name": "bower-asset/punycode",
@@ -2458,6 +2644,69 @@
                 "yii2"
             ],
             "time": "2020-05-02T11:11:31+00:00"
+        },
+        {
+            "name": "yiisoft/yii2-bootstrap",
+            "version": "2.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-bootstrap.git",
+                "reference": "073c9ab0a4eb71f2485d84c96a1967130300d8fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/073c9ab0a4eb71f2485d84c96a1967130300d8fc",
+                "reference": "073c9ab0a4eb71f2485d84c96a1967130300d8fc",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap": "3.4.* | 3.3.* | 3.2.* | 3.1.*",
+                "yiisoft/yii2": "~2.0.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "<7"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\bootstrap\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                },
+                {
+                    "name": "Alexander Makarov",
+                    "email": "sam@rmcreative.ru",
+                    "homepage": "http://rmcreative.ru/"
+                },
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "amigo.cobos@gmail.com"
+                },
+                {
+                    "name": "Qiang Xue",
+                    "email": "qiang.xue@gmail.com",
+                    "homepage": "http://www.yiiframework.com/"
+                }
+            ],
+            "description": "The Twitter Bootstrap extension for the Yii framework",
+            "keywords": [
+                "bootstrap",
+                "yii2"
+            ],
+            "time": "2019-04-23T13:18:43+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap4",
@@ -5632,5 +5881,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
