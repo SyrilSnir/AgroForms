@@ -15,10 +15,10 @@ use yii\widgets\DetailView;
 //dump($model->requestForm); die();
 $this->title = 'Заявка №' . $model->id;
 $attributes = [
-    'formType.name:text:Тип формы',
+    'formType.name:text:' . t('Form type', 'requests'),
     [
         'attribute' => 'status',
-        'label' => 'Статус',
+        'label' => t('Status'),
         'format' => 'raw',
         'value' => RequestStatusHelper::getStatusLabel($model->status)
     ]    
@@ -31,7 +31,7 @@ if (!empty($dopAttributes)) {
 ?>
 <div class="view">
     <p>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(t('Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
     <div class="card">
         <div class="card-header">

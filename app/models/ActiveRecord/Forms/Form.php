@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Forms;
 
+use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\ActiveRecord\Common\Valute;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\AddSlugTrait;
@@ -39,8 +40,7 @@ use yii\db\ActiveRecord;
  */
 class Form extends ActiveRecord
 {
-    use TimestampTrait;
-    use AddSlugTrait;
+    use TimestampTrait, AddSlugTrait, MultilangTrait;
     /**
      * {@inheritdoc}
      */
@@ -166,7 +166,7 @@ class Form extends ActiveRecord
     
     public function getExhibitions()
     {
-        return $this->hasMany(Exhibition::class, ['id' => 'exhibitions_id'])->via('formExhibitions');
-    }
-    
+        return $this->hasMany(Exhibition::class, ['id' => 'exhibitions_id'])
+                ->via('formExhibitions');
+    }       
 }

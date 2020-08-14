@@ -5,10 +5,12 @@
         </div>
         <div class="card-body">
             <template v-for="elem in elements">
-                <el :unitData="elem" v-if="!elem.isGroup" @modification="fieldsModificate"></el>
+                <el :unitData="elem" v-if="!elem.isGroup" @modification="fieldsModificate" :lang="language" :dic="dict"></el>
                 <group 
-                    :fields="elem.fields"                    
-                    :title="elem.name"
+                    :fields="elem.fields"
+                    :title="getFieldName(elem.name,elem.name_eng)"
+                    :lang="language"
+                    :dic="dict"
                     v-if="elem.isGroup"
                     @modification="fieldsModificate"
                 >
@@ -29,11 +31,15 @@
                     {{ addedFile }}</div>
             </div>
 
-            <computed v-if="isComputed" :total="totalPrice"></computed>
+            <computed 
+                v-if="isComputed" 
+                :total="totalPrice"
+                :dic="dict"
+            ></computed>
             <div class="card-footer">
-                <button type="button" @click="saveDraft" class="btn btn-primary">Сохранить черновик</button>
-                <button type="button" @click="formSubmit" class="btn btn-success">Отправить заявку</button>
-                <button type="button" @click="cancel" class="btn btn-secondary">Отмена</button>
+                <button type="button" @click="saveDraft" class="btn btn-primary">{{ dict.buttons.draft }}</button>
+                <button type="button" @click="formSubmit" class="btn btn-success">{{ dict.buttons.send }}</button>
+                <button type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.cancel }}</button>
             </div>
         </div>
     </div>
@@ -44,6 +50,7 @@ import Element from "./FormElements/Element"
 import Group from './FormElements/Group'
 import Computed from './FormElements/ComputedEl'
 import { eventBus } from './eventBus'
+import { languages } from '../lang'
 export default {
     components: {
         el: Element,
@@ -65,7 +72,11 @@ export default {
             basePrice: 0,
             totalPrice: 0,
             hasFile: false,
-            addedFile: false                
+            addedFile: false,
+            language: languages.russian,               
+            dict: {
+                buttons: {}
+            }
         }
     },
    beforeCreate: function() {
@@ -80,6 +91,8 @@ export default {
             this.totalPrice = this.basePrice;
             this.formId = response.data.formId;
             this.hasFile = response.data.hasFile;
+            this.language = response.data.language;
+            this.dict = response.data.dict;
             if (this.hasFile) {
                 this.addedFile = response.data.fileName;
             }
@@ -87,6 +100,12 @@ export default {
         })
   },
   methods: {
+        getFieldName(name,nameEng) {
+            if (this.language == languages.russian || !nameEng) {
+                return name;
+            }
+            return nameEng;
+        },
         fileLoad: function() {
             console.log('Файл загружен');
             this.formData.append('DynamicForm[loadedFile]', this.$refs.userFile.files[0]);

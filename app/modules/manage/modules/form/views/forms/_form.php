@@ -77,8 +77,9 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
     'clientOptions' => [
     ]
 ])  ?> 
+                        <?php endif; ?> 
 <?= $form->field($model, 'valute')->dropDownList($model->getValutesList()) ?>                        
-<?php endif; ?>                        
+                       
 <div class="form-group">
     <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
     <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>

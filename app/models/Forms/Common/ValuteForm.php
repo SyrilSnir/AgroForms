@@ -21,7 +21,7 @@ class ValuteForm extends Model
     {
         if ($model) {
             $this->name = $model->name;
-            $this->intName = $model->int_name;
+            $this->intName = $model->name_eng;
             $this->charCode = $model->char_code;
             $this->symbol = $model->symbol;
         }

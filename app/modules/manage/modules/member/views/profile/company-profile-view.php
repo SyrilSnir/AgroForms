@@ -15,7 +15,7 @@ $this->title = $profile->name;
 ?>
 <div class="category-view full-view">
     <p>
-    <?= Html::a(Yii::t('app','Change'), ['update-company'], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a(t('Change'), ['update-company'], ['class' => 'btn btn-primary']) ?>
     </p>    
 <div class="card">
   <div class="card-header">
@@ -30,137 +30,136 @@ $this->title = $profile->name;
                         'label'=> Yii::t('app/company', 'About company'),
                         'rowOptions'=>['class'=>'table-info']
                     ],
-                    'id',
                     'name:text:'.Yii::t('app/company','Name'),
                     'full_name:text:' . Yii::t('app/company','Full name'),
-                    'inn:text:ИНН',
-                    'kpp:text:КПП',
-                    'phone:text:Телефон',
-                    'fax:text:Факс',
-                    'site:text:Сайт',
+                    'inn:text:' . t('INN','company'),
+                    'kpp:text:' . t('KPP','company'),
+                    'phone:text:' . t('Phone','company'),
+                    'fax:text:' . t('Fax','company'),
+                    'site:text:' . t('Site','company'),
                     [
                         'group'=>true,
-                        'label'=>'Адрес',
+                        'label'=> t('Address','company'),
                         'rowOptions'=>['class'=>'table-info']
                     ],
                     [
                         'group'=>true,
-                        'label'=>'Юридический адрес',
+                        'label'=> t('Legal address','company'),
                         'rowOptions'=>['class'=>'table-success']
                     ],
                     [
                         'value' => $profile->legalAddress->index,
-                        'label' => 'Почтовый индекс'
+                        'label' => t('Zip code','company')
                     ],                  
                     [
                         'value' => $profile->legalAddress->adds,
-                        'label' => 'Адрес'
+                        'label' => t('Address','company')
                     ],
                     [
                         'value' => $profile->legalAddress->city->name,
-                        'label' => 'Город'                        
+                        'label' => t('City')                        
                     ],
                     [
                         'group'=>true,
-                        'label'=>'Почтовый адрес',
+                        'label'=> t('Mailing address','company'),
                         'rowOptions'=>['class'=>'table-success']
                     ],
                     [
                         'value' => $profile->postalAddress->index,
-                        'label' => 'Почтовый индекс'
+                        'label' => t('Zip code','company')
                     ],                  
                     [
                         'value' => $profile->postalAddress->adds,
-                        'label' => 'Адрес'
+                        'label' => t('Address','company')
                     ],
                     [
                         'value' => $profile->postalAddress->city->name,
-                        'label' => 'Город'                        
+                        'label' => t('City')                        
                     ],
                     [
                         'group'=>true,
-                        'label'=>'Контакты',
+                        'label'=> t('Contacts','company'),
                         'rowOptions'=>['class'=>'table-info']
                     ],
                     [
                         'group'=>true,
-                        'label'=>'Руководитель компании',
+                        'label'=> t('Head of company','company'),
                         'rowOptions'=>['class'=>'table-success']
                     ], 
                     [
                         'value' => $profile->contacts->chief_position,
-                        'label' => 'Дожность руководителя'
+                        'label' => t('Head position','company'),
                     ],                    
                     [
                         'value' => $profile->contacts->chief_fio,
-                        'label' => 'ФИО руководителя'
+                        'label' => t('Head full name','company'),
                     ],
                     [
                         'value' => $profile->contacts->chief_phone,
-                        'label' => 'Телефон руководителя'
+                        'label' => t('Head phone','company'),
                     ],                    
                     [
                         'value' => $profile->contacts->chief_email,
-                        'label' => 'Email руководителя'
+                        'label' => t('Head email','company'),
                     ], 
                     [
                         'group'=>true,
-                        'label'=>'Менеджер проекта',
+                        'label'=> t('Project manager','company'),
                         'rowOptions'=>['class'=>'table-success']
                     ], 
                     [
                         'value' => $profile->contacts->manager_position,
-                        'label' => 'Дожность менеджера'
+                        'label' => t('Manager\'s position','company'),
                     ],                    
                     [
                         'value' => $profile->contacts->manager_fio,
-                        'label' => 'ФИО менеджера'
+                        'label' => t('Manager\'s full name','company'),
                     ],
                     [
                         'value' => $profile->contacts->manager_phone,
-                        'label' => 'Телефон менеджера'
+                        'label' => t('Manager\'s phone','company'),
                     ],
                     [
                         'value' => $profile->contacts->manager_fax,
-                        'label' => 'Факс менеджера'
+                        'label' => t('Manager\'s fax','company'),
                     ],                    
                     [
                         'value' => $profile->contacts->manager_email,
-                        'label' => 'Email менеджера'
+                        'label' => t('Manager\'s email','company'),
                     ], 
                     [
                         'group'=>true,
-                        'label'=>'Подписант (используется в заявках)',
+                        'label'=> t('Signer (used in proposal)','company'),
                         'rowOptions'=>['class'=>'table-success']
                     ], 
                     [
                         'value' => $profile->contacts->proposal_signature_name,
-                        'label' => 'ФИО подписанта'
+                        'label' => t('Signer\'s full name','company'),
                     ],                    
                     [
                         'value' => $profile->contacts->proposal_signature_post,
-                        'label' => 'Должность подписанта'
+                        'label' => t('Signer\'s position','company'),
                     ],                     
                     [
                         'group'=>true,
-                        'label'=>'Банковские реквизиты',
+                        'label'=> t('Bank details','company'),
                         'rowOptions'=>['class'=>'table-info']
                     ],
                     [
                         'value' => $profile->bankDetails->rs_schet,
-                        'label' => 'Расчетный счет'
+                        'label' => t('Checking account','company'),
                     ],
                     [
                         'value' => $profile->bankDetails->ks_schet,
-                        'label' => 'Корреспондентскй счет'
+                        'label' => t('Correspondent account','company'),
                     ],
                     [
                         'value' => $profile->bankDetails->bik,
-                        'label' => 'БИК'
+                        'label' => t('BIC','company'),
                     ],
                     [
                         'value' => $profile->bankDetails->bank_info,
-                        'label' => 'Информация о банке'
+                        'label' => t('Bank information','company'),
                     ],                    
                 ],
             ]); ?>

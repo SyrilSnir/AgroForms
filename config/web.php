@@ -2,6 +2,7 @@
 
 use app\assets\YiiAsset;
 use app\core\manage\Auth\UserIdentity;
+use app\models\Data\Languages;
 use app\modules\manage\assets\AdminLteAsset;
 use app\modules\manage\Module as ManageModule;
 use kartik\bs4dropdown\DropdownAsset;
@@ -9,6 +10,7 @@ use kartik\dialog\DialogAsset;
 use kartik\dialog\DialogBootstrapAsset;
 use kartik\grid\GridViewAsset as GridViewAsset2;
 use kartik\grid\Module;
+use kartik\select2\Select2Asset;
 use yii\bootstrap4\BootstrapAsset;
 use yii\bootstrap4\BootstrapPluginAsset;
 use yii\caching\FileCache;
@@ -25,7 +27,7 @@ return [
     'basePath' => realpath(__DIR__ .'/../'),
     'version' => '0.0',
     'viewPath' => '@views',
-    'language' => 'ru-Ru',
+    'language' => Languages::RUSSIAN,
     'params' => require_once __DIR__ . '/params.php',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -46,13 +48,13 @@ return [
             'translations' => [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    //'basePath' => '@app/messages',
-                    //'sourceLanguage' => 'en-US',
                     'fileMap' => [
                         'app'       => 'app.php',
                         'app/error' => 'error.php',
                         'app/user' => 'user.php',
                         'app/company' => 'company.php',
+                        'app/menu' => 'menu.php',
+                        'app/requests' => 'requests.php',
                     ],
                 ],
             ],
@@ -60,10 +62,12 @@ return [
         'languagepicker' => [
             'class' => 'lajax\languagepicker\Component',
             // List of available languages (icons and text)
-            'languages' => ['en' => 'English', 'ru-RU' => 'Russian']
+            'languages' => [
+                Languages::ENGLISH => 'English', 
+                Languages::RUSSIAN => 'Russian']
         ],        
         'formatter' => [
-            'locale' => 'ru-RU',
+            'locale' => Languages::RUSSIAN,
             'thousandSeparator' => ' ',
             'defaultTimeZone' => 'Europe/Moscow',
             'timeZone' => 'Europe/Moscow',
@@ -82,7 +86,7 @@ return [
                         YiiAsset::class
                     ]
                 ],
-                kartik\select2\Select2Asset::class => [
+                Select2Asset::class => [
                     'depends' => [
                         YiiAsset::class
                     ]                    

@@ -109,20 +109,13 @@ class CompanyForm extends MultiForm
     {
         return [
             'id' => 'ID',
-            'name' => 'Название',
-            'fullName' => 'Полное наименование',
-            'inn' => 'ИНН',
-            'kpp' => 'КПП',
-            'phone' => 'Телефон',
-            'site' => 'Сайт',
-            'fax' => 'Факс',
-            'contacts_id' => 'Контакты',
-            'bank_details_id' => 'Банковские реквизиты',
-            'postal_address_id' => 'Почтовый адрес',
-            'legal_address_id' => 'Юридический адрес',
-            'image_path' => 'Путь к файлу с изображением',
-            'image_url' => 'Url файла с изображением',
-            'deleted' => 'Deleted',
+            'name' => t('Name','company'),
+            'fullName' => t('Full name','company'),
+            'inn' => t('INN','company'),
+            'kpp' => t('KPP','company'),
+            'phone' => t('Phone','company'),
+            'site' => t('Site','company'),
+            'fax' => t('Fax','company'),
         ];
     }
 

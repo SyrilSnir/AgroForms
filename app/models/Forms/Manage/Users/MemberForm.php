@@ -63,18 +63,18 @@ class MemberForm extends UserManageForm
     {
         return [
             'id' => 'ID',
-            'login' => 'Логин',
-            'userType' => 'Тип пользователя',
-            'company' => 'Компания',
-            'fio' => 'ФИО',
-            'email' => 'Email',
-            'phone' => 'Номер телефона',
-            'birthday' => 'Дата рождения',
-            'language' => 'Язык',
-            'description' => 'Description',
-            'active' => 'Active',
-            'gender' => 'Пол',
-            'position' => \Yii::t('app/user','Position')
+            'login' => t('Login','user'),
+            'userType' => t('User type', 'user'),
+            'company' => t('Company','user'),
+            'fio' => t('Full name','user'),
+            'email' => t('Email','user'),
+            'phone' => t('Phone number','user'),
+            'birthday' => t('Birthday','user'),
+            'language' => t('Language','user'),
+            'description' => t('Description'),
+            'active' => t('Status','user'),
+            'gender' => t('Gender', 'user'),
+            'position' => t('Position','user')
         ];
     }
 }

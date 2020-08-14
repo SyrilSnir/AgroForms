@@ -16,11 +16,18 @@ class FormTypeForm extends Model
     
     public $description;
     
+    public $nameEng;
+    
+    public $descriptionEng;
+    
     public function __construct(FormType $model = null, $config = array())
     {
         if ($model) {
             $this->name = $model->name;
             $this->description = $model->description;
+            $this->nameEng = $model->name_eng;
+            $this->descriptionEng = $model->description_eng;
+            
         }
         parent::__construct($config);
     }
@@ -29,14 +36,16 @@ class FormTypeForm extends Model
     {
         return [
             [['name'], 'required'],
-            [['description'], 'safe'],
+            [['description','nameEng','descriptionEng'], 'safe'],
         ];
     }
     
     public function attributeLabels(): array {
         return [
-            'name' => 'Тип формы',
-            'description' => 'Описание',
+            'name' => t('Form type', 'requests'),
+            'description' => t('Description'),
+            'nameEng' => 'Тип формы (ENG)',
+            'descriptionEng' => 'Описание (ENG)',            
         ];
     }    
 }

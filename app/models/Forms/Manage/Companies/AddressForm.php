@@ -76,11 +76,11 @@ abstract class AddressForm extends Model
     {
         return [
             'id' => 'ID',
-            'index' => 'Почтовый индекс',
-            'cityId' => 'Город',
-            'countryId' => 'Страна',
-            'regionId' => 'Регион',
-            'address' => 'Улица, дом',
+            'index' => t('Zip code','company'),
+            'cityId' => t('City'),
+            'countryId' => t('Country'),
+            'regionId' => t('Region'),
+            'address' => t('Residence','company'),
         ];
     } 
     

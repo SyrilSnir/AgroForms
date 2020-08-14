@@ -77,20 +77,32 @@ class DynamicFormController extends FormController
     {
         /** @var Form $form */
         $formId = Yii::$app->session->get('OPENED_FORM_ID');
-        $userId = Yii::$app->user->getId();
+        $userId = Yii::$app->user->getId();  
         $valuesList = [];
         if (!$formId) {
             throw new DomainException('Запрашиваемая форма не найдена на сервере');
         }
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
         $form = $this->formRepository->get($formId);
-        
         $baseConfiguration = [
           'title' => $form->headerName,
           'userId' => $userId,
           'formType' => $form->form_type_id,
           'formId' => $form->id,
-          'hasFile' => (bool) $form->has_file
+          'hasFile' => (bool) $form->has_file,
+          'language' => Yii::$app->language,
+          'dict' => [
+              'valute' => t($form->valute->char_code, 'requests'),
+              'total' => [
+                'totalMsg' => t('Total','requests'),
+                'totalHead' => t('Total amount payable','requests'),
+              ],
+              'buttons' => [
+                'send' => t('Send application','requests'),
+                'draft' => t('Save draft', 'requests'),
+                'cancel' => t('Cancel', 'requests'),
+              ]
+          ]
         ]; 
         
         if ($formChangeType === Request::FORM_UPDATE) {

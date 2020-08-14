@@ -32,6 +32,14 @@ use yii\widgets\ActiveForm;
     ],
         
 ]) ?>
+    <?= $form->field($model, 'nameEng')->textInput() ?>
+    <?= $form->field($model, 'descriptionEng')->widget(CKEditor::class,[
+    'editorOptions' => [
+        'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+        'inline' => false, //по умолчанию false
+    ],
+        
+]) ?>                            
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>

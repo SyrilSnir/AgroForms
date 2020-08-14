@@ -19,17 +19,18 @@ use yii\widgets\DetailView;
 $this->title = $profile->login;
 
 $attributes = [
-                    'id',
                     'login:text:'.Yii::t('app/user','Login'),
                     'fio:text:'.Yii::t('app/user','Full name'),
                     'email:text:E-mail',
-                    'phone:text:Номер телефона',
-                    'company.name:text:Компания',
-                    'position:text:'.Yii::t('app/user', 'Position'),
-                    'userType.name:text:Тип учетной записи',
+                    'phone:text:' . Yii::t('app/user', 'Phone'),
+                    'company.name:text:'. Yii::t('app/user', 'Company'),
+                    [
+                        'label' => Yii::t('app/user', 'Position'),
+                        'value' => $profile->position ? $profile->position : '(' . mb_convert_case(t('Undefined'), MB_CASE_LOWER) . ')'
+                    ],
                     [
                         'attribute' => 'active',
-                        'label' => 'Статус',
+                        'label' => Yii::t('app/user', 'Status'),
                         'format' => 'raw',
                         'value' => UserStatusHelper::getStatusLabel($profile->active)
                     ]

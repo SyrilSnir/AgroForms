@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 /** @var ActiveForm $form */
 /** @var CompanyForm $model */
 
-$this->title = 'Редактирование компании';
+$this->title = t('Edit company', 'company');
 if (!empty($model->getFirstErrors())):?>
 <div class="callout callout-info">
     <h5><i class="fas fa-info" style="color:red"></i> <?php echo Yii::t('app','Note')?>:</h5>
@@ -33,16 +33,16 @@ if (!empty($model->getFirstErrors())):?>
                             ]); ?>
                             <ul id="company-tabs" class="nav nav-tabs">
                               <li class="nav-item">
-                                <a class="nav-link active" href="#about" tabindex="1" data-toggle="tab">О компании</a>
+                                <a class="nav-link active" href="#about" tabindex="1" data-toggle="tab"><?php echo t('About company','company') ?></a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link" href="#address" tabindex="2" data-toggle="tab">Адрес</a>
+                                <a class="nav-link" href="#address" tabindex="2" data-toggle="tab"><?php echo t('Address','company') ?></a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link" href="#contacts" tabindex="3" data-toggle="tab">Контакты</a>
+                                <a class="nav-link" href="#contacts" tabindex="3" data-toggle="tab"><?php echo t('Contacts','company') ?></a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link" href="#bank" tabindex="4" data-toggle="tab">Банковские реквизиты</a>
+                                <a class="nav-link" href="#bank" tabindex="4" data-toggle="tab"><?php echo t('Bank details','company') ?></a>
                               </li>
                             </ul>
                             <div class="tab-content">
@@ -57,7 +57,7 @@ if (!empty($model->getFirstErrors())):?>
                                 </div>
                                 <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="card card-info">
-                                    <div class="card-header">Юридический адрес</div>
+                                        <div class="card-header"><?php echo t('Legal address','company') ?></div>
                                         <div class="card-body">
                                         <?= $form->field($model->legalAddressForm, 'index')->textInput() ?>
                                         <?= $form->field($model->legalAddressForm, 'address')->textInput() ?>
@@ -94,7 +94,7 @@ if (!empty($model->getFirstErrors())):?>
                                         </div>
                                     </div>
                                     <div class="card card-info">
-                                        <div class="card-header">Почтовый адрес</div>
+                                        <div class="card-header"><?php echo t('Mailing address','company')?></div>
                                         <div class="card-body">
                                             <?= $form->field($model->postalAddressForm, 'index')->textInput() ?>
                                             <?= $form->field($model->postalAddressForm, 'address')->textInput() ?>  
@@ -135,7 +135,7 @@ if (!empty($model->getFirstErrors())):?>
 
                                 <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="card card-info">
-                                        <div class="card-header">Руководитель компании</div>
+                                        <div class="card-header"><?php echo t('Head of company','company') ?></div>
                                         <div class="card-body">
                                             <?= $form->field($model->contacts, 'chiefPosition')->textInput() ?>
                                             <?= $form->field($model->contacts, 'chiefFio')->textInput() ?>
@@ -145,7 +145,7 @@ if (!empty($model->getFirstErrors())):?>
 
                                     </div>
                                     <div class="card card-info">
-                                        <div class="card-header">Менеджер проекта</div>
+                                        <div class="card-header"><?php echo t('Project manager','company') ?></div>
                                         <div class="card-body">
                                             <?= $form->field($model->contacts, 'managerPosition')->textInput() ?>
                                             <?= $form->field($model->contacts, 'managerFio')->textInput() ?>
@@ -156,7 +156,7 @@ if (!empty($model->getFirstErrors())):?>
 
                                     </div> 
                                     <div class="card card-info">
-                                        <div class="card-header">Подписант (используется в заявках)</div>
+                                        <div class="card-header"><?php echo t('Signer (used in proposal)','company') ?></div>
                                         <div class="card-body">
                                             <?= $form->field($model->contacts, 'proposalSignaturePost')->textInput() ?>
                                             <?= $form->field($model->contacts, 'proposalSignatureName')->textInput() ?>

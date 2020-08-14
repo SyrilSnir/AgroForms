@@ -25,7 +25,7 @@ $this->title = $model->name;
         <?= Html::dropDownList('requests-list', 0, FormsHelper::formsList(),[
             'class' => 'form-control'
         ]) ?>
-        <?= Html::button('Добавить заявку',[
+        <?= Html::button(t('Add application'),[
             'id' => 'get-form-request',
             'class' => 'btn btn-secondary'
             ]) ?>
@@ -59,7 +59,7 @@ $this->title = $model->name;
                         [
                             'attribute' => 'form',
                             'format' => 'text',
-                            'label' => 'Форма',
+                            'label' => t('Application form'),
                         //    'filter' => $searchModel->formTypesList(),
                             'value' => function (Request $model) {
                                 return $model->form->title;
@@ -67,14 +67,14 @@ $this->title = $model->name;
                         ],
                         [
                             'attribute' => 'status',
-                            'label' => 'Статус',
+                            'label' => t('Status'),
                             'format' => 'raw',
                             'filter' => RequestStatusHelper::statusList(),
                             'value' => function (Request $model) {
                                 return RequestStatusHelper::getStatusLabel($model->status);
                             }
                         ],
-                        'created_at:datetime:Дата создания',
+                        'created_at:datetime:'. t('Created at'),
                         
                         [
                             'class' => ActionColumn::class,

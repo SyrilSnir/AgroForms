@@ -81,7 +81,9 @@ class FormService
     
     private function postProcess(Form $model,FormsForm $form)
     {
-        $this->formExhibitionService->setExhibitions($model->id, $form->exhibitionsList);
+        if (is_array($form->exhibitionsList)) {
+            $this->formExhibitionService->setExhibitions($model->id, $form->exhibitionsList);
+        }
     }
     
     

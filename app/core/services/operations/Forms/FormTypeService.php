@@ -28,7 +28,12 @@ class FormTypeService
     
     public function create(FormTypeForm $form) 
     {
-        $formType = FormType::create($form->name, $form->description);
+        $formType = FormType::create(
+                $form->name, 
+                $form->description,
+                $form->nameEng,
+                $form->descriptionEng
+                );
         $this->formTypes->save($formType);
         return $formType;
     }
@@ -37,7 +42,12 @@ class FormTypeService
     {
         /** @var FormType $formType */
         $formType = $this->formTypes->get($id);
-        $formType->edit($form->name, $form->description);
+        $formType->edit(
+                $form->name, 
+                $form->description,
+                $form->nameEng,
+                $form->descriptionEng
+                );
         $this->formTypes->save($formType);        
     }
 }

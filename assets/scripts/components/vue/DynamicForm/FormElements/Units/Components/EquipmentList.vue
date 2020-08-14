@@ -9,22 +9,28 @@
                     <span class="input-group-text">{{ equipment.unit.short_name }}</span>
                 </div>
                 <div class="input-group-append">
-                    <span class="input-group-text">x<span class="price">{{ +equipment.price }}</span> РУБ</span>
+                    <span class="input-group-text">x<span class="price">{{ +equipment.price | separate }}</span> {{ dic.valute }}</span>
                 </div>
                 <div class="input-group-append">
-                    <span class="input-group-text">=<span class="price">{{ getTotalPrice(equipment,+inputs[equipment.id]) }}</span> РУБ</span>
+                    <span class="input-group-text">=<span class="price">{{ getTotalPrice(equipment,+inputs[equipment.id]) | separate }}</span> {{ dic.valute }}</span>
                 </div>                                   
             </div>          
         </div>
     </div>
 </template>
 <script>
-import axios from "axios"; 
+import axios from "axios"
+import { numberFormatMixin } from '../Mixins/numberFormatMixin'
+
 export default {
+    mixins: [
+        numberFormatMixin
+    ],
     props: [
         'id',
         'eventBus',
-        'val'
+        'val',
+        'dic'
     ],
     data() {
         return {

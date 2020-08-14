@@ -6,21 +6,21 @@ return [
     [
         'id' => Valute::RUB,
         'name' => 'Рубль',
-        'int_name' => 'Ruble',
+        'name_eng' => 'Ruble',
         'char_code' => 'RUB',
         'symbol' => 'руб.'
     ],
     [
         'id' => Valute::USD,
         'name' => 'Доллар США',
-        'int_name' => 'Dollar',
+        'name_eng' => 'Dollar',
         'char_code' => 'USD',
         'symbol' => '$'        
     ],
     [
         'id' => Valute::EUR,
         'name' => 'Евро',
-        'int_name' => 'Euro',
+        'name_eng' => 'Euro',
         'char_code' => 'EUR',
         'symbol' => '€'        
     ]

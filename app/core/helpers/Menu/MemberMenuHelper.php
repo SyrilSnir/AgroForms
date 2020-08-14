@@ -15,7 +15,7 @@ class MemberMenuHelper implements MenuHelperInterface
         return [
                     'items' => [
                         [
-                            'label' => 'Мои выставки',
+                            'label' => t('My exhibitions','menu'),
                             'icon' => 'folder',
                             'items' => [
                                 [
@@ -30,14 +30,14 @@ class MemberMenuHelper implements MenuHelperInterface
                             ]
                         ],
                         [
-                            'label' => 'Личные данные',
+                            'label' => t('Personal data','menu'),
                             'icon' => 'user',
                             'items' => [                                                                    
                                 [
-                                    'label' => 'Профиль пользователя', 'icon' => 'user-circle-o', 'url' => ['/manage/member/profile/user']
+                                    'label' => t('User profile','menu'), 'icon' => 'user-circle-o', 'url' => ['/manage/member/profile/user']
                                 ],
                                 [
-                                    'label' => 'Профиль организации', 'icon' => 'building', 'url' => ['/manage/member/profile/company'],
+                                    'label' => t('Company profile','menu'), 'icon' => 'building', 'url' => ['/manage/member/profile/company'],
                                 ],                                                                       
                             ]
                         ]                                        

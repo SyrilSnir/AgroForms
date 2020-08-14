@@ -2,7 +2,7 @@
 <div class="form-group">
         <div class="custom-control custom-checkbox">
         <input @change="change" class="custom-control-input" type="checkbox" :id="id" v-model="checked">
-        <label :for="id" class="custom-control-label">{{ params.name }}</label>
+        <label :for="id" class="custom-control-label">{{ titleLabel }}</label>
     </div>
     <div v-if="checked" class="input-block">
 <div class="input-group">
@@ -22,13 +22,13 @@
             v-if="isComputed"
             class="input-group-append"
         >
-            <span class="input-group-text">x<span class="price">{{ +unitPrice }}</span> РУБ</span>
+            <span class="input-group-text">x<span class="price">{{ +unitPrice }}</span> {{ dic.valute }}</span>
         </div>
         <div 
             v-if="isComputed"
             class="input-group-append"
             >
-            <span class="input-group-text">=<span class="price">{{ total }}</span> РУБ</span>
+            <span class="input-group-text">=<span class="price">{{ total | separate }}</span> {{ dic.valute }}</span>
         </div>                             
     </div>      
     <div v-if="hasErrorsForShow()" class="help-block">{{ currentError.message }}</div>        
@@ -36,10 +36,15 @@
 </div>
 </template>
 <script>
-    import { unitMixin } from './Mixins/unitMixin';
-    import { computedMixin } from './Mixins/computedMixin';    
-    import { eventBus } from '../../eventBus';
+    import { unitMixin } from './Mixins/unitMixin'
+    import { labelMixin } from './Mixins/labelMixin'
+    import { computedMixin } from './Mixins/computedMixin'
+    import { eventBus } from '../../eventBus'
+    import { numberFormatMixin } from './Mixins/numberFormatMixin'
     export default {
+        props: [
+            'dic','lang'
+        ],        
        data() {
            return {
             id: 'id' + this.params.id,
@@ -60,7 +65,7 @@
            }
        },
        mixins: [
-           unitMixin, computedMixin
+           unitMixin, computedMixin, labelMixin, numberFormatMixin
        ],
        computed: {
            total() {

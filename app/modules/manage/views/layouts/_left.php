@@ -21,7 +21,7 @@ use app\widgets\AdminLTE\Menu\MenuWidget;
         <div class="info">
             <a id="dropdownMenuLink" href="#" class="d-block" data-toggle="dropdown"><?php echo Yii::$app->user->getIdentity()->login ?></a>
 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item user-dropdown" href="/logout"><i class="fa fa-sign-out mr-2"></i>Выход</a>
+    <a class="dropdown-item user-dropdown" href="/logout"><i class="fa fa-sign-out mr-2"></i><?php echo t('Exit')?></a>
   </div>            
         </div>    
 

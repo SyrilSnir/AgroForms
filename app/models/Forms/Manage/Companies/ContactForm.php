@@ -83,17 +83,17 @@ class ContactForm extends Model
     {
         return [
             'id' => 'ID',
-            'chiefPosition' => 'Дожность руководителя',
-            'chiefFio' => 'ФИО руководителя',
-            'chiefPhone' => 'Телефон руководителя',
-            'chiefEmail' => 'Email руководителя',
-            'managerPosition' => 'Должность менеджера',
-            'managerFio' => 'ФИО менеджера',
-            'managerPhone' => 'Телефон менеджера',
-            'managerFax' => 'Факс менеджера',
-            'managerEmail' => 'Email менеджера',
-            'proposalSignaturePost' => 'Должность подписанта',
-            'proposalSignatureName' => 'ФИО подписанта',
+            'chiefPosition' => t('Head position','company'),
+            'chiefFio' => t('Head full name','company'),
+            'chiefPhone' => t('Head phone','company'),
+            'chiefEmail' => t('Head email','company'),
+            'managerPosition' => t('Manager\'s position','company'),
+            'managerFio' => t('Manager\'s full name','company'),
+            'managerPhone' => t('Manager\'s phone','company'),
+            'managerFax' =>  t('Manager\'s fax','company'),
+            'managerEmail' => t('Manager\'s enail','company'), 
+            'proposalSignaturePost' => t('Signer\'s position','company'),
+            'proposalSignatureName' => t('Signer\'s full name','company'),
         ];
     }    
 }

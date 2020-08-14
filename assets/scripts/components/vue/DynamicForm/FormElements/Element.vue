@@ -1,6 +1,6 @@
 <template>
     <div class="comp">
-        <component :is="currentElement" :params="unitData" @changeField="fieldChanged"></component>
+        <component :is="currentElement" :params="unitData" @changeField="fieldChanged" :lang="lang" :dic="dic"></component>
     </div>
 </template>
 <script>
@@ -17,7 +17,7 @@ import RadioBlock from './Units/RadioBlock';
 import EquipmentBlock from './Units/EquipmentBlock';
 export default {
     props: [
-        'unitData'
+        'unitData','lang','dic'
     ],
     components: {
         important: ImportantBlock,

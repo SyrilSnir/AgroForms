@@ -1,8 +1,8 @@
 <template>
 <div class="group-block">
-        <h3>{{ title}}</h3>
+        <h3>{{ title }}</h3>
         <template v-for="elem in fields">
-                <el :unitData="elem" @modification="fieldChanged"></el>
+                <el :lang="lang" :unitData="elem" @modification="fieldChanged" :dic="dic"></el>
         </template>
 </div>
 </template>
@@ -14,7 +14,9 @@ export default {
     },        
     props: [
         'fields',
-        'title'
+        'title',
+        'lang',
+        'dic'
     ],
     methods: {
         fieldChanged(field) {

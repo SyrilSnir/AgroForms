@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Nomenclature;
 
+use app\core\traits\ActiveRecord\MultilangTrait;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -23,6 +24,7 @@ use yii\db\ActiveRecord;
  */
 class Equipment extends ActiveRecord
 {
+    use MultilangTrait;
     /**
      * {@inheritdoc}
      */

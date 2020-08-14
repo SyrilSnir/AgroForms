@@ -53,7 +53,7 @@ class RequestDynamicFormViewService
                 }
  
             } else {
-                $value ='Value'; // $field['value'];
+                $value = $field['value'];
             }
             if ($value) {
                 $dopAttributes[] = [

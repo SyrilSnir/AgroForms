@@ -1,6 +1,6 @@
 <template>
 <div class="form-group">
-    <label :for="id">{{ params.name }}</label>
+    <label :for="id">{{ titleLabel }}</label>
     <div class="input-group">
 
         <input 
@@ -21,30 +21,35 @@
             v-if="isComputed"
             class="input-group-append"
             >
-            <span class="input-group-text">x<span class="price">{{ +unitPrice }}</span> РУБ</span>
+            <span class="input-group-text">x<span class="price">{{ +unitPrice }}</span> {{ dic.valute }}</span>
         </div>   
         <div 
             v-if="isComputed"
             class="input-group-append"
             >
-            <span class="input-group-text">=<span class="price">{{ total }}</span> РУБ</span>
+            <span class="input-group-text">=<span class="price">{{ total | separate }}</span> {{ dic.valute }}</span>
         </div>         
     </div>      
     <div v-if="hasErrorsForShow()" class="help-block">{{ currentError.message }}</div>        
 </div>
 </template>
 <script>
-    import { unitMixin } from './Mixins/unitMixin';
-    import { computedMixin } from './Mixins/computedMixin';
-    import { eventBus } from '../../eventBus';
+    import { unitMixin } from './Mixins/unitMixin'
+    import { labelMixin } from './Mixins/labelMixin'
+    import { computedMixin } from './Mixins/computedMixin'
+    import { eventBus } from '../../eventBus'
+    import { numberFormatMixin } from './Mixins/numberFormatMixin'
     export default {
+        props: [
+            'dic','lang'
+        ],    
        data() {
            return {
             id: 'id' + this.params.id,
             val: this.params.value,     
             currentError: null,
             showErrors : false,
-            valid : true,
+            valid : true,            
           //  required : false,
             errors : {
                 required: {
@@ -56,7 +61,7 @@
             }
            }
        },
-       computed: {
+       computed: {          
            total() {
                if (!this.isComputed) {
                    return 0;
@@ -67,7 +72,9 @@
        },
        mixins: [
            unitMixin,
-           computedMixin
+           computedMixin,
+           numberFormatMixin,
+           labelMixin
        ],
        created() {
            this.$emit('changeField',this.getData());
@@ -78,7 +85,7 @@
            });
        },
        methods: {
-            isNumber(val) {            
+           isNumber(val) {            
                 return /^\d+$/.test(val);
             },
            validate() {

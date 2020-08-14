@@ -32,7 +32,7 @@ if (Yii::$app->controller->action->id === 'login') {
     <head>
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><?= Html::encode($this->title) ?></title>
+        <title><?= Html::encode(t(Yii::$app->params['nameEng'])) ?></title>
 <?php echo Html::csrfMetaTags() ?>
 <?php $this->head() ?>
 <script src="https://kit.fontawesome.com/0846706cff.js" crossorigin="anonymous"></script>

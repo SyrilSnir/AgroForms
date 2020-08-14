@@ -1,16 +1,21 @@
 <template>
 <div class="proposal-summary">
-    <div class="proposal-summary__title">Общая стоимость по заявке:</div>
+    <div class="proposal-summary__title">{{ dic.total.totalHead }}:</div>
     <div class="proposal-summary__total">
-        Итого: {{ total }} руб
+        {{ dic.total.totalMsg }}: {{ total | separate }} {{ dic.valute }}
     </div>
     <hr>
 </div>
 </template>
 <script>
+import { numberFormatMixin } from './Units/Mixins/numberFormatMixin'
 export default {
+       mixins: [
+           numberFormatMixin
+       ],
     props: [
-        'total'
+        'total',
+        'dic'
     ],
     data() {
         return {

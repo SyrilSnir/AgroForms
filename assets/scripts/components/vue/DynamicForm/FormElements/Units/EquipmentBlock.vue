@@ -7,6 +7,7 @@
                     :val="values"
                     :id="category.id"
                     :eventBus="bus"
+                    :dic="dic"
                     @changeValue="setValue"                  
                 ></equipment-list>            
             </li>
@@ -16,12 +17,12 @@
                 <tr v-for="(val,key) in values">                    
                     <td>{{ val.code }}</td>
                     <td>{{ val.name }}</td>
-                    <td>{{ val.count }} {{ val.unit }}</td>
-                    <td>x{{ val.price }} USD</td>
-                    <td>={{ val.price * val.count }} USD</td>                    
+                    <td>{{ val.count | separate }} {{ val.unit }}</td>
+                    <td>x{{ val.price | separate }} {{ dic.valute }}</td>
+                    <td>={{ (val.price * val.count) | separate }} {{ dic.valute }}</td>                    
                 </tr>
                 <tr>
-                    <td colspan="5" class="total">Итого: {{ total }} USD</td>
+                    <td colspan="5" class="total">{{ dic.total.totalMsg }}: {{ total | separate }} {{ dic.valute }}</td>
                 </tr>
             </tbody>
         </table>
@@ -29,10 +30,14 @@
 
 </template>
 <script>
-import { unitMixin } from './Mixins/unitMixin';
-import axios from "axios";    
-import EquipmentList from "./Components/EquipmentList";
+import { unitMixin } from './Mixins/unitMixin'
+import { numberFormatMixin } from './Mixins/numberFormatMixin'
+import axios from "axios"
+import EquipmentList from "./Components/EquipmentList"
 export default {
+    props: [
+        'dic'
+    ],
     data() {   
         let val = {};
         if (this.params.value) {
@@ -56,7 +61,8 @@ export default {
         }
     },
     mixins: [
-        unitMixin
+        unitMixin,
+        numberFormatMixin
     ],
     components: {
         EquipmentList

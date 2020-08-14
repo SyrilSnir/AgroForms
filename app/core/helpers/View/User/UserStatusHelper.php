@@ -33,8 +33,8 @@ class UserStatusHelper extends StatusHelper
     public static function statusList(): array
     {
         return [
-            User::STATUS_NEW => 'Новый',
-            User::STATUS_ACTIVE => 'Активирован',
+            User::STATUS_NEW => t('New'),
+            User::STATUS_ACTIVE => t('Active'),
         ];
     }
 

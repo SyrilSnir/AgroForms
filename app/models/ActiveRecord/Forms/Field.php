@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Forms;
 
+use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\Forms\Manage\Forms\FieldParametersForm;
 use yii\db\ActiveRecord;
 
@@ -29,6 +30,7 @@ use yii\db\ActiveRecord;
 class Field extends ActiveRecord
 {
 
+    use MultilangTrait;
 /**
  * 
  * @param string $name

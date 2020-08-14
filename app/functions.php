@@ -39,11 +39,17 @@ function f($number)
  * @param string $text Текст для перевода
  * @param string $section Раздел, например ('app\messages')
  */
-function t(string $text, string $section = null)
+function t(string $text, $section = null)
 {
     if ($section === null) {
         $section = 'app';
+    } else {
+        $section = 'app/'.$section;
     }
-    return Yii::t($section,$text);
+    $result = Yii::t($section,$text);
+    if (!$result) {
+        return '';
+    }
+    return $result;
 }
 

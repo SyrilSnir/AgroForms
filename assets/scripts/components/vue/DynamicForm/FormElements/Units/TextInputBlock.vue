@@ -1,6 +1,6 @@
 <template>
 <div class="form-group" :class="{'required' : required }">
-    <label :for="id">{{ params.name }}</label>
+    <label :for="id">{{ titleLabel }}</label>
     <input 
         :id="id"
         type="text" 
@@ -12,11 +12,16 @@
     <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>        
 </div>
 </template>
-<script>
-    import { unitMixin } from './Mixins/unitMixin';
-    import { eventBus } from '../../eventBus';
-    export default {
-       data() {
+<script> 
+    import { unitMixin } from './Mixins/unitMixin'
+    import { labelMixin } from './Mixins/labelMixin'  
+    import { eventBus } from '../../eventBus'
+    export default {        
+        props: [
+            'lang'
+        ],
+
+       data() {           
            return {
             id: 'id' + this.params.id,
             val: this.params.value,
@@ -30,7 +35,8 @@
            }
        },      
        mixins: [
-           unitMixin
+           unitMixin,
+           labelMixin
        ],
        created() {
            this.$emit('changeField',this.getData());

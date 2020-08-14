@@ -2,7 +2,8 @@
 
 namespace app\models\ActiveRecord\Nomenclature;
 
-use Yii;
+use app\core\traits\ActiveRecord\MultilangTrait;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%equipment_groups}}".
@@ -13,8 +14,10 @@ use Yii;
  * @property string|null $name_eng Наименование (eng)
  * @property string|null $description_eng Описание (eng)
  */
-class EquipmentGroup extends \yii\db\ActiveRecord
+class EquipmentGroup extends ActiveRecord
 {
+    use MultilangTrait;
+    
     /**
      * {@inheritdoc}
      */

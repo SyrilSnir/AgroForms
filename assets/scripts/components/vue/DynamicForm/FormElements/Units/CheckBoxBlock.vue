@@ -2,13 +2,17 @@
 <div class="form-group">
     <div class="custom-control custom-checkbox">
         <input @change="change" class="custom-control-input" type="checkbox" :id="id" v-model="checked">
-        <label :for="id" class="custom-control-label">{{ params.name }}</label>
+        <label :for="id" class="custom-control-label">{{ titleLabel }}</label>
     </div>
 </div>
 </template>
 <script>
-    import { unitMixin } from './Mixins/unitMixin';
+    import { unitMixin } from './Mixins/unitMixin'
+    import { labelMixin } from './Mixins/labelMixin'
     export default {
+        props: [
+            'lang'
+        ],         
        data() {
            return {
                 id: 'id' + this.params.id,
@@ -17,7 +21,8 @@
            }
        },        
        mixins: [
-           unitMixin
+           unitMixin,
+           labelMixin
        ],
        created() {
            this.$emit('changeField',this.getData());

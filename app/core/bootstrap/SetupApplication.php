@@ -3,6 +3,7 @@
 namespace app\core\bootstrap;
 
 use app\core\helpers\Data\ConfigurationHelper;
+use app\core\manage\Auth\Rbac;
 use app\core\manage\Auth\RoleManager;
 use app\core\manage\Configuration\ConfigurationManager;
 use app\core\services\Mail\MailService;
@@ -19,6 +20,8 @@ use Yii;
 use yii\base\BootstrapInterface;
 use yii\rest\Serializer;
 use yii\swiftmailer\Mailer;
+use yii\web\Application;
+
 
 /**
  * Description of SetupApplication
@@ -29,6 +32,7 @@ class SetupApplication implements BootstrapInterface
 {
     public function bootstrap($app)
     {
+        /** @var Application $app */
         $container = Yii::$container;
         
         $container->set(Serializer::class, function ($container, $params, $args) {            
@@ -90,6 +94,16 @@ class SetupApplication implements BootstrapInterface
             $mailer->useFileTransport = true;
             return new MailService($mailer, 'test@test.ru','test');
         });
+        if ($app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU)) {
+            $cookies = $app->response->cookies;
+            $language = $cookies->getValue('language', 'ru-RU');
+            if ($language != 'ru-Ru') {
+                $cookies->add(new \yii\web\Cookie([
+                    'name' => 'language',
+                    'value' => 'ru-RU',
+                ]));
+            }
+        }
     }
 
 }

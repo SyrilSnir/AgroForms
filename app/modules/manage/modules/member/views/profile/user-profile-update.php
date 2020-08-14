@@ -31,13 +31,13 @@ $this->title = Yii::t('app/user','User edit');
                 <?= $form->field($model, 'phone')->textInput() ?>  
                 <?= $form->field($model, 'position')->textInput() ?>  
                 <?= $form->field($model, 'gender')->dropDownList([
-                    0 => 'Не задано',
-                    1 => 'Мужской',
-                    2 => 'Женский'
+                    0 => t('Undefined'),
+                    1 => t('Male','user'),
+                    2 => t('Female','user'),
                 ]) ?>                             
             <?php 
                 echo $form->field($model, 'birthday')->widget(DatePicker::class, [
-                   'options' => ['placeholder' => 'Дата рождения'],
+                   'options' => ['placeholder' => $model->attributeLabels()['birthday']],
                     'value' => $model->birthday,
                     'removeButton' => false,
                     'pickerIcon' => false,

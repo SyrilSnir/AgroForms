@@ -35,6 +35,8 @@ $this->title = $model->name;
                     'id',
                     'name:text:Тип формы',
                     'description:raw:Описание',
+                    'name_eng:text:Тип формы (ENG)',
+                    'description_eng:raw:Описание (ENG)',                    
                 ],
             ]); ?>
         </div>

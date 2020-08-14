@@ -57,10 +57,10 @@ class BankDetailForm extends Model
     {
         return [
             'id' => 'ID',
-            'rsSchet' => 'Расчетный счет',
-            'bankInfo' => 'Информация о банке',
-            'ksSchet' => 'Корреспондентскй счет',
-            'bik' => 'Бик',
+            'rsSchet' => t('Checking account','company'),
+            'bankInfo' => t('Bank information','company'),
+            'ksSchet' => t('Correspondent account','company'),
+            'bik' => t('BIC','company'),
         ];
     }    
 }
