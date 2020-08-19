@@ -47,5 +47,22 @@ class ExhibitionForm extends Model
             [['title', 'titleEng', 'description', 'descriptionEng'], 'string', 'max' => 255],
             [['titleEng', 'description', 'descriptionEng'], 'default', 'value' => ''],
         ];
+    }  
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'title' => 'Заголовок',
+            'titleEng' => 'Заголовок (ENG)',
+            'description' => 'Описание',
+            'descriptionEng' => 'Описание (ENG)',
+            'startDate' => 'Дата начала',
+            'endDate' => 'Дата окончания',
+            'status' => 'Статус',
+        ];
     }    
 }

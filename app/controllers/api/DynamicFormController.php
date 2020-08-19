@@ -92,6 +92,11 @@ class DynamicFormController extends FormController
           'hasFile' => (bool) $form->has_file,
           'language' => Yii::$app->language,
           'dict' => [
+              'fileAttach' => [
+                  'browse' => t('Browse'),
+                  'selectFile' => t('Select file'),
+                  'attachFile' => t('Attach file'),
+              ],
               'valute' => t($form->valute->char_code, 'requests'),
               'total' => [
                 'totalMsg' => t('Total','requests'),

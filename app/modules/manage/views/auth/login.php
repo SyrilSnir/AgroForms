@@ -1,12 +1,16 @@
 <?php
-use yii\helpers\Html;
+
+use app\models\Forms\User\Manage\LoginForm;
+use lajax\languagepicker\widgets\LanguagePicker;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
+/* @var $this View */
+/* @var $form ActiveForm */
+/* @var $model LoginForm */
 
-$this->title = 'Панель управления';
+$this->title = t('Control panel');
 
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
@@ -30,7 +34,7 @@ $fieldOptions2 = [
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Панель управления</b></a>
+        <a href="#"><b><?php echo t('Control panel') ?></b></a>
     </div>
     <?php if (Yii::$app->session->hasFlash('successActivate')): ?>
 <div class="alert alert-primary" role="alert">
@@ -40,7 +44,7 @@ $fieldOptions2 = [
     <!-- /.login-logo -->
     <div class="card">
     <div class="card-body login-card-body">
-        <p class="login-box-msg">Введите данные для автроризации</p>
+        <p class="login-box-msg"><?php echo t('Enter authorization data') ?></p>
         	
     <?php if( Yii::$app->session->hasFlash('error') ): ?>
     <div class="alert alert-error alert-dismissible" role="alert">
@@ -66,7 +70,11 @@ $fieldOptions2 = [
             </div>  */ ?>
             <!-- /.col -->
             <div class="col-xs-4">
-                <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= Html::submitButton(t('Enter'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= LanguagePicker::widget([
+    'skin' => LanguagePicker::SKIN_BUTTON,
+    'size' => LanguagePicker::SIZE_SMALL
+]); ?>
             </div>
             <!-- /.col -->
         </div>

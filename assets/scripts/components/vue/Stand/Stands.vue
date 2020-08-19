@@ -12,7 +12,7 @@
                         <img :src="stand.image_url" class="img-fluid d-block" :alt="stand.name">
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Изображение стенда является приблизительным, реальная конфигурация зависит от заказанной площади.</p>
+                        <p class="card-text">{{ dict.imageInfo }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                         </div>
                     </div>                              
@@ -20,18 +20,18 @@
                 <div class="desc" v-html="stand.description">
                 </div>
                 <div class="form-group row">                 
-                        <label for="inputSquare" class="col-sm-2 col-form-label">Площадь застройки</label>
+                        <label for="inputSquare" class="col-sm-2 col-form-label">{{ dict.standInfo.space }}:</label>
                         <div class="col-sm-10">    
                             <div class="input-group mb-3">         
                             <input v-model="standSquare" type="text" class="form-control" name="inputSquare" id="inputSquare">
                             <div class="input-group-append">
-                                <span class="input-group-text">м<sup>2</sup></span>
+                                <span class="input-group-text">{{ dict.standInfo.unit }}<sup>2</sup></span>
                             </div>
                             <div class="input-group-append">
-                                <span class="input-group-text">x<span class="price">{{stand.price}}</span> USD</span>
+                                <span class="input-group-text">x<span class="price">{{stand.price}}</span> {{ dict.valute }}</span>
                             </div>                         
                         </div>
-                        <div>Итого: {{calculatePrice(stand.price)['fullPrice'] | formatPrice }}</div>
+                        <div>{{ dict.total.totalMsg }}: {{calculatePrice(stand.price)['fullPrice'] | separate }} {{ dict.valute }}</div>
                     </div>
                 </div>                       
             </section>
@@ -40,6 +40,7 @@
 </div>
 </template>
 <script>
+import { numberFormatMixin } from "./Mixins/numberFormatMixin"
 export default {
     name: 'stand-list',
     data() {
@@ -49,12 +50,12 @@ export default {
         }
     },
     created() {
-      // this.selectedStand = +this.localSelectedStand;
-       console.log(this.selectedStand);
-       console.log(this.localSelectedStand);
         this.$emit('changeSelectedStand',this.selectedStand);
         this.bus.$on('update', this.update);
     },
+    mixins: [
+        numberFormatMixin
+    ],
     methods: {
         update(stand) {
             console.log('created');
@@ -80,6 +81,7 @@ export default {
     props: [
         'standElements',
         'standSquare',
+        'dict',
         'localSelectedStand',
         'bus'
     ]

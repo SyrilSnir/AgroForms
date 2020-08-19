@@ -23,8 +23,8 @@ class LoginForm extends Model
     public function attributeLabels(): array
     {
         return [
-            'login' => 'Логин',
-            'password' => 'Пароль'
+            'login' => t('Login','user'),
+            'password' => t('Password','user')
         ];
     }
 }

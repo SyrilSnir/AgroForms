@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование валюты';
+$this->title = 'Редактирование выставки';
 ?>
 
 <div class="update-form">

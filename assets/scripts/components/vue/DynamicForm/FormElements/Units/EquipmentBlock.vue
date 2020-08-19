@@ -2,12 +2,13 @@
     <div class="equipments-list__container">
         <ul class="additional-equipment__list">
             <li v-for="category in categories">
-                <span @click="expand(category.id)">{{ category.name }}</span>
+                <span @click="expand(category.id)">{{ getName(category.name, category.name_eng) }}</span>
                 <equipment-list 
                     :val="values"
                     :id="category.id"
                     :eventBus="bus"
                     :dic="dic"
+                    :lang="lang"
                     @changeValue="setValue"                  
                 ></equipment-list>            
             </li>
@@ -16,8 +17,8 @@
             <tbody>
                 <tr v-for="(val,key) in values">                    
                     <td>{{ val.code }}</td>
-                    <td>{{ val.name }}</td>
-                    <td>{{ val.count | separate }} {{ val.unit }}</td>
+                    <td>{{ getName(val.name,val.name_eng) }}</td>
+                    <td>{{ val.count | separate }} {{ getName(val.unit.short_name, val.unit.short_name_eng) }}</td>
                     <td>x{{ val.price | separate }} {{ dic.valute }}</td>
                     <td>={{ (val.price * val.count) | separate }} {{ dic.valute }}</td>                    
                 </tr>
@@ -32,11 +33,13 @@
 <script>
 import { unitMixin } from './Mixins/unitMixin'
 import { numberFormatMixin } from './Mixins/numberFormatMixin'
+import { textTranslateMixin } from './Mixins/textTranslateMixin'
 import axios from "axios"
 import EquipmentList from "./Components/EquipmentList"
 export default {
     props: [
-        'dic'
+        'dic',
+        'lang'
     ],
     data() {   
         let val = {};
@@ -47,7 +50,8 @@ export default {
             id: 'id' + this.params.id,
             categories: [],
             bus: new Vue(),// Шина событий
-            values: val
+            values: val,
+            isComputed: true,
         }
     },
     computed: {
@@ -62,7 +66,8 @@ export default {
     },
     mixins: [
         unitMixin,
-        numberFormatMixin
+        numberFormatMixin,
+        textTranslateMixin
     ],
     components: {
         EquipmentList
@@ -75,14 +80,8 @@ export default {
         setValue(equipment,count) {
             const index = +equipment.id;
             if (count > 0) {
-              /*  this.values.splice(index,1,{
-                    name: equipment.name,
-                    unit: equipment.unit.short_name,
-                    count: count,
-                    price: equipment.price
-                });*/
                 Vue.set(this.values, index, {
-                    name: equipment.name,
+                    name: this.getName(equipment.name, equipment.name_eng),
                     code: equipment.code,
                     unit: equipment.unit.short_name,
                     id: equipment.id,
@@ -94,6 +93,10 @@ export default {
             }
             this.$emit('changeField',this.getData());
         },
+           onChange(event) {
+               this.showErrors = false;
+                this.$emit('changeField',this.getData());
+           },       
         getData() {
             let data = {
                 id: this.id,
@@ -101,7 +104,11 @@ export default {
                     value: this.values
                 },
                 valid: true
-            }
+            };
+            if (this.isComputed) {
+                data.computed = true;
+                data.total = this.total;
+            }            
             return data;
         }
     },

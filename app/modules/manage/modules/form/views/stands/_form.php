@@ -38,7 +38,7 @@ if (!$model->imageFile) {
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput() ?>
-    <?= $form->field($model, 'price')->textInput() ?>
+
     <?= $form->field($model, 'description')->widget(CKEditor::className(),[
                 'editorOptions' => [
                     'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
@@ -47,6 +47,17 @@ if (!$model->imageFile) {
 
             ]); 
     ?> 
+    <?= $form->field($model, 'nameEng')->textInput() ?>
+
+    <?= $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
+                'editorOptions' => [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                    'inline' => false, //по умолчанию false
+                ],
+
+            ]); 
+    ?>                             
+    <?= $form->field($model, 'price')->textInput() ?>                            
     <?= $form->field($model, 'photo')->widget(FileInput::class, 
         [
             'options' => [

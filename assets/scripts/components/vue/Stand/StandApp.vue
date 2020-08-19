@@ -7,27 +7,28 @@
         :local-selected-stand="defaultSelectedStand"
         :standElements="stands"
         :bus="bus"
+        :dict="dict"
         :stand-square="square"
         @changeSquare="square = $event.square; standPrice = $event.fullPrice"
         @changeSelectedStand="standId = $event"
     >
     </stand-list>
     <div class="plan">
-        <h5 class="mt-4 mb-2">План стенда</h5>
+        <h5 class="mt-4 mb-2">{{ dict.standPlan.header }}</h5>
         <p class="d-flex flex-column">
-            <span>Загрузите план стенда. При необходимости можете скачать бланк.</span>
+            <span>{{ dict.standPlan.downloadInfo }}</span>
         </p>
         <a href="\upload\stand_blank_ru.pdf" class="btn btn-primary float-left" style="display:block;margin-right: 5px;">
-            <i class="fas fa-download"></i>Скачать бланк План стенда
+            <i class="fas fa-download"></i>{{ dict.standPlan.download }}
         </a>   
         <div class="form-group clr">
             <p class="d-flex flex-column">
-                <span>Если Вам необходимо больше места, начертите план на отдельном листе и приложите к этой заявке.</span>
+                <span>{{ dict.standPlan.attachInfo }}</span>
             </p>                         
             <div class="input-group">
                 <div class="custom-file">
                     <input @change="fileLoad" ref="userFile" type="file" class="custom-file-input" id="userFile">
-                    <label class="custom-file-label" data-browse="Обзор" for="userFile">Выбрать файл</label>
+                    <label class="custom-file-label" :data-browse="dict.fileAttach.browse" for="userFile">{{ dict.fileAttach.selectFile }}</label>
                 </div>
             </div>
                 <div v-if="addedFile" class="file__added">
@@ -38,27 +39,27 @@
     </div>  
     <div class="card card-info">
         <div class="card-header">
-            <h3 class="card-title">Желаемый размер стенда</h3>
+            <h3 class="card-title">{{ dict.standSize }}</h3>
         </div>
         <div class="card-body">
             <div class="form-group row">                 
-                    <label for="inputlength" class="col-sm-2 col-form-label">Длина</label>
+                    <label for="inputlength" class="col-sm-2 col-form-label">{{ dict.standInfo.length }}:</label>
                     <div class="col-sm-10">    
                         <div class="input-group mb-3">         
                         <input v-model="length" type="text" class="form-control" id="inputlength" name="inputlength">
                         <div class="input-group-append">
-                            <span class="input-group-text">м</span>
+                            <span class="input-group-text">{{ dict.standInfo.unit }}</span>
                         </div>                         
                     </div>
                 </div>
             </div>
             <div class="form-group row">  
-                <label for="inputWidth" class="col-sm-2 col-form-label">Ширина</label>
+                <label for="inputWidth" class="col-sm-2 col-form-label">{{ dict.standInfo.width }}:</label>
                 <div class="col-sm-10">
                     <div class="input-group mb-3">   
                         <input v-model="width" type="text" class="form-control" id="inputWidth" name="inputWidth">
                         <div class="input-group-append">
-                            <span class="input-group-text">м</span>
+                            <span class="input-group-text">{{ dict.standInfo.unit }}</span>
                         </div>
                     </div>
                 </div>
@@ -67,41 +68,42 @@
     </div>
     <div class="card card-info">
         <div class="card-header">
-            <h3 class="card-title">Фризовая надпись:</h3>
+            <h3 class="card-title">{{ dict.frize.frizeName }}:</h3>
         </div>
         <div class="card-body">
             <div class="form-group row">
-                <label for="frizeName" class="col-sm-2 col-form-label">Надпись</label>
+                <label for="frizeName" class="col-sm-2 col-form-label">{{ dict.frize.name }}:</label>
                 <div class="col-sm-10">    
                     <div class="input-group mb-3">         
                         <input v-model="frizeName" type="text" class="form-control" id="frizeName" name="frizeName">
                         <div class="input-group-append">
-                            <span class="input-group-text">{{paiedFrizeSigns}} зн.</span>
+                            <span class="input-group-text">{{paiedFrizeSigns}} {{ dict.frize.symbol }}</span>
                         </div>
                         <div class="input-group-append">
-                            <span class="input-group-text">x {{frizeDigitPrice}} USD</span>
+                            <span class="input-group-text">x {{frizeDigitPrice}} {{ dict.valute }}</span>
                         </div>
                     </div>
-                    <div>Итого: {{frizePrice | formatPrice}}</div>
+                    <div>{{ dict.total.totalMsg }}: {{frizePrice | separate}} {{ dict.valute }}</div>
                 </div>                
             </div>
         </div>
     </div>
-    <h3 class="mt-4 mb-2">Общая стоимость по заявке:</h3>
+    <h3 class="mt-4 mb-2">{{ dict.total.totalHead }}:</h3>
     <div class="py-2 px-3 mt-4">
                 <h4 class="mb-0">
-                 {{fullPrice | formatPrice}}
+                 {{fullPrice | separate}} {{ dict.valute }}
                 </h4>
      </div>
      <div class="card-footer">
-                  <button type="button" @click="saveDraft" class="btn btn-primary">Сохранить черновик</button>
-                  <button type="button" @click="formSubmit" class="btn btn-success">Отправить заявку</button>
-                  <button type="button" @click="cancel" class="btn btn-secondary">Отмена</button>
+                <button type="button" @click="saveDraft" class="btn btn-primary">{{ dict.buttons.draft }}</button>
+                <button type="button" @click="formSubmit" class="btn btn-success">{{ dict.buttons.send }}</button>
+                <button type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.cancel }}</button>
                 </div>
 </div>
 </template>
 <script>
 import axios from "axios";
+import { numberFormatMixin } from "./Mixins/numberFormatMixin"
 import StandList from "./Stands";
 export default {
     data() {
@@ -123,6 +125,14 @@ export default {
             formData : new FormData(),
             addedFile: false,            
             stands: [],
+            dict: {
+                standPlan: {},
+                standInfo: {},
+                buttons: {},
+                frize: {},
+                total: {},
+                fileAttach: {}
+            },
             bus: new Vue()
         }
     },
@@ -141,6 +151,9 @@ export default {
     components: {
         StandList
     },
+    mixins: [
+        numberFormatMixin
+    ],
     methods: {
         fileLoad: function() {
             console.log('Файл загружен');
@@ -207,6 +220,7 @@ export default {
         this.userId = response.data.userId;
         this.update = response.data.update;
         this.addedFile = response.data.fileName;
+        this.dict = response.data.dict;
         if (Object.prototype.hasOwnProperty.call(response.data,'frizeName')) {
             this.frizeName = response.data.frizeName;
         }

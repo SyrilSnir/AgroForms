@@ -58,8 +58,6 @@ class StandController extends FormController
         $this->requestRepository = $requestRepository;
         $this->requestStandService = $requestStandService;
     }
-
-
     
     public function actionGetForm()
     {
@@ -72,6 +70,44 @@ class StandController extends FormController
           'stands' => $standsList,
           'userId' => $userId              
         ];
+        $baseConfiguration['dict'] = [
+            'imageInfo' => t('Approximate image of the stand','requests'),
+            'standInfo' => [
+                'space' => t('Space','requests'),  
+                'length' => t('Length','requests'),  
+                'width' => t('Width','requests'),
+                'unit' => t('m','requests')
+            ],
+            'valute' => t($stand->valute->char_code, 'requests'),
+            'fileAttach' => [
+                'browse' => t('Browse'),
+                'selectFile' => t('Select file'),
+                'attachFile' => t('Attach file'),
+            ],            
+            'total' => [
+              'totalMsg' => t('Total','requests'),
+              'totalHead' => t('Total amount payable','requests'),
+            ],            
+            'standSize' => t('Required stand size','requests'),
+            'standLayout' => t('Stand layout','requests'),
+            'frize' => [
+                'frizeName' => t('Fascia name','requests'),
+                'symbol'  => t('symb.','requests'),
+                'name' => t('Name','requests'),
+            ],
+            'standPlan' => [
+                'header' => t('Stand plan','requests'),
+                'download' => t('Download a form \'Stand layout\'','requests'),
+                'downloadInfo' => t('Attach the plan. Also you can download a form.','requests'),
+                'attachInfo' => t('If you need more space for drawing, you can draw the plan on a separate sheet and attach it to this application.', 'requests')
+            ],
+            'buttons' => [
+              'send' => t('Send application','requests'),
+              'draft' => t('Save draft', 'requests'),
+              'cancel' => t('Cancel', 'requests'),
+            ],            
+            
+        ];        
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
         if ($formChangeType === Request::FORM_UPDATE) {
             $requestId = Yii::$app->session->get('REQUEST_ID');
@@ -85,7 +121,7 @@ class StandController extends FormController
            $baseConfiguration['length'] = $requestStand->length;
            $baseConfiguration['square'] = $requestStand->square;
            $baseConfiguration['standId'] = $requestStand->stand_id;
-           $baseConfiguration['fileName'] = $request->requestForm->file;           
+           $baseConfiguration['fileName'] = $request->requestForm->file;   
         } else {
             $baseConfiguration['update'] = false;
         }

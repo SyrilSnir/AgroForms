@@ -18,12 +18,12 @@
             </template>
             <div v-show="hasFile" class="form-group clr">
                 <p class="d-flex flex-column">
-                    <span>Добавить вложение</span>
+                    <span>{{ dict.fileAttach.attachFile }}</span>
                 </p>             
                 <div class="input-group">
                     <div class="custom-file">
                         <input @change="fileLoad" ref="userFile" type="file" class="custom-file-input" id="userFile">
-                        <label class="custom-file-label" data-browse="Обзор" for="userFile">Выбрать файл</label>
+                        <label class="custom-file-label" :data-browse="dict.fileAttach.browse" for="userFile">Select file</label>
                     </div>
                 </div>
                 <div v-if="addedFile" class="file__added">
@@ -75,6 +75,7 @@ export default {
             addedFile: false,
             language: languages.russian,               
             dict: {
+                fileAttach: {},
                 buttons: {}
             }
         }

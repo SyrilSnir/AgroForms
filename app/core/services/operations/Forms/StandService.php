@@ -31,6 +31,8 @@ class StandService
         $stand = Stand::create(
                 $form->name,
                 $form->description, 
+                $form->nameEng,
+                $form->descriptionEng,                
                 $form->price
                 );
         if ($form->photo) {
@@ -52,6 +54,8 @@ class StandService
         $stand->edit(
                 $form->name,
                 $form->description, 
+                $form->nameEng,
+                $form->descriptionEng,                
                 $form->price
                 );
         if ($form->photo) {

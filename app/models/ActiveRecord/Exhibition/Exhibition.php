@@ -2,7 +2,8 @@
 
 namespace app\models\ActiveRecord\Exhibition;
 
-use Yii;
+use app\core\traits\ActiveRecord\MultilangTrait;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%exhibitions}}".
@@ -16,8 +17,9 @@ use Yii;
  * @property int $end_date Дата окончания
  * @property int $status Статус
  */
-class Exhibition extends \yii\db\ActiveRecord
-{
+class Exhibition extends ActiveRecord
+{    
+    use MultilangTrait;
     
     public static function create(
             string $title,
@@ -60,22 +62,5 @@ class Exhibition extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{%exhibitions}}';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'title' => 'Заголовок',
-            'title_eng' => 'Заголовок (ENG)',
-            'description' => 'Описание',
-            'description_eng' => 'Описание (ENG)',
-            'start_date' => 'Дата начала',
-            'end_date' => 'Дата окончания',
-            'status' => 'Статус',
-        ];
     }
 }

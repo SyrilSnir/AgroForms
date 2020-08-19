@@ -17,6 +17,10 @@ class StandForm extends Model
     
     public $description;
     
+    public $nameEng;
+    
+    public $descriptionEng;    
+    
     public $price;
 
     public $imageFile;
@@ -29,6 +33,8 @@ class StandForm extends Model
         if ($model) {
             $this->name = $model->name;
             $this->description = $model->description;
+            $this->nameEng = $model->name_eng;
+            $this->descriptionEng = $model->description_eng;
             $this->price = $model->price;
             $this->imageFile = $model->image_url;
         }
@@ -41,7 +47,7 @@ class StandForm extends Model
     public function rules()
     {
         return [
-            ['description', 'string'],
+            [['description','nameEng','descriptionEng'], 'string'],
             [['price'], 'required'],
             [['price'], 'integer'],
             [['name'], 'string', 'max' => 255],
@@ -58,6 +64,8 @@ class StandForm extends Model
             'id' => 'ID',
             'name' => 'Название',
             'description' => 'Описание',
+            'nameEng' => 'Название (ENG)',
+            'descriptionEng' => 'Описание (ENG)',            
             'photo' => 'Имя оригинального файла с изображением',
             'image_path' => 'Путь к файлу с изображением',
             'image_url' => 'Url файла с изображением',
