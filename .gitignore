@@ -41,3 +41,5 @@ tests/_support/_generated
 #index files
 yii
 /web/index.php
+/dump
+/log
