@@ -11,6 +11,7 @@ use kartik\dialog\DialogBootstrapAsset;
 use kartik\grid\GridViewAsset as GridViewAsset2;
 use kartik\grid\Module;
 use kartik\select2\Select2Asset;
+use lajax\languagepicker\bundles\LanguagePluginAsset;
 use yii\bootstrap4\BootstrapAsset;
 use yii\bootstrap4\BootstrapPluginAsset;
 use yii\caching\FileCache;
@@ -78,6 +79,11 @@ return [
         'assetManager' => [
             'appendTimestamp' => true,
             'bundles' => [
+                LanguagePluginAsset::class => [
+                    'depends' => [
+                        YiiAsset::class
+                    ]
+                ],
                 JqueryAsset::class => [
                     'js'=>[]
                 ],
