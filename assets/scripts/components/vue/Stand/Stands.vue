@@ -23,7 +23,7 @@
                         <label for="inputSquare" class="col-sm-2 col-form-label">{{ dict.standInfo.space }}:</label>
                         <div class="col-sm-10">    
                             <div class="input-group mb-3">         
-                            <input v-model="standSquare" type="text" class="form-control" name="inputSquare" id="inputSquare">
+                            <input v-model="square" type="text" class="form-control" name="inputSquare" id="inputSquare">
                             <div class="input-group-append">
                                 <span class="input-group-text">{{ dict.standInfo.unit }}<sup>2</sup></span>
                             </div>
@@ -45,7 +45,7 @@ export default {
     name: 'stand-list',
     data() {
         return {
-         //   standSquare : '',
+            square : this.standSquare,
             selectedStand: this.localSelectedStand
         }
     },
@@ -64,10 +64,11 @@ export default {
           //  this.$forceUpdate();
         },
         calculatePrice: function(price) {
-            let standSquare = !isNaN(parseInt(this.standSquare)) ? parseInt(this.standSquare) : 0;
-            let fullPrice = standSquare * price;
+            
+            let square = !isNaN(parseInt(this.square)) ? parseInt(this.square) : 0;
+            let fullPrice = square * price;
             let result = {
-                square: this.standSquare,
+                square: square,
                 fullPrice: fullPrice
             };
             this.$emit('changeSquare',result);
