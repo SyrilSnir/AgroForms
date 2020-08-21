@@ -14,13 +14,16 @@ use yii\web\View;
 /* @var $searchModel RequestSearch */
 /* @var $modificationsProvider ActiveDataProvider */
 /** @var Request $model */
+/** @var bool $isExhibitionActive */
 
 $this->title = $model->name;
 
 //$formsList = FormsHelper::formsList();
 //dump($formsList); die();
 ?>
+
 <div class="request-view">
+    <?php if ($isExhibitionActive):?>
     <p>
         <?= Html::dropDownList('requests-list', 0, FormsHelper::formsList(),[
             'class' => 'form-control'
@@ -30,6 +33,7 @@ $this->title = $model->name;
             'class' => 'btn btn-secondary'
             ]) ?>
     </p>
+    <?php endif; ?>
 </div>
 <div class="card full-view">
   <div class="card-header">

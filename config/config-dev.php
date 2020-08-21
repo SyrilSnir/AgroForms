@@ -1,12 +1,20 @@
 <?php
 
+use app\core\bootstrap\GetActiveExhibition;
 use app\core\bootstrap\SetupApplication;
 use yii\debug\Module;
 use yii\gii\Module as GiiModule;
 use yii\swiftmailer\Mailer;
 
 return [
-    'bootstrap' => [SetupApplication::class, 'log','debug','gii','languagepicker'],
+    'bootstrap' => [
+        SetupApplication::class, 
+        GetActiveExhibition::class,
+        'log',
+        'debug',
+        'gii',
+        'languagepicker'
+    ],
     'modules' => [
         'gii' => [
             'class' => GiiModule::class,

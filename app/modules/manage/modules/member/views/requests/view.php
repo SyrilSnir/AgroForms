@@ -13,7 +13,7 @@ use yii\widgets\DetailView;
 /* @var $this View */
 /* @var $model Request */
 //dump($model->requestForm); die();
-$this->title = 'Заявка №' . $model->id;
+$this->title = t('Application №','requests') . $model->id;
 $attributes = [
     'formType.name:text:' . t('Form type', 'requests'),
     [
@@ -31,7 +31,7 @@ if (!empty($dopAttributes)) {
 ?>
 <div class="view">
     <p>
-        <?= Html::a(t('Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(t('Back'), yii\helpers\Url::previous(), ['class' => 'btn btn-secondary']) ?>
     </p>
     <div class="card">
         <div class="card-header">

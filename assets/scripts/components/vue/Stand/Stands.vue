@@ -44,9 +44,10 @@ import { numberFormatMixin } from "./Mixins/numberFormatMixin"
 export default {
     name: 'stand-list',
     data() {
-        return {
-            square : this.standSquare,
-            selectedStand: this.localSelectedStand
+        console.log('stand square = ' + this.standSquare);
+        return {            
+            selectedStand: this.localSelectedStand,
+            square: 0
         }
     },
     created() {
@@ -57,14 +58,13 @@ export default {
         numberFormatMixin
     ],
     methods: {
-        update(stand) {
-            console.log('created');
-            console.log(stand);
-            this.selectedStand = stand;
+        update(obj) {
+            this.selectedStand = obj.stand;
+            this.square = obj.square;
           //  this.$forceUpdate();
         },
         calculatePrice: function(price) {
-            
+            console.log('square=' + this.square);
             let square = !isNaN(parseInt(this.square)) ? parseInt(this.square) : 0;
             let fullPrice = square * price;
             let result = {

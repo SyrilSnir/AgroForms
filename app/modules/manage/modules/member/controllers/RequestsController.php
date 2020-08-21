@@ -56,16 +56,20 @@ class RequestsController extends BaseMemberController
         $this->service = $requestService;
     }
 
-    public function actionIndex()
+    public function actionIndex($id)
     {
+        Url::remember();
         $searchModel = new RequestSearch();
         $dataProvider = $searchModel->searchForUser(
                 Yii::$app->user->id,
+                $id,
                 Yii::$app->request->queryParams
-                );         
+                );
+        $isActive = (Yii::$app->params['activeExhibition'] == $id);
         return $this->render('index',[            
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'isExhibitionActive' => $isActive
         ]);
     }
     

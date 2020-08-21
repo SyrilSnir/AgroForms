@@ -46,7 +46,7 @@ class RequestDynamicFormService
         $this->fieldService = $fieldService;                
     }
     
-    public function create(DynamicForm $form)
+    public function create(DynamicForm $form, $exhibitionId)
     {        
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
         $serializedFields = json_encode($fields);
@@ -57,7 +57,7 @@ class RequestDynamicFormService
             $total = 0;
         }  
         /** @var Request $request */   
-        $request = Request::create($form->userId, $form->formId, $form->draft);
+        $request = Request::create($form->userId, $form->formId, $exhibitionId, $form->draft);
         $this->requests->save($request);
         $dynamicForm = RequestDynamicForm::create(
                 $request->id, 

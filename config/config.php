@@ -1,10 +1,16 @@
 <?php
 
+use app\core\bootstrap\GetActiveExhibition;
 use app\core\bootstrap\SetupApplication;
 use yii\swiftmailer\Mailer;
 
 return [
-    'bootstrap' => [SetupApplication::class, 'log','languagepicker'],
+    'bootstrap' => [
+        'log',
+        'languagepicker',        
+        SetupApplication::class, 
+        GetActiveExhibition::class,
+    ],
     'components' => [
         'mailer' => [
             'class' => Mailer::class,

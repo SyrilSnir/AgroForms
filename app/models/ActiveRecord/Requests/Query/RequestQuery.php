@@ -17,8 +17,19 @@ class RequestQuery extends ActiveQuery
      * @param type $alias
      * @return $this
      */
-    public function forUser(int $userId, $alias = null)
+    public function forUser(int $userId, $alias = null) :self
     {
         return $this->andWhere([($alias ? $alias . '.' : '') . 'user_id' => $userId]);
+    }
+    
+    /**
+     * 
+     * @param int $exhibitionId
+     * @param type $alias
+     * @return \self
+     */
+    public function forExhibition(int $exhibitionId, $alias = null) :self
+    {
+        return $this->andWhere([($alias ? $alias . '.' : '') . 'exhibition_id' => $exhibitionId]);
     }
 }

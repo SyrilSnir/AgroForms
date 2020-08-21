@@ -56,6 +56,7 @@ return [
                         'app/company' => 'company.php',
                         'app/menu' => 'menu.php',
                         'app/requests' => 'requests.php',
+                        'app/equipment' => 'equipment.php',
                     ],
                 ],
             ],
@@ -156,6 +157,7 @@ return [
         ],
         'cache' => [
             'class' => FileCache::class,
+            'defaultDuration' => 86400
         ],        
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

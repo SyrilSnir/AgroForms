@@ -2,10 +2,11 @@
 
 namespace app\models\ActiveRecord\Requests;
 
+use app\core\repositories\readModels\Forms\FormReadRepository;
+use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\Stand;
 use Yii;
 use yii\db\ActiveQuery;
-use yii\web\UploadedFile;
 use yiidreamteam\upload\FileUploadBehavior;
 
 /**
@@ -22,6 +23,7 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property int $amount Стоимость
  *
  * @property Stand $stand
+ * @property Form $form
  */
 class RequestStand extends BaseRequest
 {   
@@ -145,5 +147,10 @@ class RequestStand extends BaseRequest
     public function getStand()
     {
         return $this->hasOne(Stand::className(), ['id' => 'stand_id']);
-    }    
+    }  
+    
+    public function getForm()
+    {
+        return FormReadRepository::findStandForm();
+    }
 }

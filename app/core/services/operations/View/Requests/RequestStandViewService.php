@@ -15,28 +15,28 @@ class RequestStandViewService
     {
         return [
             [
-                'label' => 'Тип стенда',
+                'label' => t('Stand type','requests'),
                 'value' => $requestStand->stand->name
             ],
             [
-                'label' => 'Длинна, м.',
+                'label' => t('Length, m.', 'requests'),
                 'value' => $requestStand->length
             ],
             [
-                'label' => 'Ширина, м.',
+                'label' => t('Width, m.', 'requests'),
                 'value' => $requestStand->width
             ], 
             [
-                'label' => 'Площадь, м2',
+                'label' => t('Space, m<sup>2</sup>', 'requests'),
                 'value' => $requestStand->square
             ],
             [
-                'label' => 'Фризовая надпись',
+                'label' => t('Fascia name', 'requests'),
                 'value' => $requestStand->frizeName
             ],         
             [
-                'label' => 'Стоимость',
-                'value' => $requestStand->amount . ' USD'
+                'label' => t('Price','requests'),
+                'value' => f($requestStand->amount) . ' ' . t($requestStand->form->valute->char_code,'requests')
             ]
         ];        
     }

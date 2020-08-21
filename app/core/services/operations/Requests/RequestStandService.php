@@ -56,17 +56,17 @@ class RequestStandService
         $this->configurationManager = $configurationManager;
     }
 
-    /**
-     * 
-     * @param StandForm $form
-     * 
-     * @throws RuntimeException
-     */
-    public function create(StandForm $form)
+/**
+ * 
+ * @param StandForm $form
+ * @param int $exhibitionId
+ */
+    public function create(StandForm $form,int $exhibitionId)
     {
         $request = Request::create(
                 $form->userId, 
                 Stand::STAND_FORM_ID,
+                $exhibitionId,
                 $form->draft
                 );
         $this->requests->save($request);
@@ -94,7 +94,13 @@ class RequestStandService
         $this->requestStands->save($requestStand);
     }
     
-    public function edit($id, StandForm $form) 
+    /**
+     * 
+     * @param int $id
+     * @param StandForm $form
+     * @param int $exhibitionId
+     */
+    public function edit(int $id, StandForm $form) 
     {
         /** @var Stand $stand */
         /** @var RequestStand $requestStand */

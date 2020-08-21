@@ -6,7 +6,9 @@ use app\core\helpers\Data\ConfigurationHelper;
 use app\core\manage\Auth\Rbac;
 use app\core\manage\Auth\RoleManager;
 use app\core\manage\Configuration\ConfigurationManager;
+use app\core\repositories\manage\Exhibition\ExhibitionRepository;
 use app\core\services\Mail\MailService;
+use app\core\services\operations\Exhibition\ExhibitionService;
 use app\core\services\operations\Profile\CompanyService;
 use app\core\services\operations\Profile\UserService;
 use app\models\ActiveRecord\Configuration;
@@ -21,6 +23,7 @@ use yii\base\BootstrapInterface;
 use yii\rest\Serializer;
 use yii\swiftmailer\Mailer;
 use yii\web\Application;
+use yii\web\Cookie;
 
 
 /**
@@ -35,6 +38,11 @@ class SetupApplication implements BootstrapInterface
         /** @var Application $app */
         $container = Yii::$container;
         
+        $container->set(ExhibitionService::class, function ($container, $params, $args){
+            $repository = new ExhibitionRepository();
+            $cache = Yii::$app->cache;
+            return new ExhibitionService($repository,$cache);
+        });
         $container->set(Serializer::class, function ($container, $params, $args) {            
             $encoders = [new JsonEncoder()];
             $normalizers = [new ObjectNormalizer()];
@@ -98,7 +106,7 @@ class SetupApplication implements BootstrapInterface
             $cookies = $app->response->cookies;
             $language = $cookies->getValue('language', 'ru-RU');
             if ($language != 'ru-Ru') {
-                $cookies->add(new \yii\web\Cookie([
+                $cookies->add(new Cookie([
                     'name' => 'language',
                     'value' => 'ru-RU',
                 ]));

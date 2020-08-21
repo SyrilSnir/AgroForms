@@ -164,7 +164,7 @@ class DynamicFormController extends FormController
 
     private function createRequest(DynamicForm $form)
     {
-       $this->dynamicFormService->create($form); 
+       $this->dynamicFormService->create($form,Yii::$app->params['activeExhibition']); 
     }
     
     private function updateRequest(int $requestId, DynamicForm $form)

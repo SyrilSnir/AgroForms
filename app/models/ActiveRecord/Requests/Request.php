@@ -4,6 +4,7 @@ namespace app\models\ActiveRecord\Requests;
 
 use app\core\repositories\readModels\Requests\RequestDynamicFormReadRepository;
 use app\core\repositories\readModels\Requests\RequestStandReadRepository;
+use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\FormManipulation;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
@@ -20,10 +21,12 @@ use yii\db\ActiveQuery;
  * @property int $form_id Id формы
  * @property int $status
  * @property int $created_at
+ * @property int $exhibition_id
  * 
  * @property FormType $formType
  * @property Form $form
  * @property User $user
+ * @property Exhibition $exhibition
  * @property BaseRequest $requestForm
  * 
  */
@@ -50,12 +53,14 @@ class Request extends FormManipulation
     public static function create(
             int $userId,
             int $formId,
+            int $exhibitionId,
             bool $draft = false
             ):self 
     {
         $request = new self();
         $request->user_id = $userId;
         $request->form_id = $formId;
+        $request->exhibition_id = $exhibitionId;
         if ($draft) {
             $request->setStatusDraft();
         } else {
@@ -66,11 +71,13 @@ class Request extends FormManipulation
     
     public function edit(
             int $userId,
-            int $formId            
+            int $formId,
+            int $exhibitionId          
             )
     {
         $this->user_id = $userId;
         $this->form_id = $formId;
+        $this->exhibition_id = $exhibitionId;
     }
     
     public function setStatusNew()
@@ -127,8 +134,7 @@ class Request extends FormManipulation
     {
         return $this->hasOne(Form::class, ['id' => 'form_id']);
     }
-
-
+  
     public function getRequestForm() : ?BaseRequest
     {
         switch ($this->form->form_type_id) {
@@ -143,6 +149,11 @@ class Request extends FormManipulation
         }
         
         return $request;
+    }
+    
+    public function getExhibition()
+    {
+        return $this->hasOne(Exhibition::class, ['id' => 'exhibition_id']);
     }
 
     /**

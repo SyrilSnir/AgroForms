@@ -8,7 +8,7 @@
         :standElements="stands"
         :bus="bus"
         :dict="dict"
-        :stand-square="square"
+        :standSquare="defaultSquare"
         @changeSquare="square = $event.square; standPrice = $event.fullPrice"
         @changeSelectedStand="standId = $event"
     >
@@ -116,6 +116,7 @@ export default {
             width: '',
             length: '',
             square: 0,
+            defaultSquare: 5554,
             standPrice: 0,
             frizeFreeDigits : 0,
             frizeDigitPrice : 0,
@@ -200,11 +201,12 @@ export default {
                         'Content-Type': 'multipart/form-data'
                     }
                 }
-                ).then(function(){
-                    location.href = '/manage/member/requests';
+                ).then(function(response){
+                    console.log(response);
+                    location.href = '/manage/member/' + response.data.exhibitionId +'/requests';
                 })
                 .catch(function(){
-                    location.href = '/manage/member/requests';
+                    location.href = '/manage/member/' + response.data.exhibitionId +'/requests';
                     console.log('FAILURE!!');
                 });
         }
@@ -233,13 +235,17 @@ export default {
         }
 
         if (Object.prototype.hasOwnProperty.call(response.data,'square')) {
-            this.square = response.data.square;
+            console.log('data=' + response.data.square)
+            this.defaultSquare = response.data.square;
         }
         if (Object.prototype.hasOwnProperty.call(response.data,'standId')) {
             this.defaultSelectedStand = response.data.standId;
         }
         this.id = response.data.id;
-        this.bus.$emit('update',this.defaultSelectedStand);
+        this.bus.$emit('update',{ 
+            'square' : this.defaultSquare,
+            'stand' : this.defaultSelectedStand 
+            });
       });        
   },    
 }

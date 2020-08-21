@@ -21,17 +21,6 @@ class MemberMenuHelper implements MenuHelperInterface
                             'label' => t('My exhibitions','menu'),
                             'icon' => 'folder',
                             'items' => self::getExhibitionList()
-                           /* 'items' => [
-                                [
-                                    'label' => 'Агросалон 2020',
-                                    'icon' => 'folder',
-                                    'items' => [
-                                        [
-                                            'label' => t('My applications','menu'), 'icon' => 'wpforms', 'url' => ['/manage/member/requests'],
-                                        ],
-                                    ]   
-                                ]
-                            ]*/
                         ],
                         [
                             'label' => t('Personal data','menu'),
@@ -53,7 +42,7 @@ class MemberMenuHelper implements MenuHelperInterface
     {
         /** @var Exhibition $exhibition */
         $menuList = [];
-        $exhibitions = Exhibition::find()->all();
+        $exhibitions = Exhibition::find()->orderBy(['end_date' => SORT_DESC])->all();
         foreach ($exhibitions as $exhibition) {
             array_push($menuList,
                 [

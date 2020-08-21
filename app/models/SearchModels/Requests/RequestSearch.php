@@ -26,9 +26,9 @@ class RequestSearch extends Model
         ];
     }
     
-    public function searchForUser(int $userId, array $params = []) 
+    public function searchForUser(int $userId,int $exhibitionId = null, array $params = []) 
     {
-        return $this->search($params, $userId);
+        return $this->search($params, $userId, $exhibitionId);
     }
     
     public function searchForManager(array $params = [])
@@ -43,11 +43,14 @@ class RequestSearch extends Model
         return $this->search($params);
     }
 
-    private function search(array $params = [], $userId = null): ActiveDataProvider
+    private function search(array $params = [], $userId = null, $exhibitionId = null): ActiveDataProvider
     {
         $query = Request::find();
         if ($userId) {
             $query->forUser($userId);
+        }
+        if ($exhibitionId) {
+            $query->forExhibition($exhibitionId);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

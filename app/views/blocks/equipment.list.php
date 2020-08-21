@@ -2,13 +2,14 @@
 
 /** @var array $values */
 $fullPrice = 0;
+print_r($values);
 ?>
 <table class="table table-bordered">
     <thead>                  
       <tr>                      
-        <th style="width: 15px">Код</th>
-        <th>Наименование</th>
-        <th>Количество</th>
+          <th style="width: 15px"><?php echo t('Code','equipment') ?></th>
+        <th><?php echo t('Name','equipment') ?>:</th>
+        <th><?php echo t('Count','equipment') ?>:</th>
         <th>Цена зв ед.</th>
         <th>Стоимость</th>
       </tr>

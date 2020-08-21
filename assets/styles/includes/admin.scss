@@ -72,3 +72,10 @@
         clear: both;
     }
 }
+
+table {
+    tr.active-exhibition {
+        background-color: #cdf2e6;
+        font-weight: 600;        
+    }
+}

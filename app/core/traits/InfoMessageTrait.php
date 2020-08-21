@@ -22,7 +22,7 @@ trait InfoMessageTrait
      * @param string $message
      * @return string
      */
-    private function getMessage(string $message):string
+    private function getMessage(string $message)
     {
         return $this->getInfo($message);
     }
@@ -32,7 +32,7 @@ trait InfoMessageTrait
      * @param string $message
      * @return string
      */
-    private function getErrorMessage(string $message):string
+    private function getErrorMessage(string $message)
     {
         return $this->getInfo($message, Status::STATUS_ERROR);
     }
@@ -43,7 +43,7 @@ trait InfoMessageTrait
      * @param int $status
      * @return string
      */
-    private function getInfo(string $message,int $status = Status::STATUS_OK):string
+    private function getInfo(string $message,int $status = Status::STATUS_OK)
     {
         switch ($status) {
             case Status::STATUS_OK:
@@ -54,6 +54,6 @@ trait InfoMessageTrait
                 Yii::$app->session->setFlash('error',$message);
                 break;                
         }
-        return $message;
+        return;
     }
 }

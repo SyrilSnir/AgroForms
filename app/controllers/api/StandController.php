@@ -145,20 +145,22 @@ class StandController extends FormController
                     $this->createRequest($form);
                 }
                 $message = 'Форма заявки успешно сохранена';
-                return $this->getMessage($message);
+                $this->getMessage($message);
             } else {
                 throw new Exception();
             }
         } catch (Exception $e) {
-            $message = 'Произошла ошибка при сохранении формы заявки';
-            
-            return $this->getErrorMessage($message);
+            $message = 'Произошла ошибка при сохранении формы заявки';            
+            $this->getErrorMessage($message);
         }
+        return [
+            'exhibitionId' => Yii::$app->params['activeExhibition']
+        ];
     }
     
     private function createRequest(StandForm $form)
     {
-       $this->requestStandService->create($form); 
+       $this->requestStandService->create($form,Yii::$app->params['activeExhibition']); 
     }
     
     private function updateRequest(int $requestId, StandForm $form)

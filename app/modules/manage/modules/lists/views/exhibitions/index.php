@@ -33,11 +33,15 @@ $this->title = 'Список выставок';
                        'maxButtonCount' => 5, // максимум 5 кнопок
                        'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
                        'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                      'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
+                       'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
                     ],
+                    'rowOptions' => function ($model, $key, $index, $grid) {
+                        if ($model['id'] == Yii::$app->params['activeExhibition']) {
+                            return ['class' => 'active-exhibition'];
+                        }
+                    },                    
                     'filterModel' => $searchModel,
                     'columns' => [                    
-                        'id:integer:Id',
                         'title:text:Название',
                         'title_eng:text:Название (ENG)',
                         'description:text:Описание',

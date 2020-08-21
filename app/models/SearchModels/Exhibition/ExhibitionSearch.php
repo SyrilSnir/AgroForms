@@ -28,7 +28,7 @@ class ExhibitionSearch extends Model
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['id' => SORT_ASC]
+                'defaultOrder' => ['start_date' => SORT_ASC]
             ]
         ]);
 
