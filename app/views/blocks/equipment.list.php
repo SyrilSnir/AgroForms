@@ -2,16 +2,15 @@
 
 /** @var array $values */
 $fullPrice = 0;
-print_r($values);
 ?>
 <table class="table table-bordered">
     <thead>                  
       <tr>                      
           <th style="width: 15px"><?php echo t('Code','equipment') ?></th>
-        <th><?php echo t('Name','equipment') ?>:</th>
-        <th><?php echo t('Count','equipment') ?>:</th>
-        <th>Цена зв ед.</th>
-        <th>Стоимость</th>
+        <th><?php echo t('Name','equipment') ?></th>
+        <th><?php echo t('Count','equipment') ?></th>
+        <th><?php echo t('Unit price','equipment') ?></th>
+        <th><?php echo t('Price','equipment') ?></th>
       </tr>
     </thead>
     <tbody>
@@ -29,7 +28,7 @@ print_r($values);
       </tr>              
       <?php endforeach; ?>
       <tr style="background: lightgoldenrodyellow">
-          <td colspan="4">Итого:</td>
+          <td colspan="4"><?php echo t('Total','requests') ?>:</td>
           <td><?php echo number_format($fullPrice, 0, '.', ' ') ?></td>
       </tr>
       </tbody>
