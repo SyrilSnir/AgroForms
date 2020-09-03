@@ -153,8 +153,9 @@ class DynamicFormController extends FormController
                 } else {
                     $this->createRequest($form);
                 }
-                $message = 'Форма заявки успешно сохранена';            
-                return $this->getMessage($message);                
+                return [
+                    'exhibitionId' => Yii::$app->params['activeExhibition']
+                ];               
             }
         } catch (Exception $e) {
             $message = 'Произошла ошибка при сохранении формы заявки';            

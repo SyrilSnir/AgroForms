@@ -5,7 +5,9 @@ namespace app\core\services\Forms;
 use app\core\helpers\Utils\StringHelper;
 use app\core\providers\Data\FieldEnumProvider;
 use app\core\repositories\manage\Forms\FieldRepository;
+use app\core\repositories\manage\Nomenclature\EquipmentRepository;
 use app\core\repositories\readModels\Nomenclature\UnitReadRepository;
+use app\core\traits\Data\EquipmentValuesPrepareTrait;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Nomenclature\Unit;
@@ -18,6 +20,7 @@ use function GuzzleHttp\json_decode;
  */
 class FieldService
 {
+    use EquipmentValuesPrepareTrait;
     /**
      *
      * @var UnitReadRepository
@@ -35,17 +38,25 @@ class FieldService
      * @var FieldEnumProvider
      */
     private $fieldEnumProvider;
+    
+    /**
+     *
+     * @var EquipmentRepository
+     */
+    private $equipmentRepository;
 
 
     public function __construct(
             UnitReadRepository $unitRepository,
             FieldRepository $fieldReopsitory,
-            FieldEnumProvider $fieldEnumProvider
+            FieldEnumProvider $fieldEnumProvider,
+            EquipmentRepository $equipmentRepository
             )
     {
         $this->unitRepository = $unitRepository;
         $this->fieldRepository = $fieldReopsitory;
         $this->fieldEnumProvider = $fieldEnumProvider;
+        $this->equipmentRepository = $equipmentRepository;
     }
     
      public function postProcessFields(array &$fields, array $valuesList)
@@ -121,7 +132,11 @@ class FieldService
             }
         }
         if (key_exists($id, $valuesList)) {
-            $element['value'] = $valuesList[$id]['value'];
+            $value = $valuesList[$id]['value'];
+            if($element['element_type_id'] == ElementType::ELEMET_ADDITIONAL_EQUIPMENT) {
+                $value = $this->processEquipmentValues($value);
+            }            
+            $element['value'] = $value;
             if (key_exists('checked', $valuesList[$id])) {
                 $element['checked'] = $valuesList[$id]['checked'];                
             }
@@ -129,6 +144,5 @@ class FieldService
             $element['value'] = $defaultValue;
         }
         $element['postprocess'] = true;        
-     }
-
+     }    
 }

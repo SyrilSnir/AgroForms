@@ -15,7 +15,7 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property int $amount Стоимость
  * @property string|null $fields Данные формы
  *
- * @property Requests $request
+ * @property Request $request
  */
 class RequestDynamicForm extends BaseRequest
 {

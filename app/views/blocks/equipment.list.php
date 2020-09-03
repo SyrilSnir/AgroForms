@@ -1,6 +1,7 @@
 <?php 
 
 /** @var array $values */
+/** @var string $valute */
 $fullPrice = 0;
 ?>
 <table class="table table-bordered">
@@ -10,7 +11,7 @@ $fullPrice = 0;
         <th><?php echo t('Name','equipment') ?></th>
         <th><?php echo t('Count','equipment') ?></th>
         <th><?php echo t('Unit price','equipment') ?></th>
-        <th><?php echo t('Price','equipment') ?></th>
+        <th><?php echo t('Price','equipment') . ', ' . t($valute,'requests') ?></th>
       </tr>
     </thead>
     <tbody>

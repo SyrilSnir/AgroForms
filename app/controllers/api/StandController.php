@@ -67,8 +67,8 @@ class StandController extends FormController
         $standsList = StandsHelper::standsList();
         $baseConfiguration = [
           'title' => $stand->headerName,
-          'stands' => $standsList,
-          'userId' => $userId              
+          'stands' => $standsList,          
+          'userId' => $userId,
         ];
         $baseConfiguration['dict'] = [
             'imageInfo' => t('Approximate image of the stand','requests'),

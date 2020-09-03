@@ -98,10 +98,18 @@ export default {
                 this.$emit('changeField',this.getData());
            },       
         getData() {
+            let values = [];
+            for (let key in this.values) {
+                values.push({
+                    id: this.values[key].id,
+                    count: this.values[key].count,
+                    price: this.values[key].price,
+                });
+            }
             let data = {
                 id: this.id,
                 data: {
-                    value: this.values
+                    value: values
                 },
                 valid: true
             };

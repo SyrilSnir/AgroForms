@@ -106,5 +106,19 @@ class RequestsController extends BaseMemberController
             'model' => $model,
             'dopAttributes' => $dopAttributes
         ]);
-    }    
+    }
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        try {
+            $this->service->remove($id);
+        } catch (DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(Url::previous());
+    }      
 }

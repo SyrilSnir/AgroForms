@@ -43,3 +43,4 @@ yii
 /web/index.php
 /dump
 /log
+app/controllers/TestController.php

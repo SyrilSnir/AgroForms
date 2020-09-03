@@ -3,6 +3,8 @@
 namespace app\core\services\operations\View\Requests;
 
 use app\core\repositories\manage\Forms\FieldRepository;
+use app\core\repositories\manage\Nomenclature\EquipmentRepository;
+use app\core\traits\Data\EquipmentValuesPrepareTrait;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\FieldEnum;
@@ -20,6 +22,7 @@ use function GuzzleHttp\json_decode;
  */
 class RequestDynamicFormViewService
 {
+    use EquipmentValuesPrepareTrait;
     /**
      *
      * @var FieldRepository
@@ -32,9 +35,16 @@ class RequestDynamicFormViewService
      */
     private $view;
     
-    public function __construct(FieldRepository $fields, View $view)
+    /**
+     *
+     * @var EquipmentRepository
+     */
+    private $equipmentRepository;
+    
+    public function __construct(FieldRepository $fields, EquipmentRepository $equipmentRepository, View $view)
     {
         $this->fields = $fields;
+        $this->equipmentRepository = $equipmentRepository;
         $this->view = $view;
     }
 
@@ -46,8 +56,9 @@ class RequestDynamicFormViewService
         foreach ($fields as $id => $field) {
             $fieldModel = $this->fields->get($id);            
             if(in_array($fieldModel->element_type_id, ElementType::HAS_ENUM_VALUES)) {
-                if ($fieldModel->element_type_id === ElementType::ELEMET_ADDITIONAL_EQUIPMENT) {
-                    $value = $this->getEquipmentValues($field['value']);
+                if ($fieldModel->element_type_id === ElementType::ELEMET_ADDITIONAL_EQUIPMENT) {                        
+                    $valute = $requestForm->request->form->valute->char_code;
+                    $value = $this->getEquipmentValues($field['value'],$valute);
                 } else {
                     $value = $this->getEnumValues($id, $field['value']);
                 }
@@ -94,10 +105,12 @@ class RequestDynamicFormViewService
         return implode(',',ArrayHelper::getColumn(FieldEnum::find()->where(['field_id' => $fieldId])->andWhere(['value' => $values])->asArray()->all(),'name'));
     }
     
-    private function getEquipmentValues(array $values):string
-    {    
+    private function getEquipmentValues(array $values,string $valute):string
+    {   
+        $reault = $this->processEquipmentValues($values);
         return $this->view->renderFile('@views/blocks/equipment.list.php',[
-            'values' => $values
+            'values' => $reault,
+            'valute' => $valute
         ]);
         //return print_r($values,true);
     }    

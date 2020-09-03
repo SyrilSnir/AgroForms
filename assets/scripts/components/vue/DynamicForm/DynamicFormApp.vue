@@ -190,8 +190,8 @@ export default {
                         'Content-Type': 'multipart/form-data'
                     }
                 }
-                ).then(function(){
-                   location.href = '/manage/member/requests';
+                ).then(function(response){
+                   location.href = '/manage/member/'+ response.data.exhibitionId +'/requests';
                 })
                 .catch(function(){
                     location.href = '/manage/member/requests';
@@ -199,7 +199,7 @@ export default {
                 });                    
       },
       cancel() {
-        location.href = '/manage/member/requests';          
+            window.history.back();         
       }
   }
 }

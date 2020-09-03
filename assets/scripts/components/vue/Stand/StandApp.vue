@@ -165,7 +165,7 @@ export default {
             this.formSubmit();
         },
         cancel() {
-            location.href = '/manage/member/requests';
+            window.history.back();
         },
         formSubmit: function() {
             console.log('Форма отправлена');
@@ -202,7 +202,6 @@ export default {
                     }
                 }
                 ).then(function(response){
-                    console.log(response);
                     location.href = '/manage/member/' + response.data.exhibitionId +'/requests';
                 })
                 .catch(function(){
