@@ -72,7 +72,7 @@ class ExhibitionService
             }
         }
         $currentTime = time();
-        $activeExhibition = Exhibition::find()->where(['<=','end_date', $currentTime])->orderBy(['end_date' => SORT_DESC])->one();
+        $activeExhibition = Exhibition::find()->where(['>=','end_date', $currentTime])->one();
         if (!$activeExhibition) {
             return;
         }
