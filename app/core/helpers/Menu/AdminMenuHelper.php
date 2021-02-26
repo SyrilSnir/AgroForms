@@ -70,7 +70,7 @@ class AdminMenuHelper implements MenuHelperInterface
                                     ]
                                 ],
                                 [
-                                    'label' => 'Номенклатурв', 
+                                    'label' => 'Номенклатура', 
                                     'icon' => 'list', 
                                     'items' => [
                                         ['label' => 'Категории', 'icon' => 'folder', 'url' => ['/manage/lists/equipment-groups'],],
