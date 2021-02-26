@@ -37,7 +37,7 @@ $this->title = 'Справочник валют';
                     'columns' => [                    
                         'id:integer:Id',
                         'name:text:Наименование',
-                        'int_name:text:Международное название',
+                        'name_eng:text:Международное название',
                         'char_code:text:Трехбуквенное обозначение',
                         'symbol:text:Символ',
                         ['class' => ActionColumn::class],

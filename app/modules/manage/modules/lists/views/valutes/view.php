@@ -31,7 +31,7 @@ $this->title = $model->name;
                 'attributes' => [
                     'id',
                     'name:text:Наимменование',
-                    'int_name:text:Международное название',
+                    'name_eng:text:Международное название',
                     'char_code:text:Трехбуквенное обозначение',
                     'symbol:text:Символьный код',                    
                 ],
