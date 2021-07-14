@@ -76,8 +76,8 @@ class Contact extends ActiveRecord
         $contact->manager_phone = $managerPhone;
         $contact->manager_fax = $managerFax;
         
-        $this->proposal_signature_name = $proposalSignatureName;
-        $this->proposal_signature_post = $proposalSignaturePost;
+        $contact->proposal_signature_name = $proposalSignatureName;
+        $contact->proposal_signature_post = $proposalSignaturePost;
         
         return $contact;
     }

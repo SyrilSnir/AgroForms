@@ -8,7 +8,7 @@ use yii\helpers\Html;
 
 /** @var User $user */
 
-switch ($user->genre) {
+switch ($user->gender) {
     case 1:
         $appeal = 'Уважаемый';
         break;
@@ -25,8 +25,8 @@ switch ($user->genre) {
 
 <div class="container">
     <h3>
-        <?php echo "{$appeal} {$user->fio}" ?> добро пожаловать закрытую часть портала,
-        посвещенного выставке АГРОСАЛОН.
+        <?php echo "{$appeal} {$user->fio}" ?> добро пожаловать в закрытую часть портала,
+        посвященного выставке АГРОСАЛОН.
     </h3>
     <h4>
         Для активации учетной записи необходимо задать пароль.

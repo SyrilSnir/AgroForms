@@ -16,8 +16,8 @@ return [
    'Main page' => 'Главная страница',
    'Description' => 'Описание',
    'Undefined' => 'Не задано',
-   'City' => 'Город',    
-   'Country' => 'Страна',    
+   'City' => 'Город',
+   'Country' => 'Страна',
    'Region' => 'Регион',
    'Application form' => 'Форма',
    'Add application' => 'Добавить заявку',
@@ -26,6 +26,6 @@ return [
    'Enter authorization data' => 'Введите данные для автроризации',
    'Attach file' => 'Добавить вложение',
    'Select file' => 'Выбрать файл',
-   'Browse' => 'Обзор'    
+   'Browse' => 'Обзор'
 ];
 

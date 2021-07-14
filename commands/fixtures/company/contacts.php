@@ -5,7 +5,7 @@ use app\models\ActiveRecord\Companies\Contact;
 return [
     [
         'id' => Contact::BASE_COMPANY,
-        'chief_postion' => 'Генеральный директор',
+        'chief_position' => 'Генеральный директор',
         'chief_fio' => 'Елизарова Алла Владимировна',
         'chief_phone' => '1234567',
         'chief_email' => 'eav@rosspetmash.ru',

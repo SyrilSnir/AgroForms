@@ -56,7 +56,7 @@ $this->title = $model->name;
                         'label' => 'Почтовый индекс'
                     ],                  
                     [
-                        'value' => $model->legalAddress->adds,
+                        'value' => $model->legalAddress->address,
                         'label' => 'Адрес'
                     ],
                     [
@@ -73,7 +73,7 @@ $this->title = $model->name;
                         'label' => 'Почтовый индекс'
                     ],                  
                     [
-                        'value' => $model->postalAddress->adds,
+                        'value' => $model->postalAddress->address,
                         'label' => 'Адрес'
                     ],
                     [

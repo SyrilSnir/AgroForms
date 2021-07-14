@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int|null $index Почтовый индекс
  * @property int $city_id Город
- * @property string $adds Улица, дом
+ * @property string $address Улица, дом
  * 
  * @property Country $country Страна
  * @property Region $region Регион
@@ -39,7 +39,7 @@ abstract class Address extends ActiveRecord
         $address = new static();
         $address->index = $index;
         $address->city_id = $cityId;
-        $address->adds = $adds;        
+        $address->address = $adds;        
         return $address;
     }
 
@@ -51,7 +51,7 @@ abstract class Address extends ActiveRecord
     {
         $this->index = $index;
         $this->city_id = $cityId;
-        $this->adds = $address;
+        $this->address = $address;
     }
 
     /**

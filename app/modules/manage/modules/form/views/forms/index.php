@@ -1,5 +1,7 @@
 <?php
 
+use app\models\ActiveRecord\Forms\Form;
+use app\models\ActiveRecord\Forms\FormType;
 use app\models\SearchModels\Forms\FormSearch;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -38,7 +40,17 @@ $this->title = 'Справочник доступных форм';
                         'id:integer:Id',
                         'name:text:Название',
                         'title:text:Заголовок',
-                        ['class' => ActionColumn::class],
+                        [
+                            'class' => ActionColumn::class,
+                             'visibleButtons' => [
+                                'update' => function (Form $model) {
+                                    return $model->form_type_id != FormType::SPECIAL_STAND_FORM ;
+                                },
+                                'delete' => function (Form $model) {
+                                    return $model->form_type_id != FormType::SPECIAL_STAND_FORM;
+                                }
+                            ]                             
+                        ],
                     ],
                 ]); ?>
         </div>

@@ -116,7 +116,7 @@ export default {
             width: '',
             length: '',
             square: 0,
-            defaultSquare: 5554,
+            defaultSquare: null,
             standPrice: 0,
             frizeFreeDigits : 0,
             frizeDigitPrice : 0,
@@ -222,6 +222,7 @@ export default {
         this.update = response.data.update;
         this.addedFile = response.data.fileName;
         this.dict = response.data.dict;
+        console.log(response.data);
         if (Object.prototype.hasOwnProperty.call(response.data,'frizeName')) {
             this.frizeName = response.data.frizeName;
         }

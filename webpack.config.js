@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const publicPath = '../build/';
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const resolveUrlLoader = {
   loader: 'resolve-url-loader',
   options: {
@@ -41,8 +41,7 @@ module.exports = {
               {
                 loader: MiniCssExtractPlugin.loader,
                 options: {
-                    publicPath: publicPath,
-                    hwr: false
+                    publicPath: '../'//publicPath
                 },
             },
               cssLoader             
@@ -54,12 +53,16 @@ module.exports = {
               {
                 loader: MiniCssExtractPlugin.loader,
                 options: {
-                    publicPath: publicPath,
-                    hwr: false
+                    publicPath: '../' //publicPath
                 },
-            },
+              },
               cssLoader,
-              resolveUrlLoader,
+              {
+                loader: resolveUrlLoader.loader,
+                options: {
+                   root: '',
+                }
+              },
               sassLoader
             ],
           },
@@ -69,8 +72,7 @@ module.exports = {
               {
                 loader: MiniCssExtractPlugin.loader,
                 options: {
-                    publicPath: publicPath,
-                    hwr: false
+                    publicPath: publicPath
                 },
             },
               cssLoader,
@@ -88,17 +90,20 @@ module.exports = {
                 // the "scss" and "sass" values for the lang attribute to the right configs here.
                 // other preprocessors should work out of the box, no loader config like this necessary.
                 'scss': [
-                  'vue-style-loader',
+             //     'vue-style-loader',
+               MiniCssExtractPlugin.loader,
                   'css-loader',
                   'sass-loader'
                 ],
                 'sass': [
-                  'vue-style-loader',
+               //   'vue-style-loader',
+                  MiniCssExtractPlugin.loader,
                   'css-loader',
                   'sass-loader?indentedSyntax'
                 ],
                 'css': [
-                  'vue-style-loader',
+                  //'vue-style-loader',
+                  MiniCssExtractPlugin.loader,
                   'css-loader',
                 ],
               }
@@ -144,35 +149,36 @@ module.exports = {
         path: path.resolve(__dirname,'web','build'),
         filename: 'scripts/[name].js',
     },
-    plugins: [     
-        new VueLoaderPlugin(),
+    plugins: [
         new webpack.SourceMapDevToolPlugin({}),
+        new VueLoaderPlugin(),
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
             $: 'jquery',
             'window.jQuery': 'jquery',
             Popper: ['popper.js', 'default']
           }),
-          new CopyWebpackPlugin([
-            { 
-                from: './assets/images',
-                 to:  'images'
-            },
-            { 
-                from: './assets/fonts',
-                 to: 'fonts'
-            },
-            {
-                from: './assets/scripts/vue.js',
-                to:  'scripts'
-            }
-       ]), 
+          new CopyWebpackPlugin({
+            patterns: [
+              { 
+                  from: './assets/images',
+                  to:  'images'
+              },
+              { 
+                  from: './assets/fonts',
+                  to: 'fonts'
+              },
+              {
+                  from: './assets/scripts/vue.js',
+                  to:  'scripts'
+              }
+          ]
+          }), 
         //  new ExtractTextPlugin("style.css"),
           new MiniCssExtractPlugin({
             filename: './css/[name].css',
-            publicPath:'./css/',
          //   chunkFilename: '[id].css',
-            ignoreOrder: false, // Enable to remove warnings about conflicting order
+            ignoreOrder: false // Enable to remove warnings about conflicting order
          })         
     ],      
     optimization: {

@@ -5,10 +5,17 @@ namespace app\commands\controllers;
 use app\core\repositories\readModels\Forms\FieldGroupReadRepository;
 use app\core\traits\Db\QueryTrait;
 use app\models\ActiveRecord\Common\Valute;
+use app\models\ActiveRecord\Companies\BankDetail;
 use app\models\ActiveRecord\Companies\Company;
+use app\models\ActiveRecord\Companies\Contact;
+use app\models\ActiveRecord\Companies\LegalAddress;
+use app\models\ActiveRecord\Companies\PostalAddress;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\FieldGroup;
 use app\models\ActiveRecord\Forms\FormType;
+use app\models\ActiveRecord\Geography\City;
+use app\models\ActiveRecord\Geography\Country;
+use app\models\ActiveRecord\Geography\Region;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
 use Yii;
@@ -65,8 +72,17 @@ class AdminController extends Controller
      */
     public function actionAddData()
     {
-        
-  /*    $this->loadFixtureFromCSV(new Country(), 'country.csv', [
+        City::deleteAll();
+        Country::deleteAll();
+        Region::deleteAll();
+        PostalAddress::deleteAll();
+        LegalAddress::deleteAll();
+        BankDetail::deleteAll();
+        Contact::deleteAll();
+        Company::deleteAll();
+        UserType::deleteAll();
+                      
+        $this->loadFixtureFromCSV(new Country(), 'country.csv', [
             0 => 'id',
             2 => 'name'
         ]);
@@ -81,22 +97,19 @@ class AdminController extends Controller
             3 => 'name'
             
         ]);
-        */
-        //$this->addData(PostalAddress::class, './../fixtures/company/postal.address.php');
-        //$this->addData(LegalAddress::class, './../fixtures/company/legal.address.php');
-        //$this->addData(BankDetail::class, './../fixtures/company/bank.detail.php');
-     //   $this->addData(Contact::class, './../fixtures/company/contacts.php');
-//        $this->addData(Company::class, './../fixtures/company/company.php');
-        
-        $this->addData(UserType::class, './../fixtures/user/user.types.php');
-        $user = new User();
-        $user->login = 'admin';
-       // $user->
+          $this->addData(PostalAddress::class, './../fixtures/company/postal.address.php');
+          $this->addData(LegalAddress::class, './../fixtures/company/legal.address.php');
+          $this->addData(BankDetail::class, './../fixtures/company/bank.detail.php');
+          $this->addData(Contact::class, './../fixtures/company/contacts.php');
+          $this->addData(Company::class, './../fixtures/company/company.php');        
+          $this->addData(UserType::class, './../fixtures/user/user.types.php');        
+          $user = new User();
+          $user->login = 'admin';
         $user->user_type_id = UserType::ROOT_USER_ID;  
         $user->company_id = Company::BASE_COMPANY;
         $user->setPassword('123')
                 ->setAuthKey()
-                ->save(false);         
+                ->save(false);
         
     }
     /**

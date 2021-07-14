@@ -45,7 +45,7 @@ abstract class AddressForm extends Model
             $this->countryId = $model->country->id;
             $this->regionId = $model->region->id;
             $this->cityId = $model->city_id;
-            $this->address = $model->adds;    
+            $this->address = $model->address;    
             $this->id = $model->id;
         } else {
             /** @var City $city */
