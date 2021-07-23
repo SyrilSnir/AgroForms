@@ -52,7 +52,7 @@ $this->title = $profile->name;
                         'label' => t('Zip code','company')
                     ],                  
                     [
-                        'value' => $profile->legalAddress->adds,
+                        'value' => $profile->legalAddress->address,
                         'label' => t('Address','company')
                     ],
                     [
@@ -69,7 +69,7 @@ $this->title = $profile->name;
                         'label' => t('Zip code','company')
                     ],                  
                     [
-                        'value' => $profile->postalAddress->adds,
+                        'value' => $profile->postalAddress->address,
                         'label' => t('Address','company')
                     ],
                     [
