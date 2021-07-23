@@ -5,7 +5,6 @@ namespace app\modules\manage\controllers\AccessRule;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
-
 /**
  * Description of BaseController
  *
@@ -25,7 +24,7 @@ class BaseController extends Controller
                     ]  
                 ],
                 'denyCallback' => function($rule, $action) {
-                        return $action->controller->redirect(Url::to('/site/access-denied'));
+                        return $action->controller->redirect(Url::to('/manage/auth'));
                 },
             ]
         ];

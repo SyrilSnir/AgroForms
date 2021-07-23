@@ -28,6 +28,9 @@ abstract class BaseAdminController extends ManageController
                     ]  
                 ],
                 'denyCallback' => function($rule, $action) {
+                        if (\Yii::$app->user->isGuest) {
+                            return $action->controller->redirect(Url::to('/manage/auth'));
+                        }
                         return $action->controller->redirect(Url::to('/site/access-denied'));
                 },
             ]
