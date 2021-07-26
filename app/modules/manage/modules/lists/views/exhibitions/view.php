@@ -26,24 +26,19 @@ $this->title = $model->title;
     </p>
 
 <div class="card">
-  <div class="card-header">
-    <h3 class="card-title"><?php echo $this->title ?></h3>
-        <div class="card-body">
-            <?= DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'id',
-                    'title:text:Название',
-                    'title_eng:text:Название (ENG)',
-                    'description:raw:Описание',
-                    'description_eng:raw:Описание (ENG)',
-                    'start_date:date:Дата начала',
-                    'end_date:date:Дата окончания',
-                ],
-            ]); ?>
-        </div>
+    <div class="card-body">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'id',
+                'title:text:Название',
+                'title_eng:text:Название (ENG)',
+                'description:raw:Описание',
+                'description_eng:raw:Описание (ENG)',
+                'start_date:date:Дата начала',
+                'end_date:date:Дата окончания',
+            ],
+        ]); ?>
     </div>
-
-
 </div>
 

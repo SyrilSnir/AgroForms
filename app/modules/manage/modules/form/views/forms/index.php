@@ -17,9 +17,6 @@ $this->title = 'Справочник доступных форм';
 ?>
 <section class="content">
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title"><?php echo $this->title ?></h3>
-        </div>
         <div class="bd-example">
            
                 <p><?= Html::a('Новая форма', ['create'], ['class' => 'btn btn-success']) ?></p>

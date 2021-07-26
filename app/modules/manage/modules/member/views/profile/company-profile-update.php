@@ -11,20 +11,17 @@ use yii\widgets\ActiveForm;
 /** @var ActiveForm $form */
 /** @var CompanyForm $model */
 
-$this->title = t('Edit company', 'company');
+$this->title = t('Edit company', 'company') . ': ' . $model->name;
 if (!empty($model->getFirstErrors())):?>
 <div class="callout callout-info">
     <h5><i class="fas fa-info" style="color:red"></i> <?php echo Yii::t('app','Note')?>:</h5>
-              Не заполнены обязательные поля
-            </div>
+        <?php echo Yii::t('app','Required fields are missing') ?>
+    </div>
 <?php endif ;?>
 <div class="update-form">
     <section class="content">
         <div class="container-fluid">
             <div class="card card-default">
-                <div class="card-header">
-                    <h3 class="card-title"><?php echo $this->title ?></h3>
-                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col">                           
@@ -173,8 +170,8 @@ if (!empty($model->getFirstErrors())):?>
                                 </div>                         
                             </div>
                             <div class="form-group">
-                                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-                                <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>
+                                <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
+                                <?= Html::a(Yii::t('app', 'Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
                             </div>
         <?php ActiveForm::end(); ?>
                         </div>

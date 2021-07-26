@@ -16,7 +16,7 @@ use yii\web\View;
 /** @var Request $model */
 /** @var bool $isExhibitionActive */
 
-$this->title = $model->name;
+$this->title = Yii::t('app/title','My requests');
 
 //$formsList = FormsHelper::formsList();
 //dump($formsList); die();

@@ -1,6 +1,8 @@
 <?php
 
 return [
+        'Directory of companies' => 'Справочник компаний',
+        'New company' => 'Новая компания',
         'About company' => 'О компании',
         'Edit company' => 'Редактирование компании',
         'Name' => 'Название',

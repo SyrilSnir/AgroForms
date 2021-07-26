@@ -17,9 +17,6 @@ use yii\widgets\ActiveForm;
 <section class="content">
     <div class="container-fluid">
         <div class="card card-default">
-            <div class="card-header">
-                <h3 class="card-title"><?php echo $this->title ?></h3>
-            </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">                           
@@ -166,8 +163,8 @@ use yii\widgets\ActiveForm;
                             </div>                         
                         </div>
                         <div class="form-group">
-                            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-                            <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>
+                            <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
                         </div>
     <?php ActiveForm::end(); ?>
                     </div>

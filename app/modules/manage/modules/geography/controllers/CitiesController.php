@@ -62,4 +62,17 @@ class CitiesController extends BaseAdminController
             'model' => $form,
         ]);
     }    
+    
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+        $form = new CityForm($model);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $this->service->edit($id, $form);
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        return $this->render('update', [
+            'model' => $form,
+        ]);                        
+    }     
 }

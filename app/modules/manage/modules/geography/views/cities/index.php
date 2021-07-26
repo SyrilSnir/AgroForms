@@ -21,9 +21,6 @@ $this->title = 'Управление городами';
         <?= Html::a('Добавить пользователя', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 <?php */ ?>
-        <div class="card-header">
-            <h3 class="card-title"><?php echo $this->title ?></h3>
-        </div>
         <div class="bd-example">
            
                 <p><?= Html::a('Новый город', ['create'], ['class' => 'btn btn-success']) ?></p>

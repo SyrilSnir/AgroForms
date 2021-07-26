@@ -18,7 +18,7 @@ $this->title = $model->name;
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы действительно хотите регион?',
+                'confirm' => 'Вы действительно хотите страну?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,8 +30,8 @@ $this->title = $model->name;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'name:text:Название региона',
-                    'country.name:text:Страна'
+                    'name:text:Название страны',
+                    'ocde:text:Идентификатор'
                 ],
             ]); ?>
         </div>

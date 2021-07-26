@@ -51,6 +51,7 @@ return [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'fileMap' => [
                         'app'       => 'app.php',
+                        'app/title' => 'title.php',
                         'app/error' => 'error.php',
                         'app/user' => 'user.php',
                         'app/company' => 'company.php',

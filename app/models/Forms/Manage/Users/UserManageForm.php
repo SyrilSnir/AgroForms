@@ -53,10 +53,4 @@ class UserManageForm extends ActiveRecord
                         'id', 
                         'name');        
     }
-
-    protected function internalForms(): array
-    {
-        
-    }
-
 }

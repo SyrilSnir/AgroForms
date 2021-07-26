@@ -12,17 +12,6 @@ $this->title = 'Управление категориями';
 ?>
 <section class="content">
     <div class="card">
-<?php 
-
-// Добавление нового пользователя из панели администратора не имеет смысла
-/* ?>
-    <p>
-        <?= Html::a('Добавить пользователя', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php */ ?>
-        <div class="card-header">
-            <h3 class="card-title"><?php echo $this->title ?></h3>
-        </div>
         <div class="bd-example">
            
                 <p><?= Html::a('Новая категория', ['create'], ['class' => 'btn btn-success']) ?></p>

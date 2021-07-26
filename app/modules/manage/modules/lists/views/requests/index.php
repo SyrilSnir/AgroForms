@@ -14,15 +14,11 @@ use yii\web\View;
 /* @var $searchModel RequestSearch */
 /* @var $modificationsProvider ActiveDataProvider */
 
-$this->title = $model->name;
-
-//$formsList = FormsHelper::formsList();
-//dump($formsList); die();
+$this->title = Yii::t('app/title', 'Requests list');
 ?>
 
 <div class="card full-view">
   <div class="card-header">
-    <h3 class="card-title"><?php echo $this->title ?></h3>
         <div class="card-body">
  <?php if (Yii::$app->session->has('success')): ?>
     <div class="alert alert-primary" role="alert">
@@ -77,8 +73,5 @@ $this->title = $model->name;
                     ],
                 ]); ?>
         </div>
-    </div>
-
-
 </div>
 

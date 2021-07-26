@@ -26,6 +26,7 @@ return [
    'Enter authorization data' => 'Введите данные для автроризации',
    'Attach file' => 'Добавить вложение',
    'Select file' => 'Выбрать файл',
-   'Browse' => 'Обзор'
+   'Browse' => 'Обзор',
+   'Required fields are missing' => 'Не заполнены обязательные поля'
 ];
 

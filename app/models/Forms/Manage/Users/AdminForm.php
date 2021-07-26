@@ -25,7 +25,7 @@ class AdminForm extends UserManageForm
             $this->email = $user->email;
             $this->company = $user->company_id;
             $this->userType = UserType::ROOT_USER_ID;
-            $this->genre = $user->genre;
+            $this->gender = $user->gender;
             $this->userId = $user->id;
         }
         
@@ -63,10 +63,5 @@ class AdminForm extends UserManageForm
             'active' => 'Active',
             'genre' => 'Пол'
         ];
-    }
-
-        public function internalForms(): array
-    {
-        return ['member'];
     }
 }

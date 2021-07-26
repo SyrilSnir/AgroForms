@@ -9,6 +9,7 @@ use app\widgets\Forms\StandWidget;
 /** @var Form $form */
 /** @var UserIdentity $user */
 
+$this->title = Yii::t('app/title','Add request');
 $widgetConfig = [
             'user' => $user,
             'formId' => $form->id

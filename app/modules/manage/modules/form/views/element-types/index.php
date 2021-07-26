@@ -15,14 +15,9 @@ $this->title = 'Справочник типов отображаемых эле�
 ?>
 <section class="content">
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title"><?php echo $this->title ?></h3>
+        <div class="bd-example">           
+            <p><?= Html::a('Новый тип элемента', ['create'], ['class' => 'btn btn-success']) ?></p>            
         </div>
-        <div class="bd-example">
-           
-                <p><?= Html::a('Новый тип элемента', ['create'], ['class' => 'btn btn-success']) ?></p>
-            
-    </div>
         <div class="card-body">
 
                 <?= GridView::widget([

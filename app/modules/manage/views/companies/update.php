@@ -1,7 +1,11 @@
 <?php
-/* @var $this yii\web\View */
 
-$this->title = 'Редактирование компании';
+use app\models\Forms\Manage\Companies\CompanyForm;
+use yii\web\View;
+/* @var $this View */
+/** @var CompanyForm $model */
+
+$this->title = Yii::t('app/title', 'Edit company') . ': ' . $model->name;
 ?>
 
 <div class="update-form">

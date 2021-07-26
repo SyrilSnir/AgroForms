@@ -62,5 +62,18 @@ class RegionsController extends BaseAdminController
         return $this->render('create', [
             'model' => $form,
         ]);
-    }    
+    } 
+    
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+        $form = new RegionForm($model);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $this->service->edit($id, $form);
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        return $this->render('update', [
+            'model' => $form,
+        ]);                        
+    }     
 }

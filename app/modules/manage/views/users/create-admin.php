@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 /** @var AdminForm $model  */
 /** @var bool $update */
 
-$this->title = ($update) ? 'Изменить пользователя' : 'Создать пользователя';
+$this->title = ($update) ? 'Изменить пользователя: ' . $model->login : 'Создать пользователя';
 $action = ($update) ? Url::to(['/manage/users/update', 'id' => $model->userId ]) : '/manage/users/create-admin';
 ?>
 
@@ -24,9 +24,6 @@ $action = ($update) ? Url::to(['/manage/users/update', 'id' => $model->userId ])
     <section class="content">
         <div class="container-fluid">
             <div class="card card-default">
-                <div class="card-header">
-                    <h3 class="card-title"><?php echo $this->title ?></h3>
-                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">                           
@@ -41,7 +38,7 @@ $action = ($update) ? Url::to(['/manage/users/update', 'id' => $model->userId ])
     <?php if ($update): ?>                        
         <?= $form->field($model, 'userType')->dropDownList($model->typeList()) ?>             
     <?php endif; ?>                              
-    <?= $form->field($model, 'genre')->dropDownList([
+    <?= $form->field($model, 'gender')->dropDownList([
         0 => 'Не задано',
         1 => 'Мужской',
         2 => 'Женский'

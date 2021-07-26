@@ -11,18 +11,13 @@ use yii\web\View;
 /* @var $searchModel CompanySearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Справочник компаний';
+$this->title = Yii::t('app/company','Directory of companies');
 ?>
 <section class="content">
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title"><?php echo $this->title ?></h3>
+        <div class="bd-example">           
+                <p><?= Html::a(Yii::t('app/company','New company'), ['create'], ['class' => 'btn btn-success']) ?></p>            
         </div>
-        <div class="bd-example">
-           
-                <p><?= Html::a('Новая компания', ['create'], ['class' => 'btn btn-success']) ?></p>
-            
-    </div>
         <div class="card-body">
 
                 <?= GridView::widget([

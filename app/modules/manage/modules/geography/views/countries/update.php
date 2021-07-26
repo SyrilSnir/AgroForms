@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование категории';
+$this->title = 'Редактирование страны';
 ?>
 
 <div class="update-form">

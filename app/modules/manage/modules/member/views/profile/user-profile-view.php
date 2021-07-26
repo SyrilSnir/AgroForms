@@ -16,7 +16,7 @@ use yii\widgets\DetailView;
 /* @var $profile User */
 /* @var $modificationsProvider ActiveDataProvider */
 
-$this->title = $profile->login;
+$this->title = Yii::t('app/title','User info') .': ' . $profile->login;
 
 $attributes = [
                     'login:text:'.Yii::t('app/user','Login'),
@@ -43,9 +43,6 @@ $attributes = [
     <div class="row">
         <div class="col-md-12">
             <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title"><?php echo $this->title ?></h3>
-                </div>
                     <div class="card-body">
                         <?= DetailView::widget([
                             'model' => $profile,

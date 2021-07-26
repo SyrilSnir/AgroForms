@@ -23,9 +23,6 @@ $this->title = $model->name;
         <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title"><?php echo $this->title ?></h3>
-        </div>
         <div class="card-body">
             <?= DetailView::widget([
                 'model' => $model,

@@ -11,7 +11,7 @@ use yii\web\View;
 /* @var $profile Company */
 /* @var $modificationsProvider ActiveDataProvider */
 
-$this->title = $profile->name;
+$this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
 ?>
 <div class="category-view full-view">
     <p>
@@ -19,7 +19,6 @@ $this->title = $profile->name;
     </p>    
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title"><?php echo $this->title ?></h3>
         <div class="card-body">
             <?= DetailView::widget([
                 'mode'=>DetailView::MODE_VIEW,               

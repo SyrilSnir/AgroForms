@@ -12,14 +12,9 @@ $this->title = 'Справочник доп. оборудования';
 ?>
 <section class="content">
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title"><?php echo $this->title ?></h3>
+        <div class="bd-example">           
+            <p><?= Html::a('Новое оборудование', ['create'], ['class' => 'btn btn-success']) ?></p>            
         </div>
-        <div class="bd-example">
-           
-                <p><?= Html::a('Новое оборудование', ['create'], ['class' => 'btn btn-success']) ?></p>
-            
-    </div>
         <div class="card-body">
 
                 <?= GridView::widget([

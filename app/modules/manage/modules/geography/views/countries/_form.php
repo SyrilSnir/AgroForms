@@ -1,15 +1,12 @@
 <?php
 
-use app\models\Forms\Common\ValuteForm;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
-
-
 /** @var View $this */
 /** @var ActiveForm $form */
-/** @var ValuteForm $model */
+/** @var CountryForm $model */
 ?>
 
     <section class="content">
@@ -20,11 +17,10 @@ use yii\widgets\ActiveForm;
                         <div class="col-md-6">                           
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput() ?>
-    <?= $form->field($model, 'intName')->textInput() ?>
-    <?= $form->field($model, 'charCode')->textInput() ?>
-    <?= $form->field($model, 'symbol')->textInput() ?>
-                            
+    <?= $form->field($model, 'name')->textInput(['maxLength' => true]) ?>
+    <?= $form->field($model, 'code')->textInput(['maxLength' => true]) ?>
+
+
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>

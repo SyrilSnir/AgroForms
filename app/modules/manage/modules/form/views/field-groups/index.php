@@ -15,14 +15,9 @@ $this->title = 'Группы полей формы';
 ?>
 <section class="content full-view">
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title"><?php echo $this->title ?></h3>
+        <div class="bd-example">           
+            <p><?= Html::a('Новая группа', ['create'], ['class' => 'btn btn-success']) ?></p>            
         </div>
-        <div class="bd-example">
-           
-                <p><?= Html::a('Новая группа', ['create'], ['class' => 'btn btn-success']) ?></p>
-            
-    </div>
         <div class="card-body">
 
                 <?= GridView::widget([

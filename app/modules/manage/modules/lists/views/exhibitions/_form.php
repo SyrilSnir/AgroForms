@@ -16,9 +16,6 @@ use yii\widgets\ActiveForm;
     <section class="content">
         <div class="container-fluid">
             <div class="card card-default">
-                <div class="card-header">
-                    <h3 class="card-title"><?php echo $this->title ?></h3>
-                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">                           

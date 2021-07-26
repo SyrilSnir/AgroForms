@@ -27,22 +27,26 @@ class Country extends ActiveRecord
     /**
      * 
      * @param string $name
+     * @param string $code
      * @return \self
      */
-    public static function create(string $name):self
+    public static function create(string $name, string $code = ''):self
     {
         $model = new self();
         $model->name = $name;
+        $model->code = $code;
         return $model;
     }
 
     /**
      * 
      * @param string $name
+     * @param string $code
      */
-    public function edit(string $name)
+    public function edit(string $name,string $code = '')
     {
         $this->name = $name;
+        $this->code = $code;
     }   
     
     /**

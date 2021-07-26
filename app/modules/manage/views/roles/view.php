@@ -19,20 +19,15 @@ $this->title = $model->name;
     </p>
 
 <div class="card">
-  <div class="card-header">
-    <h3 class="card-title"><?php echo $this->title ?></h3>
-        <div class="card-body">
-            <?= DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'id',
-                    'name:text:Тип пользователя',
-                    'slug:text:Идентификатор',
-                ],
-            ]); ?>
-        </div>
+    <div class="card-body">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'id',
+                'name:text:Тип пользователя',
+                'slug:text:Идентификатор',
+            ],
+        ]); ?>
     </div>
-
-
 </div>
 
