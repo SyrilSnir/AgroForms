@@ -17,10 +17,11 @@ use Yii;
  */
 trait MultilangTrait
 {
+    protected $multilangEnabled = true;
 
     public function __get($name)
     {
-        if (Yii::$app->language == Languages::RUSSIAN) {
+        if (Yii::$app->language == Languages::RUSSIAN || $this->multilangEnabled == false) {
             return parent::__get($name);
         }
         $propEng = $name . '_eng';
@@ -30,5 +31,14 @@ trait MultilangTrait
         
         return parent::__get($propEng);
     }
-
+    
+    public function enableMultilang()
+    {
+        $this->multilangEnabled = true;
+    }
+    
+    public function disableMultilang()
+    {
+        $this->multilangEnabled = false;
+    }
 }

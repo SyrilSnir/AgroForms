@@ -4,6 +4,7 @@ namespace app\modules\manage\modules\form\controllers;
 
 use app\core\repositories\readModels\Forms\FormTypeReadRepository;
 use app\core\services\operations\Forms\FormTypeService;
+use app\models\ActiveRecord\Forms\FormType;
 use app\models\Forms\Manage\Forms\FormTypeForm;
 use app\models\SearchModels\Forms\FormTypeSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -48,7 +49,7 @@ class FormTypesController extends BaseAdminController
     
      public function actionCreate()
     {
-        $form = new FormTypeForm();
+        $form = new FormTypeForm();        
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $post = $this->service->create($form);
@@ -64,7 +65,9 @@ class FormTypesController extends BaseAdminController
 
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        /** @var FormType $model */
+        $model = $this->findModel($id);       
+        $model->disableMultilang();
         $form = new FormTypeForm($model);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $this->service->edit($id, $form);

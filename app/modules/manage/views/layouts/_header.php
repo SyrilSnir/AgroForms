@@ -13,12 +13,10 @@
       <li class="nav-item d-none d-sm-inline-block">
           <a href="/" class="nav-link"><?php echo t('Main page');?></a>
       </li>
-    </ul>
-    <?php if (Yii::$app->user->can(app\core\manage\Auth\Rbac::PERMISSION_MEMBER_MENU)): ?>
+    </ul>    
 <?= LanguagePicker::widget([
     'skin' => LanguagePicker::SKIN_BUTTON,
     'size' => LanguagePicker::SIZE_SMALL
 ]); ?>
-  <?php endif ;?>
   </nav>
 

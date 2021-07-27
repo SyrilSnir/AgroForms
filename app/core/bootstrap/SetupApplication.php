@@ -102,16 +102,6 @@ class SetupApplication implements BootstrapInterface
             $mailer->useFileTransport = true;
             return new MailService($mailer, 'test@test.ru','test');
         });
-        if ($app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU)) {
-            $cookies = $app->response->cookies;
-            $language = $cookies->getValue('language', 'ru-RU');
-            if ($language != 'ru-Ru') {
-                $cookies->add(new Cookie([
-                    'name' => 'language',
-                    'value' => 'ru-RU',
-                ]));
-            }
-        }
     }
 
 }
