@@ -45,11 +45,10 @@ class CompaniesController extends BaseAdminController
         $searchModel = new CompanySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $rowsCountForm = new RowsCountForm();        
-        if ($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate()) {       
-            $rowsCount = $rowsCountForm->rowsCount;
-        } else {
-            $rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
-        }         
+        if (!($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate())) {       
+            $rowsCountForm->rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
+        }   
+        $dataProvider->pagination = ['pageSize' => $rowsCountForm->rowsCount];
         return $this->render('index',[            
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

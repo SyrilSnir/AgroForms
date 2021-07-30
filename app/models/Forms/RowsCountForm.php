@@ -13,7 +13,7 @@ class RowsCountForm extends Model
 {
     const DEFAULT_ROWS_COUNT = 20;
     
-    public $rowsCount;
+    public $rowsCount;    
     
     public function rules(): array
     {
