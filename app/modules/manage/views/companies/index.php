@@ -38,11 +38,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
 ?>
 <section class="content">
     <div class="card">
-        <div class="bd-example">           
-                <p><?= Html::a(Yii::t('app/company','New company'), ['create'], ['class' => 'btn btn-success']) ?></p>            
-        </div>
         <div class="card-body">
-
                 <?= GridView::widget($fullGridConfig); ?>
         </div>
     </div>

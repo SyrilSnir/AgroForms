@@ -15,9 +15,9 @@ $this->title = Yii::t('app/title','Company info') . ': ' . $model->name;
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Добавить участника', ['add-member', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app/user','Create new member'), ['add-member', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -28,140 +28,139 @@ $this->title = Yii::t('app/title','Company info') . ': ' . $model->name;
                 'attributes' => [
                     [
                         'group'=>true,
-                        'label'=>'О компании',
+                        'label'=> Yii::t('app/company','About company'),
                         'rowOptions'=>['class'=>'table-info']
                     ],
-                    'id',
-                    'name:text:Название',
-                    'full_name:text:Полное наименование',
-                    'inn:text:ИНН',
-                    'kpp:text:КПП',
-                    'phone:text:Телефон',
-                    'fax:text:Факс',
-                    'site:text:Сайт',
+                    'name:text:' . Yii::t('app/company','Name'),
+                    'full_name:text:' . Yii::t('app/company','Full name'),
+                    'inn:text:' . Yii::t('app/company','INN'),
+                    'kpp:text:' . Yii::t('app/company','KPP'),
+                    'phone:text:' . Yii::t('app/company','Phone'),
+                    'fax:text:' . Yii::t('app/company','Fax'),
+                    'site:text:' . Yii::t('app/company','Site'),
                     [
-                        'group'=>true,
-                        'label'=>'Адрес',
+                        'group'=> true,
+                        'label'=> Yii::t('app/company','Address'),
                         'rowOptions'=>['class'=>'table-info']
                     ],
                     [
-                        'group'=>true,
-                        'label'=>'Юридический адрес',
+                        'group'=> true,
+                        'label'=> Yii::t('app/company','Legal address'),
                         'rowOptions'=>['class'=>'table-success']
                     ],
                     [
                         'value' => $model->legalAddress->index,
-                        'label' => 'Почтовый индекс'
+                        'label' => Yii::t('app/company','Zip code')
                     ],                  
                     [
                         'value' => $model->legalAddress->address,
-                        'label' => 'Адрес'
+                        'label' => Yii::t('app/company','Address')
                     ],
                     [
                         'value' => $model->legalAddress->city->name,
-                        'label' => 'Город'                        
+                        'label' => Yii::t('app','City')                        
                     ],
                     [
                         'group'=>true,
-                        'label'=>'Почтовый адрес',
+                        'label'=> Yii::t('app/company','Mailing address'),
                         'rowOptions'=>['class'=>'table-success']
                     ],
                     [
                         'value' => $model->postalAddress->index,
-                        'label' => 'Почтовый индекс'
+                        'label' => Yii::t('app/company','Zip code')
                     ],                  
                     [
                         'value' => $model->postalAddress->address,
-                        'label' => 'Адрес'
+                        'label' => Yii::t('app/company','Address')
                     ],
                     [
                         'value' => $model->postalAddress->city->name,
-                        'label' => 'Город'                        
+                        'label' => Yii::t('app','City')  
                     ],
                     [
-                        'group'=>true,
-                        'label'=>'Контакты',
+                        'group'=> true,
+                        'label'=> Yii::t('app/company','Contacts'),
                         'rowOptions'=>['class'=>'table-info']
                     ],
                     [
-                        'group'=>true,
-                        'label'=>'Руководитель компании',
+                        'group'=> true,
+                        'label'=> Yii::t('app/company','Head of company'),
                         'rowOptions'=>['class'=>'table-success']
                     ], 
                     [
                         'value' => $model->contacts->chief_position,
-                        'label' => 'Дожность руководителя'
+                        'label' => Yii::t('app/company','Head position')
                     ],                    
                     [
                         'value' => $model->contacts->chief_fio,
-                        'label' => 'ФИО руководителя'
+                        'label' => Yii::t('app/company','Head full name')
                     ],
                     [
                         'value' => $model->contacts->chief_phone,
-                        'label' => 'Телефон руководителя'
+                        'label' => Yii::t('app/company','Head phone')
                     ],                    
                     [
                         'value' => $model->contacts->chief_email,
-                        'label' => 'Email руководителя'
+                        'label' => Yii::t('app/company','Head email')
                     ], 
                     [
-                        'group'=>true,
-                        'label'=>'Менеджер проекта',
+                        'group'=> true,
+                        'label'=> Yii::t('app/company','Project manager'),
                         'rowOptions'=>['class'=>'table-success']
                     ], 
                     [
                         'value' => $model->contacts->manager_position,
-                        'label' => 'Дожность менеджера'
+                        'label' => Yii::t('app/company','Manager\'s position'),
                     ],                    
                     [
                         'value' => $model->contacts->manager_fio,
-                        'label' => 'ФИО менеджера'
+                        'label' => Yii::t('app/company','Manager\'s full name'),
                     ],
                     [
                         'value' => $model->contacts->manager_phone,
-                        'label' => 'Телефон менеджера'
+                        'label' => Yii::t('app/company','Manager\'s phone'),
                     ],
                     [
                         'value' => $model->contacts->manager_fax,
-                        'label' => 'Факс менеджера'
+                        'label' => Yii::t('app/company','Manager\'s fax'),
                     ],                    
                     [
                         'value' => $model->contacts->manager_email,
-                        'label' => 'Email менеджера'
+                        'label' => Yii::t('app/company','Manager\'s email'),
                     ], 
                     [
-                        'group'=>true,
-                        'label'=>'Подписант (используется в заявках)',
+                        'group'=> true,
+                        'label'=> Yii::t('app/company','Signer (used in proposal)'),
                         'rowOptions'=>['class'=>'table-success']
                     ], 
                     [
                         'value' => $profile->contacts->proposal_signature_name,
-                        'label' => 'ФИО подписанта'
+                        'label' => Yii::t('app/company','Signer\'s full name'),
                     ],                    
                     [
                         'value' => $profile->contacts->proposal_signature_post,
-                        'label' => 'Должность подписанта'
+                        'label' => Yii::t('app/company','Signer\'s position'),
                     ],                    
                     [
-                        'group'=>true,
-                        'label'=>'Банковские реквизиты',
+                        'group'=> true,
+                        'label'=> Yii::t('app/company','Bank details'),
                         'rowOptions'=>['class'=>'table-info']
                     ],
                     [
                         'value' => $model->bankDetails->rs_schet,
-                        'label' => 'Расчетный счет'
+                        'label' => Yii::t('app/company','Checking account'),
                     ],
                     [
                         'value' => $model->bankDetails->ks_schet,
-                        'label' => 'Корреспондентскй счет'
+                        'label' => Yii::t('app/company','Correspondent account'),
                     ],
                     [
                         'value' => $model->bankDetails->bik,
-                        'label' => 'БИК'
+                        'label' => Yii::t('app/company','BIC'),
                     ],
                     [
                         'value' => $model->bankDetails->bank_info,
-                        'label' => 'Информация о банке'
+                        'label' => Yii::t('app/company','Bank information'),
                     ],                    
                 ],
             ]); ?>
