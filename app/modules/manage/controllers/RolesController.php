@@ -5,6 +5,7 @@ namespace app\modules\manage\controllers;
 use app\core\repositories\readModels\User\UserTypeReadRepository;
 use app\core\services\operations\Users\UserTypeService;
 use app\models\Forms\Manage\Users\UserTypeForm;
+use app\models\Forms\RowsCountForm;
 use app\models\SearchModels\Users\UserTypeSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
 use BadMethodCallException;
@@ -40,10 +41,17 @@ class RolesController extends BaseAdminController
     public function actionIndex() 
     {
         $searchModel = new UserTypeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);  
+        $rowsCountForm = new RowsCountForm();        
+        if ($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate()) {       
+            $rowsCount = $rowsCountForm->rowsCount;
+        } else {
+            $rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
+        }        
         return $this->render('index',[            
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'rowsCountForm' => $rowsCountForm            
         ]);
     }
     

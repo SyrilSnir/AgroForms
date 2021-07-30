@@ -27,6 +27,11 @@ class UserType extends ActiveRecord
     
     const MEMBER_USER_ID = 2;
     const MEMBER_USER_TYPE = 'member';
+    
+    const ROLES = [
+        self::ROOT_USER_ID => self::ROOT_USER_TYPE,
+        self::MEMBER_USER_ID => self::MEMBER_USER_TYPE
+    ];    
     /**
      * {@inheritdoc}
      */
@@ -48,5 +53,5 @@ class UserType extends ActiveRecord
     public function setName( string $name) 
     {
         $this->name = $name;
-    }
+    }        
 }

@@ -6,6 +6,7 @@ return [
    'Change' => 'Изменить',
    'Save' => 'Сохранить',
    'Exit' => 'Выход',
+   'Role' => 'Роль',
    'Enter' => 'Вход',
    'Back' => 'Вернуться',
    'Cancel' => 'Отмена',
@@ -27,6 +28,11 @@ return [
    'Attach file' => 'Добавить вложение',
    'Select file' => 'Выбрать файл',
    'Browse' => 'Обзор',
-   'Required fields are missing' => 'Не заполнены обязательные поля'
+   'Required fields are missing' => 'Не заполнены обязательные поля',
+    'Rows count' => 'Количество строк',
+    'User roles' => 'Справочник пользовательских ролей',
+    'All' => 'Все',
+    'Name' => 'Название',
+    'Identifier' => 'Идентификатор'
 ];
 

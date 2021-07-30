@@ -8,12 +8,12 @@ use yii\swiftmailer\Mailer;
 
 return [
     'bootstrap' => [
+        'languagepicker',
         SetupApplication::class, 
         GetActiveExhibition::class,
         'log',
         'debug',
         'gii',
-        'languagepicker'
     ],
     'modules' => [
         'gii' => [

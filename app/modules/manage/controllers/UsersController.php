@@ -9,6 +9,8 @@ use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
 use app\models\Forms\Manage\Users\AdminForm;
 use app\models\Forms\Manage\Users\MemberForm;
+use app\models\Forms\Manage\Users\UserManageForm;
+use app\models\Forms\RowsCountForm;
 use app\models\Forms\User\Manage\ActivateForm;
 use app\models\SearchModels\Users\UserSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -53,10 +55,18 @@ class UsersController extends BaseAdminController
     public function actionIndex() 
     {
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
+        $rowsCountForm = new RowsCountForm();
+        if ($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate()) {       
+            $rowsCount = $rowsCountForm->rowsCount;
+        } else {
+            $rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
+        }        
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = ['pageSize' => 100];
         return $this->render('index',[            
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'rowsCountForm' => $rowsCountForm
         ]);
     }
     
@@ -76,7 +86,23 @@ class UsersController extends BaseAdminController
             'update' => false
         ]);        
     }
-
+    public function actionCreateUser() 
+    {
+        $form = new UserManageForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $user = $this->service->createMember($form);
+                return $this->redirect(['view', 'id' => $user->id]);
+            } catch (DomainException $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        return $this->render('create', [
+            'model' => $form,
+            'update' => false
+        ]);        
+        
+    }
     public function actionCreateMember()
     {
         $form = new MemberForm();

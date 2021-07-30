@@ -8,7 +8,7 @@ use yii\web\View;
 /** @var View $this  */
 /** @var EquipmentForm $model  */
 
-$this->title = 'Новая компания';
+$this->title = Yii::t('app/company', 'New company');
 ?>
 
 <div class="create-form">

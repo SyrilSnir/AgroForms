@@ -24,12 +24,7 @@ $this->title = 'Управление регионами';
 
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
-                    'pager' => [
-                       'maxButtonCount' => 5, // максимум 5 кнопок
-                       'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                       'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                      'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
-                    ],
+                    'pager' => require Yii::getAlias('@config') . DIRECTORY_SEPARATOR .'pager.php',
                     'filterModel' => $searchModel,
                     'columns' => [                    
                         'id:integer:Id',

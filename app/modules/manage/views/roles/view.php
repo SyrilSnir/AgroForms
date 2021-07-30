@@ -14,8 +14,8 @@ $this->title = $model->name;
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app', 'Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -23,9 +23,8 @@ $this->title = $model->name;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'id',
-                'name:text:Тип пользователя',
-                'slug:text:Идентификатор',
+                'name:text:'. Yii::t('app', 'Role'),
+                'slug:text:' . Yii::t('app', 'Identifier'),
             ],
         ]); ?>
     </div>

@@ -46,13 +46,13 @@ class UserService
         $this->users = $userRepository;
         $this->memberProfiles = $memberProfileRepository;
         $this->roleManager = $roleManager;
-    }
+    }   
     
-    public function createAdmin(AdminForm $form)
+    public function createUser(UserManageForm $form)
     {
         $user = User::create(
                 $form->login,
-                UserType::ROOT_USER_ID, 
+                $form->userType, 
                 $form->company, 
                 $form->fio, 
                 $form->email, 
@@ -63,26 +63,7 @@ class UserService
                 $form->language
                 );
         $this->users->save($user);  
-        $this->roleManager->setRole(UserType::ROOT_USER_TYPE, $user->id);
-        return $user;
-    }
-
-    public function createMember(MemberForm $form)
-    {
-        $user = User::create(
-                $form->login,
-                UserType::MEMBER_USER_ID, 
-                $form->company, 
-                $form->fio, 
-                $form->email, 
-                $form->phone, 
-                $form->birthday, 
-                $form->position,
-                $form->gender, 
-                $form->language
-                );
-        $this->users->save($user);  
-        $this->roleManager->setRole(UserType::MEMBER_USER_TYPE, $user->id);
+        $this->roleManager->setRole(UserType::ROLES[$user->user_type_id], $user->id);
         return $user;
     }
     

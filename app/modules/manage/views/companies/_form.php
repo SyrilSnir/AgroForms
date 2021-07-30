@@ -23,16 +23,16 @@ use yii\widgets\ActiveForm;
                         <?php $form = ActiveForm::begin(); ?>
                         <ul id="company-tabs" class="nav nav-tabs">
                           <li class="nav-item">
-                            <a class="nav-link active" href="#about" tabindex="1" data-toggle="tab">О компании</a>
+                            <a class="nav-link active" href="#about" tabindex="1" data-toggle="tab"><?=Yii::t('app/company', 'About company')?></a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#address" tabindex="2" data-toggle="tab">Адрес</a>
+                            <a class="nav-link" href="#address" tabindex="2" data-toggle="tab"><?= Yii::t('app/company', 'Address') ?></a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#contacts" tabindex="3" data-toggle="tab">Контакты</a>
+                            <a class="nav-link" href="#contacts" tabindex="3" data-toggle="tab"><?= Yii::t('app/company', 'Contacts') ?></a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#bank" tabindex="4" data-toggle="tab">Банковские реквизиты</a>
+                            <a class="nav-link" href="#bank" tabindex="4" data-toggle="tab"><?= Yii::t('app/company', 'Bank details')?></a>
                           </li>
                         </ul>
                         <div class="tab-content">

@@ -10,33 +10,35 @@ use yii\web\View;
 /* @var $searchModel UserTypeSearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Справочник пользовательских ролей';
+$this->title = Yii::t('app', 'User roles');
+$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$columnsConfig = [ 
+    'toolbar' => [
+        [
+            'content'=> $rowsCountTemplate
+        ],
+    ],                    
+    'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
+    'columns' => [                    
+        'name:text:' . Yii::t('app','Name'),
+        'slug:text:' . Yii::t('app','Identifier'),
+        [
+            'class' => ActionColumn::class,
+            'width' => '100px',            
+            'visibleButtons' => [
+                'delete' => false
+            ]                        
+        ],
+    ],    
+];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);
 ?>
 <section class="content">
     <div class="card">
         <div class="card-body">
-
-                <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'pager' => [
-                       'maxButtonCount' => 5, // максимум 5 кнопок
-                       'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                       'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                      'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
-                    ],
-                    'filterModel' => $searchModel,
-                    'columns' => [                    
-                        'id:integer:Id',
-                        'name:text:Название',
-                        'slug:text:Идентифтикатор',
-                        [
-                            'class' => ActionColumn::class,
-                            'visibleButtons' => [
-                                'delete' => false
-                            ]                        
-                        ],
-                    ],
-                ]); ?>
+    <?= GridView::widget($fullGridConfig); ?>
         </div>
     </div>
 </section>

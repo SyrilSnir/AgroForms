@@ -3,6 +3,7 @@
 return [
         'Directory of companies' => 'Справочник компаний',
         'New company' => 'Новая компания',
+        'Add company' => 'Добавить компанию',
         'About company' => 'О компании',
         'Edit company' => 'Редактирование компании',
         'Name' => 'Название',

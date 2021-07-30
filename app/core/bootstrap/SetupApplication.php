@@ -102,6 +102,9 @@ class SetupApplication implements BootstrapInterface
             $mailer->useFileTransport = true;
             return new MailService($mailer, 'test@test.ru','test');
         });
+        if (Yii::$app->language == \app\models\Data\Languages::ENGLISH) {
+            Yii::$app->formatter->locale = \app\models\Data\Languages::ENGLISH;
+        }
     }
 
 }

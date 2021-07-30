@@ -7,6 +7,7 @@ use app\core\services\operations\Companies\CompanyService;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\Forms\Manage\Companies\CompanyForm;
 use app\models\Forms\Manage\Users\MemberForm;
+use app\models\Forms\RowsCountForm;
 use app\models\SearchModels\Companies\CompanySearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
 use DomainException;
@@ -42,10 +43,17 @@ class CompaniesController extends BaseAdminController
     public function actionIndex() 
     {
         $searchModel = new CompanySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $rowsCountForm = new RowsCountForm();        
+        if ($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate()) {       
+            $rowsCount = $rowsCountForm->rowsCount;
+        } else {
+            $rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
+        }         
         return $this->render('index',[            
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'rowsCountForm' => $rowsCountForm
         ]);
     }
     

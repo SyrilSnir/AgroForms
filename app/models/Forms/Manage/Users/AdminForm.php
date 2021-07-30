@@ -14,21 +14,13 @@ use yii\helpers\ArrayHelper;
  */
 class AdminForm extends UserManageForm
 {
-    
+        
     public function __construct(User $user = null, $config = array())
     {     
-        parent::__construct($config);
-        if ($user) {
-            $this->fio = $user->fio;
-            $this->login = $user->login;
-            $this->phone = $user->phone;
-            $this->email = $user->email;
-            $this->company = $user->company_id;
+        parent::__construct($user, $config);
+        if (!$user) {
             $this->userType = UserType::ROOT_USER_ID;
-            $this->gender = $user->gender;
-            $this->userId = $user->id;
-        }
-        
+        }        
     }
 
     public function rules()
@@ -44,24 +36,5 @@ class AdminForm extends UserManageForm
             ],             
         ];     
         return ArrayHelper::merge(parent::rules(), $rules);
-    } 
-    
-    public function attributeLabels(): array
-    {
-        return [
-            'id' => 'ID',
-            'login' => 'Логин',
-            'userType' => 'Тип пользователя',
-            'company' => 'Компания',
-            'fio' => 'ФИО',
-            'email' => 'Email',
-            'phone' => 'Номер телефона',
-            'birthday' => 'Дата рождения',
-            'gengre' => 'Пол',
-            'language' => 'Язык',
-            'description' => 'Description',
-            'active' => 'Active',
-            'genre' => 'Пол'
-        ];
-    }
+    }     
 }

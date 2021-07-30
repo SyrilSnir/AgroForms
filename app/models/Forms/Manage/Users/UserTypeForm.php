@@ -3,6 +3,7 @@
 namespace app\models\Forms\Manage\Users;
 
 use app\models\ActiveRecord\Users\UserType;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -43,7 +44,7 @@ class UserTypeForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'Наименование',
+            'name' => Yii::t('app','Role'),
         ];
     }
 }

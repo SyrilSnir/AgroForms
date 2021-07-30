@@ -6,6 +6,7 @@ use app\core\repositories\readModels\Geography\CityReadRepository;
 use app\core\services\operations\Forms\ElementTypeService;
 use app\core\services\operations\Geography\CityService;
 use app\models\Forms\Geography\CityForm;
+use app\models\Forms\RowsCountForm;
 use app\models\SearchModels\Geography\CitySearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
 use DomainException;
@@ -40,10 +41,18 @@ class CitiesController extends BaseAdminController
     public function actionIndex()
     {
         $searchModel = new CitySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams); 
+        $rowsCountForm = new RowsCountForm();        
+        if ($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate()) {       
+            $rowsCount = $rowsCountForm->rowsCount;
+        } else {
+            $rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
+        }        
+        $dataProvider->pagination = ['pageSize' => $rowsCount];        
         return $this->render('index',[            
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'rowsCountForm' => $rowsCountForm
         ]);   
     }
     

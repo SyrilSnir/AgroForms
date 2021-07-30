@@ -8,10 +8,14 @@ Yii::setAlias('@mail', dirname(__DIR__) . DIRECTORY_SEPARATOR .
 Yii::setAlias('@pdf', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
         'app' .DIRECTORY_SEPARATOR .'views' . DIRECTORY_SEPARATOR . 
         'templates'. DIRECTORY_SEPARATOR . 'pdf');
-
+Yii::setAlias('@elements', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
+        'app' .DIRECTORY_SEPARATOR .'views' . DIRECTORY_SEPARATOR . 
+        'templates'. DIRECTORY_SEPARATOR . 'elements');
 Yii::setAlias('@fixtures', dirname(__DIR__) . DIRECTORY_SEPARATOR .
         'commands' . DIRECTORY_SEPARATOR . 'fixtures');
 
+Yii::setAlias('@config', dirname(__DIR__) . DIRECTORY_SEPARATOR .
+        'config' . DIRECTORY_SEPARATOR . 'parts');
 Yii::setAlias('@uploadPath', dirname(__DIR__)
         . DIRECTORY_SEPARATOR . 'web' 
         . DIRECTORY_SEPARATOR . 'upload'

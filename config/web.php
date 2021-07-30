@@ -12,6 +12,7 @@ use kartik\grid\GridViewAsset as GridViewAsset2;
 use kartik\grid\Module;
 use kartik\select2\Select2Asset;
 use lajax\languagepicker\bundles\LanguagePluginAsset;
+use lajax\languagepicker\Component;
 use yii\bootstrap4\BootstrapAsset;
 use yii\bootstrap4\BootstrapPluginAsset;
 use yii\caching\FileCache;
@@ -63,14 +64,14 @@ return [
             ],
         ],  
         'languagepicker' => [
-            'class' => 'lajax\languagepicker\Component',
+            'class' => Component::class,
             // List of available languages (icons and text)
             'languages' => [
                 Languages::ENGLISH => 'English', 
                 Languages::RUSSIAN => 'Russian']
         ],        
         'formatter' => [
-            'locale' => Languages::RUSSIAN,
+         //   'locale' => Languages::RUSSIAN,
             'thousandSeparator' => ' ',
             'defaultTimeZone' => 'Europe/Moscow',
             'timeZone' => 'Europe/Moscow',
