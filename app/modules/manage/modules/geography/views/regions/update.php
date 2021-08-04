@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование региона';
+$this->title = Yii::t('app/title','Edit region') . ': ' .$model->name;
 ?>
 
 <div class="update-form">

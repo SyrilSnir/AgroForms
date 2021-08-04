@@ -19,6 +19,7 @@ class City extends ActiveRecord
 {
     
     const MOSCOW = 4400;
+
     /**
      * {@inheritdoc}
      */
@@ -73,5 +74,5 @@ class City extends ActiveRecord
     public function getCountry()
     {
        return $this->region->hasOne(Country::class, ['id' => 'country_id']);
-    }
+    }   
 }

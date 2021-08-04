@@ -5,8 +5,8 @@ namespace app\modules\manage\modules\geography\controllers;
 use app\core\repositories\readModels\Geography\CityReadRepository;
 use app\core\services\operations\Forms\ElementTypeService;
 use app\core\services\operations\Geography\CityService;
+use app\core\traits\GridViewTrait;
 use app\models\Forms\Geography\CityForm;
-use app\models\Forms\RowsCountForm;
 use app\models\SearchModels\Geography\CitySearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
 use DomainException;
@@ -19,7 +19,8 @@ use Yii;
  */
 class CitiesController extends BaseAdminController
 {
-        /**
+    use GridViewTrait;
+    /**
      *
      * @var ElementTypeService
      */
@@ -30,28 +31,14 @@ class CitiesController extends BaseAdminController
             $module, 
             CityReadRepository $repository,
             CityService $service,
+            CitySearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    }
- 
-    public function actionIndex()
-    {
-        $searchModel = new CitySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams); 
-        $rowsCountForm = new RowsCountForm();        
-        if (!($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate())) {       
-            $rowsCountForm->rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
-        }   
-        $dataProvider->pagination = ['pageSize' => $rowsCountForm->rowsCount];       
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'rowsCountForm' => $rowsCountForm
-        ]);   
+        $this->searchModel = $searchModel;
     }
     
     public function actionCreate()

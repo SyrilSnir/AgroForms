@@ -5,6 +5,7 @@ namespace app\models\Forms\Manage\Exhibition;
 use app\core\helpers\Utils\DateHelper;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use DateTime;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -56,13 +57,13 @@ class ExhibitionForm extends Model
     {
         return [
             'id' => 'ID',
-            'title' => 'Заголовок',
-            'titleEng' => 'Заголовок (ENG)',
-            'description' => 'Описание',
-            'descriptionEng' => 'Описание (ENG)',
-            'startDate' => 'Дата начала',
-            'endDate' => 'Дата окончания',
-            'status' => 'Статус',
+            'title' => Yii::t('app','Title'),
+            'titleEng' => Yii::t('app','Title') . ' (ENG)',
+            'description' => Yii::t('app','Description'),
+            'descriptionEng' => Yii::t('app','Description') . ' (ENG)',
+            'startDate' => Yii::t('app','Start date'),
+            'endDate' => Yii::t('app','End date'),
+            'status' => Yii::t('app','Status'),
         ];
     }    
 }

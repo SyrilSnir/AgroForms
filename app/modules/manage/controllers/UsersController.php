@@ -5,12 +5,12 @@ namespace app\modules\manage\controllers;
 use app\core\repositories\readModels\User\UserReadRepository;
 use app\core\services\Auth\UserActivateService;
 use app\core\services\operations\Users\UserService;
+use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
 use app\models\Forms\Manage\Users\AdminForm;
 use app\models\Forms\Manage\Users\MemberForm;
 use app\models\Forms\Manage\Users\UserManageForm;
-use app\models\Forms\RowsCountForm;
 use app\models\Forms\User\Manage\ActivateForm;
 use app\models\SearchModels\Users\UserSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -24,7 +24,7 @@ use Yii;
  */
 class UsersController extends BaseAdminController
 {
-    
+    use GridViewTrait;
     /**
      *
      * @var UserService
@@ -42,6 +42,7 @@ class UsersController extends BaseAdminController
             UserReadRepository $repository,
             UserService $userService,
             UserActivateService $activateService,
+            UserSearch $searchModel,
             $config = array()
             )
     {
@@ -49,24 +50,9 @@ class UsersController extends BaseAdminController
         $this->readRepository = $repository;
         $this->service = $userService;
         $this->activateService = $activateService;
+        $this->searchModel = $searchModel;
   
-    }  
-    
-    public function actionIndex() 
-    {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
-        $rowsCountForm = new RowsCountForm();        
-        if (!($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate())) {       
-            $rowsCountForm->rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
-        }   
-        $dataProvider->pagination = ['pageSize' => $rowsCountForm->rowsCount];
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'rowsCountForm' => $rowsCountForm
-        ]);
-    }
+    }      
     
     public function actionCreateAdmin()
     {

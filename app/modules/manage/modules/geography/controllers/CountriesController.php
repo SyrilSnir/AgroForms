@@ -17,6 +17,7 @@ use Yii;
  */
 class CountriesController extends BaseAdminController
 {
+    use \app\core\traits\GridViewTrait;
     /**
      *
      * @var CountryService
@@ -28,23 +29,15 @@ class CountriesController extends BaseAdminController
             $module, 
             CountryReadRepository $repository,
             CountryService $service,
+            CountrySearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    }  
-    
-    public function actionIndex() 
-    {
-        $searchModel = new CountrySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+        $this->searchModel = $searchModel;
+    }      
 
     public function actionCreate()
     {

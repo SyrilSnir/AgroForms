@@ -18,27 +18,29 @@ class CitySearch extends Model
 {
     public $name;
     
-    public $countryId;
+    public $country_id;
 
-    public $regionId;
+    public $region_id;
 
     public function rules(): array
     {
         return [
             [['name'], 'safe'],
-            [['countryId','regionId'], 'integer'],
+            [['country_id','region_id'], 'integer'],
         ];
     }
     public function search(array $params): ActiveDataProvider
     {
-        $query = City::find()->joinWith(['region'],true);
-                
-           /*     ->with(['country' => function($query) {
-             $query->andWhere(['country_id' => 'id']);            
-            }])*/;
+        $query = City::find()->select(['{{cities}}.*', '{{regions}}.country_id'])->joinWith(['region'],true);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
+                'attributes' => [
+                    'id',
+                    'name',
+                    'region_id',
+                    'country_id'
+                ],
                 'defaultOrder' => ['id' => SORT_ASC]
             ]
         ]);
@@ -49,8 +51,8 @@ class CitySearch extends Model
             return $dataProvider;
         }
         $query->andFilterWhere(['like','cities.name', $this->name]);
-        $query->andFilterWhere(['country_id' => $this->countryId]);
-        $query->andFilterWhere(['region_id' => $this->regionId]);
+        $query->andFilterWhere(['country_id' => $this->country_id]);
+        $query->andFilterWhere(['region_id' => $this->region_id]);
         return $dataProvider;
     }
     
@@ -62,8 +64,8 @@ class CitySearch extends Model
     public function getRegions():array
     {
         $regions = Region::find();
-        if ($this->countryId) {
-            $regions->where(['country_id' => $this->countryId]);
+        if ($this->country_id) {
+            $regions->where(['country_id' => $this->country_id]);
         }        
         return ArrayHelper::map($regions->asArray()->all(), 'id', 'name');
     }

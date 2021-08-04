@@ -4,6 +4,7 @@ namespace app\modules\manage\modules\lists\controllers;
 
 use app\core\repositories\readModels\Exhibition\ExhibitionReadRepository;
 use app\core\services\operations\Exhibition\ExhibitionService;
+use app\core\traits\GridViewTrait;
 use app\models\Forms\Manage\Exhibition\ExhibitionForm;
 use app\models\SearchModels\Exhibition\ExhibitionSearch;
 use app\modules\manage\controllers\BaseAdminController;
@@ -17,6 +18,7 @@ use Yii;
  */
 class ExhibitionsController extends BaseAdminController
 {
+    use GridViewTrait;
     /**
      *
      * @var ExhibitionService 
@@ -28,23 +30,15 @@ class ExhibitionsController extends BaseAdminController
             $module, 
             ExhibitionReadRepository $repository,
             ExhibitionService $service,
+            ExhibitionSearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    }
-    
-    public function actionIndex() 
-    {
-        $searchModel = new ExhibitionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }  
+        $this->searchModel = $searchModel;
+    }   
     
     public function actionCreate()
     {

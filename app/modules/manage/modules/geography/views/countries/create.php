@@ -6,7 +6,7 @@ use yii\web\View;
 /** @var View $this  */
 /** @var RegionForm $model  */
 
-$this->title = 'Новая страна';
+$this->title = Yii::t('app/title', 'New country') ;
 ?>
 
 <div class="create-form">

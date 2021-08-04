@@ -1,34 +1,47 @@
 <?php
-use yii\grid\ActionColumn;
-use yii\helpers\Html;
-use kartik\grid\GridView;
+
 use app\models\SearchModels\Geografy\CountrySearch;
+use kartik\grid\GridView;
+use yii\data\ActiveDataProvider;
+use kartik\grid\ActionColumn;
+use yii\grid\SerialColumn;
+use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $searchModel CountrySearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Управление странами';
-$adminList = Yii::$app->params['rootUsers'] ?? [];
+$this->title = Yii::t('app/title','Directory of countries');
+$action = Yii::$app->getRequest()->getPathInfo();
+$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app/title', 'New country'),
+                                ])                            
+                        ],
+                    ],     
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [  
+                        ['class' => SerialColumn::class],
+                        'name:text:' . Yii::t('app','Country name'),
+                        'code:text:' . Yii::t('app','Identifier'),
+                        ['class' => ActionColumn::class],
+                    ],    
+];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);
+
 ?>
 <section class="content">
     <div class="card">
-        <div class="bd-example">           
-            <p><?= Html::a('Новая страна', ['create'], ['class' => 'btn btn-success']) ?></p>            
-        </div>
         <div class="card-body">
-
-                <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'pager' => require Yii::getAlias('@config') . DIRECTORY_SEPARATOR .'pager.php',
-                    'filterModel' => $searchModel,
-                    'columns' => [                    
-                        'id:integer:Id',
-                        'name:text:Название страны',
-                        'code:text:Идентификатор',
-                        ['class' => ActionColumn::class],
-                    ],
-                ]); ?>
+                <?= GridView::widget($fullGridConfig); ?>
         </div>
     </div>
 </section>

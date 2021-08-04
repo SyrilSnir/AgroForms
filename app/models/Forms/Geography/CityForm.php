@@ -5,6 +5,7 @@ namespace app\models\Forms\Geography;
 use app\core\traits\Lists\GetCountriesTrait;
 use app\core\traits\Lists\GetRegionsTrait;
 use app\models\ActiveRecord\Geography\City;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -47,9 +48,9 @@ class CityForm extends Model
     {
         return [
             'id' => 'ID',
-            'name' => 'Название города',
-            'region' => 'Регион',
-            'countryId' => 'Страна',
+            'name' => Yii::t('app','City'),
+            'region' => Yii::t('app','Region'),
+            'countryId' => Yii::t('app','Country'),
         ];
     }
 }

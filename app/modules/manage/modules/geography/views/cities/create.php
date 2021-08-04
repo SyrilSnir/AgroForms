@@ -5,7 +5,7 @@ use app\models\Forms\Manage\Geografy\CountryForm;
 /** @var yii\web\View $this  */
 /** @var CountryForm $model  */
 
-$this->title = 'Новый город';
+$this->title = Yii::t('app/title','New city');
 ?>
 
 <div class="create-form">

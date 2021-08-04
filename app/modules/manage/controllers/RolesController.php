@@ -4,6 +4,7 @@ namespace app\modules\manage\controllers;
 
 use app\core\repositories\readModels\User\UserTypeReadRepository;
 use app\core\services\operations\Users\UserTypeService;
+use app\core\traits\GridViewTrait;
 use app\models\Forms\Manage\Users\UserTypeForm;
 use app\models\Forms\RowsCountForm;
 use app\models\SearchModels\Users\UserTypeSearch;
@@ -18,7 +19,7 @@ use Yii;
  */
 class RolesController extends BaseAdminController
 {
-    
+    use GridViewTrait;    
     /**
      *
      * @var UserTypeService
@@ -30,29 +31,15 @@ class RolesController extends BaseAdminController
             $module, 
             UserTypeReadRepository $repository,
             UserTypeService $service,
+            UserTypeSearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
+        $this->searchModel = $searchModel;
     }  
-    
-    public function actionIndex() 
-    {
-        $searchModel = new UserTypeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);  
-        $rowsCountForm = new RowsCountForm();        
-        if (!($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate())) {       
-            $rowsCountForm->rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
-        }   
-        $dataProvider->pagination = ['pageSize' => $rowsCountForm->rowsCount];       
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'rowsCountForm' => $rowsCountForm            
-        ]);
-    }
     
     public function actionUpdate($id)
     {

@@ -13,36 +13,29 @@ use yii\web\View;
 /* @var $searchModel ExhibitionSearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Список выставок';
-?>
-<section class="content">
-    <div class="card">
-        <div class="bd-example">           
-            <p><?= Html::a('Новая выставка', ['create'], ['class' => 'btn btn-success']) ?></p>            
-    </div>
-        <div class="card-body">
-
-                <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'pager' => [
-                       'maxButtonCount' => 5, // максимум 5 кнопок
-                       'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                       'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                       'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
-                    ],
-                    'rowOptions' => function ($model, $key, $index, $grid) {
-                        if ($model['id'] == Yii::$app->params['activeExhibition']) {
-                            return ['class' => 'active-exhibition'];
-                        }
-                    },                    
-                    'filterModel' => $searchModel,
-                    'columns' => [                    
-                        'title:text:Название',
-                        'title_eng:text:Название (ENG)',
-                        'description:text:Описание',
-                        'description_eng:text:Описание (ENG)',
+$this->title = Yii::t('app/title','List of exhibitions');
+$this->params['breadcrumbs'][] = $this->title;
+$action = Yii::$app->getRequest()->getPathInfo();
+$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$columnsConfig = [
+                    'toolbar' => [
                         [
-                            'label' => 'Дата начала',
+                            'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app', 'New exhibition'),
+                                ])                            
+                        ],
+                    ],    
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,    
+                    'columns' => [                    
+                        'title:text:' . Yii::t('app','Name'),
+                        'title_eng:text:'. Yii::t('app','Name') .' (ENG)',
+                        'description:text:' . Yii::t('app','Description'),
+                        'description_eng:text:'. Yii::t('app','Description'). ' (ENG)',
+                        [
+                            'label' => Yii::t('app','Start date'),
                             'attribute' => 'start_date',
                             'value' => function (Exhibition $model) {
                                 /** @var Exhibition $model */
@@ -51,7 +44,7 @@ $this->title = 'Список выставок';
                             
                         ],
                         [
-                            'label' => 'Дата окончания',
+                            'label' => Yii::t('app','End date'),
                             'attribute' => 'end_date',
                             'value' => function (Exhibition $model) {
                                 /** @var Exhibition $model */
@@ -60,8 +53,16 @@ $this->title = 'Список выставок';
                             
                         ],                                
                         ['class' => ActionColumn::class],
-                    ],
-                ]); ?>
+                    ],    
+];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);        
+?>
+<section class="content">
+    <div class="card">
+        <div class="card-body">
+
+                <?= GridView::widget($fullGridConfig); ?>
         </div>
     </div>
 </section>

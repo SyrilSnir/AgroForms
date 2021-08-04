@@ -2,6 +2,7 @@
 
 namespace app\models\SearchModels\Geography;
 
+use app\core\traits\Lists\GetCountriesTrait;
 use app\models\ActiveRecord\Geography\Region;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -13,12 +14,18 @@ use yii\data\ActiveDataProvider;
  */
 class RegionSearch extends Model
 {
+    use GetCountriesTrait;
+    
     public $name;
     
+    public $country_id;
+
+
     public function rules(): array
     {
         return [
             [['name'], 'safe'],
+            [['country_id'], 'integer'],
         ];
     }
     public function search(array $params): ActiveDataProvider
@@ -37,6 +44,8 @@ class RegionSearch extends Model
             return $dataProvider;
         }
         $query->andFilterWhere(['like','name', $this->name]);
+        $query->andFilterWhere(['country_id' => $this->country_id]);
         return $dataProvider;
     }
+      
 }

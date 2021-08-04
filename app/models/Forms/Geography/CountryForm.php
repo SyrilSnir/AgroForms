@@ -3,7 +3,9 @@
 namespace app\models\Forms\Geography;
 
 use app\models\ActiveRecord\Geography\Country;
+use Yii;
 use yii\base\Model;
+
 
 /**
  * Description of CountryForm
@@ -43,8 +45,8 @@ class CountryForm extends Model
     {
         return [
             'id' => 'ID',
-            'name' => 'Название страны',
-            'code' => 'Трехбуквенный код страны',
+            'name' => Yii::t('app', 'Country'),
+            'code' => Yii::t('app', 'Identifier'),
         ];
     }
 }

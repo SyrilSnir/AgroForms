@@ -14,15 +14,15 @@ $this->title = $model->title;
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы действительно хотите удалить категорию?',
+                'confirm' => Yii::t('app', 'Are you sure you want to delete the exhibition?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -31,12 +31,12 @@ $this->title = $model->title;
             'model' => $model,
             'attributes' => [
                 'id',
-                'title:text:Название',
-                'title_eng:text:Название (ENG)',
-                'description:raw:Описание',
-                'description_eng:raw:Описание (ENG)',
-                'start_date:date:Дата начала',
-                'end_date:date:Дата окончания',
+                'title:text:' . Yii::t('app','Title'),
+                'title_eng:text:' . Yii::t('app','Title') .' (ENG)',
+                'description:raw:' . Yii::t('app','Description'),
+                'description_eng:raw:' . Yii::t('app','Description') .' (ENG)',
+                'start_date:date:' . Yii::t('app','Start date'),
+                'end_date:date:' . Yii::t('app','End date'),
             ],
         ]); ?>
     </div>

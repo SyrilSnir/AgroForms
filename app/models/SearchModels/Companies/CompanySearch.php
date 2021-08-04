@@ -3,6 +3,7 @@
 namespace app\models\SearchModels\Companies;
 
 use app\models\ActiveRecord\Companies\Company;
+use app\models\SearchModels\SearchInterface;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -11,12 +12,11 @@ use yii\data\ActiveDataProvider;
  *
  * @author kotov
  */
-class CompanySearch extends Model
+class CompanySearch extends Model implements SearchInterface
 {
     public $name; 
     
-    public $full_name;
-
+    public $full_name;    
 
     public function rules(): array
     {

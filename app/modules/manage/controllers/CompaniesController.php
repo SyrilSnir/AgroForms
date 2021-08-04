@@ -4,10 +4,10 @@ namespace app\modules\manage\controllers;
 
 use app\core\repositories\readModels\Companies\CompanyReadRepository;
 use app\core\services\operations\Companies\CompanyService;
+use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\Forms\Manage\Companies\CompanyForm;
 use app\models\Forms\Manage\Users\MemberForm;
-use app\models\Forms\RowsCountForm;
 use app\models\SearchModels\Companies\CompanySearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
 use DomainException;
@@ -21,40 +21,27 @@ use Yii;
 class CompaniesController extends BaseAdminController
 {
     
+    use GridViewTrait;
     /**
      *
      * @var CompanyService
      */
-    protected $service;
+    protected $service;    
     
     public function __construct(
             $id, 
             $module, 
             CompanyReadRepository $repository,
             CompanyService $service,
+            CompanySearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    }  
-    
-    public function actionIndex() 
-    {
-        $searchModel = new CompanySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $rowsCountForm = new RowsCountForm();        
-        if (!($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate())) {       
-            $rowsCountForm->rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
-        }   
-        $dataProvider->pagination = ['pageSize' => $rowsCountForm->rowsCount];
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'rowsCountForm' => $rowsCountForm
-        ]);
-    }
+        $this->searchModel = $searchModel;
+    }      
     
     public function actionCreate()
     {

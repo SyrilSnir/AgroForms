@@ -12,25 +12,24 @@ $this->title = $model->name;
 ?>
 <div class="city-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы действительно хотите город?',
+                'confirm' => Yii::t('app','Are you sure you want to delete the city?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
     <div class="card">
         <div class="card-body">
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id',
-                    'name:text:Название города',
-                    'country.name:text:Страна',
-                    'region.name:text:Регион',
+                    'name:text:' . Yii::t('app','City'),
+                    'country.name:text:' . Yii::t('app','Country'),
+                    'region.name:text:' . Yii::t('app','Region'),
                 ],
             ]); ?>
         </div>

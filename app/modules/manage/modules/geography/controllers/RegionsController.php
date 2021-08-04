@@ -5,6 +5,7 @@ namespace app\modules\manage\modules\geography\controllers;
 use app\core\repositories\readModels\Geography\RegionReadRepository;
 use app\core\services\operations\Forms\ElementTypeService;
 use app\core\services\operations\Geography\RegionService;
+use app\core\traits\GridViewTrait;
 use app\models\Forms\Geography\RegionForm;
 use app\models\SearchModels\Geography\RegionSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -18,7 +19,7 @@ use Yii;
  */
 class RegionsController extends BaseAdminController
 {
-    
+    use GridViewTrait;
     /**
      *
      * @var ElementTypeService
@@ -30,23 +31,15 @@ class RegionsController extends BaseAdminController
             $module, 
             RegionReadRepository $repository,
             RegionService $service,
+            RegionSearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    }
-     
-    public function actionIndex()
-    {
-        $searchModel = new RegionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);   
-    }
+        $this->searchModel = $searchModel;
+    }    
 
     public function actionCreate()
     {

@@ -12,13 +12,16 @@ return [
    'Cancel' => 'Отмена',
    'Home' => 'Домой',
    'New' => 'Новый',
+   'Title' => 'Заголовок',
    'Status' => 'Статус',
    'Active' => 'Активирован',
    'Main page' => 'Главная страница',
    'Description' => 'Описание',
    'Undefined' => 'Не задано',
    'City' => 'Город',
+   'Add city' => 'Добавить город',
    'Country' => 'Страна',
+   'Country name' => 'Страна',
    'Region' => 'Регион',
    'Application form' => 'Форма',
    'Add application' => 'Добавить заявку',
@@ -33,6 +36,14 @@ return [
     'User roles' => 'Справочник пользовательских ролей',
     'All' => 'Все',
     'Name' => 'Название',
-    'Identifier' => 'Идентификатор'
+    'Identifier' => 'Идентификатор',
+    'New exhibition' => 'Новая выставка',
+    'Start date' => 'Дата начала',
+    'End date' => 'Дата окончания',
+    'Are you sure you want to delete the exhibition?' => 'Вы действительно хотите удалить выставку?',
+    'Are you sure you want to delete the city?' => 'Вы действительно хотите удалить город?',
+    'Are you sure you want to delete the region?' => 'Вы действительно хотите удалить регион?',
+    'Are you sure you want to delete the country?' => 'Вы действительно хотите удалить страну?',
+    
 ];
 
