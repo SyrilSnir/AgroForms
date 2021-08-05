@@ -8,7 +8,7 @@ use yii\web\View;
 /** @var View $this  */
 /** @var UnitForm $model  */
 
-$this->title = 'Новый тип элемента формы';
+$this->title = Yii::t('app','New element type of form');
 ?>
 
 <div class="create-form">

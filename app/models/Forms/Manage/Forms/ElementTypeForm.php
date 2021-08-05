@@ -3,6 +3,7 @@
 namespace app\models\Forms\Manage\Forms;
 
 use app\models\ActiveRecord\Forms\ElementType;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -45,8 +46,8 @@ class ElementTypeForm extends Model
     {
         return [
             'id' => 'ID',
-            'name' => 'Название элемента фрормы',
-            'description' => 'Описание элемента фрормы',
+            'name' => Yii::t('app','Name'),
+            'description' => Yii::t('app','Description'),
         ];
     }    
 }

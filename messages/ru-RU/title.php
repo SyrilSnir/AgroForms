@@ -14,6 +14,7 @@ return [
     'Directory of regions' => 'Справочник регионов',
     'Directory of forms' => 'Справочник доступных форм',
     'Directory of fields' => 'Справочник полей',
+    'Directory of element types' => 'Справочник типов отображаемых элементов',
     'New exhibition' => 'Новая выставка',
     'New city' => 'Новый город',    
     'Edit city' => 'Изменить город',

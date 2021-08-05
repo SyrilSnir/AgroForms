@@ -29,6 +29,7 @@ class ElementType extends ActiveRecord
     const ELEMENT_INFORMATION = 13;  
     const ELEMENT_HEADER = 14;
     const ELEMET_ADDITIONAL_EQUIPMENT = 15;
+    const ELEMENT_GROUP = 16;
     
     const HAS_ENUM_ATTRIBUTES = [
         self::ELEMENT_SELECT,

@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование типа элемента формы';
+$this->title = Yii::t('app','Edit element type of form');
 ?>
 
 <div class="update-form">

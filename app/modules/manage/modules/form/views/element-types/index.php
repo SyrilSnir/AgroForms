@@ -11,12 +11,12 @@ use yii\web\View;
 /* @var $searchModel ElementTypeSearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Справочник типов отображаемых элементов';
+$this->title = Yii::t('app/title','Directory of element types');
 ?>
 <section class="content">
     <div class="card">
         <div class="bd-example">           
-            <p><?= Html::a('Новый тип элемента', ['create'], ['class' => 'btn btn-success']) ?></p>            
+            <p><?= Html::a(Yii::t('app','New element type'), ['create'], ['class' => 'btn btn-success']) ?></p>            
         </div>
         <div class="card-body">
 
@@ -30,9 +30,9 @@ $this->title = 'Справочник типов отображаемых эле�
                     ],
                     'filterModel' => $searchModel,
                     'columns' => [                    
-                        'id:integer:Id',
-                        'name:text:Название',
-                        'description:text:Описание',
+
+                        'name:text:' . Yii::t('app','Name'),
+                        'description:text:' . Yii::t('app','Description'),
                         ['class' => ActionColumn::class],
                     ],
                 ]); ?>
