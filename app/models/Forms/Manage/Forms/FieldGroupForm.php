@@ -3,6 +3,7 @@
 namespace app\models\Forms\Manage\Forms;
 
 use app\models\ActiveRecord\Forms\FieldGroup;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -52,11 +53,11 @@ class FieldGroupForm extends Model
     {
         return [
             'id' => 'ID',
-            'name' => 'Название группы полей',
-            'description' => 'Описание',
-            'nameEng' => 'Название группы полей (ENG)',
-            'descriptionEng' => 'Описание (ENG)',
-            'order' => 'Порядок вывода',
+            'name' => Yii::t('app','Name'),
+            'description' => Yii::t('app','Description'),
+            'nameEng' => Yii::t('app','Name') . ' (ENG)',
+            'descriptionEng' => Yii::t('app','Description') . ' (ENG)',
+            'order' => Yii::t('app','Display order'),
         ];
     }    
 }

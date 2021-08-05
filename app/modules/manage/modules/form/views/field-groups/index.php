@@ -11,12 +11,12 @@ use yii\web\View;
 /* @var $searchModel FieldGroupSearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Группы полей формы';
+$this->title = Yii::t('app/title','Field groups');
 ?>
 <section class="content full-view">
     <div class="card">
         <div class="bd-example">           
-            <p><?= Html::a('Новая группа', ['create'], ['class' => 'btn btn-success']) ?></p>            
+            <p><?= Html::a(Yii::t('app','New field group'), ['create'], ['class' => 'btn btn-success']) ?></p>            
         </div>
         <div class="card-body">
 
@@ -30,10 +30,9 @@ $this->title = 'Группы полей формы';
                     ],
                     'filterModel' => $searchModel,
                     'columns' => [                    
-                        'id:integer:Id',
-                        'name:text:Название',
-                        'description:raw:Описание',
-                        'order:text:Порядковый номер',
+                        'name:text:' . Yii::t('app','Name'),
+                        'description:raw:' . Yii::t('app','Description'),
+                        'order:text:' . Yii::t('app','Serial number'),
                         ['class' => ActionColumn::class,
                              'visibleButtons' => [
                                 'delete' => function ($model) {

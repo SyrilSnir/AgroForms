@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование группы полей';
+$this->title = Yii::t('app/title','Edit field group');
 ?>
 
 <div class="update-form">

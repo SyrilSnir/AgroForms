@@ -4,6 +4,7 @@ namespace app\modules\manage\modules\form\controllers;
 
 use app\core\repositories\readModels\Forms\FieldGroupReadRepository;
 use app\core\services\operations\Forms\FieldGroupService;
+use app\models\ActiveRecord\Forms\FieldGroup;
 use app\models\Forms\Manage\Forms\FieldGroupForm;
 use app\models\SearchModels\Forms\FieldGroupSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -64,7 +65,9 @@ class FieldGroupsController extends BaseAdminController
 
     public function actionUpdate($id)
     {
+        /** @var FieldGroup $model */
         $model = $this->findModel($id);
+        $model->disableMultilang();
         $form = new FieldGroupForm($model);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $this->service->edit($id, $form);

@@ -2,7 +2,8 @@
 
 namespace app\models\ActiveRecord\Forms;
 
-use Yii;
+use app\core\traits\ActiveRecord\MultilangTrait;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%field_groups}}".
@@ -16,8 +17,10 @@ use Yii;
  * 
  * @property Field[] $fields Description
  */
-class FieldGroup extends \yii\db\ActiveRecord
+class FieldGroup extends ActiveRecord
 {
+    
+    use MultilangTrait;
     
     const UNDEFINED_FIELD_GROUP = 0;
     

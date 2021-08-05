@@ -25,5 +25,8 @@ return [
     'New form' => 'Новая форма',
     'Edit form type' => 'Изменить тип формы',
     'New field' => 'Новое поле',
-    'Edit field' => 'Изменить поле'
+    'Edit field' => 'Изменить поле',
+    'Field groups' => 'Группы полей формы',
+    'New group' => 'Новая группа',
+    'Edit field group' => 'Редактировать группу полей',
 ];
