@@ -13,23 +13,22 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 
-/** @var ChangeStatusForm $statusForm */
+/* @var $statusForm ChangeStatusForm  */
 /* @var $this View */
 /* @var $model Request */
-/** @var RequestStand $requestForm */
+/* @var $requestForm RequestStand */
 $requestForm = $model->requestForm;
-//dump($model->requestForm); die();
-$this->title = 'Заявка №' . $model->id;
+$this->title = Yii::t('app/requests', 'Application №') . $model->id;
 $attributes = [
-    'formType.name:text:Тип формы',
+    'formType.name:text:' . Yii::t('app/requests', 'Form type'),
     [
         'attribute' => 'status',
-        'label' => 'Статус',
+        'label' => Yii::t('app', 'Status'),
         'format' => 'raw',
         'value' => RequestStatusHelper::getStatusLabel($model->status)
     ],
-    'user.fio:text:ФИО заказчика',
-    'user.company.name:text:Компания'
+    'user.fio:text:' . Yii::t('app/requests','Full name of the customer'),
+    'user.company.name:text:' . Yii::t('app/company','Company')
     
 ];
 $dopAttributes = [];
@@ -37,27 +36,27 @@ switch ($model->form->form_type_id) {
     case FormType::SPECIAL_STAND_FORM:
         $dopAttributes = [
             [
-                'label' => 'Тип стенда',
+                'label' => Yii::t('app/requests', 'Stand type'),
                 'value' => $requestForm->stand->name
             ],
             [
-                'label' => 'Длинна, м.',
+                'label' => Yii::t('app/requests', 'Length, m.'),
                 'value' => $requestForm->length
             ],
             [
-                'label' => 'Ширина, м.',
+                'label' => Yii::t('app/requests', 'Width, m.'),
                 'value' => $requestForm->width
             ], 
             [
-                'label' => 'Площадь, м2',
+                'label' => Yii::t('app/requests', 'Space, m<sup>2</sup>'),
                 'value' => $requestForm->square
             ],
             [
-                'label' => 'Фризовая надпись',
+                'label' => Yii::t('app/requests', 'Fascia name'),
                 'value' => $requestForm->frizeName
             ],         
             [
-                'label' => 'Стоимость',
+                'label' =>  Yii::t('app/requests', 'Price'),
                 'value' => $requestForm->amount . ' USD'
             ]
         ];
@@ -79,19 +78,15 @@ if (!empty($dopAttributes)) {
     <?php 
         $form = ActiveForm::begin();
         echo $form->field($statusForm, 'status')->dropDownList(RequestStatusHelper::statusList(Yii::$app->user->can(UserType::MEMBER_USER_TYPE)));
-        echo Html::submitButton('Изменить статус',['class' => 'btn bg-gradient-success']);
+        echo Html::submitButton(Yii::t('app/requests', 'Change status'),['class' => 'btn bg-gradient-success']);
         ActiveForm::end();
     ?>
     <p>
         <br><br>
-        <?= Html::a('Экспорт в PDF', Url::to(['export', 'id' => $model->id]), ['class' => 'btn bg-gradient-danger']) ?>
-        <?php //Html::a('Изменить статус', Url::to(['set-status', 'id' => $model->id]), ['class' => 'btn bg-gradient-success']) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app/requests', 'Export to PDF'), Url::to(['export', 'id' => $model->id]), ['class' => 'btn bg-gradient-danger']) ?>
+        <?= Html::a(Yii::t('app/requests', 'Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>    
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title"><?php echo $this->title ?></h3>        
-        </div>
         <div class="card-body">
             <?= DetailView::widget([
                 'model' => $model,

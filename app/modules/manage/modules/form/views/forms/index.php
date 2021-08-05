@@ -13,30 +13,25 @@ use yii\web\View;
 /* @var $searchModel FormSearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Справочник доступных форм';
-?>
-<section class="content">
-    <div class="card">
-        <div class="bd-example">
-           
-                <p><?= Html::a('Новая форма', ['create'], ['class' => 'btn btn-success']) ?></p>
-            
-    </div>
-        <div class="card-body">
-
-                <?= GridView::widget([
+$this->title = Yii::t('app/title','Directory of forms');
+$this->params['breadcrumbs'][] = $this->title;
+$action = Yii::$app->getRequest()->getPathInfo();
+$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app', 'Add form'),
+                                ])                            
+                        ],
+                    ],      
                     'dataProvider' => $dataProvider,
-                    'pager' => [
-                       'maxButtonCount' => 5, // максимум 5 кнопок
-                       'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                       'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                      'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
-                    ],
                     'filterModel' => $searchModel,
-                    'columns' => [                    
-                        'id:integer:Id',
-                        'name:text:Название',
-                        'title:text:Заголовок',
+                    'columns' => [                        
+                        'name:text:' . Yii::t('app', 'Name'),
+                        'title:text:' . Yii::t('app', 'Title'),
                         [
                             'class' => ActionColumn::class,
                              'visibleButtons' => [
@@ -48,8 +43,15 @@ $this->title = 'Справочник доступных форм';
                                 }
                             ]                             
                         ],
-                    ],
-                ]); ?>
+                    ],    
+    ];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);                            
+?>
+<section class="content">
+    <div class="card">
+        <div class="card-body">
+                <?= GridView::widget($fullGridConfig); ?>
         </div>
     </div>
 </section>

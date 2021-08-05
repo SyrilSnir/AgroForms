@@ -16,7 +16,7 @@ use kartik\select2\Select2;
     $this->title = Yii::t('app/title','Directory of cities');
     $action = Yii::$app->getRequest()->getPathInfo();
     $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
-    $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';    
+    $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
     $columnsConfig = [
                     'toolbar' => [
                         [

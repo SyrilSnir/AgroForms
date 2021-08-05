@@ -28,14 +28,14 @@ class RequestSearch extends Model
     
     public function searchForUser(int $userId,int $exhibitionId = null, array $params = []) 
     {
-        return $this->search($params, $userId, $exhibitionId);
+        return $this->baseSearch($params, $userId, $exhibitionId);
     }
     
     public function searchForManager(array $params = [])
     {
-        $dp = $this->search($params);
+        $dp = $this->baseSearch($params);
         $dp->query->andFilterWhere(['!=', 'status', Request::STATUS_DRAFT]);
-        return$dp ;
+        return $dp;
     }
 
     public function searchAll(array $params = [])
@@ -43,7 +43,7 @@ class RequestSearch extends Model
         return $this->search($params);
     }
 
-    private function search(array $params = [], $userId = null, $exhibitionId = null): ActiveDataProvider
+    protected function baseSearch(array $params = [], $userId = null, $exhibitionId = null): ActiveDataProvider
     {
         $query = Request::find();
         if ($userId) {

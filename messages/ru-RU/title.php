@@ -12,6 +12,8 @@ return [
     'Directory of cities' => 'Справочник городов',
     'Directory of countries' => 'Справочник стран',
     'Directory of regions' => 'Справочник регионов',
+    'Directory of forms' => 'Справочник доступных форм',
+    'Directory of fields' => 'Справочник полей',
     'New exhibition' => 'Новая выставка',
     'New city' => 'Новый город',    
     'Edit city' => 'Изменить город',
@@ -19,4 +21,8 @@ return [
     'Edit region' => 'Изменить регион',    
     'New country' => 'Новая страна',
     'Edit country' => 'Изменить страну',
+    'New form' => 'Новая форма',
+    'Edit form type' => 'Изменить тип формы',
+    'New field' => 'Новое поле',
+    'Edit field' => 'Изменить поле'
 ];

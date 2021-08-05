@@ -14,15 +14,9 @@ $this->title = $model->name;
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы действительно хотите удалить форму?',
-                'method' => 'post',
-            ],
-        ]) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app', 'Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
+        <?= Html::a(Yii::t('app', 'Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -30,11 +24,10 @@ $this->title = $model->name;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'id',
-                'name:text:Тип формы',
-                'description:raw:Описание',
-                'name_eng:text:Тип формы (ENG)',
-                'description_eng:raw:Описание (ENG)',                    
+                'name:text:' . Yii::t('app/requests', 'Form type'),
+                'description:raw:' . Yii::t('app', 'Description'),
+                'name_eng:text:' . Yii::t('app/requests', 'Form type') .' (ENG)',
+                'description_eng:raw:' . Yii::t('app', 'Description') . ' (ENG)',                    
             ],
         ]); ?>
     </div>

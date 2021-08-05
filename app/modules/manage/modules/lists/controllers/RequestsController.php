@@ -4,13 +4,13 @@ namespace app\modules\manage\modules\lists\controllers;
 
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
+use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ChangeStatusForm;
-use app\models\SearchModels\Requests\RequestSearch;
+use app\models\SearchModels\Requests\ManagerRequestSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
 use kartik\mpdf\Pdf;
-use Yii;
 
 /**
  * Description of RequestsController
@@ -19,6 +19,7 @@ use Yii;
  */
 class RequestsController extends BaseAdminController
 {
+    use GridViewTrait;
 
     /**
      *
@@ -31,23 +32,14 @@ class RequestsController extends BaseAdminController
             $module, 
             RequestReadRepository $repository,
             RequestService $service,
+            ManagerRequestSearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    }
-    public function actionIndex()
-    {
-        $searchModel = new RequestSearch();
-        $dataProvider = $searchModel->searchForManager(
-                Yii::$app->request->queryParams
-            );        
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $this->searchModel = $searchModel;
     }
     
     /**

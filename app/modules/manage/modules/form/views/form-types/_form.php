@@ -39,8 +39,8 @@ use yii\widgets\ActiveForm;
 ]) ?>                            
 
     <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -3,6 +3,7 @@
 namespace app\models\Forms\Manage\Forms;
 
 use app\models\ActiveRecord\Forms\Field;
+use Yii;
 use yii\base\Model;
 use function GuzzleHttp\json_decode;
 
@@ -84,14 +85,14 @@ class FieldParametersForm extends Model
     public function attributeLabels(): array
     {
         return [
-            'required' => 'Обязательное поле',
-            'text' => 'Отображаемый текст',
-            'textEng' => 'Отображаемый текст (ENG)',
-            'html' => 'Отображаемый текст',
-            'htmlEng' => 'Отображаемый текст (ENG)',
-            'unit' => 'Единица измерения',
-            'unitPrice' => 'Цена за ед.',
-            'isComputed' => 'Вычисляемое поле',
+            'required' => Yii::t('app','Required field'),
+            'text' => Yii::t('app','Display text'),
+            'textEng' => Yii::t('app','Display text') . ' (ENG)',
+            'html' => Yii::t('app','Display text'),
+            'htmlEng' => Yii::t('app','Display text') . ' (ENG)',
+            'unit' => Yii::t('app','Unit'),
+            'unitPrice' => Yii::t('app','Price per one'),
+            'isComputed' => Yii::t('app','Calculated field'),
         ];
     }
 }

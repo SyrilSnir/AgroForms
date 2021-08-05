@@ -5,6 +5,7 @@ namespace app\modules\manage\modules\form\controllers;
 use app\core\providers\Data\FieldEnumProvider;
 use app\core\repositories\readModels\Forms\FieldReadRepository;
 use app\core\services\operations\Forms\FieldService;
+use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\FieldEnum;
@@ -22,6 +23,7 @@ use Yii;
  */
 class FieldsController extends BaseAdminController
 {
+    use GridViewTrait;
     /**
      *
      * @var FieldService
@@ -40,6 +42,7 @@ class FieldsController extends BaseAdminController
             FieldReadRepository $repository,
             FieldService $service,
             FieldEnumProvider $fieldEnumProvider,
+            FieldSearch $searchModel,
             $config = array()
             )
     {
@@ -47,16 +50,7 @@ class FieldsController extends BaseAdminController
         $this->readRepository = $repository;
         $this->service = $service;
         $this->fieldEnumProvider = $fieldEnumProvider;
-    }  
-
-    public function actionIndex() 
-    {
-        $searchModel = new FieldSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $this->searchModel = $searchModel;
     }
     
     public function actionCreate($formId = null)
@@ -116,7 +110,7 @@ class FieldsController extends BaseAdminController
         }
         return $this->render('update', [
             'model' => $form,
-            'enumsList' => $enumsList             
+            'enumsList' => $enumsList
         ]);                        
     }
 

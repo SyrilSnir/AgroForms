@@ -8,7 +8,7 @@ use yii\web\View;
 /** @var View $this  */
 /** @var FieldForm $model  */
 
-$this->title = 'Новое поле';
+$this->title = Yii::t('app/title', 'New field');
 ?>
 
 <div class="create-form">

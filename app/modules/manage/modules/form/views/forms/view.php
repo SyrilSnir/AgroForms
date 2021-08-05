@@ -4,9 +4,9 @@ use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\SearchModels\Forms\FieldSearch;
+use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\DetailView;
@@ -20,15 +20,17 @@ $this->title = $model->name;
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('app', 'Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php if ($model->form_type_id !== FormType::SPECIAL_STAND_FORM):?>
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы действительно хотите удалить форму?',
+                'confirm' => Yii::t('app', 'Are you sure you want to delete the form?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?php endif; ?>
+        <?= Html::a(Yii::t('app', 'Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -37,46 +39,51 @@ $this->title = $model->name;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'title:text:Заголовок',
-                    'name:text:Наимменование',
-                    'description:raw:Описание',
-                    'formType.name:text:Тип формы',
-                    'order:text:Порядковый номер',
-                    'valute.name:text:Валюта',
+                    'title:text:' . Yii::t('app', 'Title'),
+                    'name:text:' . Yii::t('app', 'Name'),
+                    'description:raw:' . Yii::t('app', 'Description'),
+                    'formType.name:text:' . Yii::t('app/requests', 'Form type'),
+                    'order:text:' . Yii::t('app', 'Serial number'),
+                    'valute.name:text:' . Yii::t('app', 'Valute'),
                     
                 ],
             ]); ?>
     </div>
 </div>
 <?php if (in_array($model->form_type_id, FormType::HAS_DYNAMIC_FIELDS)): ?>
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title"><?php echo 'Список полей' ?></h3>
-        </div>
-        <div class="bd-example">    
-            <p><?= Html::a('Добавить поле', ['fields/create', 'formId' => $model->id], ['class' => 'btn btn-success']) ?></p>
-        </div>
-        <div class="card-body">
-
-                <?= GridView::widget([
+<?php 
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'header' => 'rrrgrg',
+                            'content'=> //$rowsCountTemplate .
+                                Html::a('<i class="fas fa-plus"></i>',['fields/create', 'formId' => $model->id], [
+                                    'class' => 'btn btn-sm btn-success',
+                                ])                            
+                        ],
+                    ],
+                    'panel' => [
+                        'type' => GridView::TYPE_DEFAULT,
+                        'heading' => Yii::t('app','List of fields')
+                    ],
                     'dataProvider' => $formFieldsDataProvider,
                     'filterModel' => $formFieldsModel,
                     'columns' => [  
-                        'order:text:Позиция',
-                        'name:text:Название',
+                        'order:text:' . Yii::t('app','Position'),
+                        'name:text:' . Yii::t('app','Name'),
                         [
-                            'label' => 'Группа',
+                            'label' => Yii::t('app','Group'),
                             'filter' => $formFieldsModel->fieldGroupList(),
                             'attribute' => 'fieldGroupId',
                             'value' => function (Field $model) {
                                 return $model->fieldGroup ? $model->fieldGroup->name:
-                                        'Не задана';
+                                        Yii::t('app','Undefined');
                             }
                         ],
-                        'description:text:Описание',
+                        'description:text:' . Yii::t('app','Description'),
                         
                         [
-                            'label' => 'Тип элемента',
+                            'label' => Yii::t('app','Element type'),
                             'attribute' => 'elementTypeId',
                             'filter' => $formFieldsModel->elementTypesList(),
                             'value' => function (Field $model) {
@@ -85,11 +92,17 @@ $this->title = $model->name;
                             ],
                         [
                             'class' => ActionColumn::class,
-                            'header' => 'Действия',
+                           // 'header' => 'Действия',
                             'controller' => 'fields'                       
                         ],
-                    ],
-                ]); ?>
+                    ],    
+    ];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';    
+$fullGridConfig = array_merge($gridConfig, $columnsConfig);
+?>
+    <div class="card">
+        <div class="card-body">
+            <?= GridView::widget($fullGridConfig); ?>
         </div>
     </div>  
 <?php endif; ?>

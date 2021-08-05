@@ -12,46 +12,51 @@ use yii\web\View;
 /* @var $searchModel FieldSearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Справочник полей';
-?>
-<section class="content">
-    <div class="card">
-        <div class="bd-example">           
-            <p><?= Html::a('Новое поле', ['create'], ['class' => 'btn btn-success']) ?></p>            
-        </div>
-        <div class="card-body">
-
-                <?= GridView::widget([
+$this->title = Yii::t('app/title', 'Directory of fields');
+$this->params['breadcrumbs'][] = $this->title;
+$action = Yii::$app->getRequest()->getPathInfo();
+$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app', 'Add field'),
+                                ])                            
+                        ],
+                    ],      
                     'dataProvider' => $dataProvider,
-                    'pager' => [
-                       'maxButtonCount' => 5, // максимум 5 кнопок
-                       'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                       'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                      'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
-                    ],
                     'filterModel' => $searchModel,
                     'columns' => [                    
-                        'order:integer:Порядковый номер',
+                        'order:integer:' . Yii::t('app', 'Serial number'),
                         [
                             'filter' => $searchModel->formsList(),
                             'attribute' => 'formId',
-                            'label' => 'Форма',
+                            'label' => Yii::t('app', 'Form'),
                             'value' => function (Field $model) {
                                 return $model->form->name;
                             }                         
                         ],
-                        'name:text:Название',
+                        'name:text:' . Yii::t('app', 'Name'),
                         [
                             'attribute' => 'fieldGroupId',
-                            'label' => 'Группа',
+                            'label' => Yii::t('app', 'Group'),
                             'filter' => $searchModel->fieldGroupList(),
                             'value' => function (Field $model) {
-                                return $model->fieldGroup ? $model->fieldGroup->name: 'Не задана';
+                                return $model->fieldGroup ? $model->fieldGroup->name: Yii::t('app', 'Undefined');
                             }
                         ],
                         ['class' => ActionColumn::class],
-                    ],
-                ]); ?>
+                    ],    
+    ];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);                        
+?>
+<section class="content">
+    <div class="card">
+        <div class="card-body">
+                <?= GridView::widget($fullGridConfig); ?>
         </div>
     </div>
 </section>

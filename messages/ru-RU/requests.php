@@ -1,10 +1,14 @@
 <?php
 
-return [
+return [   
+   'Add request' => 'Добавить заявку',
+   'Full name of the customer' => 'ФИО заказчика',
    'New'  => 'Новая',
    'Paid'  => 'Оплачена',
    'Partial paid'  => 'Оплачена частично',
    'Changed'  => 'Изменена',
+   'Change status' => 'Изменить статус',
+   'Export to PDF' => 'Экспорт в PDF',
    'Total'  => 'Итого',
    'Draft'  => 'Черновик',
    'Rejected'  => 'Отклонена',
@@ -33,6 +37,7 @@ return [
    'If you need more space for drawing, you can draw the plan on a separate sheet and attach it to this application.' => 'Если Вам необходимо больше места, начертите план на отдельном листе и приложите к этой заявке.',
    'Name' => 'Надпись',
    'Price' => 'Стоимость',
+   'Base price' => 'Базовая стоимость',
    'symb.' => 'зн.',
    'm' => 'м'    
 ];

@@ -1,7 +1,11 @@
 <?php
-/* @var $this yii\web\View */
 
-$this->title = 'Редактирование формы';
+use app\models\Forms\Manage\Forms\FormsForm;
+use yii\web\View;
+/* @var $this View */
+/* @var $model FormsForm */
+
+$this->title = Yii::t('app/title', 'Edit form') . ': ' . $model->name;
 ?>
 
 <div class="update-form">

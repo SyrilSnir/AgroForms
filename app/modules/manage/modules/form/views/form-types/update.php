@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Изменить тип формы';
+$this->title = Yii::t('app/title', 'Change form type');
 ?>
 
 <div class="update-form">

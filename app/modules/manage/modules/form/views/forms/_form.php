@@ -60,8 +60,8 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
 
 <?= $form->field($model, 'hasFile')->widget(SwitchInput::class,[
                 'pluginOptions' => [
-                        'onText' => 'Да',
-                        'offText' => 'Нет',
+                        'onText' => Yii::t('app','Yes'),
+                        'offText' => Yii::t('app','No'),
                     ]
     ]);
     ?>
@@ -78,10 +78,9 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
 <?= $form->field($model, 'valute')->dropDownList($model->getValutesList()) ?>                        
                        
 <div class="form-group">
-    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-    <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>
+    <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
+    <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
 </div>
-
 <?php ActiveForm::end(); ?>
 
                     </div>

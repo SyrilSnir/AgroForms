@@ -7,8 +7,8 @@ use app\core\traits\Lists\GetFormsListTrait;
 use app\core\traits\Lists\GetUnitsTrait;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
-use app\models\ActiveRecord\Forms\Form;
 use app\models\Forms\MultiForm;
+use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -84,15 +84,15 @@ class FieldForm extends MultiForm
     {
         return [
             'id' => 'ID',
-            'name' => 'Название',
-            'description' => 'Описание',
-            'nameEng' => 'Название (ENG)',
-            'descriptionEng' => 'Описание (ENG)',            
-            'formId' => 'Форма',
-            'elementTypeId' => 'Тип элемента формы',
-            'fieldGroupId' => 'Группа полей',
-            'order' => 'Позиция на экране',
-            'defaultValue' => 'Значение по умолчанию',
+            'name' => Yii::t('app', 'Name'),
+            'description' => Yii::t('app', 'Description'),
+            'nameEng' => Yii::t('app', 'Name') . ' (ENG)',
+            'descriptionEng' => Yii::t('app', 'Description') . ' (ENG)',            
+            'formId' => Yii::t('app', 'Form'),
+            'elementTypeId' => Yii::t('app', 'Element type'),
+            'fieldGroupId' => Yii::t('app', 'Field group'),
+            'order' => Yii::t('app', 'Position'),
+            'defaultValue' => Yii::t('app', 'Default falue'),
         ];
     }
  

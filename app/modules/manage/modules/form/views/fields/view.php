@@ -1,25 +1,29 @@
 <?php
 
+use app\models\ActiveRecord\Forms\Field;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model Unit */
-/* @var $modificationsProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $model Field */
+/* @var $modificationsProvider ActiveDataProvider */
 
 $this->title = $model->name;
+
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы действительно хотите удалить форму?',
+                'confirm' => Yii::t('app','Are you sure you want to delete the field?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -27,8 +31,10 @@ $this->title = $model->name;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'id',
-                'name:text:Наимменование',
+                'name:text:' . Yii::t('app','Name'),
+                'description:text:' . Yii::t('app','Description'),
+                'form.name:text:' . Yii::t('app', 'Form'),
+                'elementType.name:text:' . Yii::t('app', 'Element type')
             ],
         ]); ?>
     </div>

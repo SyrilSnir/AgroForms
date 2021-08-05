@@ -4,6 +4,7 @@ namespace app\modules\manage\modules\form\controllers;
 
 use app\core\repositories\readModels\Forms\FormReadRepository;
 use app\core\services\operations\Forms\FormService;
+use app\core\traits\GridViewTrait;
 use app\models\Forms\Manage\Forms\FormsForm;
 use app\models\SearchModels\Forms\FieldSearch;
 use app\models\SearchModels\Forms\FormSearch;
@@ -18,33 +19,26 @@ use Yii;
  */
 class FormsController extends BaseAdminController
 {
+    use GridViewTrait;
     /**
      *
      * @var FormService
      */
     protected $service;
     
-     public function __construct(
+    public function __construct(
             $id, 
             $module, 
             FormReadRepository $repository,
             FormService $service,
+            FormSearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    }  
-
-    public function actionIndex() 
-    {
-        $searchModel = new FormSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $this->searchModel = $searchModel;
     }
 
     public function actionView($id)

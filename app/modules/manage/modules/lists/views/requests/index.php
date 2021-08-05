@@ -15,6 +15,54 @@ use yii\web\View;
 /* @var $modificationsProvider ActiveDataProvider */
 
 $this->title = Yii::t('app/title', 'Requests list');
+$action = Yii::$app->getRequest()->getPathInfo();
+$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$columnsConfig = [
+                'toolbar' => [
+                    [
+                        'content'=> $rowsCountTemplate .
+                            Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                'class' => 'btn btn-sm btn-success',
+                                'title' => Yii::t('app/requests', 'Add request'),
+                            ])                            
+                    ],
+                ],      
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel, 
+                'columns' => [
+                    'user.company.name:text:' . Yii::t('app','Customer'),
+                    [
+                        'attribute' => 'formType',
+                        'format' => 'text',
+                        'label' => Yii::t('app/requests','Form type'),
+                        'filter' => $searchModel->formTypesList(),
+                        'value' => 'formType.name',
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'label' => Yii::t('app','Status'),
+                        'format' => 'raw',
+                        'filter' => RequestStatusHelper::statusList(false),
+                        'value' => function (Request $model) {
+                            return RequestStatusHelper::getStatusLabel($model->status);
+                        }
+                    ],
+                    'created_at:datetime:' . Yii::t('app','Created at'),
+
+                    [
+                        'class' => ActionColumn::class,
+                        'visibleButtons' => [
+                            'update' => function ($model) {
+                                /** @var Request $model */
+                                return ($model->status === Request::STATUS_DRAFT);
+                            }
+                        ]                        
+                    ],
+                ],    
+    ];
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);                       
+
 ?>
 
 <div class="card full-view">
@@ -30,48 +78,7 @@ $this->title = Yii::t('app/title', 'Requests list');
         <?php echo Yii::$app->session->getFlash('error') ?>
     </div>
 <?php endif; ?>            
- <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'pager' => [
-                       'maxButtonCount' => 5, // максимум 5 кнопок
-                       'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                       'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                      'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
-                    ],
-                    'filterModel' => $searchModel,
-                    'columns' => [                    
-                        'id:integer:Id',
-                        'user.company.name:text:Заказчик',
-                        [
-                            'attribute' => 'formType',
-                            'format' => 'text',
-                            'label' => 'Тип формы',
-                            'filter' => $searchModel->formTypesList(),
-                            'value' => 'formType.name',
-                        ],
-                        [
-                            'attribute' => 'status',
-                            'label' => 'Статус',
-                            'format' => 'raw',
-                            'filter' => RequestStatusHelper::statusList(false),
-                            'value' => function (Request $model) {
-                                return RequestStatusHelper::getStatusLabel($model->status);
-                            }
-                        ],
-                        'created_at:datetime:Дата создания',
-                        
-                        [
-                            'class' => ActionColumn::class,
-                            'visibleButtons' => [
-                            //    'delete' => false,
-                                'update' => function ($model) {
-                                    /** @var Request $model */
-                                    return ($model->status === Request::STATUS_DRAFT);
-                                }
-                            ]                        
-                        ],
-                    ],
-                ]); ?>
+ <?= GridView::widget($fullGridConfig); ?>
         </div>
 </div>
 

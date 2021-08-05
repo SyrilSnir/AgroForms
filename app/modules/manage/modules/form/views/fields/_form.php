@@ -57,7 +57,7 @@ if ($formId) {
     <?= $form->field($model, 'order')->textInput() ?>
             <div id="field-options" class="card card-default"<?php if ($model->elementTypeId == ElementType::ELEMET_ADDITIONAL_EQUIPMENT): ?> style="display: none;"<?php endif; ?>>
                 <div class="card-header">
-                    <h3 class="card-title">Дополнительные параметры</h3>
+                  <h3 class="card-title"><?= Yii::t('app', 'Extra options') ?></h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -65,8 +65,8 @@ if ($formId) {
     <div id="required-block"<?php if (!in_array($model->elementTypeId, ElementType::HAS_REQUIRED)):?> class="hide"<?php endif; ?>>
         <?= $form->field($model->parameters, 'required')->widget(SwitchInput::class,[
                 'pluginOptions' => [
-                        'onText' => 'Да',
-                        'offText' => 'Нет',
+                        'onText' => Yii::t('app', 'Yes'),
+                        'offText' => Yii::t('app', 'No'),
                     ]
             ]) 
         ?>
@@ -77,8 +77,8 @@ if ($formId) {
     <div id="computed"<?php if (!in_array($model->elementTypeId, ElementType::COMPUTED_FIELDS)):?> class="hide"<?php endif; ?>>
         <?= $form->field($model->parameters, 'isComputed')->widget(SwitchInput::class,[
                 'pluginOptions' => [
-                        'onText' => 'Да',
-                        'offText' => 'Нет',
+                        'onText' => Yii::t('app', 'Yes'),
+                        'offText' => Yii::t('app', 'No'),
                     ],
                 'pluginEvents' => [
                     "switchChange.bootstrapSwitch" => 
@@ -122,8 +122,8 @@ if ($formId) {
                 </div>
             </div>                            
     <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Canlel'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

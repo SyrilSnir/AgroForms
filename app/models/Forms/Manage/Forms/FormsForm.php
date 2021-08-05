@@ -6,6 +6,7 @@ use app\core\traits\Lists\GetExhibitionsTrait;
 use app\core\traits\Lists\GetValutesListTrait;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
+use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
@@ -80,19 +81,19 @@ class FormsForm extends Model
     public function attributeLabels()
     {
         return [
-            'title' => 'Название',
-            'titleEng' => 'Название (ENG)',
-            'name' => 'Заголовок',
-            'nameEng' => 'Заголовок (ENG)',
-            'slug' => 'Символьный код',
-            'description' => 'Описание',
-            'descriptionEng' => 'Описание (ENG)',
-            'formType' => 'Тип формы',
-            'order' => 'Порядковый номер',
-            'basePrice' => 'Базовая стоимость',
-            'hasFile' => 'Доступно вложение файла',
-            'exhibitionsList' => 'Доступна для выставок',
-            'valute' => 'Валюта'
+            'title' => Yii::t('app','Name'),
+            'titleEng' => Yii::t('app','Name') . ' (ENG)',
+            'name' => Yii::t('app','Title'),
+            'nameEng' => Yii::t('app','Title') . ' (ENG)',
+            'slug' => Yii::t('app','Character code'),
+            'description' => Yii::t('app','Description'),
+            'descriptionEng' => Yii::t('app','Description') . ' (ENG)',
+            'formType' => Yii::t('app/requests','Forn type'),
+            'order' => Yii::t('app','Serial number'),
+            'basePrice' => Yii::t('app/requests','Base price'),
+            'hasFile' => Yii::t('app','File attachment available'),
+            'exhibitionsList' => Yii::t('app','Available for exhibitions'),
+            'valute' => Yii::t('app','Valute')
         ];
     }
     
