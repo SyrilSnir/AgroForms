@@ -4,6 +4,8 @@ namespace app\modules\manage\modules\geography\controllers;
 
 use app\core\repositories\readModels\Geography\CountryReadRepository;
 use app\core\services\operations\Geography\CountryService;
+use app\core\traits\GridViewTrait;
+use app\models\ActiveRecord\Geography\Country;
 use app\models\Forms\Geography\CountryForm;
 use app\models\SearchModels\Geography\CountrySearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -17,7 +19,7 @@ use Yii;
  */
 class CountriesController extends BaseAdminController
 {
-    use \app\core\traits\GridViewTrait;
+    use GridViewTrait;
     /**
      *
      * @var CountryService
@@ -57,7 +59,9 @@ class CountriesController extends BaseAdminController
     
     public function actionUpdate($id)
     {
+        /* @var $model Country */
         $model = $this->findModel($id);
+        $model->disableMultilang();
         $form = new CountryForm($model);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $this->service->edit($id, $form);

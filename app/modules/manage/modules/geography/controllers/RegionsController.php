@@ -6,6 +6,7 @@ use app\core\repositories\readModels\Geography\RegionReadRepository;
 use app\core\services\operations\Forms\ElementTypeService;
 use app\core\services\operations\Geography\RegionService;
 use app\core\traits\GridViewTrait;
+use app\models\ActiveRecord\Geography\Region;
 use app\models\Forms\Geography\RegionForm;
 use app\models\SearchModels\Geography\RegionSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -59,7 +60,9 @@ class RegionsController extends BaseAdminController
     
     public function actionUpdate($id)
     {
+        /* @var $model Region */
         $model = $this->findModel($id);
+        $model->disableMultilang();
         $form = new RegionForm($model);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $this->service->edit($id, $form);

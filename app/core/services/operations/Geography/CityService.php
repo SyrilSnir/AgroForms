@@ -28,7 +28,7 @@ class CityService
     
     public function create(CityForm $form) : City
     {
-        $model = City::create($form->name, $form->region);
+        $model = City::create($form->name, $form->region, $form->nameEng);
         $this->cities->save($model);
         return $model;
     }
@@ -39,7 +39,8 @@ class CityService
         $model = $this->cities->get($id);
         $model->edit(
                 $form->name,
-                $form->region
+                $form->region,
+                $form->nameEng
                 );
         $this->cities->save($model); 
     }    

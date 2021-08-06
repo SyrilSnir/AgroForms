@@ -16,6 +16,7 @@ use yii\base\Model;
 class CityForm extends Model
 {
     public $name;
+    public $nameEng;
     public $region;
     public $countryId;
 
@@ -26,6 +27,7 @@ class CityForm extends Model
     {
         if ($model) {
             $this->name = $model->name;
+            $this->nameEng = $model->name_eng;
             $this->region = $model->region_id;
             $this->countryId = $model->country->id;
         }
@@ -37,7 +39,7 @@ class CityForm extends Model
         return [
             [['name', 'region','countryId'], 'required'],
             [['region','countryId'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name','nameEng'], 'string', 'max' => 255],
         ];
     }
     
@@ -49,6 +51,7 @@ class CityForm extends Model
         return [
             'id' => 'ID',
             'name' => Yii::t('app','City'),
+            'nameEng' => Yii::t('app','City') . ' (ENG)',
             'region' => Yii::t('app','Region'),
             'countryId' => Yii::t('app','Country'),
         ];

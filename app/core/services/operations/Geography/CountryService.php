@@ -25,7 +25,7 @@ class CountryService
     
     public function create(CountryForm $form): Country
     {
-        $model = Country::create($form->name, $form->code);
+        $model = Country::create($form->name, $form->code, $form->nameEng);
         $this->countries->save($model);
         return $model;
     }
@@ -34,7 +34,7 @@ class CountryService
     {
         /** @var Country $model */
         $model = $this->countries->get($id);
-        $model->edit($form->name, $form->code);
+        $model->edit($form->name, $form->code, $form->nameEng);
         $this->countries->save($model);
     }
 

@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Geography;
 
+use app\core\traits\ActiveRecord\MultilangTrait;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -10,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $name Название региона
+ * @property string $name_eng Название региона (ENG)
  * @property int $country_id Страна
  *
  * @property City[] $cities
@@ -17,6 +19,7 @@ use yii\db\ActiveRecord;
  */
 class Region extends ActiveRecord
 {
+    use MultilangTrait;
     /**
      * {@inheritdoc}
      */
@@ -28,15 +31,18 @@ class Region extends ActiveRecord
     /*
      * @param string $name
      * @param int $countryId
+     * @param string $nameEng
      * @return \self
      */
     public static function create(
             string $name,
-            int $countryId
+            int $countryId,
+            string $nameEng = ''
             ):self
     {
         $model = new self();
         $model->name = $name;
+        $model->name_eng = $nameEng;
         $model->country_id = $countryId;
         return $model;
     }
@@ -48,10 +54,12 @@ class Region extends ActiveRecord
      */
     public function edit(
             string $name,
-            int $countryId            
+            int $countryId,
+            string $nameEng = ''
             )
     {
         $this->name = $name;
+        $this->name_eng = $nameEng;
         $this->country_id = $countryId;
     }
     

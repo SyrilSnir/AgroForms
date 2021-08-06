@@ -6,6 +6,7 @@ use app\core\repositories\readModels\Geography\CityReadRepository;
 use app\core\services\operations\Forms\ElementTypeService;
 use app\core\services\operations\Geography\CityService;
 use app\core\traits\GridViewTrait;
+use app\models\ActiveRecord\Geography\City;
 use app\models\Forms\Geography\CityForm;
 use app\models\SearchModels\Geography\CitySearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -59,7 +60,9 @@ class CitiesController extends BaseAdminController
     
     public function actionUpdate($id)
     {
+        /* @var $model City */
         $model = $this->findModel($id);
+        $model->disableMultilang();
         $form = new CityForm($model);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $this->service->edit($id, $form);

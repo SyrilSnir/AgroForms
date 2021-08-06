@@ -21,6 +21,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxLength' => true]) ?>
+    <?= $form->field($model, 'nameEng')->textInput(['maxLength' => true]) ?>
     <?= $form->field($model, 'countryId')->widget(Select2::class,
     [
         'data' => $model->countriesList(),

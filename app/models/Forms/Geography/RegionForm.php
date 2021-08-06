@@ -16,6 +16,7 @@ use yii\base\Model;
 class RegionForm extends Model
 {
     public $name;
+    public $nameEng;
     public $country;
     
     use GetCountriesTrait;  
@@ -24,6 +25,7 @@ class RegionForm extends Model
     {
         if ($model) {
             $this->name = $model->name;
+            $this->nameEng = $model->name_eng;
             $this->country = $model->country_id;
         }
         parent::__construct($config);
@@ -37,7 +39,7 @@ class RegionForm extends Model
         return [
             [['name', 'country'], 'required'],
             [['country'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name','nameEng'], 'string', 'max' => 255],
             [['country'], 'exist', 'skipOnError' => true, 'targetClass' => Country::class, 'targetAttribute' => ['country' => 'id']],
         ];
     }
@@ -50,6 +52,7 @@ class RegionForm extends Model
         return [
             'id' => 'ID',
             'name' => Yii::t('app', 'Region'),
+            'nameEng' => Yii::t('app', 'Region') . ' (ENG)',
             'country' => Yii::t('app', 'Country'),
         ];
     }    

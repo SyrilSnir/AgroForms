@@ -15,6 +15,7 @@ use yii\base\Model;
 class CountryForm extends Model
 {
     public $name;
+    public $nameEng;
     public $code;
     
     public function __construct(Country $model = null, $config = array())
@@ -22,6 +23,7 @@ class CountryForm extends Model
         if ($model) {
             $this->name = $model->name;
             $this->code = $model->code;
+            $this->nameEng = $model->name_eng;
         }
         parent::__construct($config);
     }
@@ -33,7 +35,7 @@ class CountryForm extends Model
     {
         return [
             [['name'], 'required'],
-            [['name'], 'string', 'max' => 255],
+            [['name','nameEng'], 'string', 'max' => 255],
             [['code'], 'string', 'max' => 3],
         ];
     }
@@ -46,6 +48,7 @@ class CountryForm extends Model
         return [
             'id' => 'ID',
             'name' => Yii::t('app', 'Country'),
+            'nameEng' => Yii::t('app', 'Country') . ' (ENG)',
             'code' => Yii::t('app', 'Identifier'),
         ];
     }

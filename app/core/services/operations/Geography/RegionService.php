@@ -28,7 +28,7 @@ class RegionService
     
     public function create(RegionForm $form) : Region
     {
-        $model = Region::create($form->name, $form->country);
+        $model = Region::create($form->name, $form->country, $form->nameEng);
         $this->regions->save($model);
         return $model;
     }
@@ -39,7 +39,8 @@ class RegionService
         $model = $this->regions->get($id);
         $model->edit(
                 $form->name,
-                $form->country
+                $form->country,
+                $form->nameEng
                 );
         $this->regions->save($model); 
     }  
