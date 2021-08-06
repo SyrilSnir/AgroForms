@@ -4,6 +4,7 @@ namespace app\modules\manage\modules\lists\controllers;
 
 use app\core\repositories\readModels\Nomenclature\EquipmentReadRepository;
 use app\core\services\operations\Nomenclature\EquipmentService;
+use app\core\traits\GridViewTrait;
 use app\models\Forms\Nomenclature\EquipmentForm;
 use app\models\SearchModels\Nomenclature\EquipmentSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -17,7 +18,7 @@ use Yii;
  */
 class EquipmentsController extends BaseAdminController
 {
-    
+    use GridViewTrait;
     /**
      *
      * @var EquipmentService
@@ -29,22 +30,14 @@ class EquipmentsController extends BaseAdminController
             $module, 
             EquipmentReadRepository $repository,
             EquipmentService $service,
+            EquipmentSearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    }  
-    
-    public function actionIndex() 
-    {
-        $searchModel = new EquipmentSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $this->searchModel = $searchModel;
     }
     
     public function actionCreate()

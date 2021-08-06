@@ -5,6 +5,7 @@ namespace app\models\Forms\Nomenclature;
 use app\models\ActiveRecord\Nomenclature\Equipment;
 use app\models\ActiveRecord\Nomenclature\EquipmentGroup;
 use app\models\ActiveRecord\Nomenclature\Unit;
+use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
@@ -63,14 +64,14 @@ class EquipmentForm extends Model
     {
         return [
             'id' => 'ID',
-            'groupId' => 'Группа оборудования',
-            'code' => 'Код',
-            'name' => 'Наименование',
-            'description' => 'Описание',
-            'unitId' => 'Единица измерения',
-            'price' => 'Стоимость',
-            'nameEng' => 'Наименование (ENG)',
-            'descriptionEng' => 'Описание (ENG)',             
+            'groupId' => Yii::t('app','Equipments group'),
+            'code' => Yii::t('app','Code'),
+            'name' => Yii::t('app','Name'),
+            'description' => Yii::t('app','Description'),
+            'unitId' => Yii::t('app','Unit'),
+            'price' => Yii::t('app','Price'),
+            'nameEng' => Yii::t('app','Name') . ' (ENG)',
+            'descriptionEng' => Yii::t('app','Description') . ' (ENG)',             
         ];
     }
     

@@ -8,7 +8,7 @@ use yii\web\View;
 /** @var View $this  */
 /** @var UnitForm $model  */
 
-$this->title = 'Новая единица измерения';
+$this->title = Yii::t('app/title','New unit');
 ?>
 
 <div class="create-form">

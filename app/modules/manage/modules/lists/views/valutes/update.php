@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование валюты';
+$this->title = Yii::t('app/title', 'Edit valute');
 ?>
 
 <div class="update-form">

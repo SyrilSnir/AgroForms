@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование оборудования';
+$this->title = Yii::t('app/title','Edit equipment');
 ?>
 
 <div class="update-form">

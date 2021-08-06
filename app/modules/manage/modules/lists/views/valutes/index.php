@@ -11,33 +11,37 @@ use yii\web\View;
 /* @var $searchModel ValuteSearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Справочник валют';
+$this->title = Yii::t('app/title', 'Directory of valutes');
+$this->params['breadcrumbs'][] = $this->title;
+$action = Yii::$app->getRequest()->getPathInfo();
+$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app/title', 'New valute'),
+                                ])                            
+                        ],
+                    ],      
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [                    
+                        'name:text:' . Yii::t('app','Name'),
+                        'name_eng:text:' . Yii::t('app','International name'),
+                        'char_code:text:' . Yii::t('app','Three-letter designation'),
+                        'symbol:text:' . Yii::t('app','Character code'),
+                        ['class' => ActionColumn::class],
+                    ],
+                ];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);
 ?>
 <section class="content">
     <div class="card">
-        <div class="bd-example">         
-            <p><?= Html::a('Новая валюта', ['create'], ['class' => 'btn btn-success']) ?></p>            
-        </div>
         <div class="card-body">
-
-                <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'pager' => [
-                       'maxButtonCount' => 5, // максимум 5 кнопок
-                       'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                       'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                      'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
-                    ],
-                    'filterModel' => $searchModel,
-                    'columns' => [                    
-                        'id:integer:Id',
-                        'name:text:Наименование',
-                        'name_eng:text:Международное название',
-                        'char_code:text:Трехбуквенное обозначение',
-                        'symbol:text:Символ',
-                        ['class' => ActionColumn::class],
-                    ],
-                ]); ?>
+                <?= GridView::widget($fullGridConfig); ?>
         </div>
     </div>
 </section>

@@ -2,6 +2,7 @@
 
 return [
   'Login' => 'Логин',
+  'Username' => 'Имя пользователя',  
   'Password' => 'Пароль',
   'Full name'  => 'ФИО',
   'Birthday'  => 'Дата рождения',

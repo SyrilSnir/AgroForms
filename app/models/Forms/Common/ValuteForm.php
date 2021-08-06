@@ -3,6 +3,7 @@
 namespace app\models\Forms\Common;
 
 use app\models\ActiveRecord\Common\Valute;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -47,10 +48,10 @@ class ValuteForm extends Model
     {
         return [
             'id' => 'ID',
-            'name' => 'Наименование',
-            'intName' => 'Международное название',
-            'charCode' => 'Трехбуквенное обозначение',
-            'symbol' => 'Символьный код',
+            'name' => Yii::t('app','Name'),
+            'intName' => Yii::t('app','International name'),
+            'charCode' => Yii::t('app','Three-letter designation'),
+            'symbol' => Yii::t('app','Character code'),
         ];
     }    
     

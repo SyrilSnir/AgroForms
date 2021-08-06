@@ -3,6 +3,7 @@
 namespace app\models\Forms\Nomenclature;
 
 use app\models\ActiveRecord\Nomenclature\Unit;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -65,10 +66,10 @@ class UnitForm extends Model
     {
         return [
             'id' => 'ID',
-            'name' => 'Наименование',
-            'shortName' => 'Краткое наименование',
-            'nameEng' => 'Наименование (ENG)',
-            'shortNameEng' => 'Краткое наименование (ENG)',            
+            'name' => Yii::t('app','Name'),
+            'shortName' => Yii::t('app','Short name'),
+            'nameEng' => Yii::t('app','Name') . ' (ENG)',
+            'shortNameEng' => Yii::t('app','Short name') . ' (ENG)',            
         ];
     }
 }

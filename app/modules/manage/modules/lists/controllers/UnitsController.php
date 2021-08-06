@@ -4,6 +4,7 @@ namespace app\modules\manage\modules\lists\controllers;
 
 use app\core\repositories\readModels\Nomenclature\UnitReadRepository;
 use app\core\services\operations\Nomenclature\UnitService;
+use app\core\traits\GridViewTrait;
 use app\models\Forms\Nomenclature\UnitForm;
 use app\models\SearchModels\Nomenclature\UnitSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
@@ -17,6 +18,8 @@ use Yii;
  */
 class UnitsController extends BaseAdminController
 {
+
+    use GridViewTrait;
     
     /**
      *
@@ -29,22 +32,14 @@ class UnitsController extends BaseAdminController
             $module, 
             UnitReadRepository $repository,
             UnitService $service,
+            UnitSearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    }  
-    
-    public function actionIndex() 
-    {
-        $searchModel = new UnitSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $this->searchModel = $searchModel;
     }
     
     public function actionCreate()

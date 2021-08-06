@@ -11,15 +11,15 @@ $this->title = $model->name;
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы действительно хотите удалить категорию?',
+                'confirm' => Yii::t('app','Are you sure you want to delete the category?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -28,10 +28,8 @@ $this->title = $model->name;
             'model' => $model,
             'attributes' => [
                 'id',
-                'name:text:Наимменование',
-                'description:text:Описание',
-                'name_eng:text:Наимменование (ENG)',
-                'description_eng:text:Описание (ENG)',                    
+                'name:text:' . Yii::t('app','Name'),
+                'description:text:' . Yii::t('app','Description'),                                   
             ],
         ]); ?>
     </div>

@@ -14,15 +14,15 @@ $this->title = $model->name;
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы действительно хотите удалить оборудование?',
+                'confirm' => Yii::t('app','Are you sure you want to delete the equipment?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -31,14 +31,12 @@ $this->title = $model->name;
             'model' => $model,
             'attributes' => [
                 'id',
-                'name:text:Наимменование',
-                'name_eng:text:Наимменование (ENG)',
-                'equipmentGroup.name:text:Категория',
-                'description:text:Описание',
-                'description_eng:text:Описание (ENG)',
-                'code:text:Код',
-                'unit.name:text:Единица измерения',
-                'price:text:Цена',
+                'name:text:' . Yii::t('app','Name'),
+                'equipmentGroup.name:text:' . Yii::t('app','Category'),
+                'description:text:' . Yii::t('app','Description'),           
+                'code:text:' . Yii::t('app','Code'),
+                'unit.name:text:' . Yii::t('app','Unit'),
+                'price:text:' . Yii::t('app','Price'),
             ],
         ]); ?>
     </div>

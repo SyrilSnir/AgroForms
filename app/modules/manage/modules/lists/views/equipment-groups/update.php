@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование категории';
+$this->title = Yii::t('app/title','Edit category');
 ?>
 
 <div class="update-form">

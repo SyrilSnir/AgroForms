@@ -11,15 +11,15 @@ $this->title = $model->name;
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('app','Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Remove'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы действительно хотите удалить категорию?',
+                'confirm' => Yii::t('app','Are you sure you want to delete the valute?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -27,11 +27,10 @@ $this->title = $model->name;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'id',
-                'name:text:Наимменование',
-                'name_eng:text:Международное название',
-                'char_code:text:Трехбуквенное обозначение',
-                'symbol:text:Символьный код',                    
+                'name:text:' . Yii::t('app','Name'),
+                'name_eng:text:' . Yii::t('app','International name'),
+                'char_code:text:' . Yii::t('app','Three-letter designation'),
+                'symbol:text:' . Yii::t('app','Character code'),
             ],
         ]); ?>
     </div>

@@ -4,6 +4,7 @@ namespace app\modules\manage\modules\lists\controllers;
 
 use app\core\repositories\readModels\Common\ValuteReadRepository;
 use app\core\services\operations\Common\ValuteService;
+use app\core\traits\GridViewTrait;
 use app\models\Forms\Common\ValuteForm;
 use app\models\SearchModels\Common\ValuteSearch;
 use app\modules\manage\controllers\BaseAdminController;
@@ -17,6 +18,7 @@ use Yii;
  */
 class ValutesController extends BaseAdminController
 {
+    use GridViewTrait;
     /**
      *
      * @var ValuteService
@@ -28,22 +30,14 @@ class ValutesController extends BaseAdminController
             $module, 
             ValuteReadRepository $repository,
             ValuteService $service,
+            ValuteSearch $searchModel,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-    } 
-    
-    public function actionIndex() 
-    {
-        $searchModel = new ValuteSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);        
-        return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $this->searchModel = $searchModel;
     } 
     
     public function actionCreate()

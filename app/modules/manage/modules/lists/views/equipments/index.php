@@ -8,34 +8,39 @@ use app\models\SearchModels\Geografy\EquipmentSearch;
 /* @var $searchModel EquipmentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Справочник доп. оборудования';
+$this->title = Yii::t('app/title','Directory of add. equipments');
+$this->params['breadcrumbs'][] = $this->title;
+$action = Yii::$app->getRequest()->getPathInfo();
+$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app/title','New equipment'),
+                                ])                            
+                        ],
+                    ],      
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [                    
+                        'name:text:' . Yii::t('app','Name'),
+                        'code:text:' . Yii::t('app','Code'),
+                        'description:text:' . Yii::t('app','Description'),
+                        'unit.name:text:' . Yii::t('app','Unit'),
+                        'price:text:' . Yii::t('app','Price'),
+                        ['class' => ActionColumn::class],
+                    ],
+                ];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);
+
 ?>
 <section class="content">
     <div class="card">
-        <div class="bd-example">           
-            <p><?= Html::a('Новое оборудование', ['create'], ['class' => 'btn btn-success']) ?></p>            
-        </div>
         <div class="card-body">
-
-                <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'pager' => [
-                       'maxButtonCount' => 5, // максимум 5 кнопок
-                       'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                       'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                      'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
-                    ],
-                    'filterModel' => $searchModel,
-                    'columns' => [                    
-                        'id:integer:Id',
-                        'name:text:Наименование',
-                        'code:text:Код',
-                        'description:text:Описание',
-                        'unit.name:text:Единица измерения',
-                        'price:text:Цена',
-                        ['class' => ActionColumn::class],
-                    ],
-                ]); ?>
+                <?= GridView::widget($fullGridConfig); ?>
         </div>
     </div>
 </section>

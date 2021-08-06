@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование единицы измерения';
+$this->title = Yii::t('app/title','Edit unit');
 ?>
 
 <div class="update-form">

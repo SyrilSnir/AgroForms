@@ -3,6 +3,7 @@
 namespace app\models\Forms\Nomenclature;
 
 use app\models\ActiveRecord\Nomenclature\EquipmentGroup;
+use Yii;
 use yii\base\Model;
 /**
  * Description of CategoryForm
@@ -46,10 +47,10 @@ class EquipmentGroupForm extends Model
     {
         return [
             'id' => 'ID',
-            'name' => 'Категория',
-            'description' => 'Описание',
-            'nameEng' => 'Категория (ENG)',
-            'descriptionEng' => 'Описание (ENG)',            
+            'name' => Yii::t('app','Category'),
+            'description' => Yii::t('app','Description'),
+            'nameEng' => Yii::t('app','Category') . ' (ENG)',
+            'descriptionEng' => Yii::t('app','Description') . ' (ENG)',            
         ];
     }
 }

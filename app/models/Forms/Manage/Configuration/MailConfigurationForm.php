@@ -2,6 +2,7 @@
 
 namespace app\models\Forms\Manage\Configuration;
 
+use Yii;
 use yii\base\Model;
 
 
@@ -67,13 +68,13 @@ class MailConfigurationForm extends Model implements ConfigurationFormInterface
     public function attributeLabels(): array
     {
         return [
-            'smtpServer' => 'Сервер исходящей почты',
-            'smtpPort' => 'Порт SMTP',
-            'tls' => 'Использовать защищенное соединение (TLS)',
-            'userName' => 'Имя пользователя',
-            'password' => 'Пароль подключения',
-            'senderName' => 'Имя отправителя',
-            'senderEmail' => 'Адрес электронной почты отправителя',
+            'smtpServer' => Yii::t('app', 'Mail server'),
+            'smtpPort' => Yii::t('app', 'SMTP port'),
+            'tls' => Yii::t('app', 'Use secure connection (TLS)'),
+            'userName' => Yii::t('app/user', 'Username'),
+            'password' => Yii::t('app/user', 'Password'),
+            'senderName' => Yii::t('app', 'Sender name'),
+            'senderEmail' => Yii::t('app', 'Sender email address'),
         ];
     }
 }
