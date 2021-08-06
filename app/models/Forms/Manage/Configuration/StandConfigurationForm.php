@@ -2,6 +2,7 @@
 
 namespace app\models\Forms\Manage\Configuration;
 
+use Yii;
 use yii\base\Model;
 
 /**
@@ -25,8 +26,8 @@ class StandConfigurationForm extends Model implements ConfigurationFormInterface
     public function attributeLabels(): array
     {
         return [
-            'frizeFreeDigits' => 'Количество бесплатных знаков во фризовой надписи',
-            'frizeDigitPrice' => 'Стоимость символа фризовой надписи',
+            'frizeFreeDigits' => Yii::t('app','The number of free characters in the frieze inscription'),
+            'frizeDigitPrice' => Yii::t('app','The cost of the frieze lettering symbol'),
         ];
     }
 }

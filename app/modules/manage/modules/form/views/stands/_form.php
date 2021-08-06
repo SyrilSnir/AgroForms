@@ -54,7 +54,7 @@ if (!$model->imageFile) {
 
             ]); 
     ?>                             
-    <?= $form->field($model, 'price')->textInput() ?>                            
+    <?= $form->field($model, 'price')->textInput()->label(Html::decode($model->getAttributeLabel('price'))) ?>
     <?= $form->field($model, 'photo')->widget(FileInput::class, 
         [
             'options' => [
@@ -66,8 +66,8 @@ if (!$model->imageFile) {
     ?>                            
 
     <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::submitButton(Yii::t('app/title', 'Save'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app/title', 'Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

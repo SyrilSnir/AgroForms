@@ -14,15 +14,15 @@ $this->title = $model->name;
 ?>
 <div class="category-view">
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы действительно хотите удалить форму?',
+                'confirm' => Yii::t('app','Are you sure you want to delete the stand?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Вернуться', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
@@ -31,14 +31,14 @@ $this->title = $model->name;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'name:text:Наимменование',
-                    'description:html:Описание',
-                    'price:text:Стоимость',
+                    'name:text:' . Yii::t('app','Name'),
+                    'description:html:' . Yii::t('app','Description'),
+                    'price:text:' . Yii::t('app','Price'),
                 ],
             ]); ?>
     <?php if ($model->image_url) :?>
         <div class="box">
-            <div class="box-header with-border">Изображение стенда</div>
+          <div class="box-header with-border"><?php echo Yii::t('app','Stand image')?></div>
             <div class="box-body">
                     <?php echo Html::img($model->image_url, [
                         'class' => 'thumbnail',

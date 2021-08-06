@@ -3,6 +3,7 @@
 namespace app\models\Forms\Manage\Forms;
 
 use app\models\ActiveRecord\Forms\Stand;
+use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
 
@@ -62,15 +63,15 @@ class StandForm extends Model
     {
         return [
             'id' => 'ID',
-            'name' => 'Название',
-            'description' => 'Описание',
-            'nameEng' => 'Название (ENG)',
-            'descriptionEng' => 'Описание (ENG)',            
-            'photo' => 'Имя оригинального файла с изображением',
+            'name' => Yii::t('app', 'Name'),
+            'description' => Yii::t('app', 'Description'),
+            'nameEng' => Yii::t('app', 'Name') . ' (ENG)',
+            'descriptionEng' => Yii::t('app', 'Description') . ' (ENG)',            
+            'photo' => Yii::t('app','The name of the original image file'),
             'image_path' => 'Путь к файлу с изображением',
             'image_url' => 'Url файла с изображением',
             'plan_path' => 'Путь к файлу с планом стенда',
-            'price' => 'Цена за м2'
+            'price' => Yii::t('app', 'Price for, m<sup>2</sup>'),
         ];
     }
     public function beforeValidate(): bool

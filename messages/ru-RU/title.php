@@ -29,4 +29,7 @@ return [
     'Field groups' => 'Группы полей формы',
     'New group' => 'Новая группа',
     'Edit field group' => 'Редактировать группу полей',
+    'Available stands' => 'Доступные стенды',
+    'New stand' => 'Новый стенд',
+    'Efit stand' => 'Изменить стенд',
 ];

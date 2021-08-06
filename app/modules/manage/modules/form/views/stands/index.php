@@ -12,12 +12,12 @@ use yii\web\View;
 /* @var $searchModel StandSearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = 'Доступные стенды';
+$this->title = Yii::t('app/title', 'Available stands');
 ?>
 <section class="content">
     <div class="card">
         <div class="bd-example">           
-            <p><?= Html::a('Новый стенд', ['create'], ['class' => 'btn btn-success']) ?></p>            
+            <p><?= Html::a(Yii::t('app', 'New stand'), ['create'], ['class' => 'btn btn-success']) ?></p>            
         </div>
         <div class="card-body">
 
@@ -31,11 +31,10 @@ $this->title = 'Доступные стенды';
                     ],
                     'filterModel' => $searchModel,
                     'columns' => [                    
-                        'id:integer:Id',
-                        'name:text:Название',
-                        'description:html:Описание',
+                        'name:text:' . Yii::t('app', 'Name'),
+                        'description:html:' . Yii::t('app', 'Description'),
                         [
-                            'label' => 'Изображение стенда',
+                            'label' => Yii::t('app', 'Stand image'),
                             'value' => function (Stand $model) {
                                 return Html::img($model->image_url,['style' => 'width: 80px']);
                             },

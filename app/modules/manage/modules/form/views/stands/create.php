@@ -8,7 +8,7 @@ use yii\web\View;
 /** @var View $this  */
 /** @var StandForm $model  */
 
-$this->title = 'Новый тип стенда';
+$this->title = Yii::t('app/title', 'New stand');
 ?>
 
 <div class="create-form">

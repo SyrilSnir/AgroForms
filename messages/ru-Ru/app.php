@@ -69,12 +69,20 @@ return [
     'End date' => 'Дата окончания',
     'Display order' => 'Порядок вывода',
     'Extra options' => 'Дополнительные параметры',
+    'Stand image' => 'Изображение стенда',
+    'Stand settings' => 'настройки стендов',
+    'Price for, m<sup>2</sup>' => 'Цена за м<sup>2</sup>',
+    'The number of free characters in the frieze inscription' => 'Количество бесплатных знаков во фризовой надписи',
+    'The cost of the frieze lettering symbol' => 'Стоимость символа фризовой надписи',
+    'The name of the original image file' => 'Имя оригинального файла с изображением',
     'Are you sure you want to delete the exhibition?' => 'Вы действительно хотите удалить выставку?',
     'Are you sure you want to delete the city?' => 'Вы действительно хотите удалить город?',
     'Are you sure you want to delete the region?' => 'Вы действительно хотите удалить регион?',
     'Are you sure you want to delete the country?' => 'Вы действительно хотите удалить страну?',
     'Are you sure you want to delete the form?' => 'Вы действительно хотите удалить форму?',
     'Are you sure you want to delete the field?' => 'Вы действительно хотите удалить поле?',
+    'Are you sure you want to delete the stand?' => 'Вы действительно хотите удалить стенд?',
+    'Are you sure you want to delete the fields group?' => 'Вы действительно хотите удалить группу полей?',
     
 ];
 

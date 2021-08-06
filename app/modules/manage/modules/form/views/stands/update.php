@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->title = 'Редактирование информации о стенде';
+$this->title = Yii::t('app/title', 'Edit stand');
 ?>
 
 <div class="update-form">

@@ -1,12 +1,12 @@
 <?php
 
-use app\models\Forms\Manage\StandConfigurationForm;
+use app\models\Forms\Manage\Configuration\StandConfigurationForm;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 /* @var $this View */
 /** @var StandConfigurationForm $model  */
-$this->title = 'Настройки стендов';
+$this->title = Yii::t('app','Stand settings');
 ?>
 
 <div class="stand-settings-form update-form">
@@ -27,8 +27,8 @@ $this->title = 'Настройки стендов';
     <?= $form->field($model, 'frizeDigitPrice')->textInput() ?>      
                             
     <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Отмена', ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </div>
     <?php ActiveForm::end(); ?>                            
                         </div>
