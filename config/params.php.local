@@ -1,4 +1,6 @@
+<?php
 return [
+    'nameEng' => 'Agrosalon. Requests management.',
     'rootUsers' => ['admin'], /* Не изменяемые системные типы учетных записей */
     'bsVersion' => '4.x',      /* Версия Bootstrap */
     'mailSettings' => [
