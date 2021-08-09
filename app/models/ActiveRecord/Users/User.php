@@ -55,6 +55,7 @@ class User extends ActiveRecord
     
     /**
      * 
+     * @param int $id ID
      * @param string $login
      * @param int $userTypeId
      * @param int $companyId

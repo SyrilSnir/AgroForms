@@ -46,18 +46,21 @@ class AdminController extends Controller
         $memberRole = $auth->getRole(UserType::MEMBER_USER_TYPE);
         $managerRole = $auth->getRole(UserType::MANAGER_USER_TYPE);
         $accountantRole = $auth->getRole(UserType::ACCOUNTANT_USER_TYPE);
-        
+        $superAdminRole = $auth->getRole(UserType::SUPER_ADMIN);
+        $adminList = Yii::$app->params['rootUsers'] ?? [];        
         $users = User::find()->all();
         
         foreach ($users as $user)
         {
-        /**
-         * User $user
-         */
+            /* @var $user User */
             switch ($user->user_type_id) {
                 case UserType::ROOT_USER_ID:
                     Console::output("Установлена роль 'Администратор' для пользователя {$user->login}");
                     $auth->assign($adminRole, $user->id);
+                    if (in_array($user->login, $adminList)) {
+                        Console::output("Установлена роль 'СуперАдмин' для пользователя {$user->login}");
+                        $auth->assign($superAdminRole, $user->id);
+                    }                    
                     break;
                 case UserType::MEMBER_USER_ID:
                     $auth->assign($memberRole, $user->id);

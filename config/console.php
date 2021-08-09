@@ -10,6 +10,7 @@ if (YII_DEBUG) {
     $db = require __DIR__ . '/db.php';
 }
 
+
 $config = [
     'id' => 'bfree-console',
     'basePath' => realpath(__DIR__ .'/../'),
@@ -36,7 +37,7 @@ $config = [
             'class' => PhpManager::class,
         ],
     ],
-  //  'params' => $params,
+    'params' => require_once __DIR__ . '/params.php',
     /*
     'controllerMap' => [
         'fixture' => [ // Fixture generation command line.
