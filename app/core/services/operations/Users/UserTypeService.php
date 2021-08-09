@@ -30,7 +30,7 @@ class UserTypeService
     {
         /** @var UserType $userType */
         $userType = $this->userTypes->get($id);
-        $userType->setName($form->name);
+        $userType->setName($form->name,$form->nameEng);
         $this->userTypes->save($userType);
     }
 }

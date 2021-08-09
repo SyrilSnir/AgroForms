@@ -5,8 +5,8 @@ namespace app\modules\manage\controllers;
 use app\core\repositories\readModels\User\UserTypeReadRepository;
 use app\core\services\operations\Users\UserTypeService;
 use app\core\traits\GridViewTrait;
+use app\models\ActiveRecord\Users\UserType;
 use app\models\Forms\Manage\Users\UserTypeForm;
-use app\models\Forms\RowsCountForm;
 use app\models\SearchModels\Users\UserTypeSearch;
 use app\modules\manage\controllers\AccessRule\BaseAdminController;
 use BadMethodCallException;
@@ -43,7 +43,9 @@ class RolesController extends BaseAdminController
     
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        /* @var $model UserType */
+        $model = $this->findModel($id);        
+        $model->disableMultilang();
         $form = new UserTypeForm($model);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $this->service->edit($id, $form);
@@ -57,6 +59,6 @@ class RolesController extends BaseAdminController
 
     public function actionDelete($id)
     {
-        throw new BadMethodCallException('Запрещенная операция');
+        throw new BadMethodCallException(Yii::t('app','Forbidden operation'));
     }
 }

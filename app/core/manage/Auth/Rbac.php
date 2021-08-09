@@ -10,6 +10,5 @@ namespace app\core\manage\Auth;
 class Rbac
 {
     const PERMISSION_ADMINISTRATOR_MENU = 'adminMenu';
-    const PERMISSION_MEMBER_MENU = 'memberMenu';
-    
+    const PERMISSION_MEMBER_MENU = 'memberMenu';    
 }

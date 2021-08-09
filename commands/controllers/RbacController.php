@@ -32,7 +32,13 @@ class RbacController extends Controller
         $member->description = 'Роль участника выставки';
         $auth->add($member);
         
+        $accountant = $auth->createRole(UserType::ACCOUNTANT_USER_TYPE);
+        $accountant->description = 'Роль бухгалтера';
+        $auth->add($accountant);
         
+        $manager = $auth->createRole(UserType::MANAGER_USER_TYPE);
+        $manager->description = 'Роль менеджера';
+        $auth->add($manager);
         
         $adminMenu = $auth->createPermission(Rbac::PERMISSION_ADMINISTRATOR_MENU);
         $adminMenu->description ='Меню администратора';

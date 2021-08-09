@@ -18,11 +18,17 @@ class UserTypeForm extends Model
      * @var string
      */
     public $name;
+    /**
+     *
+     * @var string
+     */
+    public $nameEng;    
       
     public function __construct(UserType $model = null, $config = array())
     {
         if ($model) {
             $this->name = $model->name;
+            $this->nameEng = $model->name_eng;
         }
         parent::__construct($config);
     }
@@ -34,7 +40,7 @@ class UserTypeForm extends Model
     {
         return [
             [['name'], 'required'],
-            [['name'], 'string', 'max' => 255],
+            [['name','nameEng'], 'string', 'max' => 255],
         ];
     }
 
@@ -45,6 +51,7 @@ class UserTypeForm extends Model
     {
         return [
             'name' => Yii::t('app','Role'),
+            'nameEng' => Yii::t('app','Role') . ' (ENG)',
         ];
     }
 }

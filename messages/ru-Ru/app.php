@@ -2,6 +2,8 @@
 
 return [
    Yii::$app->params['nameEng'] => Yii::$app->name,
+   'Russian' => 'Русский',
+   'English' => 'Английский',
    'Note' => 'Внимание',
    'Change' => 'Изменить',
    'Save' => 'Сохранить',
@@ -18,6 +20,8 @@ return [
    'Main page' => 'Главная страница',
    'Description' => 'Описание',
    'Undefined' => 'Не задано',
+   'Male' => 'Мужской',
+   'Female' => 'Женский',
    'City' => 'Город',
    'Add city' => 'Добавить город',
    'Country' => 'Страна',
@@ -100,6 +104,8 @@ return [
     'Use secure connection (TLS)' => 'Использовать защищенное соединение (TLS)',
     'Sender name' => 'Имя отправителя',
     'Sender email address' => 'Адрес электронной почты отправителя',
+    'Forbidden operation' => 'Запрещенная операция',
+
 
 ];
 

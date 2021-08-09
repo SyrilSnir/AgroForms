@@ -44,6 +44,8 @@ class AdminController extends Controller
         $auth->removeAllAssignments();
         $adminRole = $auth->getRole(UserType::ROOT_USER_TYPE);
         $memberRole = $auth->getRole(UserType::MEMBER_USER_TYPE);
+        $managerRole = $auth->getRole(UserType::MANAGER_USER_TYPE);
+        $accountantRole = $auth->getRole(UserType::ACCOUNTANT_USER_TYPE);
         
         $users = User::find()->all();
         
@@ -61,6 +63,13 @@ class AdminController extends Controller
                     $auth->assign($memberRole, $user->id);
                      Console::output("Установлена роль 'Участник' для пользователя {$user->login}");
                     break;
+                case UserType::MANAGER_USER_ID:
+                    $auth->assign($managerRole, $user->id);
+                     Console::output("Установлена роль 'Менеджер' для пользователя {$user->login}");                    
+                    break;
+                case UserType::ACCOUNTANT_USER_ID:
+                    $auth->assign($accountantRole, $user->id);
+                     Console::output("Установлена роль 'Бухгалтер' для пользователя {$user->login}");                    
             }
         }
         return ExitCode::OK;
@@ -109,8 +118,7 @@ class AdminController extends Controller
         $user->company_id = Company::BASE_COMPANY;
         $user->setPassword('123')
                 ->setAuthKey()
-                ->save(false);
-        
+                ->save(false);        
     }
     /**
      * Заполнение справочников
@@ -138,8 +146,6 @@ class AdminController extends Controller
 
     protected function loadFixtureFromCSV(ActiveRecord $obj, string $csvFile, array $fieldNames)
     {
-       //$db = Yii::$app->db;
-     //   $obj::deleteAll();
         $fixture = Yii::getAlias('@fixtures') . DIRECTORY_SEPARATOR . $csvFile;
         $lines = file($fixture);
         foreach ($lines as $line)

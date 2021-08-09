@@ -44,6 +44,8 @@ $this->title = Yii::t('app/user','Create new user');
            ]
        ]);    
     ?>
+<?= $form->field($model, 'gender')->dropDownList($model->getGenderData()); ?>
+<?= $form->field($model, 'language')->dropDownList($model->languagesList()); ?>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>

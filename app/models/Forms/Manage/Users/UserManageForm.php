@@ -2,6 +2,8 @@
 
 namespace app\models\Forms\Manage\Users;
 
+use app\core\traits\Lists\GetGenderListTrait;
+use app\core\traits\Lists\GetLanguagesListTrait;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
@@ -28,6 +30,9 @@ class UserManageForm extends ActiveRecord
     public $userId;
    
 
+    use GetGenderListTrait;
+    use GetLanguagesListTrait;
+    
     public function __construct(User $user = null, $config = array())
     {     
         parent::__construct($config);
@@ -50,8 +55,9 @@ class UserManageForm extends ActiveRecord
     public function rules()
     {
         return [
+            [['login','email'],'required'],
             ['email','email'],
-            [['position'],'string'],
+            [['position','login'],'string'],
             [['position'],'default' ,'value' => ''],
             [['userType','company', 'gender','language'],'integer'],
             [['phone','fio'], 'string', 'max' => 255],

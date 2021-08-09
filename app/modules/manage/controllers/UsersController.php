@@ -75,7 +75,7 @@ class UsersController extends BaseAdminController
         $form = new UserManageForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $user = $this->service->createMember($form);
+                $user = $this->service->createUser($form);
                 return $this->redirect(['view', 'id' => $user->id]);
             } catch (DomainException $e) {
                 Yii::$app->session->setFlash('error', $e->getMessage());

@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Users;
 
+use app\core\traits\ActiveRecord\MultilangTrait;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -10,16 +11,24 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $name Название типа пользователя
+ * @property string $name_eng Название типа пользователя (ENG)
  * @property string $slug Идентификатор типа пользователя
  *
  * @property User[] $users
  */
 class UserType extends ActiveRecord
 {
+    use MultilangTrait;
     /**
      * ID для типа учетной записи "Суперпользователь"
      */
     const ROOT_USER_ID = 1;
+    
+    /**
+     * Роль суперадминистратора
+     */
+    const SUPER_ADMIN = 'superadmin';
+    
     /**
      * Роль "администратор"
      */
@@ -28,9 +37,23 @@ class UserType extends ActiveRecord
     const MEMBER_USER_ID = 2;
     const MEMBER_USER_TYPE = 'member';
     
+    /**
+     * Менеджер
+     */
+    const MANAGER_USER_ID = 3;
+    const MANAGER_USER_TYPE = 'manager';
+    
+    /**
+     * Бухгалтер
+     */
+    const ACCOUNTANT_USER_ID = 4;
+    const ACCOUNTANT_USER_TYPE = 'accountant';
+    
     const ROLES = [
         self::ROOT_USER_ID => self::ROOT_USER_TYPE,
-        self::MEMBER_USER_ID => self::MEMBER_USER_TYPE
+        self::MEMBER_USER_ID => self::MEMBER_USER_TYPE,
+        self::MANAGER_USER_ID => self::MANAGER_USER_TYPE,
+        self::ACCOUNTANT_USER_ID => self::ACCOUNTANT_USER_TYPE
     ];    
     /**
      * {@inheritdoc}
@@ -50,8 +73,14 @@ class UserType extends ActiveRecord
         return $this->hasMany(User::className(), ['user_type_id' => 'id']);
     }
     
-    public function setName( string $name) 
+    /**
+     * 
+     * @param string $name
+     * @param string $nameEng
+     */
+    public function setName( string $name, string $nameEng ='') 
     {
         $this->name = $name;
+        $this->name_eng = $nameEng;
     }        
 }

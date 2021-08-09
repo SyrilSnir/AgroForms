@@ -21,6 +21,7 @@ $this->title = Yii::t('app/title', 'Edit role') .': ' . $model->name;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput() ?>
+    <?= $form->field($model, 'nameEng')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
