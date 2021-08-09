@@ -85,7 +85,11 @@ class RequestDynamicFormService
             $total = 0;
         } 
         $request = $this->requests->get($id);
-        $request->edit($form->userId, $form->formId,$form->draft);
+        $request->edit(
+                $form->userId, 
+                $form->formId
+                );
+        $form->draft ? $request->setStatusDraft() : $request->setStatusNew();        
         $this->requests->save($request);        
         $dynamicForm = $request->requestForm;
         $dynamicForm->edit($request->id, $serializedFields, $total);

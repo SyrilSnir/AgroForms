@@ -71,13 +71,11 @@ class Request extends FormManipulation
     
     public function edit(
             int $userId,
-            int $formId,
-            int $exhibitionId          
+            int $formId         
             )
     {
         $this->user_id = $userId;
         $this->form_id = $formId;
-        $this->exhibition_id = $exhibitionId;
     }
     
     public function setStatusNew()
