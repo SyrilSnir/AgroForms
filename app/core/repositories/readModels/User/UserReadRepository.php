@@ -41,6 +41,8 @@ class UserReadRepository implements ReadRepositoryInterface
     public function getAllMembers(): DataProviderInterface 
     {        
         $query = User::find()->members();
-        return $this->getProvider($query);
+        $provider = $this->getProvider($query);
+        $provider->setPagination(false);
+        return $provider;
     }
 }
