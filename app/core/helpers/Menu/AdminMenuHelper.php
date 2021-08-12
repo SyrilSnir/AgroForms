@@ -38,9 +38,39 @@ class AdminMenuHelper implements MenuHelperInterface
                             'items' => [
                                 ['label' => Yii::t('app/menu', 'Request list'), 'icon' => 'tasks', 'url' => ['/manage/lists/requests'],],
                             ]
-                        ],                         
+                        ],                                                
+                    ],
+                ], 
+                [
+                    'label' => Yii::t('app/menu', 'Directories'),
+                    'icon' => 'share',
+                    'items' => [
+                        ['label' => Yii::t('app/menu', 'Geography'), 
+                            'icon' => 'map', 
+                            'items' => [
+                                ['label' => Yii::t('app/menu', 'Cities'), 'icon' => 'map-o', 'url' => ['/manage/geography/cities'],],
+                                ['label' => Yii::t('app/menu', 'Regions'), 'icon' => 'map-o', 'url' => ['/manage/geography/regions'],],
+                                ['label' => Yii::t('app/menu', 'Countries'), 'icon' => 'map-o', 'url' => ['/manage/geography/countries'],],
+                            ]
+                        ],
                         [
-                            'label' => Yii::t('app/menu', 'Form management'),
+                            'label' => Yii::t('app/menu', 'Nomenclature'), 
+                            'icon' => 'list', 
+                            'items' => [
+                                ['label' => Yii::t('app/menu', 'Categories'), 'icon' => 'folder', 'url' => ['/manage/lists/equipment-groups'],],
+                                ['label' => Yii::t('app/menu', 'Add. equipment'), 'icon' => 'gift', 'url' => ['/manage/lists/equipments'],],
+                                ['label' => Yii::t('app/menu', 'Units measurement'), 'icon' => 'thermometer', 'url' => ['/manage/lists/units'],],
+                            ]
+                        ], 
+                        ['label' => Yii::t('app/menu', 'Valutes'), 'icon' => 'money', 'url' => ['/manage/lists/valutes'],],
+                    ],
+                ],               
+                [
+                    'label' => Yii::t('app/menu', 'Settings'), 
+                    'icon' => 'cog', 
+                    'items' => [
+                        [
+                            'label' => Yii::t('app/menu', 'Forms constructor'),
                             'icon' => 'share',
                             'items' => [
                                 ['label' => Yii::t('app/menu', 'List of forms'), 'icon' => 'tasks', 'url' => ['/manage/form/forms'],],
@@ -50,7 +80,7 @@ class AdminMenuHelper implements MenuHelperInterface
                                 ['label' => Yii::t('app/menu', 'Form elements'), 'icon' => 'tasks', 'url' => ['/manage/form/element-types'],],
 
                             ]
-                        ],
+                        ], 
                         [
                             'label' =>  Yii::t('app/menu', 'Standard stand'),
                             'icon' => 'share',
@@ -58,40 +88,10 @@ class AdminMenuHelper implements MenuHelperInterface
                                 ['label' => Yii::t('app/menu', 'Stand management'), 'icon' => 'tasks', 'url' => ['/manage/form/stands'],],
                                 ['label' => Yii::t('app/menu', 'Stand settings'), 'icon' => 'cogs', 'url' => ['/manage/form/stands/settings'],],
                             ]
-                        ], 
-                        [
-                            'label' => Yii::t('app/menu', 'Directories'),
-                            'icon' => 'share',
-                            'items' => [
-                                ['label' => Yii::t('app/menu', 'Geography'), 
-                                    'icon' => 'map', 
-                                    'items' => [
-                                        ['label' => Yii::t('app/menu', 'Cities'), 'icon' => 'map-o', 'url' => ['/manage/geography/cities'],],
-                                        ['label' => Yii::t('app/menu', 'Regions'), 'icon' => 'map-o', 'url' => ['/manage/geography/regions'],],
-                                        ['label' => Yii::t('app/menu', 'Countries'), 'icon' => 'map-o', 'url' => ['/manage/geography/countries'],],
-                                    ]
-                                ],
-                                [
-                                    'label' => Yii::t('app/menu', 'Nomenclature'), 
-                                    'icon' => 'list', 
-                                    'items' => [
-                                        ['label' => Yii::t('app/menu', 'Categories'), 'icon' => 'folder', 'url' => ['/manage/lists/equipment-groups'],],
-                                        ['label' => Yii::t('app/menu', 'Add. equipment'), 'icon' => 'gift', 'url' => ['/manage/lists/equipments'],],
-                                        ['label' => Yii::t('app/menu', 'Units measurement'), 'icon' => 'thermometer', 'url' => ['/manage/lists/units'],],
-                                    ]
-                                ], 
-                                ['label' => Yii::t('app/menu', 'Valutes'), 'icon' => 'money', 'url' => ['/manage/lists/valutes'],],
-                            ],
-                        ],
-                        [
-                            'label' => Yii::t('app/menu', 'Settings'), 
-                            'icon' => 'cog', 
-                            'items' => [
-                                [ 'label' => Yii::t('app/menu', 'Mail server'), 'icon' => 'envelope-o', 'url' => ['/manage/config/mail-settings'],],
-                            ]
-                        ]                        
-                    ],
-                ],                        
+                        ],                        
+                        [ 'label' => Yii::t('app/menu', 'Mail server'), 'icon' => 'envelope-o', 'url' => ['/manage/config/mail-settings'],],
+                    ]
+                ]                 
             ]
         ];
     }
