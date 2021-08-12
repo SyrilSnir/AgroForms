@@ -1,8 +1,6 @@
 <?php
 
 $this->title = Yii::t('app','Free information');
-$sum = 50;
-
 ?>
   <!-- Content Wrapper. Contains page content -->
 <section class="content content-large main-section">  
@@ -27,4 +25,5 @@ $sum = 50;
           </div>            
         </div>
        </div>
+          </div>
 </section>
