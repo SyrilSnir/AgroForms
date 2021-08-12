@@ -105,7 +105,9 @@ return [
     'Sender name' => 'Имя отправителя',
     'Sender email address' => 'Адрес электронной почты отправителя',
     'Forbidden operation' => 'Запрещенная операция',
-
+    'Free information' => 'Сводная информация',
+    'More info' => 'Больше информации',
+    '{member, plural, =1{exhibition participant} other{exhibitions}}' => '{member, plural, one{участник} few{участника} many{участников} other{участников}} выставки',
 
 ];
 

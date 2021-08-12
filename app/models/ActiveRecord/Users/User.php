@@ -2,10 +2,10 @@
 
 namespace app\models\ActiveRecord\Users;
 
-use app\core\repositories\readModels\User\Profile\MemberProfileReadRepository;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Users\Profile\DefaultProfile;
 use app\models\ActiveRecord\Users\Profile\UserProfileInterface;
+use app\models\ActiveRecord\Users\queries\UserQuery;
 use app\models\TimestampTrait;
 use DateTime;
 use Yii;
@@ -53,7 +53,12 @@ class User extends ActiveRecord
         return '{{%users}}';
     }
     
-    /**
+    public static function find(): UserQuery
+    {
+        return new UserQuery(static::class);
+    }
+
+        /**
      * 
      * @param int $id ID
      * @param string $login
@@ -139,7 +144,7 @@ class User extends ActiveRecord
         $this->position = $position;
     }
 
-     public function setPassword($password) :self
+    public function setPassword($password) :self
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
         return $this;

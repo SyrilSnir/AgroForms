@@ -2,8 +2,10 @@
 
 namespace app\core\repositories\readModels\User;
 
-use app\models\ActiveRecord\Users\User;
 use app\core\repositories\readModels\ReadRepositoryInterface;
+use app\core\traits\ActiveRecord\GetProviderTrait;
+use app\models\ActiveRecord\Users\User;
+use yii\data\DataProviderInterface;
 
 /**
  * Description of UserRepository
@@ -12,6 +14,7 @@ use app\core\repositories\readModels\ReadRepositoryInterface;
  */
 class UserReadRepository implements ReadRepositoryInterface
 {
+    use GetProviderTrait;
     
     public static function findById($id): ?User
     {
@@ -33,5 +36,11 @@ class UserReadRepository implements ReadRepositoryInterface
                 ->where(['auth_key' => $authKey])
                 ->andWhere(['deleted' => false])              
                 ->one();
-    }    
+    }  
+    
+    public function getAllMembers(): DataProviderInterface 
+    {        
+        $query = User::find()->members();
+        return $this->getProvider($query);
+    }
 }

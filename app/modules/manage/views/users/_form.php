@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
             'value' => $model->birthday,
             'removeButton' => false,
             'pickerIcon' => false,
-           'pluginOptions' => [
+            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'
            ]
