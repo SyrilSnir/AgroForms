@@ -3,8 +3,8 @@
 use app\assets\YiiAsset;
 use app\core\manage\Auth\UserIdentity;
 use app\models\Data\Languages;
-use app\modules\manage\assets\AdminLteAsset;
-use app\modules\manage\Module as ManageModule;
+use app\modules\panel\assets\AdminLteAsset;
+use app\modules\panel\Module as ManageModule;
 use kartik\bs4dropdown\DropdownAsset;
 use kartik\dialog\DialogAsset;
 use kartik\dialog\DialogBootstrapAsset;
@@ -36,7 +36,7 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules' => [
-        'manage' => [
+        'panel' => [
             'class' => ManageModule::class,
             'layout' => 'main',
             'defaultRoute' => 'main/index',

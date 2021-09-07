@@ -26,10 +26,10 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            return Yii::$app->response->redirect(Url::to('manage/auth'));
+            return Yii::$app->response->redirect(Url::to('panel/auth'));
         }
 
-        return Yii::$app->response->redirect(Url::to('manage'));
+        return Yii::$app->response->redirect(Url::to('panel'));
     }
     
     public function actionAccessDenied()

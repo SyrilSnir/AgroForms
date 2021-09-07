@@ -3,7 +3,7 @@ return [
     'enablePrettyUrl' => true,
     'showScriptName' => false,  
     'rules' => [
-        'manage/auth' => 'manage/auth/login',
-        'manage/member/<id:\d+>/requests' => 'manage/member/requests'
+        'panel/auth' => 'panel/auth/login',
+        'panel/member/<id:\d+>/requests' => 'panel/member/requests'
     ]
 ];
