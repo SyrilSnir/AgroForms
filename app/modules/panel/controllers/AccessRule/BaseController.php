@@ -2,6 +2,7 @@
 
 namespace app\modules\panel\controllers\AccessRule;
 
+use Yii;
 use yii\base\Action;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -21,7 +22,6 @@ class BaseController extends Controller implements DenyCallbackInterface
     
     public function behaviors()
     {
-        $controller = $this;
         return [
             'access' => [
                 'class' => AccessControl::class,
@@ -36,8 +36,11 @@ class BaseController extends Controller implements DenyCallbackInterface
         ];                                
     }
     
-    public static function isDenyAction($rule, Action $action) 
+    public static function isDenyAction($rule, Action $action)
     {
-        return $action->controller->redirect(Url::to('/panel/auth'));        
+        if (Yii::$app->user->isGuest) {
+            return $action->controller->redirect(Url::to('/panel/auth'));
+        }
+        return $action->controller->redirect(Url::to('/site/access-denied'));        
     }
 }

@@ -22,7 +22,6 @@ switch ($user->gender) {
 }
 ?>
 
-
 <div class="container">
     <h3>
         <?php echo "{$appeal} {$user->fio}" ?> добро пожаловать в закрытую часть портала,

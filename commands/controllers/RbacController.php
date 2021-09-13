@@ -52,6 +52,17 @@ class RbacController extends Controller
         $memberMenu->description = 'Меню участника выставки';
         $auth->add($memberMenu);
         $auth->addChild($member, $memberMenu);
+        
+        $managerMenu = $auth->createPermission(Rbac::PERMISSION_MANAGER_MENU);
+        $managerMenu->description = 'Меню менеджера выставки';
+        $auth->add($managerMenu);
+        $auth->addChild($manager, $managerMenu);
+        
+        $accountantMenu = $auth->createPermission(Rbac::PERMISSION_ACCOUNTANT_MENU);
+        $accountantMenu->description = 'Меню бухгалтера';
+        $auth->add($accountantMenu);
+        $auth->addChild($accountant, $accountantMenu);
+        
         Console::output('Роли установлены');
     }
 }

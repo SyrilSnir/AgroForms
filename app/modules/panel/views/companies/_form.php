@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
                             </div>
                             <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="card card-info">
-                                <div class="card-header">Юридический адрес</div>
+                                    <div class="card-header"><?php echo t('Legal address','company') ?></div>
                                     <div class="card-body">
                                     <?= $form->field($model->legalAddressForm, 'index')->textInput() ?>
                                     <?= $form->field($model->legalAddressForm, 'address')->textInput() ?>
@@ -84,7 +84,7 @@ use yii\widgets\ActiveForm;
                                     </div>
                                 </div>
                                 <div class="card card-info">
-                                    <div class="card-header">Почтовый адрес</div>
+                                    <div class="card-header"><?php echo t('Mailing address', 'company')?></div>
                                     <div class="card-body">
                                         <?= $form->field($model->postalAddressForm, 'index')->textInput() ?>
                                         <?= $form->field($model->postalAddressForm, 'address')->textInput() ?>  
@@ -125,7 +125,7 @@ use yii\widgets\ActiveForm;
 
                             <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="card card-info">
-                                    <div class="card-header">Руководитель компании</div>
+                                    <div class="card-header"><?php echo t('Head of company', 'Руководитель компании') ?></div>
                                     <div class="card-body">
                                         <?= $form->field($model->contacts, 'chiefPosition')->textInput() ?>
                                         <?= $form->field($model->contacts, 'chiefFio')->textInput() ?>
@@ -135,7 +135,7 @@ use yii\widgets\ActiveForm;
 
                                 </div>
                                 <div class="card card-info">
-                                    <div class="card-header">Менеджер проекта</div>
+                                    <div class="card-header"><?php echo t('Project manager','company') ?></div>
                                     <div class="card-body">
                                         <?= $form->field($model->contacts, 'managerPosition')->textInput() ?>
                                         <?= $form->field($model->contacts, 'managerFio')->textInput() ?>
@@ -146,7 +146,7 @@ use yii\widgets\ActiveForm;
 
                                 </div> 
                                 <div class="card card-info">
-                                    <div class="card-header">Подписант (используется в заявках)</div>
+                                    <div class="card-header"><?php echo t('Signer (used in proposal)','company') ?></div>
                                     <div class="card-body">
                                         <?= $form->field($model->contacts, 'proposalSignaturePost')->textInput() ?>
                                         <?= $form->field($model->contacts, 'proposalSignatureName')->textInput() ?>

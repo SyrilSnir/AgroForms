@@ -3,7 +3,7 @@
 use app\models\SearchModels\Companies\CompanySearch;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
-use yii\grid\ActionColumn;
+use kartik\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -30,7 +30,13 @@ $columnsConfig = [
                     'columns' => [                    
                         'name:text:'. Yii::t('app/company', 'Name'),
                         'full_name:text:'. Yii::t('app/company', 'Full name'),
-                        ['class' => ActionColumn::class],
+                        [
+                            'class' => ActionColumn::class,
+                            'width' => '100px',
+                            'visibleButtons' => [
+                                'delete' => Yii::$app->user->can('adminMenu')
+                            ]                            
+                        ],
                     ],
                 ];
 $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';

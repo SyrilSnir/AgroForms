@@ -19,6 +19,7 @@ return [
     'Directory of add. equipments' => 'Справочник доп. оборудования',
     'Directory of units' => 'Справочник единиц измерения',
     'Directory of valutes' => 'Справочник валют',
+    'New member' => 'Новый участник',
     'New exhibition' => 'Новая выставка',
     'New equipment' => 'Новое оборудование',
     'Edit equipment' => 'Изменить оборудование',

@@ -35,7 +35,7 @@ class ActivateForm extends Model
     public function attributeLabels(): array
     {
         return [
-            'email' => 'Введите email или оставьте указанный при регистрации'
+            'email' => t('Enter your email or leave the one specified during registration','user')
         ];
     }
 }

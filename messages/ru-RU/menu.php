@@ -8,6 +8,7 @@ return [
     'Company profile' => 'Профиль организации',
     'Administration' => 'Администрирование',
     'Users and roles' => 'Пользователи и роли',
+    'Users and companies' => 'Пользователи и компании',
     'Users' => 'Пользователи',
     'Roles' => 'Роли',
     'Companies' => 'Компании',

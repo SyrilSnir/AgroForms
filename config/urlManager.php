@@ -4,6 +4,7 @@ return [
     'showScriptName' => false,  
     'rules' => [
         'panel/auth' => 'panel/auth/login',
-        'panel/member/<id:\d+>/requests' => 'panel/member/requests'
+        'panel/member/<id:\d+>/requests' => 'panel/member/requests',
+        'panel/manager/companies' => 'panel/companies'
     ]
 ];

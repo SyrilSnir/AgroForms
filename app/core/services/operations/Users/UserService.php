@@ -86,14 +86,7 @@ class UserService
                 $form->language
                 );
         $this->roleManager->revokeRoles($user->id);
-        switch ($user->user_type_id) {
-            case UserType::ROOT_USER_ID:
-                $this->roleManager->setRole(UserType::ROOT_USER_TYPE, $user->id);                  
-            break;
-            case UserType::MEMBER_USER_ID:
-                $this->roleManager->setRole(UserType::MEMBER_USER_TYPE, $user->id);              
-            break;
-      }
+        $this->roleManager->setRole(UserType::ROLES[$user->user_type_id], $user->id);        
         $this->users->save($user);        
     }
     

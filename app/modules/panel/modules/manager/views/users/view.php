@@ -24,7 +24,6 @@ $attributes = [
                     'email:text:' . t('Email','user'),
                     'phone:text:' . t('Phone number','user'),
                     'company.name:text:' . t('Company','user'),
-                    'userType.name:text:' . t('User type', 'user'),
                     [
                         'attribute' => 'active',
                         'label' => t('Status'),
@@ -35,7 +34,7 @@ $attributes = [
 switch ($model->user_type_id) {
     case UserType::MEMBER_USER_ID:
         $dopAttributes = [
-            'profile.position:text:' . t('Position', 'user'),
+            'profile.position:text:' . t('Position','user'),
             'profile.activities:text:' . t('Scope of the company','company'),
             'profile.proposal_signature_name:text:' . t('Signer\'s full name','company'),
             'profile.proposal_signature_post:text:' . t('Signer\'s position','company'),
@@ -127,4 +126,3 @@ switch ($model->user_type_id) {
     </div>
   </div>
 </div>
-

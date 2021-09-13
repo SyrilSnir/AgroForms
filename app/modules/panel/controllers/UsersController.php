@@ -87,22 +87,6 @@ class UsersController extends BaseAdminController
         ]);        
         
     }
-    public function actionCreateMember()
-    {
-        $form = new MemberForm();
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            try {
-                $user = $this->service->createMember($form);
-                return $this->redirect(['view', 'id' => $user->id]);
-            } catch (DomainException $e) {
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
-        }
-        return $this->render('create-member', [
-            'model' => $form,
-            'update' => false
-        ]);
-    } 
     
     public function actionUpdate($id) 
     {

@@ -27,10 +27,10 @@ class MemberMenuHelper implements MenuHelperInterface
                             'icon' => 'user',
                             'items' => [                                                                    
                                 [
-                                    'label' => t('User profile','menu'), 'icon' => 'user-circle-o', 'url' => ['/manage/member/profile/user']
+                                    'label' => t('User profile','menu'), 'icon' => 'user-circle-o', 'url' => ['/panel/member/profile/user']
                                 ],
                                 [
-                                    'label' => t('Company profile','menu'), 'icon' => 'building', 'url' => ['/manage/member/profile/company'],
+                                    'label' => t('Company profile','menu'), 'icon' => 'building', 'url' => ['/panel/member/profile/company'],
                                 ],                                                                       
                             ]
                         ]                                        
@@ -50,7 +50,7 @@ class MemberMenuHelper implements MenuHelperInterface
                     'icon' => 'folder',
                     'items' => [
                         [
-                            'label' => t('My applications','menu'), 'icon' => 'wpforms', 'url' => ["/manage/member/{$exhibition->id}/requests"],
+                            'label' => t('My applications','menu'), 'icon' => 'wpforms', 'url' => ["/panel/member/{$exhibition->id}/requests"],
                         ],
                     ]   
                 ]                

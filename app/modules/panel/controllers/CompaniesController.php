@@ -9,7 +9,6 @@ use app\models\ActiveRecord\Companies\Company;
 use app\models\Forms\Manage\Companies\CompanyForm;
 use app\models\Forms\Manage\Users\MemberForm;
 use app\models\SearchModels\Companies\CompanySearch;
-use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
 use Yii;
 
@@ -18,9 +17,10 @@ use Yii;
  *
  * @author kotov
  */
-class CompaniesController extends BaseAdminController
+class CompaniesController extends ManageController
 {
-    
+    public $roles = ['managerMenu', 'adminMenu'];
+
     use GridViewTrait;
     /**
      *

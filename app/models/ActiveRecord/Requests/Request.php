@@ -39,6 +39,8 @@ class Request extends FormManipulation
     const STATUS_CHANGED = 4; // Изменена
     const STATUS_DELETE = 5; // Удалена
     const STATUS_DRAFT = 3; // Черновик
+    const STATUS_INVOICED = 7; // Выставлен счет
+    const STATUS_ACCEPTED = 8; // Принята
     
     use CreatedTimestampTrait;
     

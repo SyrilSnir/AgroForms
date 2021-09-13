@@ -6,7 +6,6 @@ use app\core\repositories\readModels\ReadRepositoryInterface;
 use DomainException;
 use Yii;
 use yii\db\ActiveRecord;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -58,6 +57,6 @@ class ManageController extends AccessRule\BaseController
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
         return $this->redirect(['index']);
-    }   
+    }      
 
 }

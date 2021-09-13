@@ -2,64 +2,34 @@
 
 namespace app\models\SearchModels\Users;
 
-use app\core\traits\Lists\GetCompanyNamesTrait;
 use app\core\traits\Lists\GetUserTypeListTrait;
-use app\models\ActiveRecord\Users\User;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
+use app\models\ActiveRecord\Users\queries\UserQuery;
+use yii\helpers\ArrayHelper;
 
 /**
  * Description of UserSearch
  *
  * @author kotov
  */
-class UserSearch extends Model
-{
-    public $login; 
-    
-    public $fio;
-    
-    public $email;
-    
+class UserSearch extends BaseUserSearch
+{   
     public $active;
     
-    public $user_type_id;
-    
-    public $company_id;
-
+    public $user_type_id;    
 
     use GetUserTypeListTrait;
-    use GetCompanyNamesTrait;
     
+    protected function addFilters(UserQuery $query)
+    {
+        $query->andFilterWhere(['active' => $this->active]);
+        $query->andFilterWhere(['user_type_id' => $this->user_type_id]);        
+        parent::addFilters($query);
+    }
     public function rules(): array
     {
-        return [
-            [['login', 'fio','email'], 'safe'],
-            [['active','user_type_id','company_id'], 'integer'],
+        $rules = [
+            [['active','user_type_id'], 'integer'],
         ];
-    }
-    public function search(array $params): ActiveDataProvider
-    {
-        $query = User::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort' => [
-                'defaultOrder' => ['id' => SORT_ASC]
-            ]
-        ]);
-
-        $this->load($params);
-        if (!$this->validate()) {
-            $query->where('0=1');
-            return $dataProvider;
-        }
-        $query->andFilterWhere(['deleted' => false]);
-        $query->andFilterWhere(['active' => $this->active]);
-        $query->andFilterWhere(['user_type_id' => $this->user_type_id]);
-        $query->andFilterWhere(['company_id' => $this->company_id]);
-        $query->andFilterWhere(['like','login', $this->login]);
-        $query->andFilterWhere(['like','fio', $this->fio]);
-        $query->andFilterWhere(['like','email', $this->email]);
-        return $dataProvider;
+        return ArrayHelper::merge($rules, parent::rules());
     }
 }
