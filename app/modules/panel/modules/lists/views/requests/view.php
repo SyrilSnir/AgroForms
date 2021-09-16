@@ -1,7 +1,6 @@
 <?php
 
 use app\core\helpers\View\Request\RequestStatusHelper;
-use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\ActiveRecord\Requests\RequestStand;
 use app\models\ActiveRecord\Users\UserType;
@@ -31,6 +30,7 @@ $attributes = [
     'user.company.name:text:' . Yii::t('app/company','Company')
     
 ];
+/*
 $dopAttributes = [];
 switch ($model->form->form_type_id) {
     case FormType::SPECIAL_STAND_FORM:
@@ -62,7 +62,7 @@ switch ($model->form->form_type_id) {
         ];
         break;
 }
-
+*/
 if (!empty($dopAttributes)) {
     $attributes = ArrayHelper::merge($attributes, $dopAttributes);
 }
@@ -84,7 +84,7 @@ if (!empty($dopAttributes)) {
     <p>
         <br><br>
         <?= Html::a(Yii::t('app/requests', 'Export to PDF'), Url::to(['export', 'id' => $model->id]), ['class' => 'btn bg-gradient-danger']) ?>
-        <?= Html::a(Yii::t('app/requests', 'Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app', 'Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>    
     <div class="card">
         <div class="card-body">

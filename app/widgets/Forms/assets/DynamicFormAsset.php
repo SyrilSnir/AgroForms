@@ -2,7 +2,7 @@
 
 namespace app\widgets\Forms\assets;
 
-use app\modules\manage\assets\AdminLteAsset;
+use app\modules\panel\assets\AdminLteAsset;
 use yii\web\AssetBundle;
 
 /**

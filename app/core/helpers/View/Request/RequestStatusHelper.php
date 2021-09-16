@@ -40,10 +40,13 @@ class RequestStatusHelper extends StatusHelper
         if ($isMember) {
             $statusList[Request::STATUS_DRAFT] = t('Draft','requests');
         }
+        $statusList[Request::STATUS_INVOICED] = t('Invoiced','requests');
         $statusList[Request::STATUS_PAID] = t('Paid','requests');
         $statusList[Request::STATUS_PARTIAL_PAID] = t('Partial paid','requests');
         $statusList[Request::STATUS_CHANGED] = t('Changed','requests');
         $statusList[Request::STATUS_REJECTED] = t('Rejected','requests');
+        $statusList[Request::STATUS_ACCEPTED] = t('Accepted','requests');
+        
         return $statusList;
     }
 

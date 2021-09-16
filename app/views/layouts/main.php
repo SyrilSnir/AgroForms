@@ -39,9 +39,9 @@ MainAsset::register($this);
 $menuItems = [];
  
 if (Yii::$app->user->isGuest) {
-    $menuItems[] = ['label' => 'Авторизация', 'url' => ['/manage/auth']];
+    $menuItems[] = ['label' => 'Авторизация', 'url' => ['/panel/auth']];
 } else {
-     $menuItems[] = ['label' => 'Войти в систему', 'url' => ['/manage']];
+     $menuItems[] = ['label' => 'Войти в систему', 'url' => ['/panel']];
 }
  
 echo Nav::widget([

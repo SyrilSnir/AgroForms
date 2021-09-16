@@ -4,13 +4,17 @@ namespace app\modules\panel\modules\lists\controllers;
 
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
+use app\core\services\operations\View\Requests\RequestDynamicFormViewService;
+use app\core\services\operations\View\Requests\RequestStandViewService;
 use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\ActiveRecord\Requests\RequestDynamicForm;
 use app\models\Forms\Requests\ChangeStatusForm;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use kartik\mpdf\Pdf;
+use Yii;
 
 /**
  * Description of RequestsController
@@ -27,12 +31,25 @@ class RequestsController extends BaseAdminController
      */
     protected $service;
     
+    /**
+     *
+     * @var RequestDynamicFormViewService
+     */
+    private $dynamicFormViewService;
+    /**
+     *
+     * @var RequestStandViewService
+     */
+    private $standViewService;    
+    
     public function __construct(
             $id, 
             $module, 
             RequestReadRepository $repository,
             RequestService $service,
             ManagerRequestSearch $searchModel,
+            RequestDynamicFormViewService $requestDynamicFormViewService,
+            RequestStandViewService $requestStandViewService,            
             $config = array()
             )
     {
@@ -40,6 +57,8 @@ class RequestsController extends BaseAdminController
         $this->readRepository = $repository;
         $this->service = $service;
         $this->searchModel = $searchModel;
+        $this->standViewService = $requestStandViewService;
+        $this->dynamicFormViewService = $requestDynamicFormViewService;
     }
     
     /**
@@ -50,14 +69,27 @@ class RequestsController extends BaseAdminController
     {
         /** @var Request $model */
         $model = $this->findModel($id);
-        $statusForm = new ChangeStatusForm($model->id, $model->status);
-        if ($statusForm->load(\Yii::$app->request->post()) && $statusForm->validate()) {
+        $form = $model->form;
+        $requestForm = $model->requestForm;
+        $statusForm = new ChangeStatusForm($model->id, $model->status);        
+        switch ($form->form_type_id) {
+            case FormType::SPECIAL_STAND_FORM:
+                $dopAttributes = $this->standViewService->getFieldAttributes($requestForm);
+                break;
+            case FormType::DYNAMIC_INFORMATION_FORM:
+            case FormType::DYNAMIC_ORDER_FORM:
+            /** @var RequestDynamicForm $requestForm */
+                $dopAttributes = $this->dynamicFormViewService->getFieldAttributes($requestForm);
+            break; 
+        }        
+        if ($statusForm->load(Yii::$app->request->post()) && $statusForm->validate()) {
             $model = $this->service->changeStatus($statusForm);
-            \Yii::$app->session->setFlash('success','Статус заявки успешно изменен');            
+            Yii::$app->session->setFlash('success','Статус заявки успешно изменен');            
         }
         return $this->render('view', [
             'model' => $model,
-            'statusForm' => $statusForm
+            'statusForm' => $statusForm,
+            'dopAttributes' => $dopAttributes            
         ]);
     }    
     

@@ -23,6 +23,9 @@ class ManagerMenuHelper implements MenuHelperInterface
                             ['label' => Yii::t('app/menu', 'Companies'), 'icon' => 'university ', 'url' => ['/panel/manager/companies'],],                            
                         ]
                     ],
+                    [
+                        'label' => Yii::t('app/menu', 'Request management'), 'icon' => 'tasks', 'url' => ['/panel/config/mail-settings'],
+                    ]
                 ]
             ];
     }

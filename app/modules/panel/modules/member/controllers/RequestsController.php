@@ -77,7 +77,7 @@ class RequestsController extends BaseMemberController
     {
         /** @var Request $request */
         $request = $this->readRepository->findById($id);
-        return $this->redirect(Url::to(['/manage/member/forms/load', 'id' => $request->form->id, 'requestId' => $request->id]));
+        return $this->redirect(Url::to(['/panel/member/forms/load', 'id' => $request->form->id, 'requestId' => $request->id]));
     }
     
     /**

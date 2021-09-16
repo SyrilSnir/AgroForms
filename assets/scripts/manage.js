@@ -40,5 +40,5 @@ function managerActivateHandler(e) {
 function getFormRequestHandler(e) {
     const selectedOption = document.querySelector('[name="requests-list"] option:checked');
     let selectedValue = selectedOption.value;
-    location.href = '/manage/member/forms/load?id=' + selectedValue;
+    location.href = '/panel/member/forms/load?id=' + selectedValue;
 }

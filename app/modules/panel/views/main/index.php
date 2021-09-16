@@ -20,7 +20,7 @@ $this->title = Yii::t('app','Free information');
               <div class="icon">
                 <i class="fa fa-user-circle-o"></i>
               </div>
-              <a href="manage/users/?UserSearch[user_type_id]=2" class="small-box-footer"><?php echo Yii::t('app', 'More info') ?> <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="panel/users/?UserSearch[user_type_id]=2" class="small-box-footer"><?php echo Yii::t('app', 'More info') ?> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>            
         </div>

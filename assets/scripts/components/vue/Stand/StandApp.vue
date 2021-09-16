@@ -202,10 +202,10 @@ export default {
                     }
                 }
                 ).then(function(response){
-                    location.href = '/manage/member/' + response.data.exhibitionId +'/requests';
+                    location.href = '/panel/member/' + response.data.exhibitionId +'/requests';
                 })
                 .catch(function(){
-                    location.href = '/manage/member/' + response.data.exhibitionId +'/requests';
+                    location.href = '/panel/member/' + response.data.exhibitionId +'/requests';
                     console.log('FAILURE!!');
                 });
         }
