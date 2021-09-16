@@ -33,7 +33,7 @@ class Stand extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%stands_list}}';
+        return '{{%stands}}';
     }
     
     
