@@ -26,7 +26,7 @@ $userProfile = $user->profile;
     <li>Ширина: <span><i><?php echo $form->width ?> м.</i></span></li>
     <li>Площадь застройки: <span><i><?php echo $form->square ?> м<sup>2</sup>.</i></span></li>
 </ul>
-<p>Фризовая надпись: <span><strong><?php echo $form->frizeName ?></strong></span></p>
+<p>Фризовая надпись: <span><strong><?php echo $form->frize_name ?></strong></span></p>
 <p>Надбавка за дополнительные символы: <?php echo $form->frize_price ?> USD.</p>
 
 <br>

@@ -116,7 +116,7 @@ class StandController extends FormController
            $request = $this->requestRepository->getForUser($requestId, $userId);
            $requestStand = $request->requestForm;
            $baseConfiguration['update'] = true;
-           $baseConfiguration['frizeName'] = $requestStand->frizeName;
+           $baseConfiguration['frizeName'] = $requestStand->frize_name;
            $baseConfiguration['width'] = $requestStand->width;
            $baseConfiguration['length'] = $requestStand->length;
            $baseConfiguration['square'] = $requestStand->square;

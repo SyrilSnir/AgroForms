@@ -32,7 +32,7 @@ class RequestStandViewService
             ],
             [
                 'label' => t('Fascia name', 'requests'),
-                'value' => $requestStand->frizeName
+                'value' => $requestStand->frize_name
             ],         
             [
                 'label' => t('Price','requests'),

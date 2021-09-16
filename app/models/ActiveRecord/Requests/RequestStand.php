@@ -19,7 +19,7 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property int $square Площадь
  * @property int $stand_price Стоимость стенда
  * @property int $frize_price Стоимость фризовой надписи
- * @property string|null $frizeName Фризовая надпись
+ * @property string|null $frize_name Фризовая надпись
  * @property int $amount Стоимость
  *
  * @property Stand $stand
@@ -71,7 +71,7 @@ class RequestStand extends BaseRequest
         $request->square =  $square;
         $request->width = $width;
         $request->length = $length;
-        $request->frizeName = $frizeName;
+        $request->frize_name = $frizeName;
         $request->stand_price = $standPrice;
         $request->frize_price = $frizePrice;
         $request->amount = $amount;
@@ -105,7 +105,7 @@ class RequestStand extends BaseRequest
         $this->square =  $square;
         $this->width = $width;
         $this->length = $length;
-        $this->frizeName = $frizeName;
+        $this->frize_name = $frizeName;
         $this->stand_price = $standPrice;
         $this->frize_price = $frizePrice;
         $this->amount = $amount;        
@@ -131,7 +131,7 @@ class RequestStand extends BaseRequest
             'width' => 'Ширина',
             'length' => 'Длинна',
             'square' => 'Площадь',
-            'frizeName' => 'Фризовая надпись',
+            'frize_name' => 'Фризовая надпись',
             'amount' => 'Стоимость',
             'file' => 'Файл, приложенный к форме',
             'status' => 'Статус',
