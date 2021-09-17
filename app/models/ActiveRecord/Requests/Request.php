@@ -135,6 +135,17 @@ class Request extends FormManipulation
         return $this->hasOne(Form::class, ['id' => 'form_id']);
     }
   
+    public function getStands()
+    {
+        return $this->hasMany(RequestStand::class, ['request_id' => 'id' ]);
+    }
+      
+    public function getApplications()
+    {
+        
+    }
+
+
     public function getRequestForm() : ?BaseRequest
     {
         switch ($this->form->form_type_id) {

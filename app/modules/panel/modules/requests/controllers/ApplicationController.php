@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\panel\modules\lists\controllers;
+namespace app\modules\panel\modules\requests\controllers;
 
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
@@ -21,7 +21,7 @@ use Yii;
  *
  * @author kotov
  */
-class RequestsController extends BaseAdminController
+class ApplicationController extends BaseAdminController
 {
     use GridViewTrait;
 

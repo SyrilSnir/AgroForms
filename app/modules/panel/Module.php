@@ -8,6 +8,7 @@ use app\modules\panel\modules\form\Module as FormModule;
 use app\modules\panel\modules\member\Module as MemberModule;
 use app\modules\panel\modules\config\Module as ConfigurationModule;
 use app\modules\panel\modules\manager\Module as ManagerModule;
+use app\modules\panel\modules\requests\Module as RequestsModule;
 use yii\base\Module as BaseModule;
 /**
  * Description of Module
@@ -40,6 +41,9 @@ class Module extends BaseModule
             'manager' => [
                    'class' => ManagerModule::class,
             ],            
+            'requests' => [
+                'class' => RequestsModule::class,
+            ]                       
         ];
     }    
 }
