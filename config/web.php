@@ -59,6 +59,7 @@ return [
                         'app/menu' => 'menu.php',
                         'app/requests' => 'requests.php',
                         'app/equipment' => 'equipment.php',
+                        'app/exception' => 'exception.php'
                     ],
                 ],
             ],

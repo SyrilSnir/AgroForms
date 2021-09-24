@@ -7,12 +7,13 @@ use app\core\helpers\Data\Form\FieldsHelper;
 use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\manage\Requests\RequestRepository;
 use app\core\services\Forms\FieldService;
-use app\core\services\operations\Requests\RequestDynamicFormService;
-use app\core\services\operations\View\Requests\RequestDynamicFormViewService;
+use app\core\services\operations\Requests\ApplicationService;
+use app\core\services\operations\View\Requests\ApplicationViewService;
 use app\core\traits\InfoMessageTrait;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\Forms\Requests\ApplicationForm;
 use app\models\Forms\Requests\DynamicForm;
 use DomainException;
 use Yii;
@@ -23,7 +24,7 @@ use yii\helpers\ArrayHelper;
  *
  * @author kotov
  */
-class DynamicFormController extends FormController
+class ApplicationController extends FormController
 { 
     /**
      *
@@ -33,9 +34,9 @@ class DynamicFormController extends FormController
     
     /**
      *
-     * @var RequestDynamicFormService
+     * @var ApplicationService
      */
-    protected $dynamicFormService;
+    protected $applicationService;
     /**
      *
      * @var FormRepository
@@ -49,9 +50,9 @@ class DynamicFormController extends FormController
     
     /**
      *
-     * @var RequestDynamicFormViewService
+     * @var ApplicationViewService
      */
-    protected $dynamicFormViewService;    
+    protected $applicationViewService;    
 
     use InfoMessageTrait;
     
@@ -60,8 +61,8 @@ class DynamicFormController extends FormController
             $module, 
             FormRepository $formRepository,
             RequestRepository $requestRepository,
-            RequestDynamicFormService $dynamicFormService,
-            RequestDynamicFormViewService $dynamicFormViewService,
+            ApplicationService $applicationService,
+            ApplicationViewService $applicationViewService,
             FieldService $fieldService,
             $config = array()
             )
@@ -70,8 +71,8 @@ class DynamicFormController extends FormController
         $this->formRepository = $formRepository;
         $this->requestRepository = $requestRepository;
         $this->fieldService = $fieldService;
-        $this->dynamicFormService = $dynamicFormService;
-        $this->dynamicFormViewService = $dynamicFormViewService;
+        $this->applicationService = $applicationService;
+        $this->applicationViewService = $applicationViewService;
     }    
     public function actionGetForm()
     {
@@ -105,7 +106,7 @@ class DynamicFormController extends FormController
               'buttons' => [
                 'send' => t('Send application','requests'),
                 'draft' => t('Save draft', 'requests'),
-                'cancel' => t('Cancel', 'requests'),
+                'cancel' => t('Cancel'),
               ]
           ]
         ]; 
@@ -114,7 +115,7 @@ class DynamicFormController extends FormController
             $requestId = Yii::$app->session->get('REQUEST_ID');            
             /** @var Request $request */
            $request = $this->requestRepository->getForUser($requestId,$userId);
-           $valuesList = $this->dynamicFormViewService->getValuesList($request->requestForm);
+           $valuesList = $this->applicationViewService->getValuesList($request->requestForm);
            $baseConfiguration['fileName'] = $request->requestForm->file;
         }               
         if ($form->form_type_id == FormType::DYNAMIC_ORDER_FORM) {
@@ -142,10 +143,10 @@ class DynamicFormController extends FormController
 
     public function actionSendForm()
     {
-        $form = new DynamicForm();
+        $form = new ApplicationForm();
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE');
         try {
-            if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            if ($form->load(Yii::$app->request->post(),'DynamicForm') && $form->validate()) {
                 if ($formChangeType === Request::FORM_UPDATE) {
                     $requestId = Yii::$app->session->get('REQUEST_ID');
              /** @var Request $request */
@@ -163,16 +164,16 @@ class DynamicFormController extends FormController
         }        
     }
 
-    private function createRequest(DynamicForm $form)
+    private function createRequest(ApplicationForm $form)
     {
-       $this->dynamicFormService->create($form,Yii::$app->params['activeExhibition']); 
+       $this->applicationService->create($form,Yii::$app->params['activeExhibition']); 
     }
     
-    private function updateRequest(int $requestId, DynamicForm $form)
+    private function updateRequest(int $requestId, ApplicationForm $form)
     {
         /** @var Request $request */
         $request = $this->requestRepository->get($requestId);
-        $this->dynamicFormService->edit($requestId, $form);   
+        $this->applicationService->edit($requestId, $form);   
     }    
 
 }

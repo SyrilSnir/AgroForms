@@ -8,11 +8,11 @@
 
 namespace app\modules\panel\modules\requests\controllers;
 
-use app\core\repositories\readModels\Requests\RequestStandReadRepository;
+use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestStandService;
-use app\core\services\operations\View\Requests\RequestStandViewService;
 use app\core\traits\GridViewTrait;
-use app\models\SearchModels\Requests\RequestStandSearch;
+use app\core\traits\RequestViewTrait;
+use app\models\SearchModels\Requests\ManagerStandSearch;
 use app\modules\panel\controllers\BaseAdminController;
 
 /**
@@ -22,25 +22,20 @@ use app\modules\panel\controllers\BaseAdminController;
  */
 class StandController extends BaseAdminController
 {
-    use GridViewTrait;    
+    use GridViewTrait, RequestViewTrait;  
     /**
      *
      * @var RequestStandService
      */
+         
     protected $service;
-    /**
-     *
-     * @var RequestStandViewService
-     */
-    private $standViewService;
-    
+        
     public function __construct(
             $id, 
             $module, 
-            RequestStandReadRepository $repository,
+            RequestReadRepository $repository,
             RequestStandService $service,
-            RequestStandSearch $searchModel,
-            RequestStandViewService $requestStandViewService,            
+            ManagerStandSearch $searchModel,           
             $config = array()
             )
     {
@@ -48,6 +43,5 @@ class StandController extends BaseAdminController
         $this->readRepository = $repository;
         $this->service = $service;
         $this->searchModel = $searchModel;
-        $this->standViewService = $requestStandViewService;
     }    
 }

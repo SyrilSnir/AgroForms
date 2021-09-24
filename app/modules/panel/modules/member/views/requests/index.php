@@ -2,6 +2,7 @@
 
 use app\core\helpers\Data\FormsHelper;
 use app\core\helpers\View\Request\RequestStatusHelper;
+use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\SearchModels\Requests\RequestSearch;
 use kartik\grid\ActionColumn;
@@ -36,9 +37,10 @@ $this->title = Yii::t('app/title','My requests');
     <?php endif; ?>
 </div>
 <div class="card full-view">
-  <div class="card-header">
-    <h3 class="card-title"><?php echo $this->title ?></h3>
-        <div class="card-body">
+    <div class="card-header">
+        <h3 class="card-title"><?php echo Yii::t('app/title', 'Stand orders') ?></h3>
+   </div>
+    <div class="card-body">
  <?php if (Yii::$app->session->has('success')): ?>
     <div class="alert alert-primary" role="alert">
         <?php echo Yii::$app->session->getFlash('success') ?>
@@ -49,18 +51,19 @@ $this->title = Yii::t('app/title','My requests');
         <?php echo Yii::$app->session->getFlash('error') ?>
     </div>
 <?php endif; ?>            
+            
+            
  <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
+                    'dataProvider' => $standDataProvider,
                     'pager' => [
-                       'maxButtonCount' => 5, // максимум 5 кнопок
-                       'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                       'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                      'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
+                        'maxButtonCount' => 5, // максимум 5 кнопок
+                        'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
+                        'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
+                        'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
                     ],
-                    'filterModel' => $searchModel,
+                    'filterModel' => $standSearchModel,
                     'columns' => [                    
-                        'id:integer:Id',
-                        [
+                    /*    [
                             'attribute' => 'form',
                             'format' => 'text',
                             'label' => t('Application form'),
@@ -68,7 +71,7 @@ $this->title = Yii::t('app/title','My requests');
                             'value' => function (Request $model) {
                                 return $model->form->title;
                             }
-                        ],
+                        ],*/
                         [
                             'attribute' => 'status',
                             'label' => t('Status'),
@@ -85,18 +88,67 @@ $this->title = Yii::t('app/title','My requests');
                             'visibleButtons' => [
                                 'delete' => function ($model) {
                                     /** @var Request $model */
-                                    return ($model->status === Request::STATUS_DRAFT);                            
+                                    return ($model->status === BaseRequest::STATUS_DRAFT);                            
                                 },
                                 'update' => function ($model) {
                                     /** @var Request $model */
-                                    return ($model->status === Request::STATUS_DRAFT);
+                                    return ($model->status === BaseRequest::STATUS_DRAFT);
                                 }
                             ]                        
                         ],
                     ],
                 ]); ?>
         </div>
-    </div>
+    <div class="card-header">
+        <h3 class="card-title"><?php echo $this->title ?></h3>
+   </div>
+    <div class="card-body">                        
+ <?= GridView::widget([
+                    'dataProvider' => $applicationDataProvider,
+                    'pager' => [
+                        'maxButtonCount' => 5, // максимум 5 кнопок
+                        'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
+                        'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
+                        'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
+                    ],
+                    'filterModel' => $applicationSearchModel,
+                    'columns' => [                    
+                    /*    [
+                            'attribute' => 'form',
+                            'format' => 'text',
+                            'label' => t('Application form'),
+                        //    'filter' => $searchModel->formTypesList(),
+                            'value' => function (Request $model) {
+                                return $model->form->title;
+                            }
+                        ],*/
+                        [
+                            'attribute' => 'status',
+                            'label' => t('Status'),
+                            'format' => 'raw',
+                            'filter' => RequestStatusHelper::statusList(),
+                            'value' => function (Request $model) {
+                                return RequestStatusHelper::getStatusLabel($model->status);
+                            }
+                        ],
+                        'created_at:datetime:'. t('Created at'),
+                        
+                        [
+                            'class' => ActionColumn::class,
+                            'visibleButtons' => [
+                                'delete' => function ($model) {
+                                    /** @var Request $model */
+                                    return ($model->status === BaseRequest::STATUS_DRAFT);                            
+                                },
+                                'update' => function ($model) {
+                                    /** @var Request $model */
+                                    return ($model->status === BaseRequest::STATUS_DRAFT);
+                                }
+                            ]                        
+                        ],
+                    ],
+                ]); ?>
+        </div>    
 
 
 </div>

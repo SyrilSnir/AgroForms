@@ -17,8 +17,22 @@ use yii\web\UploadedFile;
  * 
  * @author kotov
  */
-class BaseRequest extends ActiveRecord
-{
+abstract class BaseRequest extends ActiveRecord
+{   
+    const STATUS_NEW = 0; // Новая
+    const STATUS_PAID = 1; // Оплачена
+    const STATUS_PARTIAL_PAID = 6; // Частично оплачена 
+    const STATUS_REJECTED = 2; // Отклонена
+    const STATUS_CHANGED = 4; // Изменена
+    const STATUS_DELETE = 5; // Удалена
+    const STATUS_DRAFT = 3; // Черновик
+    const STATUS_INVOICED = 7; // Выставлен счет
+    const STATUS_ACCEPTED = 8; // Принята
+    
+    const TYPE_STAND = 1; // Заказ стенда
+    const TYPE_APPLICATION = 2; // Заявки
+    const TYPE_POLL = 3; // Опросы    
+    
     const FORM_ID = '';
     
     public function setFile(UploadedFile $file) 

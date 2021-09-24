@@ -2,12 +2,13 @@
 
 namespace app\core\services\operations\Requests;
 
-use app\core\repositories\manage\Requests\RequestDynamicFormRepository;
+use app\core\repositories\manage\Requests\ApplicationRepository;
 use app\core\repositories\manage\Requests\RequestRepository;
 use app\core\services\Forms\FieldService;
 use app\models\ActiveRecord\Forms\FormType;
+use app\models\ActiveRecord\Requests\Application;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\ActiveRecord\Requests\RequestDynamicForm;
+use app\models\Forms\Requests\ApplicationForm;
 use app\models\Forms\Requests\DynamicForm;
 use function GuzzleHttp\json_encode;
 
@@ -16,13 +17,13 @@ use function GuzzleHttp\json_encode;
  *
  * @author kotov
  */
-class RequestDynamicFormService
+class ApplicationService
 {
     /**
      *
-     * @var RequestDynamicFormRepository
+     * @var ApplicationRepository
      */
-    public $requestDynamicForms;
+    public $application;
     /**
      *
      * @var RequestRepository
@@ -36,67 +37,63 @@ class RequestDynamicFormService
     protected $fieldService;
     
     public function __construct(
-            RequestDynamicFormRepository $requestDynamicForms, 
+            ApplicationRepository $application, 
             RequestRepository $requests,
             FieldService $fieldService
             )
     {
-        $this->requestDynamicForms = $requestDynamicForms;        
+        $this->application = $application;        
         $this->requests = $requests;
         $this->fieldService = $fieldService;                
     }
     
-    public function create(DynamicForm $form, $exhibitionId)
+    public function create(ApplicationForm $form, $exhibitionId)
     {        
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
         $serializedFields = json_encode($fields);
-        if ($form->formType == FormType::DYNAMIC_ORDER_FORM) {
-            $total = $this->fieldService->calculateTotal($fields,$form->basePrice);
-        } else 
-        {
-            $total = 0;
-        }  
+        $total = $this->fieldService->calculateTotal($fields,$form->basePrice); 
         /** @var Request $request */   
-        $request = Request::create($form->userId, $form->formId, $exhibitionId, $form->draft);
+        $request = Request::create(
+                $form->userId, 
+                $exhibitionId, 
+                $form->draft,
+                FormType::DYNAMIC_ORDER_FORM
+                );
         $this->requests->save($request);
-        $dynamicForm = RequestDynamicForm::create(
+        $dynamicForm = Application::create(
                 $request->id, 
-                $serializedFields, 
+                $form->formId,
+                $serializedFields,
                 $total
                 );
         if ($form->loadedFile) {
            $dynamicForm->setFile($form->loadedFile);
         }
-        $this->requestDynamicForms->save($dynamicForm);
+        $this->application->save($dynamicForm);
         return $dynamicForm;        
     }
     
-    public function edit($id, DynamicForm $form)
+    public function edit($id, ApplicationForm $form)
     {
-        /** @var RequestDynamicForm $dynamicForm */
+        /** @var Application $dynamicForm */
         /** @var Request $request */
         
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
         $serializedFields = json_encode($fields);    
-        if ($form->formType == FormType::DYNAMIC_ORDER_FORM) {
-            $total = $this->fieldService->calculateTotal($fields,$form->basePrice);
-        } else 
-        {
-            $total = 0;
-        } 
+        $total = $this->fieldService->calculateTotal($fields,$form->basePrice);
+
         $request = $this->requests->get($id);
         $request->edit(
-                $form->userId, 
-                $form->formId
+                $form->userId
                 );
         $form->draft ? $request->setStatusDraft() : $request->setStatusNew();        
         $this->requests->save($request);        
-        $dynamicForm = $request->requestForm;
-        $dynamicForm->edit($request->id, $serializedFields, $total);
+        $dynamicForm = $this->application->findByRequest($id);
+        $dynamicForm->edit($serializedFields, $total);
         if ($form->loadedFile) {
            $dynamicForm->setFile($form->loadedFile);
         }        
-        $this->requestDynamicForms->save($dynamicForm);    
+        $this->application->save($dynamicForm);    
         
     }
 }

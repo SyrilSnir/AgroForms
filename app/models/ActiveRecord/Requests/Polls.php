@@ -1,23 +1,25 @@
 <?php
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 namespace app\models\ActiveRecord\Requests;
 
-use Yii;
-use yii\db\ActiveQuery;
-use yii\web\UploadedFile;
-use yiidreamteam\upload\FileUploadBehavior;
-
 /**
- * This is the model class for table "request_dynamic_forms".
+ * Description of Polls
  *
  * @property int $id
  * @property int $request_id Id заявки
- * @property int $amount Стоимость
+ * @property int $form_id Id формы
  * @property string|null $fields Данные формы
  *
  * @property Request $request
+ * @property Form $form
  */
-class RequestDynamicForm extends BaseRequest
+class Polls extends BaseRequest
 {
     public function __construct($config = array())
     {
@@ -36,45 +38,40 @@ class RequestDynamicForm extends BaseRequest
      */
     public static function tableName()
     {
-        return 'request_dynamic_forms';
+        return '{{%polls}}';
     }
     
     /**
      * 
      * @param int $requestId
+     * @param int $formId
      * @param string $fields
      * @param int $amount
      * @return \self
      */
     public static function create(
             int $requestId,
-            string $fields,
-            int $amount = 0
+            int $formId,
+            string $fields
             ):self 
     {
         $request = new self();
         $request->request_id = $requestId;
+        $request->form_id = $formId;
         $request->fields = $fields;
-        $request->amount = $amount;
-        return $request;
-        
+        return $request;   
     }
     
     /**
      * 
-     * @param int $requestId
      * @param string $fields
      * @param int $amount
      */
     public function edit(
-                int $requestId,
-                string $fields,
-                int $amount = 0
+                string $fields
             )    
     {
-        $this->request_id = $requestId;
-        $this->fields = $fields;
-        $this->amount = $amount;        
+        $this->fields = $fields;       
     }
 
     /**
@@ -83,10 +80,11 @@ class RequestDynamicForm extends BaseRequest
     public function rules()
     {
         return [
-            [['request_id'], 'required'],
-            [['request_id', 'amount'], 'integer'],
+            [['request_id','form_id'], 'required'],
+            [['request_id','form_id'], 'integer'],
             [['fields'], 'string'],
             [['request_id'], 'exist', 'skipOnError' => true, 'targetClass' => Request::className(), 'targetAttribute' => ['request_id' => 'id']],
+            [['form_id'], 'exist', 'skipOnError' => true, 'targetClass' => Form::className(), 'targetAttribute' => ['form_id' => 'id']],
         ];
     }
 
@@ -98,7 +96,7 @@ class RequestDynamicForm extends BaseRequest
         return [
             'id' => 'ID',
             'request_id' => 'Request ID',
-            'amount' => 'Amount',
+            'form_id' => 'Form ID',
             'fields' => 'Fields',
         ];
     }
@@ -111,5 +109,10 @@ class RequestDynamicForm extends BaseRequest
     public function getRequest()
     {
         return $this->hasOne(Request::className(), ['id' => 'request_id']);
-    }  
+    }
+    
+    public function getForm()
+    {
+        return $this->hasOne(Form::class, ['id','form_id']);
+    }
 }

@@ -2,15 +2,17 @@
 
 namespace app\modules\panel\modules\member\controllers;
 
+use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
-use app\core\services\operations\View\Requests\RequestDynamicFormViewService;
-use app\core\services\operations\View\Requests\RequestStandViewService;
-use app\models\ActiveRecord\Forms\FormType;
+use app\core\services\operations\View\Requests\RequestViewFactory;
+use app\models\ActiveRecord\Forms\Form;
+use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\ActiveRecord\Requests\RequestDynamicForm;
-use app\models\SearchModels\Requests\RequestSearch;
+use app\models\SearchModels\Requests\ApplicationSearch;
+use app\models\SearchModels\Requests\RequestStandSearch;
 use app\modules\panel\controllers\AccessRule\BaseMemberController;
+use DomainException;
 use Yii;
 use yii\helpers\Url;
 
@@ -20,64 +22,105 @@ use yii\helpers\Url;
  * @author kotov
  */
 class RequestsController extends BaseMemberController
-{
-    /**
-     *
-     * @var RequestDynamicFormViewService
-     */
-    private $dynamicFormViewService;
-    /**
-     *
-     * @var RequestStandViewService
-     */
-    private $standViewService;
-    
+{   
     /**
      *
      * @var RequestService
      */
     protected $service;
+    
+    /**
+     * 
+     * @var RequestStandSearch
+     */
+    protected $standSearch;
 
-
+    /**
+     * 
+     * @var ApplicationSearch
+     */
+    protected $applicationSearch;
+            
+    /**
+     *
+     * @var FormRepository
+     */
+    protected $formsRepository;
+    
     public function __construct(
             $id, 
             $module, 
             RequestReadRepository $repository,
-            RequestDynamicFormViewService $requestDynamicFormViewService,
-            RequestStandViewService $requestStandViewService,
             RequestService $requestService,
+            RequestStandSearch $standSearch,
+            FormRepository $formRepository,            
+            ApplicationSearch $applicationSearch,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
-        $this->dynamicFormViewService = $requestDynamicFormViewService;
-        $this->standViewService = $requestStandViewService;
         $this->service = $requestService;
+        $this->standSearch = $standSearch;
+        $this->applicationSearch = $applicationSearch;
+        $this->formsRepository = $formRepository;
     }
 
     public function actionIndex($id)
     {
         Url::remember();
-        $searchModel = new RequestSearch();
-        $dataProvider = $searchModel->searchForUser(
+
+        $standDataProvider = $this->standSearch->searchForUser(
                 Yii::$app->user->id,
                 $id,
                 Yii::$app->request->queryParams
                 );
+        $applicationDataProvider = $this->applicationSearch->searchForUser(
+                Yii::$app->user->id,
+                $id,
+                Yii::$app->request->queryParams
+                );        
         $isActive = (Yii::$app->params['activeExhibition'] == $id);
         return $this->render('index',[            
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'standSearchModel' => $this->standSearch,
+            'standDataProvider' => $standDataProvider,
+            'applicationSearchModel' => $this->applicationSearch,
+            'applicationDataProvider' => $applicationDataProvider,            
             'isExhibitionActive' => $isActive
         ]);
     }
-    
+    public function actionCreate(int $id) 
+    {
+        /** @var Form $form */
+        $form = $this->formsRepository->get($id);  
+        $user = Yii::$app->user->getIdentity();    
+        Yii::$app->session->set('FORM_CHANGE_TYPE', Request::FORM_CREATE);
+        Yii::$app->session->remove('REQUEST_ID'); 
+        return $this->render('create', [
+            'form' => $form,
+            'user' => $user,
+        ]);        
+    }
     public function actionUpdate($id) 
     {
         /** @var Request $request */
         $request = $this->readRepository->findById($id);
-        return $this->redirect(Url::to(['/panel/member/forms/load', 'id' => $request->form->id, 'requestId' => $request->id]));
+        if (!$request) {
+            throw new DomainException(t('The application with the specified number does not exist','exception'));
+        }
+        if($request->status !== BaseRequest::STATUS_DRAFT) {
+            throw new DomainException(t('This application is not available for editing','exception'));
+        }
+        Yii::$app->session->set('FORM_CHANGE_TYPE', Request::FORM_UPDATE);
+        Yii::$app->session->set('REQUEST_ID', $request->id);        
+        $user = Yii::$app->user->getIdentity();        
+        return $this->render('update', [
+            'request' => $request,
+            //'formId' => 
+            'user' => $user,
+        ]);
+            
+    //    return $this->redirect(Url::to(['/panel/member/forms/load', 'id' => $requestForm->id, 'requestId' => $request->id]));
     }
     
     /**
@@ -87,20 +130,10 @@ class RequestsController extends BaseMemberController
     public function actionView($id)
     {        
         /** @var Request $model */
-        $dopAttributes = [];
         $model = $this->findModel($id);
         $requestForm = $model->requestForm;
-        $form =  $model->form;
-        switch ($form->form_type_id) {
-            case FormType::SPECIAL_STAND_FORM:
-                $dopAttributes = $this->standViewService->getFieldAttributes($requestForm);
-                break;
-            case FormType::DYNAMIC_INFORMATION_FORM:
-            case FormType::DYNAMIC_ORDER_FORM:
-            /** @var RequestDynamicForm $requestForm */
-                $dopAttributes = $this->dynamicFormViewService->getFieldAttributes($requestForm);
-            break; 
-        }
+        $viewService = RequestViewFactory::getViewService($model);
+        $dopAttributes = $viewService->getFieldAttributes($requestForm);
 
         return $this->render('view', [
             'model' => $model,

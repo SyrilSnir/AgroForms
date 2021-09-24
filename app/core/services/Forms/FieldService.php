@@ -79,14 +79,18 @@ class FieldService
          $resultArray = [];
          foreach ($fieldsArray as $key => $field)
          {
+             
              $index = StringHelper::extractNumberFromString($key);
              $element = [
                             'computed' => $field['computed'],
                             'value' => $field['data']['value']
                         ];
+             $element['checkbox'] = $field['checkbox'];
              if (key_exists('checked', $field['data'])) {
                  $element['checked'] = $field['data']['checked'];
+
              }
+             
              $resultArray[$index] = $element;
          }
          return $resultArray;
@@ -96,13 +100,18 @@ class FieldService
      {
          /** @var Field $formField */
          $total = $basePrice;
+        
          foreach ($fields as $id => $field) {
+             $isCheckbox = $field['checkbox'];
              if (!key_exists('computed', $field) || $field['computed'] == false) {
+                 continue;
+             }
+             if ($isCheckbox && $field['checked'] == false) {
                  continue;
              }
              $formField = $this->fieldRepository->get($id);
              $unitPrice = (int) $formField->fieldParams->unitPrice;
-             $val = (int) $field['value'];
+             $val = $isCheckbox ? 1 : (int) $field['value'];
             $total = $total + ($val * $unitPrice);
          }         
          return $total;

@@ -81,7 +81,7 @@ export default {
         }
     },
    beforeCreate: function() {
-    axios.get('/api/dynamic-form/get-form')
+    axios.get('/api/application/get-form')
         .then((response) => {
             this.title = response.data.title; 
             this.elements = response.data.elements;  
@@ -131,12 +131,13 @@ export default {
         if(field.hasOwnProperty('computed')) {
             computed = true;
             total = field.total;
-        }
-          this.fields[field.id] = {
+        }        
+        this.fields[field.id] = {
               data : field.data,
               valid : field.valid,
               computed : computed,
-              total : total
+              total : total,
+              checkbox: field.hasOwnProperty('checkbox') ? true : false
               };
           if (this.isComputed) {
               this.calculatePrice(this.fields);
@@ -183,7 +184,7 @@ export default {
             this.formData.append(
                 'DynamicForm[formType]', this.formType
             );                            
-            axios.post( '/api/dynamic-form/send-form',
+            axios.post( '/api/application/send-form',
                 this.formData,
                 {
                     headers: {

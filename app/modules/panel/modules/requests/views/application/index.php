@@ -1,7 +1,7 @@
 <?php
 
-use app\core\helpers\Data\FormsHelper;
 use app\core\helpers\View\Request\RequestStatusHelper;
+use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\SearchModels\Requests\RequestSearch;
 use kartik\grid\ActionColumn;
@@ -33,13 +33,6 @@ $columnsConfig = [
                 'columns' => [
                     'user.company.name:text:' . Yii::t('app','Customer'),
                     [
-                        'attribute' => 'formType',
-                        'format' => 'text',
-                        'label' => Yii::t('app/requests','Form type'),
-                        'filter' => $searchModel->formTypesList(),
-                        'value' => 'formType.name',
-                    ],
-                    [
                         'attribute' => 'status',
                         'label' => Yii::t('app','Status'),
                         'format' => 'raw',
@@ -55,7 +48,7 @@ $columnsConfig = [
                         'visibleButtons' => [
                             'update' => function ($model) {
                                 /** @var Request $model */
-                                return ($model->status === Request::STATUS_DRAFT);
+                                return ($model->status === BaseRequest::STATUS_DRAFT);
                             }
                         ]                        
                     ],

@@ -65,8 +65,8 @@ class RequestStandService
     {
         $request = Request::create(
                 $form->userId, 
-                Stand::STAND_FORM_ID,
                 $exhibitionId,
+                FormType::SPECIAL_STAND_FORM,
                 $form->draft
                 );
         $this->requests->save($request);

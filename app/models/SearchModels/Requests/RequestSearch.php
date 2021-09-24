@@ -28,7 +28,9 @@ class RequestSearch extends Model
     
     public function searchForUser(int $userId,int $exhibitionId = null, array $params = []) 
     {
-        return $this->baseSearch($params, $userId, $exhibitionId);
+        $dp = $this->baseSearch($params, $exhibitionId);
+        $dp->query->forUser($userId);
+        return $dp;
     }
     
     public function searchForManager(array $params = [])
@@ -40,15 +42,12 @@ class RequestSearch extends Model
 
     public function searchAll(array $params = [])
     {
-        return $this->search($params);
+        return $this->baseSearch($params);
     }
 
-    protected function baseSearch(array $params = [], $userId = null, $exhibitionId = null): ActiveDataProvider
+    protected function baseSearch(array $params = [], $exhibitionId = null): ActiveDataProvider
     {
-        $query = Request::find();
-        if ($userId) {
-            $query->forUser($userId);
-        }
+        $query = Request::find()->joinWith('applications',true,'RIGHT JOIN');
         if ($exhibitionId) {
             $query->forExhibition($exhibitionId);
         }

@@ -11,6 +11,7 @@ namespace app\core\traits;
 use app\models\Forms\RowsCountForm;
 use app\models\SearchModels\SearchInterface;
 use Yii;
+use yii\helpers\Url;
 
 /**
  *
@@ -26,6 +27,7 @@ trait GridViewTrait
     
     public function actionIndex() 
     {
+        Url::remember();
         $dataProvider = $this->searchModel->search(Yii::$app->request->queryParams);
         $rowsCountForm = new RowsCountForm();        
         if (!($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate())) {       

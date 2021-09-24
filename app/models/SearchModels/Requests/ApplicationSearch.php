@@ -8,24 +8,25 @@
 
 namespace app\models\SearchModels\Requests;
 
-use app\models\ActiveRecord\Requests\Query\RequestQuery;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\SearchModels\SearchInterface;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * Description of RequestStandSearch
+ * Description of ApplicationSearch
  *
  * @author kotov
  */
-class RequestStandSearch extends Model
+class ApplicationSearch extends Model implements SearchInterface
 {
+
     public $name;
     
     public function rules(): array
     {
         return [
-           // [['name'], 'safe'],
+            // [['name'], 'safe'],
         ];
     }
 
@@ -44,7 +45,7 @@ class RequestStandSearch extends Model
     
     public function search(array $params): ActiveDataProvider
     {
-        $query = Request::find()->joinWith('stands',true,'RIGHT JOIN');
+        $query = Request::find()->joinWith('applications',true,'RIGHT JOIN');
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [

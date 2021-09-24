@@ -10,7 +10,7 @@ use yii\web\UploadedFile;
  *
  * @author kotov
  */
-class DynamicForm extends Model
+class ApplicationForm extends Model
 {
     public $fields;
     
@@ -22,8 +22,6 @@ class DynamicForm extends Model
     
     public $userId;
     
-    public $formType;
-    
     public $formId;
     
     public $loadedFile;
@@ -33,11 +31,11 @@ class DynamicForm extends Model
     public function rules()
     {
         return [
-            [['userId','formId','formType'],'required'],            
+            [['userId','formId'],'required'],            
             [['fields'],'required'],
             [['loadedFile'],'file'],            
             [['hasFile'],'boolean'],            
-            [['total','basePrice','userId','formId','formType'],'integer'],
+            [['total','basePrice','userId','formId'],'integer'],
             [['draft'],'boolean'],
         ];
     }

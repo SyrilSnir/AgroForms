@@ -2,7 +2,7 @@
 
 namespace app\models\ActiveRecord\Requests;
 
-use app\core\repositories\readModels\Requests\RequestDynamicFormReadRepository;
+use app\core\repositories\readModels\Requests\ApplicationReadRepository;
 use app\core\repositories\readModels\Requests\RequestStandReadRepository;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\FormManipulation;
@@ -18,30 +18,18 @@ use yii\db\ActiveQuery;
  *
  * @property int $id
  * @property int $user_id Заказчик
- * @property int $form_id Id формы
  * @property int $status
  * @property int $created_at
  * @property int $exhibition_id
- * 
+ * @property int $type_id Тип заявки
  * @property FormType $formType
- * @property Form $form
  * @property User $user
  * @property Exhibition $exhibition
  * @property BaseRequest $requestForm
  * 
  */
 class Request extends FormManipulation
-{
-    const STATUS_NEW = 0; // Новая
-    const STATUS_PAID = 1; // Оплачена
-    const STATUS_PARTIAL_PAID = 6; // Частично оплачена 
-    const STATUS_REJECTED = 2; // Отклонена
-    const STATUS_CHANGED = 4; // Изменена
-    const STATUS_DELETE = 5; // Удалена
-    const STATUS_DRAFT = 3; // Черновик
-    const STATUS_INVOICED = 7; // Выставлен счет
-    const STATUS_ACCEPTED = 8; // Принята
-    
+{   
     use CreatedTimestampTrait;
     
     /**
@@ -54,15 +42,15 @@ class Request extends FormManipulation
 
     public static function create(
             int $userId,
-            int $formId,
             int $exhibitionId,
+            int $typeId,
             bool $draft = false
             ):self 
     {
         $request = new self();
         $request->user_id = $userId;
-        $request->form_id = $formId;
         $request->exhibition_id = $exhibitionId;
+        $request->type_id = $typeId;
         if ($draft) {
             $request->setStatusDraft();
         } else {
@@ -72,22 +60,20 @@ class Request extends FormManipulation
     }
     
     public function edit(
-            int $userId,
-            int $formId         
+            int $userId       
             )
     {
         $this->user_id = $userId;
-        $this->form_id = $formId;
     }
     
     public function setStatusNew()
     {
-        $this->status = self::STATUS_NEW;
+        $this->status = BaseRequest::STATUS_NEW;
     }
     
     public function setStatusDraft()
     {
-        $this->status = self::STATUS_DRAFT;
+        $this->status = BaseRequest::STATUS_DRAFT;
     }
 
     /**
@@ -127,34 +113,29 @@ class Request extends FormManipulation
      */
     public function getFormType()
     {
-        return $this->form->hasOne(FormType::class, ['id' => 'form_type_id']);
+        return $this->hasOne(FormType::class, ['id' => 'type_id']);
     }
     
-    public function getForm()
-    {
-        return $this->hasOne(Form::class, ['id' => 'form_id']);
-    }
   
     public function getStands()
     {
         return $this->hasMany(RequestStand::class, ['request_id' => 'id' ]);
     }
-      
+    
     public function getApplications()
     {
-        
-    }
-
+        return $this->hasMany(Application::class, ['request_id' => 'id' ]);
+    }    
 
     public function getRequestForm() : ?BaseRequest
     {
-        switch ($this->form->form_type_id) {
+        switch ($this->type_id) {
             case FormType::SPECIAL_STAND_FORM:
                 $request = RequestStandReadRepository::findByRequest($this->id);
                 break;
             case FormType::DYNAMIC_INFORMATION_FORM:
             case FormType::DYNAMIC_ORDER_FORM:
-                $request = RequestDynamicFormReadRepository::findByRequest($this->id);
+                $request = ApplicationReadRepository::findByRequest($this->id);
                 break;
                 
         }

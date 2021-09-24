@@ -3,6 +3,7 @@
 namespace app\core\helpers\View\Request;
 
 use app\core\helpers\View\StatusHelper;
+use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -22,7 +23,7 @@ class RequestStatusHelper extends StatusHelper
     public static function getStatusLabel(string $status):string
     {
         switch ($status) {
-            case Request::STATUS_NEW:
+            case BaseRequest::STATUS_NEW:
                 $className = 'badge badge-info';
                 break;
             default:
@@ -36,16 +37,16 @@ class RequestStatusHelper extends StatusHelper
 
     public static function statusList(bool $isMember = true): array
     {
-        $statusList[Request::STATUS_NEW] = t('New','requests');
+        $statusList[BaseRequest::STATUS_NEW] = t('New','requests');
         if ($isMember) {
-            $statusList[Request::STATUS_DRAFT] = t('Draft','requests');
+            $statusList[BaseRequest::STATUS_DRAFT] = t('Draft','requests');
         }
-        $statusList[Request::STATUS_INVOICED] = t('Invoiced','requests');
-        $statusList[Request::STATUS_PAID] = t('Paid','requests');
-        $statusList[Request::STATUS_PARTIAL_PAID] = t('Partial paid','requests');
-        $statusList[Request::STATUS_CHANGED] = t('Changed','requests');
-        $statusList[Request::STATUS_REJECTED] = t('Rejected','requests');
-        $statusList[Request::STATUS_ACCEPTED] = t('Accepted','requests');
+        $statusList[BaseRequest::STATUS_INVOICED] = t('Invoiced','requests');
+        $statusList[BaseRequest::STATUS_PAID] = t('Paid','requests');
+        $statusList[BaseRequest::STATUS_PARTIAL_PAID] = t('Partial paid','requests');
+        $statusList[BaseRequest::STATUS_CHANGED] = t('Changed','requests');
+        $statusList[BaseRequest::STATUS_REJECTED] = t('Rejected','requests');
+        $statusList[BaseRequest::STATUS_ACCEPTED] = t('Accepted','requests');
         
         return $statusList;
     }

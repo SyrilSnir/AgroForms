@@ -22,6 +22,17 @@ $this->title = Yii::t('app','Free information');
               </div>
               <a href="panel/users/?UserSearch[user_type_id]=2" class="small-box-footer"><?php echo Yii::t('app', 'More info') ?> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3><?php echo $membersCount ?></h3>
+
+                <p><?php echo \Yii::t('app', '{member, plural, =1{exhibition participant} other{exhibitions}}', ['member' => $membersCount]); ?></p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-truck"></i>
+              </div>
+              <a href="panel/users/?UserSearch[user_type_id]=2" class="small-box-footer"><?php echo Yii::t('app', 'More info') ?> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>            
           </div>            
         </div>
        </div>

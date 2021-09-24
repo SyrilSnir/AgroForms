@@ -20,10 +20,7 @@ class FormType extends ActiveRecord
      * Стандартный стенд
      */
     const SPECIAL_STAND_FORM = 1;
-    /**
-     * Технические плдключения
-     */
-    const SPECIAL_CONNECTION_FORM = 2;
+
     const DYNAMIC_INFORMATION_FORM = 10;
     const DYNAMIC_ORDER_FORM = 11;
     

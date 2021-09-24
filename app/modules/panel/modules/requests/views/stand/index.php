@@ -1,6 +1,7 @@
 <?php
 
 use app\core\helpers\View\Request\RequestStatusHelper;
+use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\SearchModels\Requests\RequestStandSearch;
 use kartik\grid\ActionColumn;
@@ -47,7 +48,7 @@ $columnsConfig = [
                         'visibleButtons' => [
                             'update' => function ($model) {
                                 /** @var Request $model */
-                                return ($model->status === Request::STATUS_DRAFT);
+                                return ($model->status === BaseRequest::STATUS_DRAFT);
                             }
                         ]                        
                     ],

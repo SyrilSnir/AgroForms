@@ -2,6 +2,7 @@
 
 namespace app\core\services\operations\View\Requests;
 
+use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\RequestStand;
 
 /**
@@ -9,9 +10,14 @@ use app\models\ActiveRecord\Requests\RequestStand;
  *
  * @author kotov
  */
-class RequestStandViewService
+class RequestStandViewService implements RequestViewInterface
 {
-    public function getFieldAttributes(RequestStand $requestStand): array
+    /**
+     * 
+     * @param RequestStand $requestStand
+     * @return array
+     */
+    public function getFieldAttributes(BaseRequest $requestStand): array
     {
         return [
             [

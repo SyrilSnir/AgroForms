@@ -4,14 +4,12 @@ namespace app\modules\panel\modules\requests\controllers;
 
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
-use app\core\services\operations\View\Requests\RequestDynamicFormViewService;
-use app\core\services\operations\View\Requests\RequestStandViewService;
+use app\core\services\operations\View\Requests\RequestViewFactory;
 use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\ActiveRecord\Requests\RequestDynamicForm;
 use app\models\Forms\Requests\ChangeStatusForm;
-use app\models\SearchModels\Requests\ManagerRequestSearch;
+use app\models\SearchModels\Requests\ManagerApplicationSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -30,26 +28,14 @@ class ApplicationController extends BaseAdminController
      * @var RequestService
      */
     protected $service;
-    
-    /**
-     *
-     * @var RequestDynamicFormViewService
-     */
-    private $dynamicFormViewService;
-    /**
-     *
-     * @var RequestStandViewService
-     */
-    private $standViewService;    
+      
     
     public function __construct(
             $id, 
             $module, 
             RequestReadRepository $repository,
             RequestService $service,
-            ManagerRequestSearch $searchModel,
-            RequestDynamicFormViewService $requestDynamicFormViewService,
-            RequestStandViewService $requestStandViewService,            
+            ManagerApplicationSearch $searchModel,           
             $config = array()
             )
     {
@@ -57,8 +43,6 @@ class ApplicationController extends BaseAdminController
         $this->readRepository = $repository;
         $this->service = $service;
         $this->searchModel = $searchModel;
-        $this->standViewService = $requestStandViewService;
-        $this->dynamicFormViewService = $requestDynamicFormViewService;
     }
     
     /**
@@ -69,19 +53,10 @@ class ApplicationController extends BaseAdminController
     {
         /** @var Request $model */
         $model = $this->findModel($id);
-        $form = $model->form;
         $requestForm = $model->requestForm;
-        $statusForm = new ChangeStatusForm($model->id, $model->status);        
-        switch ($form->form_type_id) {
-            case FormType::SPECIAL_STAND_FORM:
-                $dopAttributes = $this->standViewService->getFieldAttributes($requestForm);
-                break;
-            case FormType::DYNAMIC_INFORMATION_FORM:
-            case FormType::DYNAMIC_ORDER_FORM:
-            /** @var RequestDynamicForm $requestForm */
-                $dopAttributes = $this->dynamicFormViewService->getFieldAttributes($requestForm);
-            break; 
-        }        
+        $statusForm = new ChangeStatusForm($model->id, $model->status);
+        $viewService = RequestViewFactory::getViewService($model);
+        $dopAttributes = $viewService->getFieldAttributes($requestForm);                
         if ($statusForm->load(Yii::$app->request->post()) && $statusForm->validate()) {
             $model = $this->service->changeStatus($statusForm);
             Yii::$app->session->setFlash('success','Статус заявки успешно изменен');            

@@ -9,37 +9,54 @@
 <script>
     import { unitMixin } from './Mixins/unitMixin'
     import { labelMixin } from './Mixins/labelMixin'
+    import { computedMixin } from './Mixins/computedMixin'
     export default {
         props: [
             'lang'
         ],         
        data() {
            return {
-                id: 'id' + this.params.id,
-                checked: this.params.value,
+                id: 'id' + this.params.id,                 
+                checked: this.params.checked,
                 valid: true                
            }
        },        
        mixins: [
            unitMixin,
+           computedMixin,
            labelMixin
        ],
        created() {
            this.$emit('changeField',this.getData());
        }, 
+       computed: {
+           total() {
+               if (!this.isComputed || !this.checked) {
+                   return 0;
+               }
+               return +this.unitPrice;
+           }
+       },       
        methods: {
            change() {
                this.params.value = this.checked;
                 this.$emit('changeField',this.getData());               
            },
            getData() {
-               return {
+               let data = {
                    id: this.id,
                    data:  {
-                       value: this.params.value,                       
+                       value: this.unitPrice, 
+                       checked: this.checked                     
                     },
-                   valid: this.valid                   
+                   valid: this.valid,
+                   checkbox: true,                  
+               };
+                if (this.isComputed) {
+                   data.computed = true;
+                   data.total = this.total;
                }
+               return data;               
            }
        }      
     }

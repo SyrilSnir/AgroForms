@@ -25,4 +25,9 @@ class RequestStandReadRepository implements ReadRepositoryInterface
             ->andWhere(['request_id' => $requestId])
             ->one();
     }
+    
+    public function getActiveStands()
+    {
+        $query = Request::find()->joinWith('stands',true,'RIGHT JOIN');        
+    }
 }
