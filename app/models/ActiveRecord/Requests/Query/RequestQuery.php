@@ -32,4 +32,9 @@ class RequestQuery extends ActiveQuery
     {
         return $this->andWhere([($alias ? $alias . '.' : '') . 'exhibition_id' => $exhibitionId]);
     }
+    
+    public function forStands()
+    {
+        return $this->joinWith('stands',true,'RIGHT JOIN');
+    }
 }

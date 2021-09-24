@@ -3,7 +3,11 @@
 namespace app\core\repositories\readModels\Requests;
 
 use app\core\repositories\readModels\ReadRepositoryInterface;
+use app\core\traits\ActiveRecord\GetProviderTrait;
+use app\models\ActiveRecord\Requests\BaseRequest;
+use app\models\ActiveRecord\Requests\Request;
 use app\models\ActiveRecord\Requests\RequestStand;
+use yii\data\DataProviderInterface;
 
 /**
  * Description of RequestStandReadRepository
@@ -12,6 +16,8 @@ use app\models\ActiveRecord\Requests\RequestStand;
  */
 class RequestStandReadRepository implements ReadRepositoryInterface
 {
+    use GetProviderTrait;
+    
     public static function findById($id)
     {
         return RequestStand::find($id)
@@ -26,8 +32,11 @@ class RequestStandReadRepository implements ReadRepositoryInterface
             ->one();
     }
     
-    public function getActiveStands()
+    public function getActiveStands() : DataProviderInterface
     {
-        $query = Request::find()->joinWith('stands',true,'RIGHT JOIN');        
+        $query = Request::find()->forStands()->andWhere(['NOT IN','status', [BaseRequest::STATUS_DRAFT, BaseRequest::STATUS_DELETE]]);      
+        $provider = $this->getProvider($query);
+        $provider->setPagination(false);
+        return $provider;
     }
 }

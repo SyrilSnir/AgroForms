@@ -110,6 +110,7 @@ return [
     'Free information' => 'Сводная информация',
     'More info' => 'Больше информации',
     '{member, plural, =1{exhibition participant} other{exhibitions}}' => '{member, plural, one{участник} few{участника} other{участников}} выставки',
+    '{stand, plural, =1{ordered stand} other{ordered stands}}' => '{stand, plural, one{заказанный стенд} few{заказанных стенда} other{заказанных стендов}}',
 
 ];
 

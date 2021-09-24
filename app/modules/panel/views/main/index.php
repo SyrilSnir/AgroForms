@@ -1,5 +1,7 @@
 <?php
 
+/** @var int $membersCount */
+/** @var int $standsCount */
 $this->title = Yii::t('app','Free information');
 ?>
   <!-- Content Wrapper. Contains page content -->
@@ -22,18 +24,21 @@ $this->title = Yii::t('app','Free information');
               </div>
               <a href="panel/users/?UserSearch[user_type_id]=2" class="small-box-footer"><?php echo Yii::t('app', 'More info') ?> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <div class="small-box bg-info">
+            </div> 
+          <div class="col-lg-3 col-6">              
+            <div class="small-box bg-success">
               <div class="inner">
-                <h3><?php echo $membersCount ?></h3>
+                <h3><?php echo $standsCount ?></h3>
 
-                <p><?php echo \Yii::t('app', '{member, plural, =1{exhibition participant} other{exhibitions}}', ['member' => $membersCount]); ?></p>
+                <p><?php echo \Yii::t('app', '{stand, plural, =1{ordered stand} other{ordered stands}}', ['stand' => $standsCount]); ?></p>
               </div>
               <div class="icon">
                 <i class="fa fa-truck"></i>
               </div>
-              <a href="panel/users/?UserSearch[user_type_id]=2" class="small-box-footer"><?php echo Yii::t('app', 'More info') ?> <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="panel/requests/stand" class="small-box-footer"><?php echo Yii::t('app', 'More info') ?> <i class="fas fa-arrow-circle-right"></i></a>
             </div>            
-          </div>            
+        </div>            
+           
         </div>
        </div>
           </div>
