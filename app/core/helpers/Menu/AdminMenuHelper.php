@@ -34,11 +34,8 @@ class AdminMenuHelper implements MenuHelperInterface
                         ['label' => Yii::t('app/menu', 'Exhibition management'), 'icon' => 'truck', 'url' => ['/panel/lists/exhibitions'],],                        
                         [
                             'label' => Yii::t('app/menu', 'Request management'),
-                            'icon' => 'share',
-                            'items' => [
-                                ['label' => Yii::t('app/menu', 'Standard stand'), 'icon' => 'inbox', 'url' => ['/panel/requests/stand'],],
-                                ['label' => Yii::t('app/menu', 'Request list'), 'icon' => 'tasks', 'url' => ['/panel/requests/application'],],
-                            ]
+                            'icon' => 'tasks',
+                            'url' => ['/panel/requests']
                         ],                                                
                     ],
                 ], 

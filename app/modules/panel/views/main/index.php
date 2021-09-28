@@ -35,7 +35,7 @@ $this->title = Yii::t('app','Free information');
               <div class="icon">
                 <i class="fa fa-truck"></i>
               </div>
-              <a href="panel/requests/stand" class="small-box-footer"><?php echo Yii::t('app', 'More info') ?> <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="panel/requests?ManagerRequestSearch[formId]=1" class="small-box-footer"><?php echo Yii::t('app', 'More info') ?> <i class="fas fa-arrow-circle-right"></i></a>
             </div>            
         </div>            
            

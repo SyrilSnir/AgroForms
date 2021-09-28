@@ -16,13 +16,15 @@ class RequestSearch extends Model
 {
     public $formType; 
     public $status;
+    public $form;
+    public $formId;
 
     use GetFormTypesListTrait;
     
     public function rules(): array
     {
         return [
-            [['formType','status'], 'safe'],
+            [['formType','formId','status'], 'safe'],
         ];
     }
     
@@ -40,14 +42,14 @@ class RequestSearch extends Model
         return $dp;
     }
 
-    public function searchAll(array $params = [])
+    public function search(array $params = [])
     {
         return $this->baseSearch($params);
     }
 
     protected function baseSearch(array $params = [], $exhibitionId = null): ActiveDataProvider
     {
-        $query = Request::find()->joinWith('applications',true,'RIGHT JOIN');
+        $query = Request::find()->joinWith(['application','stand']); //->joinWith('stands');
         if ($exhibitionId) {
             $query->forExhibition($exhibitionId);
         }
@@ -65,6 +67,11 @@ class RequestSearch extends Model
         }
         $query->andFilterWhere(['form_type_id' => $this->formType]);
         $query->andFilterWhere(['status' => $this->status]);
+        if($this->formId == 1)  {
+            $query->andWhere([ 'form_id' => null]);
+        } else {
+            $query->andFilterWhere([ 'form_id' => $this->formId]);            
+        }
         return $dataProvider;
     }
 }

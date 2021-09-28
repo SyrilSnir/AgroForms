@@ -153,4 +153,10 @@ class RequestStand extends BaseRequest
     {
         return FormReadRepository::findStandForm();
     }
+
+    public function getHeader(): string
+    {
+        return $this->form->headerName;
+    }
+
 }

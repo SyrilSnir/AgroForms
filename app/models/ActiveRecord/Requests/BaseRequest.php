@@ -38,5 +38,7 @@ abstract class BaseRequest extends ActiveRecord
     public function setFile(UploadedFile $file) 
     {
         $this->file = $file;
-    }    
+    } 
+    
+    abstract public function getHeader():string;
 }

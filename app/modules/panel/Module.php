@@ -40,10 +40,7 @@ class Module extends BaseModule
             ],
             'manager' => [
                    'class' => ManagerModule::class,
-            ],            
-            'requests' => [
-                'class' => RequestsModule::class,
-            ]                       
+            ],                      
         ];
     }    
 }

@@ -35,6 +35,6 @@ class RequestQuery extends ActiveQuery
     
     public function forStands()
     {
-        return $this->joinWith('stands',true,'RIGHT JOIN');
+        return $this->joinWith('stand',true,'RIGHT JOIN');
     }
 }

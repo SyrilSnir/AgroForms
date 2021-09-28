@@ -117,14 +117,14 @@ class Request extends FormManipulation
     }
     
   
-    public function getStands()
+    public function getStand()
     {
-        return $this->hasMany(RequestStand::class, ['request_id' => 'id' ]);
+        return $this->hasOne(RequestStand::class, ['request_id' => 'id' ]);
     }
     
-    public function getApplications()
+    public function getApplication()
     {
-        return $this->hasMany(Application::class, ['request_id' => 'id' ]);
+        return $this->hasOne(Application::class, ['request_id' => 'id' ]);
     }    
 
     public function getRequestForm() : ?BaseRequest
@@ -143,6 +143,12 @@ class Request extends FormManipulation
         return $request;
     }
     
+    public function getHeader(): string
+    {
+        return $this->requestForm->header;
+    }
+
+
     public function getExhibition()
     {
         return $this->hasOne(Exhibition::class, ['id' => 'exhibition_id']);

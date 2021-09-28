@@ -120,4 +120,9 @@ class Application extends BaseRequest
     {
         return $this->hasOne(Form::class, ['id' => 'form_id']);
     }
+    
+    public function getHeader():string 
+    {
+        return $this->form->headerName;
+    }
 }
