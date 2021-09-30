@@ -6,11 +6,12 @@ use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
 use app\core\services\operations\View\Requests\RequestViewFactory;
+use app\core\traits\GridViewTrait;
+use app\core\traits\RequestViewTrait;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\SearchModels\Requests\ApplicationSearch;
-use app\models\SearchModels\Requests\RequestStandSearch;
+use app\models\SearchModels\Requests\ManagerRequestSearch;
 use app\modules\panel\controllers\AccessRule\BaseMemberController;
 use DomainException;
 use Yii;
@@ -28,67 +29,50 @@ class RequestsController extends BaseMemberController
      * @var RequestService
      */
     protected $service;
-    
-    /**
-     * 
-     * @var RequestStandSearch
-     */
-    protected $standSearch;
-
-    /**
-     * 
-     * @var ApplicationSearch
-     */
-    protected $applicationSearch;
-            
+               
     /**
      *
      * @var FormRepository
      */
     protected $formsRepository;
     
+    protected $searchModel;
+    
+    use RequestViewTrait;
+    
     public function __construct(
             $id, 
             $module, 
             RequestReadRepository $repository,
             RequestService $requestService,
-            RequestStandSearch $standSearch,
+            ManagerRequestSearch $searchModel,
             FormRepository $formRepository,            
-            ApplicationSearch $applicationSearch,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $requestService;
-        $this->standSearch = $standSearch;
-        $this->applicationSearch = $applicationSearch;
         $this->formsRepository = $formRepository;
+        $this->searchModel = $searchModel;
     }
 
     public function actionIndex($id)
     {
         Url::remember();
-
-        $standDataProvider = $this->standSearch->searchForUser(
-                Yii::$app->user->id,
-                $id,
-                Yii::$app->request->queryParams
-                );
-        $applicationDataProvider = $this->applicationSearch->searchForUser(
+        $applicationDataProvider = $this->searchModel->searchForUser(
                 Yii::$app->user->id,
                 $id,
                 Yii::$app->request->queryParams
                 );        
         $isActive = (Yii::$app->params['activeExhibition'] == $id);
         return $this->render('index',[            
-            'standSearchModel' => $this->standSearch,
-            'standDataProvider' => $standDataProvider,
-            'applicationSearchModel' => $this->applicationSearch,
-            'applicationDataProvider' => $applicationDataProvider,            
+            'searchModel' => $this->searchModel,
+            'dataProvider' => $applicationDataProvider,            
             'isExhibitionActive' => $isActive
         ]);
     }
+ 
     public function actionCreate(int $id) 
     {
         /** @var Form $form */

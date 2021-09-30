@@ -37,9 +37,6 @@ $this->title = Yii::t('app/title','My requests');
     <?php endif; ?>
 </div>
 <div class="card full-view">
-    <div class="card-header">
-        <h3 class="card-title"><?php echo Yii::t('app/title', 'Stand orders') ?></h3>
-   </div>
     <div class="card-body">
  <?php if (Yii::$app->session->has('success')): ?>
     <div class="alert alert-primary" role="alert">
@@ -50,69 +47,22 @@ $this->title = Yii::t('app/title','My requests');
     <div class="alert alert-danger" role="alert">
         <?php echo Yii::$app->session->getFlash('error') ?>
     </div>
-<?php endif; ?>            
-            
-            
+<?php endif; ?>                                 
  <?= GridView::widget([
-                    'dataProvider' => $standDataProvider,
+                    'dataProvider' => $dataProvider,
                     'pager' => [
                         'maxButtonCount' => 5, // максимум 5 кнопок
                         'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
                         'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
                         'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
                     ],
-                    'filterModel' => $standSearchModel,
-                    'columns' => [                    
-                    /*    [
-                            'attribute' => 'form',
-                            'format' => 'text',
-                            'label' => t('Application form'),
-                        //    'filter' => $searchModel->formTypesList(),
-                            'value' => function (Request $model) {
-                                return $model->form->title;
-                            }
-                        ],*/
-                        [
-                            'attribute' => 'status',
-                            'label' => t('Status'),
-                            'format' => 'raw',
-                            'filter' => RequestStatusHelper::statusList(),
-                            'value' => function (Request $model) {
-                                return RequestStatusHelper::getStatusLabel($model->status);
-                            }
-                        ],
-                        'created_at:datetime:'. t('Created at'),
-                        
-                        [
-                            'class' => ActionColumn::class,
-                            'visibleButtons' => [
-                                'delete' => function ($model) {
-                                    /** @var Request $model */
-                                    return ($model->status === BaseRequest::STATUS_DRAFT);                            
-                                },
-                                'update' => function ($model) {
-                                    /** @var Request $model */
-                                    return ($model->status === BaseRequest::STATUS_DRAFT);
-                                }
-                            ]                        
-                        ],
+                    'filterModel' => $searchModel,
+                    'columns' => [                                               [
+                      'attribute' => 'formId',
+                      'label' => Yii::t('app','Form'),
+                      'filter' => FormsHelper::formsList(),                        
+                      'value' => 'header'
                     ],
-                ]); ?>
-        </div>
-    <div class="card-header">
-        <h3 class="card-title"><?php echo $this->title ?></h3>
-   </div>
-    <div class="card-body">                        
- <?= GridView::widget([
-                    'dataProvider' => $applicationDataProvider,
-                    'pager' => [
-                        'maxButtonCount' => 5, // максимум 5 кнопок
-                        'options' => ['id' => 'mypager', 'class' => 'pagination pagination-sm'], // прикручиваем свой id чтобы создать собственный дизайн не касаясь основного.
-                        'nextPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>', // стрелочка в право
-                        'prevPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>', // стрелочка влево
-                    ],
-                    'filterModel' => $applicationSearchModel,
-                    'columns' => [                    
                     /*    [
                             'attribute' => 'form',
                             'format' => 'text',

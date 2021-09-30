@@ -26,6 +26,9 @@ class RequestStatusHelper extends StatusHelper
             case BaseRequest::STATUS_NEW:
                 $className = 'badge badge-info';
                 break;
+            case BaseRequest::STATUS_PAID:
+                $className = 'badge badge-success';
+                break;            
             default:
                 $className = 'badge badge-warning';
                 break;

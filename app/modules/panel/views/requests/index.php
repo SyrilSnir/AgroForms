@@ -22,11 +22,7 @@ $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.g
 $columnsConfig = [
                 'toolbar' => [
                     [
-                        'content'=> $rowsCountTemplate .
-                            Html::a('<i class="fas fa-plus"></i>',['create'], [
-                                'class' => 'btn btn-sm btn-success',
-                                'title' => Yii::t('app/requests', 'Add request'),
-                            ])                            
+                        'content'=> $rowsCountTemplate                           
                     ],
                 ],      
                 'dataProvider' => $dataProvider,
@@ -57,6 +53,10 @@ $columnsConfig = [
                             'update' => function ($model) {
                                 /** @var Request $model */
                                 return ($model->status === BaseRequest::STATUS_DRAFT);
+                            },
+                            'delete' => function ($model) {
+                                /** @var Request $model */
+                                return !Yii::$app->user->can('accountantMenu');
                             }
                         ]                        
                     ],

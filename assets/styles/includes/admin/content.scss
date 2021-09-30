@@ -4,3 +4,21 @@
 .main-section {
     width: 100%;
 }
+.change-status-block {
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        align-items: center;        
+    }
+    button {
+        margin-top: 1rem;        
+        margin-left: .5rem;
+    }
+}
+.status-buttons-wrapper {
+    margin-bottom: 1rem;
+    .status-change-btn {
+        margin-right: .5rem;
+    }
+}

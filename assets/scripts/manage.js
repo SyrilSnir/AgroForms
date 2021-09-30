@@ -1,6 +1,7 @@
 import axios from 'axios';
 import FieldParams from './components/manage/FieldParams';
 import EnumList from './components/manage/EnumList';
+import FormManager from './components/manage/Requests/FormManager';
 
 const $ = window.$;
 const managerActivateLink = document.getElementById('get-activare-link');
@@ -42,3 +43,5 @@ function getFormRequestHandler(e) {
     let selectedValue = selectedOption.value;
     location.href = '/panel/member/requests/create?id=' + selectedValue;
 }
+
+const formManager = new FormManager();

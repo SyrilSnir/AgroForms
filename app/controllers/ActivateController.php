@@ -68,7 +68,7 @@ class ActivateController extends Controller
                     'successActivate',
                     'Поздравляем! Ваша учетная запись успешно активирована. '
                     . 'Укажите <strong>'.$user->login.'</strong> в качестве логина');
-            return $this->redirect(Url::toRoute('/manage/auth'));;
+            return $this->redirect(Url::toRoute('/panel/auth'));;
         }
         return 'error';
     }

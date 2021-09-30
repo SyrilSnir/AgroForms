@@ -9,6 +9,7 @@
 namespace app\modules\panel\controllers;
 
 use app\core\repositories\readModels\Requests\RequestReadRepository;
+use app\core\services\operations\Requests\RequestService;
 use app\core\traits\GridViewTrait;
 use app\core\traits\RequestViewTrait;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
@@ -18,15 +19,19 @@ use app\models\SearchModels\Requests\ManagerRequestSearch;
  *
  * @author kotov
  */
-class RequestsController extends BaseAdminController
+class RequestsController extends ManageController
 {
+    
+    protected $roles = ['adminMenu','managerMenu','accountantMenu'];
+
     use GridViewTrait,RequestViewTrait;
     
     public function __construct(
             $id, 
             $module, 
             ManagerRequestSearch $searchModel,
-            RequestReadRepository $repository,            
+            RequestReadRepository $repository, 
+            RequestService $requestService,
             $config = array()
             )
     {
@@ -35,5 +40,6 @@ class RequestsController extends BaseAdminController
     //    $this->service = $service;
         $this->searchModel = $searchModel;
         $this->readRepository = $repository;
+        $this->service = $requestService;
     }        
 }

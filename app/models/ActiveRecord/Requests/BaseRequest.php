@@ -23,10 +23,24 @@ abstract class BaseRequest extends ActiveRecord
     const STATUS_PAID = 1; // Оплачена
     const STATUS_PARTIAL_PAID = 6; // Частично оплачена 
     const STATUS_REJECTED = 2; // Отклонена
-    const STATUS_CHANGED = 4; // Изменена
-    const STATUS_DELETE = 5; // Удалена
-    const STATUS_DRAFT = 3; // Черновик
-    const STATUS_INVOICED = 7; // Выставлен счет
+    
+    /**
+     * Изменена
+     */
+    const STATUS_CHANGED = 4; 
+    
+    /**
+     * Удалена
+     */
+    const STATUS_DELETE = 5; 
+    /**
+     * Черновик
+     */
+    const STATUS_DRAFT = 3; 
+    /**
+     * Выставлен счет
+     */
+    const STATUS_INVOICED = 7; 
     const STATUS_ACCEPTED = 8; // Принята
     
     const TYPE_STAND = 1; // Заказ стенда
