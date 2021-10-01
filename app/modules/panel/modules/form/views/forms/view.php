@@ -4,10 +4,12 @@ use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\SearchModels\Forms\FieldSearch;
-use kartik\grid\GridView;
-use yii\data\ActiveDataProvider;
 use kartik\grid\ActionColumn;
+use kartik\grid\GridView;
+use kotchuprik\sortable\grid\Column;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\DetailView;
 
@@ -38,7 +40,6 @@ $this->title = $model->name;
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id',
                     'title:text:' . Yii::t('app', 'Title'),
                     'name:text:' . Yii::t('app', 'Name'),
                     'description:raw:' . Yii::t('app', 'Description'),
@@ -68,10 +69,15 @@ $columnsConfig = [
                     ],
                     'dataProvider' => $formFieldsDataProvider,
                     'filterModel' => $formFieldsModel,
+                    'rowOptions' => function ($model, $key, $index, $grid) {
+                        return ['data-sortable-id' => $model->id];
+                    },    
                     'columns' => [  
-                        'order:text:' . Yii::t('app','Position'),
-                        'name:text:' . Yii::t('app','Name'),
                         [
+                            'class' => Column::className(),
+                        ],                        
+                        'name:text:' . Yii::t('app','Name'),
+                        /**[
                             'label' => Yii::t('app','Group'),
                             'filter' => $formFieldsModel->fieldGroupList(),
                             'attribute' => 'fieldGroupId',
@@ -79,7 +85,7 @@ $columnsConfig = [
                                 return $model->fieldGroup ? $model->fieldGroup->name:
                                         Yii::t('app','Undefined');
                             }
-                        ],
+                        ],*/
                         'description:text:' . Yii::t('app','Description'),
                         
                         [
@@ -95,9 +101,15 @@ $columnsConfig = [
                            // 'header' => 'Действия',
                             'controller' => 'fields'                       
                         ],
-                    ],    
+                    ],  
+                    'options' => [
+                        'data' => [
+                            'sortable-widget' => 1,
+                            'sortable-url' => Url::toRoute(['sorting']),
+                        ]
+                    ],                                      
     ];
-$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';    
+$gridConfig = []; //require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';    
 $fullGridConfig = array_merge($gridConfig, $columnsConfig);
 ?>
     <div class="card">

@@ -6,7 +6,6 @@ use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
 use app\core\services\operations\View\Requests\RequestViewFactory;
-use app\core\traits\GridViewTrait;
 use app\core\traits\RequestViewTrait;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Requests\BaseRequest;

@@ -86,6 +86,12 @@ class ApplicationViewService implements RequestViewInterface
                     'value' => $value,
                     'format' => 'raw'
                 ];           
+            } elseif($fieldModel->element_type_id == ElementType::ELEMENT_CHECKBOX) {
+                $dopAttributes[] = [
+                    'label' => $fieldModel->name,
+                    'value' => '',
+                    'format' => 'raw'
+                ];                
             }
         }
         $dopAttributes[] = [

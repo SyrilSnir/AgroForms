@@ -29,7 +29,8 @@
         "kartik-v/yii2-mpdf": "^1.0",
         "2amigos/yii2-multi-select-widget": "^1.0",
         "lajax/yii2-language-picker": "^1.2",
-        "guzzlehttp/guzzle": "^6.3.0"
+        "guzzlehttp/guzzle": "^6.3.0",
+        "kotchuprik/yii2-sortable-widgets": "^2.1"
     },
     "autoload": {
         "psr-4": {

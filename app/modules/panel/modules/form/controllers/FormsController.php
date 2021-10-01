@@ -10,6 +10,7 @@ use app\models\SearchModels\Forms\FieldSearch;
 use app\models\SearchModels\Forms\FormSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
+use kotchuprik\sortable\actions\Sorting;
 use Yii;
 
 /**
@@ -25,6 +26,16 @@ class FormsController extends BaseAdminController
      * @var FormService
      */
     protected $service;
+
+    public function actions()
+    {
+        return [
+            'sorting' => [
+                'class' => Sorting::className(),
+                'query' => \app\models\ActiveRecord\Forms\Field::find(),
+            ],
+        ];
+    }
     
     public function __construct(
             $id, 

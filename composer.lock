@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fce53059ebe7ee6a59b03799900a03d0",
+    "content-hash": "5819c6221493eacce54f36aa2fd915ea",
     "packages": [
         {
             "name": "2amigos/yii2-multi-select-widget",
@@ -1600,6 +1600,58 @@
             "time": "2016-01-10T16:47:35+00:00"
         },
         {
+            "name": "kotchuprik/yii2-sortable-widgets",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kotchuprik/yii2-sortable-widgets.git",
+                "reference": "fc77dafe4a04997df0505d54bbaccc83bd0bb446"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kotchuprik/yii2-sortable-widgets/zipball/fc77dafe4a04997df0505d54bbaccc83bd0bb446",
+                "reference": "fc77dafe4a04997df0505d54bbaccc83bd0bb446",
+                "shasum": ""
+            },
+            "require": {
+                "npm-asset/sortablejs": "1.13.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kotchuprik\\sortable\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Constantine Chuprik",
+                    "email": "constantinchuprik@gmail.com"
+                }
+            ],
+            "description": "Implementation Rubaxa/Sortable for Yii2. Sortable grid view inside.",
+            "homepage": "http://github.com/kotchuprik/yii2-sortable-widgets",
+            "keywords": [
+                "dnd",
+                "grid",
+                "gridview",
+                "jQueryUI",
+                "rubaxa",
+                "sortable",
+                "sorting",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/kotchuprik/yii2-sortable-widgets/issues",
+                "source": "https://github.com/kotchuprik/yii2-sortable-widgets/tree/v2.1.0"
+            },
+            "time": "2021-01-18T20:35:33+00:00"
+        },
+        {
             "name": "la-haute-societe/yii2-save-relations-behavior",
             "version": "1.7.2",
             "source": {
@@ -2025,6 +2077,18 @@
                 "web"
             ],
             "time": "2021-01-19T16:20:07+00:00"
+        },
+        {
+            "name": "npm-asset/sortablejs",
+            "version": "1.13.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/sortablejs/-/sortablejs-1.13.0.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "paragonie/random_compat",
@@ -7515,5 +7579,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }

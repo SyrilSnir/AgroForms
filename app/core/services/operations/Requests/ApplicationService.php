@@ -56,8 +56,8 @@ class ApplicationService
         $request = Request::create(
                 $form->userId, 
                 $exhibitionId, 
-                $form->draft,
-                FormType::DYNAMIC_ORDER_FORM
+                FormType::DYNAMIC_ORDER_FORM,
+                $form->draft
                 );
         $this->requests->save($request);
         $dynamicForm = Application::create(

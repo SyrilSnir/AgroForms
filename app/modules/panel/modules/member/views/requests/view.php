@@ -1,12 +1,10 @@
 <?php
 
 use app\core\helpers\View\Request\RequestStatusHelper;
-use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\ActiveRecord\Requests\RequestDynamicForm;
-use app\models\ActiveRecord\Requests\RequestStand;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\DetailView;
 
@@ -31,7 +29,7 @@ if (!empty($dopAttributes)) {
 ?>
 <div class="view">
     <p>
-        <?= Html::a(t('Back'), yii\helpers\Url::previous(), ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(t('Back'), Url::previous(), ['class' => 'btn btn-secondary']) ?>
     </p>
     <div class="card">
         <div class="card-header">
