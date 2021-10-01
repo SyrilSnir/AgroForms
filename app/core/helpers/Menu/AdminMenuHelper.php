@@ -69,14 +69,15 @@ class AdminMenuHelper implements MenuHelperInterface
                     'items' => [
                         [
                             'label' => Yii::t('app/menu', 'Forms constructor'),
-                            'icon' => 'share',
-                            'items' => [
-                                ['label' => Yii::t('app/menu', 'List of forms'), 'icon' => 'tasks', 'url' => ['/panel/form/forms'],],
+                            'url' => ['/panel/forms'],
+                            'icon' => 'tasks',
+                      /*      'items' => [
+                                ['label' => Yii::t('app/menu', 'List of forms'), 'icon' => 'tasks', 'url' => ['/panel/forms'],],
                         //        ['label' => Yii::t('app/menu', 'Form types'), 'icon' => 'tasks', 'url' => ['/panel/form/form-types'],],
                                 ['label' => Yii::t('app/menu', 'Form fields'), 'icon' => 'tasks', 'url' => ['/panel/form/fields'],],
                         //       ['label' => Yii::t('app/menu', 'Field groups'), 'icon' => 'tasks', 'url' => ['/panel/form/field-groups'],],
                         //        ['label' => Yii::t('app/menu', 'Form elements'), 'icon' => 'tasks', 'url' => ['/panel/form/element-types'],],
-                            ]
+                            ]*/
                         ], 
                         [
                             'label' =>  Yii::t('app/menu', 'Standard stand'),

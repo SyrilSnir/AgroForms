@@ -28,9 +28,7 @@ class FormSearch extends Model
         $query = Form::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => [
-                'defaultOrder' => ['id' => SORT_ASC]
-            ]
+            'sort' => false
         ]);
 
         $this->load($params);
@@ -40,6 +38,7 @@ class FormSearch extends Model
         }
         $query->andFilterWhere(['like','name', $this->name]);
         $query->andFilterWhere(['like','title', $this->title]);
+        $query->orderBy('order');
         return $dataProvider;
     }
 }

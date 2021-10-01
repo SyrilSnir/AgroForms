@@ -25,19 +25,28 @@ trait GridViewTrait
      */
     private $searchModel;
     
+    /**
+     * 
+     * @var bool Показ постраничной навигации
+     */
+    private $showPagination = true;
+    
     public function actionIndex() 
     {
         Url::remember();
         $dataProvider = $this->searchModel->search(Yii::$app->request->queryParams);
-        $rowsCountForm = new RowsCountForm();        
-        if (!($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate())) {       
-            $rowsCountForm->rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
-        }   
-        $dataProvider->pagination = ['pageSize' => $rowsCountForm->rowsCount];
+        if ($this->showPagination) {
+            $rowsCountForm = new RowsCountForm();        
+            if (!($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate())) {       
+                $rowsCountForm->rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
+            }   
+            $dataProvider->pagination = ['pageSize' => $rowsCountForm->rowsCount];
+        }
         return $this->render('index',[            
             'searchModel' => $this->searchModel,
             'dataProvider' => $dataProvider,
-            'rowsCountForm' => $rowsCountForm
+            'rowsCountForm' => $rowsCountForm,
+            'pagination' => $this->showPagination
         ]);
     }    
     

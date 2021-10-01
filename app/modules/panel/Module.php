@@ -29,9 +29,6 @@ class Module extends BaseModule
             'lists' => [
                 'class' => NomenclatureModule::class,
             ],
-            'form' => [
-                'class' => FormModule::class,
-            ],
              'member' => [
                 'class' => MemberModule::class,
             ],  
