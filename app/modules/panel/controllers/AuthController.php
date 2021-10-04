@@ -6,7 +6,7 @@ use app\core\manage\Auth\UserIdentity;
 use app\core\services\Auth\AuthService;
 use app\models\Forms\User\Manage\LoginForm;
 use DomainException;
-use Exception;
+use yii\base\Exception;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -49,7 +49,7 @@ class AuthController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'denyCallback' => function ($rule, $action) {
-                   throw new Exception('Вы уже авторизованы в системе');
+                    throw new Exception('Вы уже авторизованы в системе');
                 },
                 'rules' => [
                     [

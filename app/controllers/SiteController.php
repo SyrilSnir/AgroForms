@@ -14,13 +14,12 @@ use yii\web\ErrorAction;
  */
 class SiteController extends Controller
 {
-    public function actions()
+    public function actionError()
     {
-        return [
-            'error' => [
-                'class' => ErrorAction::class,
-            ],
-        ];        
+        $exception = Yii::$app->errorHandler->exception;
+        if ($exception !== null) {
+            return $this->render('error', ['exception' => $exception,'message' => $exception->getMessage()]);
+        }
     }
     
     public function actionIndex()
