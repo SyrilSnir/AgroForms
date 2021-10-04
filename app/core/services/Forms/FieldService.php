@@ -101,7 +101,6 @@ class FieldService
      {
          /** @var Field $formField */
          $total = $basePrice;
-        
          foreach ($fields as $id => $field) {
              $isCheckbox = $field['checkbox'];
              if (!key_exists('computed', $field) || $field['computed'] == false) {
@@ -111,7 +110,11 @@ class FieldService
                  continue;
              }
              $formField = $this->fieldRepository->get($id);
-             $unitPrice = (int) $formField->fieldParams->unitPrice;
+            if (!$formField->fieldParams->unitPrice) {
+               $unitPrice = 1;
+            } else {
+                $unitPrice = (int) $formField->fieldParams->unitPrice;
+            }
              if ($field['equip'] != true) {
                 $val = $isCheckbox ? 1 : (int) $field['value'];
                 $total = $total + ($val * $unitPrice);

@@ -1,7 +1,8 @@
 <template>
 <div class="form-group">
+    <label class="control-label">{{ titleLabel }}</label>
     <select  @change="change" :name="id" :id="id" class="form-control" v-model="selected">
-        <option v-for="element in enums" :value="element.value">{{ element.name }}</option>
+        <option v-for="element in enums" :value="element.value">{{ getName(element.name, element.name_eng) }}</option>
     </select>
 </div>
 
@@ -10,8 +11,12 @@
 import { unitMixin } from './Mixins/unitMixin';
 import { selectMixin } from './Mixins/selectMixin';
 import { computedMixin } from './Mixins/computedMixin';  
+import { labelMixin } from './Mixins/labelMixin'
+import { textTranslateMixin } from './Mixins/textTranslateMixin';
 export default {
-    
+        props: [
+            'lang'
+        ],     
        data() {
            return {
                 id: 'id' + this.params.id,
@@ -53,7 +58,9 @@ export default {
        mixins: [
            unitMixin,
            selectMixin,
-           computedMixin
+           computedMixin,
+           labelMixin,
+           textTranslateMixin           
        ],    
 }
 </script>
