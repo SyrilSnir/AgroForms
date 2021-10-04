@@ -73,7 +73,7 @@ class FieldForm extends MultiForm
             [['formId', 'elementTypeId', 'fieldGroupId', 'order'], 'integer'],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'string', 'max' => 255],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'default','value' => ''],
-            [['order'], 'default','value' => 0],
+            [['order','fieldGroupId'], 'default','value' => 0],
         ];
     }
 
@@ -98,7 +98,13 @@ class FieldForm extends MultiForm
  
     public function elementTypesList():array
     {
-        return ArrayHelper::map(ElementType::find()->orderBy('id')->asArray()->all(),'id','name');       
+        $notAvailable =[
+            ElementType::ELEMENT_DATE,
+            ElementType::ELEMENT_DATE_MULTIPLE,
+            ElementType::ELEMENT_INFORMATION_IMPORTANT,
+            ElementType::ELEMENT_GROUP
+        ];
+        return ArrayHelper::map(ElementType::find()->where(['NOT IN', 'id',$notAvailable])->orderBy('id')->asArray()->all(),'id','name');       
     }
 
     protected function internalForms(): array

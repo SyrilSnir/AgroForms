@@ -20,6 +20,7 @@ use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
 use kotchuprik\sortable\actions\Sorting;
 use Yii;
+use yii\helpers\Url;
 
 /**
  * Description of FormsConrtroller
@@ -66,6 +67,7 @@ class FormsController extends BaseAdminController
 
     public function actionView($id)
     {
+        Url::remember();
         $formFieldsSearchModel = new FieldSearch();
         $formFieldsDataProvider = $formFieldsSearchModel->searchForForm($id , Yii::$app->request->queryParams);
         return $this->render('view', [

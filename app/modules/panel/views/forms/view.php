@@ -44,7 +44,7 @@ $this->title = $model->name;
                     'name:text:' . Yii::t('app', 'Name'),
                     'description:raw:' . Yii::t('app', 'Description'),
                     'formType.name:text:' . Yii::t('app/requests', 'Form type'),
-                    'order:text:' . Yii::t('app', 'Serial number'),
+                //    'order:text:' . Yii::t('app', 'Serial number'),
                     'valute.name:text:' . Yii::t('app', 'Valute'),
                     
                 ],

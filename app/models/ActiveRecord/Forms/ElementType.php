@@ -31,6 +31,8 @@ class ElementType extends ActiveRecord
     const ELEMET_ADDITIONAL_EQUIPMENT = 15;
     const ELEMENT_GROUP = 16;
     
+    const DEFAULT_ELEMENT_TYPE = self::ELEMENT_CHECKBOX;
+    
     const HAS_ENUM_ATTRIBUTES = [
         self::ELEMENT_SELECT,
         self::ELEMENT_SELECT_MULTIPLE,
