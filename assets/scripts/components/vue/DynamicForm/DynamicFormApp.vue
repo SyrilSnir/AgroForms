@@ -137,7 +137,8 @@ export default {
               valid : field.valid,
               computed : computed,
               total : total,
-              checkbox: field.hasOwnProperty('checkbox') ? true : false
+              checkbox: field.hasOwnProperty('checkbox') ? true : false,
+              equip: field.hasOwnProperty('equip') ? true : false
               };
           if (this.isComputed) {
               this.calculatePrice(this.fields);

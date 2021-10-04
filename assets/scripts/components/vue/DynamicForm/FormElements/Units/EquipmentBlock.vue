@@ -115,6 +115,7 @@ export default {
             };
             if (this.isComputed) {
                 data.computed = true;
+                data.equip = true;
                 data.total = this.total;
             }            
             return data;

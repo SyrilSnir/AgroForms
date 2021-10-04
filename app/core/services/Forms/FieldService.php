@@ -86,6 +86,7 @@ class FieldService
                             'value' => $field['data']['value']
                         ];
              $element['checkbox'] = $field['checkbox'];
+             $element['equip'] = $field['equip'];
              if (key_exists('checked', $field['data'])) {
                  $element['checked'] = $field['data']['checked'];
 
@@ -111,8 +112,14 @@ class FieldService
              }
              $formField = $this->fieldRepository->get($id);
              $unitPrice = (int) $formField->fieldParams->unitPrice;
-             $val = $isCheckbox ? 1 : (int) $field['value'];
-            $total = $total + ($val * $unitPrice);
+             if ($field['equip'] != true) {
+                $val = $isCheckbox ? 1 : (int) $field['value'];
+                $total = $total + ($val * $unitPrice);
+             } else {
+                 foreach ($field['value'] as $element) {
+                     $total = $total + ($element['price'] * $element['count']);
+                 }                 
+             }
          }         
          return $total;
      }
