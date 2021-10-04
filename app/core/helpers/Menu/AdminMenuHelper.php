@@ -83,8 +83,8 @@ class AdminMenuHelper implements MenuHelperInterface
                             'label' =>  Yii::t('app/menu', 'Standard stand'),
                             'icon' => 'share',
                             'items' => [
-                                ['label' => Yii::t('app/menu', 'Stand management'), 'icon' => 'tasks', 'url' => ['/panel/form/stands'],],
-                                ['label' => Yii::t('app/menu', 'Stand settings'), 'icon' => 'cogs', 'url' => ['/panel/form/stands/settings'],],
+                                ['label' => Yii::t('app/menu', 'Stand management'), 'icon' => 'tasks', 'url' => ['/panel/stands'],],
+                                ['label' => Yii::t('app/menu', 'Stand settings'), 'icon' => 'cogs', 'url' => ['/panel/stands/settings'],],
                             ]
                         ],                        
                         [ 'label' => Yii::t('app/menu', 'Mail server'), 'icon' => 'envelope-o', 'url' => ['/panel/config/mail-settings'],],

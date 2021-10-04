@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\panel\modules\form\controllers;
+namespace app\modules\panel\controllers;
 
 use app\core\helpers\Data\ConfigurationHelper;
 use app\core\repositories\readModels\Forms\StandReadRepository;

@@ -37,7 +37,7 @@ class Module extends BaseModule
             ],
             'manager' => [
                    'class' => ManagerModule::class,
-            ],                      
+            ],                                  
         ];
     }    
 }
