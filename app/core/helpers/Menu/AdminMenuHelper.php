@@ -22,11 +22,11 @@ class AdminMenuHelper implements MenuHelperInterface
                     'icon' => 'cog',
                     'items' => [
                         [
-                            'label' => Yii::t('app/menu', 'Users and roles'),
+                            'label' => Yii::t('app/menu', 'Users and companies'),
                             'icon' => 'user-circle',                             
                             'items' => [
                                 ['label' => Yii::t('app/menu', 'Users'), 'icon' => 'user', 'url' => ['/panel/users'],],
-                                ['label' => Yii::t('app/menu', 'Roles'), 'icon' => 'universal-access', 'url' => ['/panel/roles'],],
+                          /*      ['label' => Yii::t('app/menu', 'Roles'), 'icon' => 'universal-access', 'url' => ['/panel/roles'],],*/
                                 ['label' => Yii::t('app/menu', 'Companies'), 'icon' => 'university ', 'url' => ['/panel/companies'],],
 
                             ]
