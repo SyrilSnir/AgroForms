@@ -113,6 +113,7 @@ return [
     '{stand, plural, =1{ordered stand} other{ordered stands}}' => '{stand, plural, one{заказанный стенд} few{заказанных стенда} other{заказанных стендов}}',
     'The passwords entered do not match' => 'Введенные пароли не совпадают',
     'The user with the specified data is already registered' => 'Пользователь с указанными данными уже зарегистрирован',
+    'An exhibitor for the specified company already exists' => 'Участник выставки для указанной компании уже существует'
 
 ];
 

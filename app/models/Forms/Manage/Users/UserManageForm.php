@@ -60,12 +60,14 @@ class UserManageForm extends ActiveRecord
             [['position','login'],'string'],
             [['position'],'default' ,'value' => ''],
             [['userType','company', 'gender','language'],'integer'],
+            [['company'], 'validateMemberUnique'],
             [['phone','fio'], 'string', 'max' => 255],
             [['birthday'], 'safe'],  
             [
                 ['login'],
                 'unique',
                 'targetClass'=> User::class,
+                'filter' => ['deleted' => false],
                 'message' => t('The user with the specified data is already registered')
             ],            
         ];
@@ -85,6 +87,17 @@ class UserManageForm extends ActiveRecord
                         Company::find()->orderBy('name')->asArray()->all(), 
                         'id', 
                         'name');        
+    }
+    
+    public function validateMemberUnique($attribute, $params)
+    {
+        if ($this->userType != UserType::MEMBER_USER_ID) {
+            return;
+        }
+        $member = User::findOne(['company_id' => $this->company, 'user_type_id' => UserType::MEMBER_USER_ID, 'deleted' => false]);
+        if ($member) {
+            $this->addError($attribute, t('An exhibitor for the specified company already exists'));
+        }
     }
     
     public function attributeLabels(): array
