@@ -2,6 +2,7 @@
 
 use app\models\Forms\Manage\Exhibition\ExhibitionForm;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -23,6 +24,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput() ?>
     <?= $form->field($model, 'titleEng')->textInput() ?>
+    <?= $form->field($model, 'companyId')->widget(Select2::class,[
+        'data' => $model->companiesList()
+            ]) ?>   
+    <?= $form->field($model, 'status')->dropDownList(\app\core\helpers\View\Exhibition\ExhibitionStatusHelper::statusList()) ?>                              
+    <?= $form->field($model, 'address')->textInput() ?>                            
     <?= $form->field($model, 'description')->textInput() ?>
     <?= $form->field($model, 'descriptionEng')->textInput() ?>
     <?= $form->field($model, 'startDate')->widget(DatePicker::class, [
@@ -45,7 +51,46 @@ use yii\widgets\ActiveForm;
                'format' => 'dd.mm.yyyy'
            ]
        ]);?>
-                            
+    <?= $form->field($model, 'startAssembling')->widget(DatePicker::class, [
+           'options' => ['placeholder' => ''],
+            'value' => $model->startAssembling,
+            'removeButton' => false,
+            'pickerIcon' => false,
+           'pluginOptions' => [
+               'autoclose'=>true,
+               'format' => 'dd.mm.yyyy'
+           ]
+       ]);?>
+    <?= $form->field($model, 'endAssembling')->widget(DatePicker::class, [
+           'options' => ['placeholder' => ''],
+            'value' => $model->endAssembling,
+            'removeButton' => false,
+            'pickerIcon' => false,
+           'pluginOptions' => [
+               'autoclose'=>true,
+               'format' => 'dd.mm.yyyy'
+           ]
+       ]);?>
+    <?= $form->field($model, 'startDisassembling')->widget(DatePicker::class, [
+           'options' => ['placeholder' => ''],
+            'value' => $model->startDisassembling,
+            'removeButton' => false,
+            'pickerIcon' => false,
+           'pluginOptions' => [
+               'autoclose'=>true,
+               'format' => 'dd.mm.yyyy'
+           ]
+       ]);?>
+    <?= $form->field($model, 'endDisassembling')->widget(DatePicker::class, [
+           'options' => ['placeholder' => ''],
+            'value' => $model->endDisassembling,
+            'removeButton' => false,
+            'pickerIcon' => false,
+           'pluginOptions' => [
+               'autoclose'=>true,
+               'format' => 'dd.mm.yyyy'
+           ]
+       ]);?>                            
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>

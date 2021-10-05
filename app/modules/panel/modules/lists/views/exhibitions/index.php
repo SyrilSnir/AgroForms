@@ -1,6 +1,7 @@
 <?php
 
 use app\core\helpers\Utils\DateHelper;
+use app\core\helpers\View\Exhibition\ExhibitionStatusHelper;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\SearchModels\Exhibition\ExhibitionSearch;
 use kartik\grid\GridView;
@@ -31,9 +32,7 @@ $columnsConfig = [
                     'filterModel' => $searchModel,    
                     'columns' => [                    
                         'title:text:' . Yii::t('app','Name'),
-                        'title_eng:text:'. Yii::t('app','Name') .' (ENG)',
                         'description:text:' . Yii::t('app','Description'),
-                        'description_eng:text:'. Yii::t('app','Description'). ' (ENG)',
                         [
                             'label' => Yii::t('app','Start date'),
                             'attribute' => 'start_date',
@@ -51,6 +50,15 @@ $columnsConfig = [
                                 return DateHelper::timestampToDate($model->end_date);
                             }
                             
+                        ],
+                        [
+                            'attribute' => 'status',
+                            'label' => Yii::t('app','Status'),
+                            'format' => 'raw',
+                            'filter' => ExhibitionStatusHelper::statusList(false),
+                            'value' => function (Exhibition $model) {
+                                return ExhibitionStatusHelper::getStatusLabel($model->status);
+                            }
                         ],                                
                         ['class' => ActionColumn::class],
                     ],    

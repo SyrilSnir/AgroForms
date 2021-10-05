@@ -5,7 +5,6 @@ namespace app\core\services\operations\Exhibition;
 use app\core\repositories\manage\Exhibition\ExhibitionRepository;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\Forms\Manage\Exhibition\ExhibitionForm;
-use DateTime;
 use yii\caching\Cache;
 
 /**
@@ -36,14 +35,7 @@ class ExhibitionService
 
     public function create(ExhibitionForm $form) 
     {
-        $exhibition = Exhibition::create(
-                $form->title, 
-                $form->titleEng,
-                $form->description,
-                $form->descriptionEng,
-                DateTime::createFromFormat('d.m.Y', $form->startDate)->getTimestamp(),
-                DateTime::createFromFormat('d.m.Y', $form->endDate)->getTimestamp(),
-                );
+        $exhibition = Exhibition::create($form);
         $this->exhibitions->save($exhibition);
         return $exhibition;
     }
@@ -52,14 +44,7 @@ class ExhibitionService
     {
         /** @var Exhibition $exhibition */
         $exhibition = $this->exhibitions->get($id);
-        $exhibition->edit(
-                $form->title, 
-                $form->titleEng,
-                $form->description,
-                $form->descriptionEng,
-                DateTime::createFromFormat('d.m.Y', $form->startDate)->getTimestamp(),
-                DateTime::createFromFormat('d.m.Y', $form->endDate)->getTimestamp(),
-                );
+        $exhibition->edit($form);
         $this->exhibitions->save($exhibition);
     } 
     

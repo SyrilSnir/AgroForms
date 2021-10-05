@@ -3,8 +3,8 @@
 namespace app\models\Forms\Manage\Exhibition;
 
 use app\core\helpers\Utils\DateHelper;
+use app\core\traits\Lists\GetCompanyNamesTrait;
 use app\models\ActiveRecord\Exhibition\Exhibition;
-use DateTime;
 use Yii;
 use yii\base\Model;
 
@@ -21,12 +21,19 @@ class ExhibitionForm extends Model
     public $descriptionEng;
     public $startDate;
     public $endDate;
+    public $status;
+    public $startAssembling;
+    public $endAssembling;
+    public $startDisassembling;
+    public $endDisassembling;
+    public $companyId;
+    public $address;
+    
+    use GetCompanyNamesTrait;
     
     public function __construct(Exhibition $model = null, $config = array())
-    {        
+    {              
         parent::__construct($config);
-        $dtStart = new DateTime();
-        $dtEnd = new DateTime();
         if ($model) {           
             $this->title = $model->title;
             $this->titleEng = $model->title_eng;
@@ -34,6 +41,12 @@ class ExhibitionForm extends Model
             $this->descriptionEng = $model->description_eng;
             $this->startDate = DateHelper::timestampToDate($model->start_date);
             $this->endDate = DateHelper::timestampToDate($model->end_date);
+            $this->startAssembling = DateHelper::timestampToDate($model->assembling_start);
+            $this->endAssembling = DateHelper::timestampToDate($model->assembling_end);
+            $this->startDisassembling = DateHelper::timestampToDate($model->disassembling_start);
+            $this->endDisassembling = DateHelper::timestampToDate($model->disassembling_end);
+            $this->companyId = $model->company_id;
+            $this->address = $model->address;
         }
     }
     
@@ -43,9 +56,9 @@ class ExhibitionForm extends Model
     public function rules()
     {
         return [
-            [['title', 'startDate', 'endDate'], 'required'],
-            [['startDate', 'endDate'], 'date'],
-            [['title', 'titleEng', 'description', 'descriptionEng'], 'string', 'max' => 255],
+            [['title', 'startDate', 'endDate','status'], 'required'],
+            [['startDate', 'endDate','startAssembling','endAssembling','startDisassembling','endDisassembling'], 'date'],
+            [['title', 'titleEng', 'description', 'descriptionEng','address'], 'string', 'max' => 255],
             [['titleEng', 'description', 'descriptionEng'], 'default', 'value' => ''],
         ];
     }  
@@ -64,6 +77,13 @@ class ExhibitionForm extends Model
             'startDate' => Yii::t('app','Start date'),
             'endDate' => Yii::t('app','End date'),
             'status' => Yii::t('app','Status'),
-        ];
+            'startAssembling' => Yii::t('app','Start date of assembling'),
+            'endAssembling' => Yii::t('app','End date of assembling'),
+            'startDisassembling' => Yii::t('app','Start date of disassembling'),
+            'endDisassembling' => Yii::t('app','End date of disassembling'),
+            'address' => Yii::t('app','Location'),
+            'companyId' => t('Organizer', 'exhibitions'),
+            'status' => Yii::t('app','Status')
+        ];        
     }    
 }

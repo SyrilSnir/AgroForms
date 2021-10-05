@@ -14,15 +14,14 @@ use yii\data\ActiveDataProvider;
 class ExhibitionSearch extends Model
 {
     public $title;
-    public $title_eng;
+    public $status;
     public $description;
-    public $description_eng;
     
     
     public function rules(): array
     {
         return [
-            [['title','title_eng','description','description_eng'], 'safe'],
+            [['title','description','status'], 'safe'],
         ];
     }
     public function search(array $params): ActiveDataProvider
@@ -41,9 +40,9 @@ class ExhibitionSearch extends Model
             return $dataProvider;
         }
         $query->andFilterWhere(['like','title', $this->title]);
-        $query->andFilterWhere(['like','title_eng', $this->title_eng]);
+        $query->andFilterWhere(['status' => $this->status]);
         $query->andFilterWhere(['like','description', $this->description]);
-        $query->andFilterWhere(['like','description_eng', $this->description_eng]);
+
         return $dataProvider;
     }
 }

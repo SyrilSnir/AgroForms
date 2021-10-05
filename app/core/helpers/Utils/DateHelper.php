@@ -9,8 +9,11 @@ namespace app\core\helpers\Utils;
  */
 class DateHelper
 {
-    public static function timestampToDate(int $timestamp,string $format = 'd.m.Y'):string
+    public static function timestampToDate(int $timestamp = null,string $format = 'd.m.Y'):string
     {
+        if (!$timestamp) {
+            return '';
+        }
         $dt = new \DateTime();
         return $dt->setTimestamp($timestamp)->format($format);
     }

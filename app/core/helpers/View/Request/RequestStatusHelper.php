@@ -4,7 +4,6 @@ namespace app\core\helpers\View\Request;
 
 use app\core\helpers\View\StatusHelper;
 use app\models\ActiveRecord\Requests\BaseRequest;
-use app\models\ActiveRecord\Requests\Request;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
