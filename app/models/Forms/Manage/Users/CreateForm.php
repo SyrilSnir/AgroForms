@@ -21,14 +21,8 @@ class CreateForm extends UserManageForm
     public function rules()
     {
         $rules = [
-             [['login','email','password'],'required'],
-            ['passwordRepeat', 'compare', 'compareAttribute'=>'password','message' => 'Введенные пароли не совпадают'],
-            [
-                ['login'],
-                'unique',
-                'targetClass'=> User::class,
-                'message' => 'Пользователь с указанными данными уже зарегистрирован'
-            ],             
+            [['password'],'required'],
+            ['passwordRepeat', 'compare', 'compareAttribute'=>'password','message' => t('The passwords entered do not match')],            
         ];
         
         return ArrayHelper::merge(parent::rules(), $rules);

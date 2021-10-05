@@ -61,7 +61,13 @@ class UserManageForm extends ActiveRecord
             [['position'],'default' ,'value' => ''],
             [['userType','company', 'gender','language'],'integer'],
             [['phone','fio'], 'string', 'max' => 255],
-            [['birthday'], 'safe'],
+            [['birthday'], 'safe'],  
+            [
+                ['login'],
+                'unique',
+                'targetClass'=> User::class,
+                'message' => t('The user with the specified data is already registered')
+            ],            
         ];
     }
     
