@@ -17,11 +17,13 @@ class CompanySearch extends Model implements SearchInterface
     public $name; 
     
     public $full_name;    
+    
+    public $blocked;
 
     public function rules(): array
     {
         return [
-            [['name', 'full_name'], 'safe'],
+            [['name', 'full_name','blocked'], 'safe'],
         ];
     }
     public function search(array $params): ActiveDataProvider
@@ -41,6 +43,7 @@ class CompanySearch extends Model implements SearchInterface
         }
         $query->andFilterWhere(['like','name', $this->name]);
         $query->andFilterWhere(['like','full_name', $this->full_name]);
+        $query->andFilterWhere(['blocked' => $this->blocked]);
         return $dataProvider;
     }
 }

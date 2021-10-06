@@ -23,7 +23,8 @@ use yii\db\ActiveRecord;
  * @property int $legal_address_id Юридический адрес
  * @property string|null $image_path Путь к файлу с изображением
  * @property string|null $image_url Url файла с изображением
- * @property int $deleted
+ * @property bool $deleted
+ * @property bool $blocked
  *
  * @property BankDetail $bankDetails
  * @property Contact $contacts
@@ -175,4 +176,22 @@ class Company extends ActiveRecord
     {
         return $this->hasOne(PostalAddress::className(), ['id' => 'postal_address_id']);
     }
+    
+    public function isBlocked(): bool 
+    {
+        return $this->blocked;
+    }
+       
+    
+    public function block() :self
+    {
+        $this->blocked = true;  
+        return $this;
+    }
+    
+    public function unblock() :self
+    {
+        $this->blocked = false;
+        return $this;
+    }    
 }
