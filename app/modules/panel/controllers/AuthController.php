@@ -49,7 +49,7 @@ class AuthController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'denyCallback' => function ($rule, $action) {
-                    throw new Exception('Вы уже авторизованы в системе');
+                    throw new Exception(t('You are already logged into the system','exception'));
                 },
                 'rules' => [
                     [

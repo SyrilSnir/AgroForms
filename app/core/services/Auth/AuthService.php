@@ -30,8 +30,11 @@ class AuthService extends Model
     {
         $user = $this->userReadRepository->findByLogin($loginForm->login);
         if (!$user || !$user->validatePassword($loginForm->password)) {
-            throw new DomainException('Неверное имя пользователя или пароль');
-        }        
+            throw new DomainException(t('The username or password you entered is incorrect','exception'));
+        }
+        if ($user->company->isBlocked()) {
+            throw new DomainException(t('Your company has been disconnected from the system','exception'));            
+        }
         return $user;
     }
 }

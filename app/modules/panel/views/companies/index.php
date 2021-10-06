@@ -1,9 +1,10 @@
 <?php
 
+use app\models\ActiveRecord\Companies\Company;
 use app\models\SearchModels\Companies\CompanySearch;
+use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
-use kartik\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -31,7 +32,20 @@ $columnsConfig = [
                         'name:text:'. Yii::t('app/company', 'Name'),
                         'full_name:text:'. Yii::t('app/company', 'Full name'),
                         [
-                            'class' => ActionColumn::class,
+                            'attribute' => 'blocked',
+                            'label' => Yii::t('app','Status'),
+                            'format' => 'raw',
+                            'filter' => [
+                                0 => t('Active','company'),
+                                1 => t('Blocked','company')
+                            ],
+                            'value' =>
+                                function (Company $model) {
+                                    return $model->isBlocked() ? t('Blocked','company') : t('Active','company');
+                                }
+                        ],                        
+                        [
+                            'class' => ActionColumn::class,                            
                             'width' => '100px',
                             'visibleButtons' => [
                                 'delete' => Yii::$app->user->can('adminMenu')

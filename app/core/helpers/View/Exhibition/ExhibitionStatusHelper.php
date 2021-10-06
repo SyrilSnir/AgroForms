@@ -26,6 +26,7 @@ class ExhibitionStatusHelper extends StatusHelper
             Exhibition::STATUS_ACTIVE => t('Active','exhibitions'),
             Exhibition::STATUS_COMPLETED => t('Completed','exhibitions'),
             Exhibition::STATUS_DECLINED => t('Declined','exhibitions'),
+            Exhibition::STATUS_PROJECT => t('Project','exhibitions')
         ];
         return $statusList;
     }

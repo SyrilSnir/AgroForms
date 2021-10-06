@@ -17,6 +17,11 @@ $this->title = Yii::t('app/title','Company info') . ': ' . $model->name;
     <p>
         <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app/user','Create new member'), ['add-member', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php if (!$model->isBlocked()):?>
+        <?= Html::a(Yii::t('app/company','Block company'), ['block', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?php else: ?>
+        <?= Html::a(Yii::t('app/company','Unblock company'), ['unblock', 'id' => $model->id], ['class' => 'btn btn-default']) ?>        
+        <?php endif; ?>
         <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
