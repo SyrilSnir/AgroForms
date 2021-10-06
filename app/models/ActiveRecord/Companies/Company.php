@@ -2,6 +2,8 @@
 
 namespace app\models\ActiveRecord\Companies;
 
+use app\models\ActiveRecord\Users\User;
+use app\models\ActiveRecord\Users\UserType;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -26,6 +28,8 @@ use yii\db\ActiveRecord;
  * @property bool $deleted
  * @property bool $blocked
  *
+ * @property User $member
+ * 
  * @property BankDetail $bankDetails
  * @property Contact $contacts
  * @property LegalAddress $legalAddress
@@ -193,5 +197,19 @@ class Company extends ActiveRecord
     {
         $this->blocked = false;
         return $this;
-    }    
+    }
+    
+    /**
+     * Возвращает пользователя, являющегося участником выставки для данной компании
+     * 
+     * @return User|null
+     */
+    public function getMember(): ?User
+    {
+       return User::findOne([
+           'deleted' => false, 
+           'user_type_id' => UserType::MEMBER_USER_ID,
+           'company_id' => $this->id
+        ]); 
+    }
 }
