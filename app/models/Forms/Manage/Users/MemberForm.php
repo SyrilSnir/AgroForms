@@ -3,8 +3,6 @@
 namespace app\models\Forms\Manage\Users;
 
 use app\models\ActiveRecord\Users\User;
-use app\models\ActiveRecord\Users\UserType;
-use app\models\Forms\Manage\Users\Profiles\MemberProfileForm;
 use yii\helpers\ArrayHelper;
 
 
@@ -28,15 +26,23 @@ class MemberForm extends UserManageForm
 
     public function rules()
     {
+        $userId = $this->userId;
         $rules = [
             [['login','email'],'required'],
-            [
-                ['login'],
-                'unique',
+            ['login','unique',
                 'targetClass'=> User::class,
-                'filter' => ['<>', 'id', $this->userId],
-                'message' => 'Пользователь с указанными данными уже зарегистрирован'
-            ],             
+                'filter' => function(\yii\db\Query $query) use ($userId) {
+                    $query->andFilterWhere(['<>', 'id', $userId]);
+                },
+                'message' => t('The user with the specified data is already registered')
+            ],
+            ['email','unique',
+                'targetClass'=> User::class,
+                'filter' => function(\yii\db\Query $query) use ($userId) {
+                    $query->andFilterWhere(['<>', 'id', $userId]);
+                },
+                'message' => t('The user with the specified data is already registered')
+            ],            
         ];     
         return ArrayHelper::merge(parent::rules(), $rules);
     }    

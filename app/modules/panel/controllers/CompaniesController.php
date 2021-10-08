@@ -4,6 +4,7 @@ namespace app\modules\panel\controllers;
 
 use app\core\repositories\readModels\Companies\CompanyReadRepository;
 use app\core\services\operations\Companies\CompanyService;
+use app\core\services\operations\Users\UserService;
 use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\Forms\Manage\Companies\CompanyForm;
@@ -26,7 +27,13 @@ class CompaniesController extends ManageController
      *
      * @var CompanyService
      */
-    protected $service;    
+    protected $service;  
+    
+    /**
+     *
+     * @var UserService
+     */
+    protected $userService;    
     
     public function __construct(
             $id, 
@@ -34,12 +41,14 @@ class CompaniesController extends ManageController
             CompanyReadRepository $repository,
             CompanyService $service,
             CompanySearch $searchModel,
+            UserService $userService,
             $config = array()
             )
     {
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
+        $this->userService = $userService;
         $this->searchModel = $searchModel;
     }      
     
@@ -82,6 +91,14 @@ class CompaniesController extends ManageController
         /** @var Company $model */
         $model = $this->findModel($id);
         $form = new MemberForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $user = $this->userService->createUser($form);
+                return $this->redirect(['/panel/users/view', 'id' => $user->id]);
+            } catch (DomainException $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }        
         $form->company = $model->id;
         $form->fio = $model->contacts->manager_fio;
         $form->login = $model->contacts->manager_email;
@@ -89,6 +106,7 @@ class CompaniesController extends ManageController
         $form->phone = $model->contacts->manager_phone;
     //    $form->member->proposalSignatureName = $model->contacts->chief_fio;
     //    $form->member->proposalSignaturePost = $model->contacts->chief_email;
+       
         return $this->render('../users/create-member', [
             'model' => $form,
         ]);   

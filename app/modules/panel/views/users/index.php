@@ -29,6 +29,11 @@ $action = Yii::$app->getRequest()->getPathInfo();
                     'toolbar' => [
                         [
                             'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-redo"></i>', [''], [
+                                    'class' => 'btn btn-outline-secondary',
+                                    'title'=>t('Reset Grid'),
+                                    'data-pjax' => 1, 
+                                ]),                             
                                 Html::a('<i class="fas fa-plus"></i>',['create-user'], [
                                     'class' => 'btn btn-sm btn-success',
                                     'title' => Yii::t('app/user', 'Add user'),
