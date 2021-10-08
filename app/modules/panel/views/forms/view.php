@@ -44,6 +44,7 @@ $this->title = $model->name;
                     'title:text:' . Yii::t('app', 'Title'),
                     'name:text:' . Yii::t('app', 'Name'),
                     'description:raw:' . Yii::t('app', 'Description'),
+                    'slug:text:' . Yii::t('app','Character code'),
                     'formType.name:text:' . Yii::t('app/requests', 'Form type'),
                     [
                         'attribute' => 'has_file',
