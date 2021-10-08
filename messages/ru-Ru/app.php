@@ -118,7 +118,8 @@ return [
     'End date of assembling' => 'Дата окончания монтажа',
     'Start date of disassembling' => 'Дата начала демонтажа',
     'End date of disassembling' => 'Дата окончания демонтажа',
-    'Location' => 'Место проведения'
+    'Location' => 'Место проведения',
+    'Default sort' => 'Сортировка по умолчанию'
 
 ];
 

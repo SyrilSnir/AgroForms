@@ -20,8 +20,13 @@ $columnsConfig = [
                     'toolbar' => [
                         [
                             'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-redo"></i>', [''], [
+                                    'class' => 'btn btn-outline-secondary',
+                                    'title'=>t('Default sort'),
+                                    'data-pjax'=> '', 
+                                ]) .                            
                                 Html::a('<i class="fas fa-plus"></i>',['create'], [
-                                    'class' => 'btn btn-sm btn-success',
+                                    'class' => 'btn btn-success',
                                     'title' => Yii::t('app/company', 'Add company'),
                                 ])                            
                         ],
