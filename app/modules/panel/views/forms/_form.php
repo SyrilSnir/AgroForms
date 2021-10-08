@@ -1,11 +1,17 @@
 <?php
 
+use app\core\helpers\View\Form\FormStatusHelper;
+use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\Forms\Manage\Forms\FormsForm;
 use dosamigos\multiselect\MultiSelectListBox;
+use kartik\grid\ActionColumn;
+use kartik\grid\GridView;
 use kartik\switchinput\SwitchInput;
+use kotchuprik\sortable\grid\Column;
 use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
@@ -56,7 +62,7 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
 <div id="price-block"<?php if (!($model->formType == $dynamicFormId)):?> class="hide"<?php endif; ?>>
     <?= $form->field($model, 'basePrice')->textInput() ?>                            
 </div>                            
-<?= $form->field($model, 'order')->textInput() ?>
+<?= $form->field($model, 'status')->dropDownList(FormStatusHelper::statusList()) ?>
 
 <?= $form->field($model, 'hasFile')->widget(SwitchInput::class,[
                 'pluginOptions' => [
@@ -87,5 +93,74 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
                 </div>
             </div>
         </div>
+
+<?php if (in_array($model->formType, FormType::HAS_DYNAMIC_FIELDS)): ?>
+<?php 
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'header' => 'rrrgrg',
+                            'content'=> //$rowsCountTemplate .
+                                Html::a('<i class="fas fa-plus"></i>',['fields/create', 'formId' => $model->id], [
+                                    'class' => 'btn btn-sm btn-success',
+                                ])                            
+                        ],
+                    ],
+                    'panel' => [
+                        'type' => GridView::TYPE_DEFAULT,
+                        'heading' => Yii::t('app','List of fields')
+                    ],
+                    'dataProvider' => $formFieldsDataProvider,
+                    'filterModel' => $formFieldsModel,
+                    'rowOptions' => function ($model, $key, $index, $grid) {
+                        return ['data-sortable-id' => $model->id];
+                    },    
+                    'columns' => [  
+                        [
+                            'class' => Column::className(),
+                        ],                        
+                        'name:text:' . Yii::t('app','Name'),
+                        /**[
+                            'label' => Yii::t('app','Group'),
+                            'filter' => $formFieldsModel->fieldGroupList(),
+                            'attribute' => 'fieldGroupId',
+                            'value' => function (Field $model) {
+                                return $model->fieldGroup ? $model->fieldGroup->name:
+                                        Yii::t('app','Undefined');
+                            }
+                        ],*/
+                        'description:text:' . Yii::t('app','Description'),
+                        
+                        [
+                            'label' => Yii::t('app','Element type'),
+                            'attribute' => 'elementTypeId',
+                            'filter' => $formFieldsModel->elementTypesList(),
+                            'value' => function (Field $model) {
+                                    return $model->elementType->name;
+                                }
+                            ],
+                        [
+                            'class' => ActionColumn::class,
+                           // 'header' => 'Действия',
+                            'controller' => 'fields'                       
+                        ],
+                    ],  
+                    'options' => [
+                        'data' => [
+                            'sortable-widget' => 1,
+                            'sortable-url' => Url::toRoute(['fields-sorting']),
+                        ]
+                    ],                                      
+    ];
+$gridConfig = []; //require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';    
+$fullGridConfig = array_merge($gridConfig, $columnsConfig);
+?>
+    <div class="card">
+        <div class="card-body">
+            <?= GridView::widget($fullGridConfig); ?>
+        </div>
+    </div>  
+<?php endif; ?>        
+        
     </div>
 </section>

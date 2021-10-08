@@ -68,13 +68,8 @@ class FormsController extends BaseAdminController
     public function actionView($id)
     {
         Url::remember();
-        $formFieldsSearchModel = new FieldSearch();
-        $formFieldsDataProvider = $formFieldsSearchModel->searchForForm($id , Yii::$app->request->queryParams);
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'formFieldsDataProvider' => $formFieldsDataProvider,
-            'formFieldsModel' => $formFieldsSearchModel,
-            
+            'model' => $this->findModel($id),            
         ]);
     }
     
@@ -96,14 +91,19 @@ class FormsController extends BaseAdminController
 
     public function actionUpdate($id)
     {
+        Url::remember();
+        $formFieldsSearchModel = new FieldSearch();        
+        $formFieldsDataProvider = $formFieldsSearchModel->searchForForm($id , Yii::$app->request->queryParams); 
         $model = $this->findModel($id);
-        $form = new FormsForm($model);
+        $form = new FormsForm($model);        
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $this->service->edit($id, $form);
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update', [
             'model' => $form,
+            'formFieldsDataProvider' => $formFieldsDataProvider,
+            'formFieldsModel' => $formFieldsSearchModel,            
         ]);                        
     }  
 }

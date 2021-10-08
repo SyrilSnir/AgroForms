@@ -6,6 +6,7 @@ use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\ActiveRecord\Common\Valute;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\AddSlugTrait;
+use app\models\Forms\Manage\Forms\FormsForm;
 use app\models\TimestampTrait;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -25,6 +26,7 @@ use yii\db\ActiveRecord;
  * @property int|null $created_at Дата создания
  * @property int|null $updated_at Дата модификации
  * @property int $order Порядок
+ * @property int $status Статус
  * @property boolean $has_file Может содержать вложенный файл
  * @property int $base_price Базовая стоимость
  * @property int $form_type_id Id типа формы
@@ -40,6 +42,21 @@ use yii\db\ActiveRecord;
  */
 class Form extends ActiveRecord
 {
+    /**
+     * Черновик
+     */
+    const STATUS_DRAFT = 0;
+    
+    /**
+     * Активая
+     */
+    const STATUS_ACTIVE = 1;
+    
+    /**
+     * Архив
+     */
+    const STATUS_ARCHIVE = 2;
+    
     use TimestampTrait, AddSlugTrait, MultilangTrait;
     /**
      * {@inheritdoc}
@@ -49,54 +66,26 @@ class Form extends ActiveRecord
         return '{{%forms}}';
     }
     
-    /**
- * 
- * @param string $title
- * @param string $name
- * @param string $description
- * @param string $slug
- * @param string $titleEng
- * @param string $nameEng
- * @param string $descriptionEng
- * @param int $formTypeId
- * @param int $order
- * @param int $basePrice
- * @param bool $hasFile
- * @param int $valute
- * @param int $created
+/**
+ * @param FormsForm $form
  * @return \self
  */
-    public static function create(
-            string $title,
-            string $name,
-            string $description,
-            string $slug,
-            string $titleEng,
-            string $nameEng,
-            string $descriptionEng,            
-            int $formTypeId,
-            int $order,
-            int $basePrice,
-            bool $hasFile,
-            int $valute = Valute::RUB,
-            int $created = null
-            ):self
+    public static function create(FormsForm $form):self
     {
-        $form = new self();
-        $form->name = $name;
-        $form->title = $title;
-        $form->description = $description;
-        $form->slug = $slug;
-        $form->form_type_id = $formTypeId;
-        $form->order = $order;
-        $form->created_by = $created;
-        $form->base_price = $basePrice;
-        $form->name_eng = $nameEng;
-        $form->title_eng = $titleEng;
-        $form->has_file = $hasFile;
-        $form->description_eng = $descriptionEng;
-        $form->valute_id = $valute;
-        
+        $model = new self();
+        $model->name = $form->name;
+        $model->title = $form->title;
+        $model->description = $form->description;
+        $model->slug = $form->slug;
+        $model->form_type_id = $form->formType;
+        $model->order = $form->order;                
+        $model->base_price = $form->basePrice;
+        $model->name_eng = $form->nameEng;
+        $model->title_eng = $form->titleEng;
+        $model->has_file = $form->hasFile;
+        $model->description_eng = $form->descriptionEng;        
+        $model->valute_id = $form->valute;  
+        $model->status = $form->status;
         return $form;
     }
     
@@ -115,33 +104,21 @@ class Form extends ActiveRecord
  * @param bool $hasFile
  * @param int $valute
  */
-    public function edit(
-            string $title,
-            string $name,
-            string $description,
-            string $slug,
-            string $titleEng,
-            string $nameEng,
-            string $descriptionEng,             
-            int $formTypeId,
-            int $order,
-            int $basePrice,
-            bool $hasFile,
-            int $valute = Valute::RUB
-            )
+    public function edit(FormsForm $form)            
     {
-        $this->name = $name;
-        $this->title = $title;
-        $this->description = $description;
-        $this->slug = $slug;
-        $this->form_type_id = $formTypeId;
-        $this->title_eng = $titleEng;
-        $this->name_eng = $nameEng;
-        $this->description_eng = $descriptionEng;
-        $this->base_price = $basePrice;
-        $this->order = $order;
-        $this->has_file = $hasFile;
-        $this->valute_id = $valute;
+        $this->name = $form->name;
+        $this->title = $form->title;
+        $this->description = $form->description;
+        $this->slug = $form->slug;
+        $this->form_type_id = $form->formType;
+        $this->order = $form->order;                
+        $this->base_price = $form->basePrice;
+        $this->name_eng = $form->nameEng;
+        $this->title_eng = $form->titleEng;
+        $this->has_file = $form->hasFile;
+        $this->description_eng = $form->descriptionEng;        
+        $this->valute_id = $form->valute; 
+        $this->status = $form->status;
     }
     
     public function getFormType() : ActiveQuery

@@ -2,6 +2,7 @@
 
 namespace app\modules\panel\modules\member\controllers;
 
+use app\core\helpers\Data\FormsHelper;
 use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
@@ -65,10 +66,12 @@ class RequestsController extends BaseMemberController
                 Yii::$app->request->queryParams
                 );        
         $isActive = (Yii::$app->params['activeExhibition'] == $id);
+        
         return $this->render('index',[            
             'searchModel' => $this->searchModel,
             'dataProvider' => $applicationDataProvider,            
-            'isExhibitionActive' => $isActive
+            'isExhibitionActive' => $isActive,
+            'availableForms' => FormsHelper::formsList($id)
         ]);
     }
  

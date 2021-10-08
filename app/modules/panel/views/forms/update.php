@@ -11,5 +11,7 @@ $this->title = Yii::t('app/title', 'Edit form') . ': ' . $model->name;
 <div class="update-form">
     <?php echo $this->render('_form', [
         'model' => $model,
+        'formFieldsDataProvider' => $formFieldsDataProvider,
+        'formFieldsModel' => $formFieldsModel,         
     ]) ?>
 </div>

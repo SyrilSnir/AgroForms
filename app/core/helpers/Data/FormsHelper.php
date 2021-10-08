@@ -12,10 +12,21 @@ use yii\helpers\ArrayHelper;
  */
 class FormsHelper
 {
-    public static function formsList():array
+    /**
+     * Список доступных форм
+     * @param int $exhibitionId ID выставки
+     * @return array
+     */
+    public static function formsList(int $exhibitionId = null):array
     {
+        $formsList = ArrayHelper::toArray(Form::find()->joinWith('exhibitions',true,'RIGHT JOIN')
+              //  ->andFilterWhere(['!=','status', Form::STATUS_DRAFT])
+                ->andFilterWhere(['!=','forms.status', Form::STATUS_DRAFT])
+                ->andFilterWhere(['exhibitions.id'=> $exhibitionId])
+                ->orderBy('order')->all());
+        
         return array_reduce(
-                ArrayHelper::toArray(Form::find()->orderBy('order')->all()),
+                $formsList,
                 function($result,$element){
                     $result[$element['id']] = $element['title'] .': ' . $element['name'];
                     return $result;

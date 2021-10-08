@@ -17,6 +17,8 @@ use yii\helpers\ArrayHelper;
  */
 class FormsForm extends Model
 {
+    public $id;
+    
     public $title;
     public $name;
     public $slug;
@@ -26,6 +28,7 @@ class FormsForm extends Model
     public $basePrice;
     public $hasFile;
     public $valute;
+    public $status;
 
     public $nameEng;
     public $titleEng;
@@ -57,6 +60,8 @@ class FormsForm extends Model
            $this->hasFile = $model->has_file;
            $this->exhibitionsList = $model->exhibitions;
            $this->valute = $model->valute_id;
+           $this->status = $model->status;
+           $this->id = $model->id;
        }
        parent::__construct($config);
    }
@@ -68,7 +73,7 @@ class FormsForm extends Model
     {
         return [
             [['title', 'name', 'slug', 'formType'], 'required'],
-            [['order', 'formType','basePrice','valute'],'integer'],
+            [['order', 'formType','basePrice','valute','status'],'integer'],
             [['hasFile'],'boolean'],
             [['order','basePrice'],'default','value' => 0],
             [['title', 'name', 'slug', 'description','titleEng', 'nameEng', 'descriptionEng'], 'string', 'max' => 255],
@@ -88,12 +93,13 @@ class FormsForm extends Model
             'slug' => Yii::t('app','Character code'),
             'description' => Yii::t('app','Description'),
             'descriptionEng' => Yii::t('app','Description') . ' (ENG)',
-            'formType' => Yii::t('app/requests','Forn type'),
+            'formType' => Yii::t('app/requests','Form type'),
             'order' => Yii::t('app','Serial number'),
             'basePrice' => Yii::t('app/requests','Base price'),
             'hasFile' => Yii::t('app','File attachment available'),
             'exhibitionsList' => Yii::t('app','Available for exhibitions'),
-            'valute' => Yii::t('app','Valute')
+            'valute' => Yii::t('app','Valute'),
+            'status' => Yii::t('app','Status'),
         ];
     }
     

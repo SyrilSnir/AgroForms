@@ -5,5 +5,7 @@ return [
     'Active' => 'Активна',
     'Declined' => 'Отменена',
     'Completed' => 'Завершена',
-    'Organizer' => 'Организатор'
+    'Organizer' => 'Организатор',
+    'Archive' => 'Архивная',
+    'Draft' => 'Черновик'
     ];

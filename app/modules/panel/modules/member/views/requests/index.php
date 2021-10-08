@@ -16,6 +16,7 @@ use yii\web\View;
 /* @var $modificationsProvider ActiveDataProvider */
 /** @var Request $model */
 /** @var bool $isExhibitionActive */
+/** @var array $availableForms */
 
 $this->title = Yii::t('app/title','My requests');
 
@@ -26,7 +27,7 @@ $this->title = Yii::t('app/title','My requests');
 <div class="request-view">
     <?php if ($isExhibitionActive):?>
     <p>
-        <?= Html::dropDownList('requests-list', 0, FormsHelper::formsList(),[
+        <?= Html::dropDownList('requests-list', 0, $availableForms,[
             'class' => 'form-control'
         ]) ?>
         <?= Html::button(t('Add application'),[

@@ -1,5 +1,6 @@
 <?php
 
+use app\core\helpers\View\Form\FormStatusHelper;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\SearchModels\Forms\FormSearch;
@@ -39,6 +40,15 @@ $columnsConfig = [
                         ],                        
                         'name:text:' . Yii::t('app', 'Name'),
                         'title:text:' . Yii::t('app', 'Title'),
+                        [
+                            'attribute' => 'status',
+                            'label' => Yii::t('app','Status'),
+                            'format' => 'raw',
+                            'filter' => FormStatusHelper::statusList(false),
+                            'value' => function (Form $model) {
+                                return FormStatusHelper::getStatusLabel($model->status);
+                            }
+                        ],                         
                         [
                             'class' => ActionColumn::class,
                              'visibleButtons' => [

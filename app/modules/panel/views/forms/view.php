@@ -1,5 +1,6 @@
 <?php
 
+use app\core\helpers\View\Form\FormStatusHelper;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
@@ -44,78 +45,33 @@ $this->title = $model->name;
                     'name:text:' . Yii::t('app', 'Name'),
                     'description:raw:' . Yii::t('app', 'Description'),
                     'formType.name:text:' . Yii::t('app/requests', 'Form type'),
-                //    'order:text:' . Yii::t('app', 'Serial number'),
-                    'valute.name:text:' . Yii::t('app', 'Valute'),
+                    [
+                        'attribute' => 'has_file',
+                        'label' => Yii::t('app','File attachment available'),
+                        'value' => $model->has_file ? t('Yes') : t('No')
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'label' => t('Status'),
+                        'format' => 'raw',
+                        'value' => FormStatusHelper::getStatusLabel($model->status)
+                    ],
+                    [
+                        'attribute' => 'exhibitions',
+                        'label' => Yii::t('app','Available for exhibitions'),
+                        'format' => 'raw',
+                        'value' => function(Form $model) {
+                            $result = '';
+                            foreach ($model->exhibitions as $exhibition) {
+                                $result.= "<p>{$exhibition->title}</p>";
+                            }
+                            return $result;
+                        }
+                    ],                        
+                    'valute.name:text:' . t('Valute'),
                     
                 ],
             ]); ?>
     </div>
 </div>
-<?php if (in_array($model->form_type_id, FormType::HAS_DYNAMIC_FIELDS)): ?>
-<?php 
-$columnsConfig = [
-                    'toolbar' => [
-                        [
-                            'header' => 'rrrgrg',
-                            'content'=> //$rowsCountTemplate .
-                                Html::a('<i class="fas fa-plus"></i>',['fields/create', 'formId' => $model->id], [
-                                    'class' => 'btn btn-sm btn-success',
-                                ])                            
-                        ],
-                    ],
-                    'panel' => [
-                        'type' => GridView::TYPE_DEFAULT,
-                        'heading' => Yii::t('app','List of fields')
-                    ],
-                    'dataProvider' => $formFieldsDataProvider,
-                    'filterModel' => $formFieldsModel,
-                    'rowOptions' => function ($model, $key, $index, $grid) {
-                        return ['data-sortable-id' => $model->id];
-                    },    
-                    'columns' => [  
-                        [
-                            'class' => Column::className(),
-                        ],                        
-                        'name:text:' . Yii::t('app','Name'),
-                        /**[
-                            'label' => Yii::t('app','Group'),
-                            'filter' => $formFieldsModel->fieldGroupList(),
-                            'attribute' => 'fieldGroupId',
-                            'value' => function (Field $model) {
-                                return $model->fieldGroup ? $model->fieldGroup->name:
-                                        Yii::t('app','Undefined');
-                            }
-                        ],*/
-                        'description:text:' . Yii::t('app','Description'),
-                        
-                        [
-                            'label' => Yii::t('app','Element type'),
-                            'attribute' => 'elementTypeId',
-                            'filter' => $formFieldsModel->elementTypesList(),
-                            'value' => function (Field $model) {
-                                    return $model->elementType->name;
-                                }
-                            ],
-                        [
-                            'class' => ActionColumn::class,
-                           // 'header' => 'Действия',
-                            'controller' => 'fields'                       
-                        ],
-                    ],  
-                    'options' => [
-                        'data' => [
-                            'sortable-widget' => 1,
-                            'sortable-url' => Url::toRoute(['fields-sorting']),
-                        ]
-                    ],                                      
-    ];
-$gridConfig = []; //require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';    
-$fullGridConfig = array_merge($gridConfig, $columnsConfig);
-?>
-    <div class="card">
-        <div class="card-body">
-            <?= GridView::widget($fullGridConfig); ?>
-        </div>
-    </div>  
-<?php endif; ?>
 
