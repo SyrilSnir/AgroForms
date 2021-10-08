@@ -41,6 +41,19 @@ $columnsConfig = [
                         'name:text:' . Yii::t('app', 'Name'),
                         'title:text:' . Yii::t('app', 'Title'),
                         [
+                            'attribute' => 'exhibitions',
+                            'label' => Yii::t('app/title','List of exhibitions'),
+                            'format' => 'raw',
+                            'filter' => $searchModel->getExhibitionsList(),
+                            'value' => function (Form $model) {
+                                $exhibitionStr = '';
+                                foreach ($model->exhibitions as $exhibition) {
+                                    $exhibitionStr.= "<pre>{$exhibition->title}</pre>";
+                                }
+                                return $exhibitionStr;
+                            }
+                        ],                        
+                        [
                             'attribute' => 'status',
                             'label' => Yii::t('app','Status'),
                             'format' => 'raw',

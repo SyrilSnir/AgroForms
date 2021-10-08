@@ -2,6 +2,7 @@
 
 namespace app\models\SearchModels\Forms;
 
+use app\core\traits\Lists\GetExhibitionsTrait;
 use app\models\ActiveRecord\Forms\Form;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -18,17 +19,19 @@ class FormSearch extends Model
     public $title;
     
     public $status;
+    
+    public $exhibitions;
 
-
+    use GetExhibitionsTrait;
     public function rules(): array
     {
         return [
-            [['name', 'title', 'status'], 'safe'],
+            [['name', 'title', 'status','exhibitions'], 'safe'],
         ];
     }    
     public function search(array $params): ActiveDataProvider
     {
-        $query = Form::find();
+        $query = Form::find()->joinWith('exhibitions');
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => false
@@ -42,6 +45,7 @@ class FormSearch extends Model
         $query->andFilterWhere(['like','name', $this->name]);
         $query->andFilterWhere(['like','title', $this->title]);
         $query->andFilterWhere(['status' => $this->status]);
+        $query->andFilterWhere(['exhibitions.id' => $this->exhibitions]);
         $query->orderBy('order');
         return $dataProvider;
     }
