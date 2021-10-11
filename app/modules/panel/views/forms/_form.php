@@ -21,7 +21,6 @@ use yii\widgets\ActiveForm;
 /** @var ActiveForm $form */
 /** @var FormsForm $model */
 $dynamicFormId = FormType::DYNAMIC_ORDER_FORM;
-$exhibitions = $model->getExhibitionsList();
 ?>
 <section class="content">
     <div class="container-fluid">
@@ -71,16 +70,7 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
                     ]
     ]);
     ?>
-<?php if (!empty($exhibitions)):?>
-<?php  echo $form->field($model, 'exhibitionsList')->widget(MultiSelectListBox::className(),[
-    'data' => $exhibitions,
-    'options' => [
-        'multiple'=>"multiple"
-    ],
-    'clientOptions' => [
-    ]
-])  ?> 
-                        <?php endif; ?> 
+<?= $form->field($model, 'exhibitionId')->dropDownList($model->getExhibitionsList()) ?>  
 <?= $form->field($model, 'valute')->dropDownList($model->getValutesList()) ?>                        
                        
 <div class="form-group">

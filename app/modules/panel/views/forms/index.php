@@ -15,6 +15,7 @@ use yii\web\View;
 /* @var $this View */
 /* @var $searchModel FormSearch */
 /* @var $dataProvider ActiveDataProvider */
+/** @var Form $model */
 
 $this->title = Yii::t('app/title','Directory of forms');
 $this->params['breadcrumbs'][] = $this->title;
@@ -41,17 +42,11 @@ $columnsConfig = [
                         'name:text:' . Yii::t('app', 'Name'),
                         'title:text:' . Yii::t('app', 'Title'),
                         [
-                            'attribute' => 'exhibitions',
+                            'attribute' => 'exhibitionId',
                             'label' => Yii::t('app/title','List of exhibitions'),
                             'format' => 'raw',
                             'filter' => $searchModel->getExhibitionsList(),
-                            'value' => function (Form $model) {
-                                $exhibitionStr = '';
-                                foreach ($model->exhibitions as $exhibition) {
-                                    $exhibitionStr.= "<pre>{$exhibition->title}</pre>";
-                                }
-                                return $exhibitionStr;
-                            }
+                            'value' => function (Form $model) { return $model->exhibition->title ;}
                         ],                        
                         [
                             'attribute' => 'status',

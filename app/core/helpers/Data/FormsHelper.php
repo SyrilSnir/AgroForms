@@ -19,10 +19,10 @@ class FormsHelper
      */
     public static function formsList(int $exhibitionId = null):array
     {
-        $formsList = ArrayHelper::toArray(Form::find()->joinWith('exhibitions',true,'RIGHT JOIN')
+        $formsList = ArrayHelper::toArray(Form::find()
               //  ->andFilterWhere(['!=','status', Form::STATUS_DRAFT])
                 ->andFilterWhere(['!=','forms.status', Form::STATUS_DRAFT])
-                ->andFilterWhere(['exhibitions.id'=> $exhibitionId])
+                ->andFilterWhere(['exhibition_id'=> $exhibitionId])
                 ->orderBy('order')->all());
         
         return array_reduce(

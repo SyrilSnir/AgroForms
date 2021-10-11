@@ -16,22 +16,15 @@ class FormService
 {
     /**
      *
-     * @var FormExhibitionService 
-     */
-    protected $formExhibitionService;
-    /**
-     *
      * @var FormRepository
      */
     protected $forms;
     
     public function __construct(
-            FormRepository $repository,
-            FormExhibitionService $formExhibitionService
+            FormRepository $repository
             )
     {
         $this->forms = $repository;
-        $this->formExhibitionService = $formExhibitionService;
         
     }
     
@@ -39,7 +32,6 @@ class FormService
     {
         $model = Form::create($form);
         $this->forms->save($model);
-        $this->postProcess($model, $form);
         return $model;
     }
     
@@ -49,16 +41,8 @@ class FormService
         $model = $this->forms->get($id);
         $model->edit($form);
         $this->forms->save($model);  
-        $this->postProcess($model, $form);
     }
     
-    private function postProcess(Form $model,FormsForm $form)
-    {
-        $this->formExhibitionService->clearExhibitions($model->id);
-        if (is_array($form->exhibitionsList)) {
-            $this->formExhibitionService->setExhibitions($model->id, $form->exhibitionsList);
-        }
-    }
     
     
 }

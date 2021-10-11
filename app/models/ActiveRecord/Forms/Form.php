@@ -30,14 +30,14 @@ use yii\db\ActiveRecord;
  * @property boolean $has_file Может содержать вложенный файл
  * @property int $base_price Базовая стоимость
  * @property int $form_type_id Id типа формы
+ * @property int $exhibition_id Id выставки
  * @property int $valute_id Id валюты
  * 
  * @property string $headerName Заголовок
  * 
  * @property FormType $formType Тип формы
  * @property Valute $valute Валюта
- * @property FormExhibitions[] $formExhibitions Выставки
- * @property Exhibition[] $exhibitions Выставки
+ * @property Exhibition $exhibition Выставка, связанная с формой
  * 
  */
 class Form extends ActiveRecord
@@ -86,6 +86,7 @@ class Form extends ActiveRecord
         $model->description_eng = $form->descriptionEng;        
         $model->valute_id = $form->valute;  
         $model->status = $form->status;
+        $model->exhibition_id = $form->exhibitionId;
         return $form;
     }
     
@@ -119,6 +120,7 @@ class Form extends ActiveRecord
         $this->description_eng = $form->descriptionEng;        
         $this->valute_id = $form->valute; 
         $this->status = $form->status;
+        $this->exhibition_id = $form->exhibitionId;
     }
     
     public function getFormType() : ActiveQuery
@@ -134,16 +136,10 @@ class Form extends ActiveRecord
     public function getValute() : ActiveQuery
     {
         return $this->hasOne(Valute::class, ['id' => 'valute_id']);
-    }
+    }    
     
-    public function getFormExhibitions()
+    public function getExhibition()
     {
-        return $this->hasMany(FormExhibitions::class, ['forms_id' => 'id']);
-    }
-    
-    public function getExhibitions()
-    {
-        return $this->hasMany(Exhibition::class, ['id' => 'exhibitions_id'])
-                ->via('formExhibitions');
+        return $this->hasOne(Exhibition::class, ['id' => 'exhibition_id']);
     }       
 }

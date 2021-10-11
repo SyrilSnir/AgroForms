@@ -58,16 +58,10 @@ $this->title = $model->name;
                         'value' => FormStatusHelper::getStatusLabel($model->status)
                     ],
                     [
-                        'attribute' => 'exhibitions',
+                        'attribute' => 'exhibition_id',
                         'label' => Yii::t('app','Available for exhibitions'),
                         'format' => 'raw',
-                        'value' => function(Form $model) {
-                            $result = '';
-                            foreach ($model->exhibitions as $exhibition) {
-                                $result.= "<p>{$exhibition->title}</p>";
-                            }
-                            return $result;
-                        }
+                        'value' => $model->exhibition->title
                     ],                        
                     'valute.name:text:' . t('Valute'),
                     
