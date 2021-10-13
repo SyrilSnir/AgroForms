@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
 /* @var $model Unit */
 /* @var $modificationsProvider ActiveDataProvider */
 
-$this->title = 'Специальная цена';
+$this->title = t('Special price','title');
 ?>
 <div class="category-view">
     <p>

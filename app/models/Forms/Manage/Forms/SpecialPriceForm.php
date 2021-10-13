@@ -33,7 +33,7 @@ class SpecialPriceForm extends Model
     public function __construct(SpecialPrice $model = null, $config = [])
     {
         if($model) {
-            $this->id = $id;                    
+            $this->id = $model->id;                    
             $this->price = $model->price;
             $this->fieldId = $model->field_id;
             $this->startDate = DateTime::createFromFormat('Y-m-d',$model->start_date)->format('d.m.Y');
@@ -52,6 +52,14 @@ class SpecialPriceForm extends Model
         ];
     }
     
+    public function attributeLabels(): array    
+    {
+        return [
+            'price' => t('Price'),
+            'startDate' => t('Start date'),
+            'endDate' => t('End date')
+        ];
+    }
     public function validateDate($attribute,$param)
     {
         /** @var SpecialPrice $price */
@@ -60,19 +68,16 @@ class SpecialPriceForm extends Model
         if (($endDate - $startDate) < 0) {
             $this->addError($attribute, t('Wrong period'));
             return;
-        } else {
-             $listOfPrices = SpecialPrice::find()
-                     ->andFilterWhere(['field_id' => $this->fieldId])
-                     ->andFilterWhere(['!=','id', $this->id])
-                     ->all();
-             foreach ($listOfPrices as $price)
-             {
-                 if ($startDate > $price->endDateTimestamp || $endDate < $price->startDateTimestamp) {
-                     continue;
-                 }
-                 $this->addError($attribute, t('Intersect periods'));
-             }
-             
+        }
+        $listOfPrices = SpecialPrice::find()
+                ->andFilterWhere(['field_id' => $this->fieldId])
+                ->andFilterWhere(['!=','id', $this->id])
+                ->all();
+        foreach ($listOfPrices as $price) {
+            if ($startDate > $price->endDateTimestamp || $endDate < $price->startDateTimestamp) {
+                continue;
+            }
+            $this->addError($attribute, t('Date intervals must not overlap'));             
         }
     }
 }

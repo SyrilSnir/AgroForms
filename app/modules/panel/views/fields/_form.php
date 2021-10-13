@@ -136,7 +136,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                 <?= $form->field($model->parameters, 'unitPrice')->textInput() ?>
             </div>
             <div class="special-price-params__container">
-                SPECIAL PRICE
+                <h5><?php echo t('Special price rules')?> </h5>
             <section class="content">
                 <div class="card">
                     <div class="card-body">

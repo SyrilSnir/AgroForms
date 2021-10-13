@@ -122,5 +122,8 @@ return [
     'Default sort' => 'Сортировка по умолчанию',
     'Add special price rules' => 'Добавить специальные ценовые правила',
     'Price' => 'Стоимость',
+    'Date intervals must not overlap' => 'Интервалы дат не должны пересекаться',
+    'Wrong period' => 'Неверное значение периода',
+    'Special price rules' => 'Специальные ценовые правила',    
 ];
 
