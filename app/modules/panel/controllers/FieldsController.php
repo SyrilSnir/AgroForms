@@ -12,9 +12,11 @@ use app\models\ActiveRecord\Forms\FieldEnum;
 use app\models\Forms\Manage\Forms\FieldForm;
 use app\models\Forms\Manage\Forms\FieldParametersForm;
 use app\models\SearchModels\Forms\FieldSearch;
+use app\models\SearchModels\Forms\SpecialPriceSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
 use Yii;
+use yii\helpers\Url;
 
 /**
  * Description of FieldsController
@@ -36,13 +38,21 @@ class FieldsController extends BaseAdminController
      */
     protected $fieldEnumProvider;
     
-     public function __construct(
+    /**
+     * 
+     * @var SpecialPriceSearch
+     */
+    protected $specialPriceSearch;
+
+
+    public function __construct(
             $id, 
             $module, 
             FieldReadRepository $repository,
             FieldService $service,
             FieldEnumProvider $fieldEnumProvider,
             FieldSearch $searchModel,
+            SpecialPriceSearch $specialPriceSearch,
             $config = array()
             )
     {
@@ -51,11 +61,12 @@ class FieldsController extends BaseAdminController
         $this->service = $service;
         $this->fieldEnumProvider = $fieldEnumProvider;
         $this->searchModel = $searchModel;
+        $this->specialPriceSearch = $specialPriceSearch;
     }
     
     public function actionCreate($formId = null)
     {
-        
+        Url::remember();
         $form = new FieldForm();
         $loadFormData = $form->load(Yii::$app->request->post());
         if ($loadFormData) {
@@ -86,6 +97,7 @@ class FieldsController extends BaseAdminController
     public function actionUpdate($id)
     {
         /** @var Field $model */
+        Url::remember();        
         $model = $this->findModel($id);
         $form = new FieldForm($model);
         $loadFormData = $form->load(Yii::$app->request->post());
@@ -109,9 +121,12 @@ class FieldsController extends BaseAdminController
             }
             return $this->redirect(['view', 'id' => $model->id]);
         }
+        $dataProvider = $this->specialPriceSearch->search();        
         return $this->render('update', [
             'model' => $form,
-            'enumsList' => $enumsList
+            'enumsList' => $enumsList,
+            //'searchModel' => $this->searchModel,
+            'dataProvider' => $dataProvider,
         ]);                        
     }
 

@@ -12,7 +12,7 @@ class m211011_062733_add_exhibition_id_column_to_forms_table extends Migration
      */
     public function safeUp()
     {
-    //    $this->addColumn('{{%forms}}', 'exhibition_id', $this->integer()->comment('Id выставки'));
+        $this->addColumn('{{%forms}}', 'exhibition_id', $this->integer()->comment('Id выставки'));
         // creates index for column `exhibitions_id`
         $this->createIndex(
             '{{idx-forms-exhibitions_id}}',

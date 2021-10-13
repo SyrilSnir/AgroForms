@@ -2,8 +2,10 @@
 
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\Forms\Manage\Forms\FieldForm;
+use kartik\grid\GridView;
 use kartik\switchinput\SwitchInput;
 use mihaildev\ckeditor\CKEditor;
+use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -16,9 +18,46 @@ use function GuzzleHttp\json_encode;
 /** @var ActiveForm $form */
 /** @var FieldForm $model */
 /** @var int|null $formId */
+/** @var bool $isNew */
 
 if ($formId) {
     $model->formId = $formId;
+}
+if (!$isNew) {
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'content'=> 
+                                Html::a('<i class="fas fa-plus"></i>',['special-price/create', 'fieldId' => $model->id], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app', 'Add special price rules'),
+                                ])                            
+                        ],
+                    ],      
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        [
+                            'attribute' => 'start_date',
+                            'format' => 'date',
+                            'value' => 'start_date',
+                            'label' => Yii::t('app', 'Start date'),
+                        ],
+                        [
+                            'attribute' => 'end_date',
+                            'format' => 'date',
+                            'value' => 'end_date',
+                            'label' => Yii::t('app', 'End date'),                            
+                        ],                         
+                        'price:text:' . Yii::t('app', 'Price'),
+                        [
+                            'class' => ActionColumn::class,
+                            'controller' => 'special-price'
+                        ],
+                    ],    
+    ];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);     
 }
 ?>
 
@@ -49,11 +88,13 @@ if ($formId) {
     <?php else: ?>   
        <?php echo $form->field($model,'formId')->hiddenInput()->label(false) ;?>                      
     <?php endif; ?> 
-    <?= $form->field($model, 'elementTypeId',['inputOptions' => [
-        'id' => 'element-type-selector',
-        'class' => 'form-control'
-        ]])
-            ->dropDownList($model->elementTypesList()) ?>                        
+    <?php if ($isNew):?>
+        <?= $form->field($model, 'elementTypeId',['inputOptions' => [
+            'id' => 'element-type-selector',
+            'class' => 'form-control'
+            ]])
+                ->dropDownList($model->elementTypesList()) ?>                        
+    <?php endif; ?>
     <?php //$form->field($model, 'fieldGroupId')->dropDownList($model->fieldGroupList()) ?>
     <?= $form->field($model, 'fieldGroupId')->hiddenInput(['value' => 0])->label(false) ?>
     <?php // $form->field($model, 'order')->textInput() ?>
@@ -92,8 +133,18 @@ if ($formId) {
                 
         <div id="computed-params__container"<?php if(!$model->parameters->isComputed): ?> class="hide"<?php endif ?>>
             <div id="unit-price__container"<?php if ($model->hasEnums ):?> style="display: none;"<?php endif; ?>>
-            <?= $form->field($model->parameters, 'unitPrice')->textInput() ?>
+                <?= $form->field($model->parameters, 'unitPrice')->textInput() ?>
+            </div>
+            <div class="special-price-params__container">
+                SPECIAL PRICE
+            <section class="content">
+                <div class="card">
+                    <div class="card-body">
+                            <?= GridView::widget($fullGridConfig); ?>
+                    </div>
                 </div>
+            </section>                
+            </div>
         </div>
     </div>                
                             

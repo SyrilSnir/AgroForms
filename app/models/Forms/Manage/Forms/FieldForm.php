@@ -19,6 +19,8 @@ use yii\helpers\ArrayHelper;
  */
 class FieldForm extends MultiForm
 {
+    public $id;
+    
     public $name;
     public $description;
     public $nameEng;
@@ -28,6 +30,8 @@ class FieldForm extends MultiForm
     public $fieldGroupId;
     public $order;
     public $defaultValue;
+    
+    
     
     
     /**
@@ -48,6 +52,7 @@ class FieldForm extends MultiForm
         parent::__construct($config);
         if ($model)
         {
+            $this->id = $model->id;
             $this->name = $model->name;
             $this->description = $model->description;
             $this->nameEng = $model->name_eng;

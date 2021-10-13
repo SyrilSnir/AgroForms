@@ -16,7 +16,8 @@ $this->title = Yii::t('app/title', 'New field');
 <?php echo $this->render('_form', [
         'model' => $model,
         'formId' => $formId,
-        'enumsList' => $enumsList
+        'enumsList' => $enumsList,
+        'isNew' => true
         
 ]) ?>
 

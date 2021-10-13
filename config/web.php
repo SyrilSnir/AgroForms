@@ -5,12 +5,17 @@ use app\core\manage\Auth\UserIdentity;
 use app\models\Data\Languages;
 use app\modules\panel\assets\AdminLteAsset;
 use app\modules\panel\Module as ManageModule;
+use kartik\base\WidgetAsset;
 use kartik\bs4dropdown\DropdownAsset;
+use kartik\date\DatePickerAsset;
 use kartik\dialog\DialogAsset;
 use kartik\dialog\DialogBootstrapAsset;
-use kartik\grid\GridViewAsset as GridViewAsset2;
+use kartik\dialog\DialogYiiAsset;
+use kartik\grid\GridExportAsset;
+use kartik\grid\GridViewAsset as KartikGridViewAsset;
 use kartik\grid\Module;
 use kartik\select2\Select2Asset;
+use kartik\switchinput\SwitchInputAsset;
 use lajax\languagepicker\bundles\LanguagePluginAsset;
 use lajax\languagepicker\Component;
 use yii\bootstrap4\BootstrapAsset;
@@ -102,12 +107,17 @@ return [
                         YiiAsset::class
                     ]                    
                 ],
+                SwitchInputAsset::class => [
+                    'depends' => [
+                        YiiAsset::class
+                    ]                     
+                ],
                 GridViewAsset::class => [
                     'depends' => [
                         YiiAsset::class
                     ]
                 ],
-                GridViewAsset2::class => [
+                KartikGridViewAsset::class => [
                     'depends' => [
                         YiiAsset::class
                     ]                    
@@ -131,6 +141,44 @@ return [
                      'js'=>[],
                      'css'=>[],
                      'depends'=>[],
+                ],
+                WidgetAsset::class => [
+                    'depends' => [
+                        YiiAsset::class,
+                        BootstrapAsset::class
+                    ] 
+                ],
+                DialogYiiAsset::class => [
+                    'depends' => [
+                        YiiAsset::class,
+                        DialogAsset::class,
+                        BootstrapAsset::class                        
+                    ]
+                ],
+                GridExportAsset::class => [
+                    'depends' => [
+                        YiiAsset::class,
+                        DialogAsset::class,
+                        BootstrapAsset::class                         
+                    ]
+                ],
+                kartik\grid\GridResizeColumnsAsset::class => [
+                    'depends' => [
+                        YiiAsset::class,
+                        KartikGridViewAsset::class,
+                        BootstrapAsset::class                         
+                    ]                    
+                ],
+                mihaildev\ckeditor\Assets::class => [
+                    'depends' => [
+                        YiiAsset::class
+                    ]                    
+                ],
+                DatePickerAsset::class => [
+                    'depends' => [
+                        YiiAsset::class,
+                        BootstrapAsset::class,                        
+                    ]                    
                 ],
                 BootstrapPluginAsset::class => [
                      'js'=>[],

@@ -119,7 +119,8 @@ return [
     'Start date of disassembling' => 'Дата начала демонтажа',
     'End date of disassembling' => 'Дата окончания демонтажа',
     'Location' => 'Место проведения',
-    'Default sort' => 'Сортировка по умолчанию'
-
+    'Default sort' => 'Сортировка по умолчанию',
+    'Add special price rules' => 'Добавить специальные ценовые правила',
+    'Price' => 'Стоимость',
 ];
 
