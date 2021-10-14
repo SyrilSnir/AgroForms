@@ -10,5 +10,6 @@ $this->title = Yii::t('app/title','Edit field');
         'enumsList' => $enumsList,
         'isNew' => false,                    
         'dataProvider' => $dataProvider,
+        'previousPage' => $previousPage, 
     ]) ?>
 </div>

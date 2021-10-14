@@ -34,6 +34,7 @@ return [
     'New country' => 'Новая страна',
     'Edit country' => 'Изменить страну',
     'New form' => 'Новая форма',
+    'Edit form' => 'Изменить форму',
     'Edit form type' => 'Изменить тип формы',
     'New field' => 'Новое поле',
     'Edit field' => 'Изменить поле',

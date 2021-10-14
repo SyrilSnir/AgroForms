@@ -65,7 +65,8 @@ class FieldsController extends BaseAdminController
     }
     
     public function actionCreate($formId = null)
-    {
+    {        
+        $previousPage = '/panel/forms/update?id=' .$formId;        
         Url::remember();
         $form = new FieldForm();
         $loadFormData = $form->load(Yii::$app->request->post());
@@ -90,15 +91,17 @@ class FieldsController extends BaseAdminController
         return $this->render('create', [
             'model' => $form,
             'formId' => $formId,
-            'enumsList' => $enumsList            
+            'enumsList' => $enumsList,
+            'previousPage' => $previousPage,            
         ]);
     }
 
     public function actionUpdate($id)
     {
         /** @var Field $model */
-        Url::remember();        
+        Url::remember();          
         $model = $this->findModel($id);
+        $previousPage = '/panel/forms/update?id=' .$model->form_id;  
         $form = new FieldForm($model);
         $loadFormData = $form->load(Yii::$app->request->post());
         $this->setFieldParamsScenario($form); 
@@ -125,7 +128,7 @@ class FieldsController extends BaseAdminController
         return $this->render('update', [
             'model' => $form,
             'enumsList' => $enumsList,
-            //'searchModel' => $this->searchModel,
+            'previousPage' => $previousPage,
             'dataProvider' => $dataProvider,
         ]);                        
     }
