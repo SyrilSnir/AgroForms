@@ -20,6 +20,7 @@ use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
 use kotchuprik\sortable\actions\Sorting;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 
 /**
@@ -68,8 +69,14 @@ class FormsController extends BaseAdminController
     public function actionView($id)
     {
         Url::remember();
+        $fieldsList = Field::find()->availableForForm($id)->orderBy(['order'  => SORT_ASC]);
+        $fieldDataProvider = new ActiveDataProvider([
+            'query' => $fieldsList,
+            'sort' => false
+        ]);        
         return $this->render('view', [
-            'model' => $this->findModel($id),            
+            'model' => $this->findModel($id),
+            'fieldDataProvider' => $fieldDataProvider
         ]);
     }
     

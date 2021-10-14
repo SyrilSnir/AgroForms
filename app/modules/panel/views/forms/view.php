@@ -1,16 +1,12 @@
 <?php
 
 use app\core\helpers\View\Form\FormStatusHelper;
-use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\SearchModels\Forms\FieldSearch;
-use kartik\grid\ActionColumn;
-use kartik\grid\GridView;
-use kotchuprik\sortable\grid\Column;
 use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\DetailView;
 
@@ -75,4 +71,20 @@ $this->title = $model->name;
             ]); ?>
     </div>
 </div>
+    <div class="card">
+        <div class="card-header">
+            <h3><?php echo t('Form fields'); ?></h3>
+        </div>    
+        <div class="card-body">
+            <?php 
+    echo GridView::widget([
+        'columns' => [
+            'name:text:' . t('Name'),
+            'elementType.name:text:' . t('Element type'),
+        ],
+        'dataProvider'=> $fieldDataProvider,               
+    ]); 
+            ?>
+        </div>        
+    </div>
 

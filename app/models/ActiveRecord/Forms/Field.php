@@ -174,4 +174,9 @@ class Field extends ActiveRecord
                 ->andWhere(['>','end_date',$currentDate])
                 ->one();        
     }
+    
+    public static function find(): Query\FieldQuery
+    {
+        return new Query\FieldQuery(static::class);
+    }
 }
