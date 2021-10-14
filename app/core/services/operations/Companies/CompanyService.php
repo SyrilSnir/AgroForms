@@ -12,6 +12,7 @@ use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Companies\Contact;
 use app\models\ActiveRecord\Companies\LegalAddress;
 use app\models\ActiveRecord\Companies\PostalAddress;
+use app\models\ActiveRecord\Users\User;
 use app\models\Forms\Manage\Companies\CompanyForm;
 /**
  * Description of CompanyService
@@ -168,6 +169,34 @@ class CompanyService
                 );
         $this->companies->save($company);
     }
+    
+    public function block($id)
+    {
+        /** @var Company $company */
+        /** @var User $member */         
+        $company = $this->companies->get($id);
+        $member = $company->getMember();
+        $company->block();
+        if ($member) {
+            $member->block();
+            $member->save();
+        }
+        $company->save();
+    }
+    
+    public function unblock($id)
+    {
+        /** @var Company $company */
+        /** @var User $member */        
+        $company = $this->companies->get($id);
+        $member = $company->getMember();
+        $company->unblock();
+        if ($member) {
+            $member->unblock();
+            $member->save();
+        }
+        $company->save();
+    }    
 
             
 }

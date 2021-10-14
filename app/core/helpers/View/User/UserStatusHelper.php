@@ -35,6 +35,7 @@ class UserStatusHelper extends StatusHelper
         return [
             User::STATUS_NEW => t('New'),
             User::STATUS_ACTIVE => t('Active'),
+            User::STATUS_BLOCKED => t('Blocked','user'),
         ];
     }
 

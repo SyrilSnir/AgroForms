@@ -70,20 +70,14 @@ class CompaniesController extends ManageController
 
     public function actionUnblock($id)
     {
-        /** @var Company $model */
-        $model = $this->findModel($id); 
-        $model->unblock();
-        $model->save();
-        return $this->redirect(['view', 'id' => $model->id]);
+        $this->service->unblock($id);
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     public function actionBlock($id)
     {
-        /** @var Company $model */
-        $model = $this->findModel($id); 
-        $model->block();
-        $model->save();
-        return $this->redirect(['view', 'id' => $model->id]);
+        $this->service->block($id);
+        return $this->redirect(['view', 'id' => $id]);
     }
     
     public function actionAddMember($id)

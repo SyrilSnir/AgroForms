@@ -28,6 +28,7 @@ return [
   'Send invitation by e-mail' => 'Отправить приглашение на e-mail',
   'Get a link to activate a user' => 'Получить ссылку для активации пользователя',
   'Enter your email or leave the one specified during registration' => 'Введите email или оставьте указанный при регистрации',
-  'By this link you can activate the user' => 'По данной ссылке можно активировать пользователя'
+  'By this link you can activate the user' => 'По данной ссылке можно активировать пользователя',
+  'Blocked' => 'Заблокирован',
 ];
 

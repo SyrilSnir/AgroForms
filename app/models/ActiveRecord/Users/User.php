@@ -43,6 +43,7 @@ class User extends ActiveRecord
 {
     const STATUS_NEW = 0;
     const STATUS_ACTIVE = 1;
+    const STATUS_BLOCKED = 2;
     
      use TimestampTrait;
     /**
@@ -197,4 +198,14 @@ class User extends ActiveRecord
     {
         $this->deleted = true;
     }
+    
+    public function block() 
+    {
+        $this->active = static::STATUS_BLOCKED;
+    }
+    
+    public function unblock() 
+    {
+        $this->active = static::STATUS_ACTIVE;
+    }    
 }
