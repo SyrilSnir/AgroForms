@@ -60,8 +60,7 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
     ])->dropDownList($model->formTypesList()) ?>
 <div id="price-block"<?php if (!($model->formType == $dynamicFormId)):?> class="hide"<?php endif; ?>>
     <?= $form->field($model, 'basePrice')->textInput() ?>                            
-</div>                            
-<?= $form->field($model, 'status')->dropDownList(FormStatusHelper::statusList()) ?>
+</div>
 
 <?= $form->field($model, 'hasFile')->widget(SwitchInput::class,[
                 'pluginOptions' => [

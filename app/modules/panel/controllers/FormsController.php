@@ -73,6 +73,18 @@ class FormsController extends BaseAdminController
         ]);
     }
     
+    public function actionPublish($id)
+    {
+        $this->service->publish($id);
+        return $this->redirect(['view', 'id' => $id]);
+    }    
+    
+    public function actionUnpublish($id)
+    {
+        $this->service->unpublish($id);
+        return $this->redirect(['view', 'id' => $id]);
+    }     
+    
      public function actionCreate()
     {
         $form = new FormsForm();

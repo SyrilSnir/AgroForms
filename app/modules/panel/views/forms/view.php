@@ -24,6 +24,12 @@ $this->title = $model->name;
 <div class="category-view">
     <p>
         <?= Html::a(Yii::t('app', 'Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php if ($model->status === Form::STATUS_DRAFT): ?>
+        <?= Html::a(Yii::t('app', 'Publish'), ['publish', 'id' => $model->id], ['class' => 'btn btn-success']) ?>        
+        <?php endif; ?>
+        <?php if ($model->status === Form::STATUS_ACTIVE): ?>
+        <?= Html::a(Yii::t('app', 'To draft'), ['unpublish', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>        
+        <?php endif; ?>        
         <?php if ($model->form_type_id !== FormType::SPECIAL_STAND_FORM):?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',

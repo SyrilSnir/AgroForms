@@ -43,6 +43,22 @@ class FormService
         $this->forms->save($model);  
     }
     
+    public function publish(int $id)
+    {
+        /** @var Form $model */
+        $model = $this->forms->get($id); 
+        $model->publish();
+        $this->forms->save($model);       
+    }
+    
+    public function unpublish(int $id)
+    {
+        /** @var Form $model */
+        $model = $this->forms->get($id);        
+        $model->toDraft();
+        $this->forms->save($model);        
+    }    
+    
     
     
 }

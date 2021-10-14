@@ -125,5 +125,7 @@ return [
     'Date intervals must not overlap' => 'Интервалы дат не должны пересекаться',
     'Wrong period' => 'Неверное значение периода',
     'Special price rules' => 'Специальные ценовые правила',    
+    'Publish' => 'Опубликовать',
+    'To draft' => 'Снять с публикации',
 ];
 

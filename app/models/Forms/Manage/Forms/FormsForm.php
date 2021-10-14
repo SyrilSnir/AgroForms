@@ -28,7 +28,6 @@ class FormsForm extends Model
     public $basePrice;
     public $hasFile;
     public $valute;
-    public $status;
     public $exhibitionId; 
     
     public $nameEng;
@@ -56,7 +55,6 @@ class FormsForm extends Model
            $this->hasFile = $model->has_file;
            $this->exhibitionId = $model->exhibition_id;
            $this->valute = $model->valute_id;
-           $this->status = $model->status;
            $this->id = $model->id;
        }
        parent::__construct($config);
@@ -69,7 +67,7 @@ class FormsForm extends Model
     {
         return [
             [['title', 'name', 'slug', 'formType'], 'required'],
-            [['order', 'formType','basePrice','valute','status','exhibitionId'],'integer'],
+            [['order', 'formType','basePrice','valute','exhibitionId'],'integer'],
             [['hasFile'],'boolean'],
             [['order','basePrice'],'default','value' => 0],
             [['title', 'name', 'slug', 'description','titleEng', 'nameEng', 'descriptionEng'], 'string', 'max' => 255],
@@ -94,7 +92,6 @@ class FormsForm extends Model
             'hasFile' => Yii::t('app','File attachment available'),
             'exhibitionId' => Yii::t('app','Available for exhibitions'),
             'valute' => Yii::t('app','Valute'),
-            'status' => Yii::t('app','Status'),
         ];
     }
     

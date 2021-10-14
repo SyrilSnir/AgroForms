@@ -85,7 +85,7 @@ class Form extends ActiveRecord
         $model->has_file = $form->hasFile;
         $model->description_eng = $form->descriptionEng;        
         $model->valute_id = $form->valute;  
-        $model->status = $form->status;
+        $model->status = self::STATUS_DRAFT;
         $model->exhibition_id = $form->exhibitionId;
         return $form;
     }
@@ -119,7 +119,6 @@ class Form extends ActiveRecord
         $this->has_file = $form->hasFile;
         $this->description_eng = $form->descriptionEng;        
         $this->valute_id = $form->valute; 
-        $this->status = $form->status;
         $this->exhibition_id = $form->exhibitionId;
     }
     
@@ -141,5 +140,15 @@ class Form extends ActiveRecord
     public function getExhibition()
     {
         return $this->hasOne(Exhibition::class, ['id' => 'exhibition_id']);
-    }       
+    } 
+    
+    public function toDraft()
+    {
+        $this->status = self::STATUS_DRAFT;
+    }
+    
+    public function publish()
+    {
+        $this->status = self::STATUS_ACTIVE;
+    }    
 }
