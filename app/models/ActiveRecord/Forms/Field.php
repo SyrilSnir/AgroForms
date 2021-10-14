@@ -4,6 +4,7 @@ namespace app\models\ActiveRecord\Forms;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\Forms\Manage\Forms\FieldParametersForm;
+use DateTime;
 use yii\db\ActiveRecord;
 
 /**
@@ -26,6 +27,9 @@ use yii\db\ActiveRecord;
  * @property Form $form Форма
  * @property FieldEnum[] $enums Перечисляемые аттрибуты
  * @property FieldParametersForm $fieldParams Параметры
+ * 
+ * @property int|null $price Цена
+ * @property SpecialPrice|null $actualSpecialPrice Действующая специальная цена
  */
 class Field extends ActiveRecord
 {
@@ -39,9 +43,10 @@ class Field extends ActiveRecord
  * @param string $descriptionEng
  * @param int $formId
  * @param int $elementTypeId
- * @param int $order
+ * @param int $fieldGroupId
  * @param string $defaultValue
  * @param string $parameters
+
  * @return \self
  */    
     public static function create(
@@ -147,5 +152,26 @@ class Field extends ActiveRecord
         $form = new FieldParametersForm();
         $form->setAttributes($params);
         return $form;
+    }
+    /**
+     * Цена
+     * @return int|null
+     */
+    public function getPrice(): ?int 
+    {
+        if (!$this->fieldParams->isComputed) {
+            return null;
+        }        
+        return $this->actualSpecialPrice ? $this->actualSpecialPrice->price : $this->fieldParams->unitPrice;
+    }
+    
+    public function getActualSpecialPrice(): ?SpecialPrice
+    {
+        $currentDate = ( new DateTime())->format('Y-m-d');        
+        return SpecialPrice::find()
+                ->andWhere(['field_id' => $this->id])
+                ->andWhere(['<','start_date',$currentDate])
+                ->andWhere(['>','end_date',$currentDate])
+                ->one();        
     }
 }

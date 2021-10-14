@@ -113,7 +113,7 @@ class FieldService
             if (!$formField->fieldParams->unitPrice) {
                $unitPrice = 1;
             } else {
-                $unitPrice = (int) $formField->fieldParams->unitPrice;
+                $unitPrice = (int) $formField->price;
             }
              if ($field['equip'] != true) {
                 $val = $isCheckbox ? 1 : (int) $field['value'];
@@ -129,8 +129,10 @@ class FieldService
 
      private function postProcessElement(array &$element, array $valuesList)
      {
+            /** @var Field $field */
          $id = (int) $element['id'];
          $defaultValue = '';
+         $field = $this->fieldRepository->get($id);
          /** @var Unit $unit */
         if ($element['parameters']) {
             $params = &$element['parameters'];
@@ -140,16 +142,16 @@ class FieldService
             $params['checked'] = !!$params['checked'];
             $unitId = $params['unit'] = (int) $params['unit'];
             $unit = $this->unitRepository->findById($unitId);            
-            $unit ? $params['unitName'] = $unit->short_name : '';            
+            $unit ? $params['unitName'] = $unit->short_name : '';
+            $params['unitPrice'] = $field->price;
         }
         if (in_array($element['element_type_id'], ElementType::HAS_ENUM_ATTRIBUTES)) {
-            /** @var Field $field */
-            $field = $this->fieldRepository->get($element['id']);
             $element['enumsList'] = $this->fieldEnumProvider->getEnumsList($field);
             if (count($element['enumsList']) > 0) {
                 $defaultValue = $element['enumsList'][0]['value'];
             }
         }
+        
         if (key_exists($id, $valuesList)) {
             $value = $valuesList[$id]['value'];
             if($element['element_type_id'] == ElementType::ELEMET_ADDITIONAL_EQUIPMENT) {
