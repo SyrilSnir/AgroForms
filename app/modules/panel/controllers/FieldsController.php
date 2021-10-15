@@ -96,6 +96,17 @@ class FieldsController extends BaseAdminController
         ]);
     }
 
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+    
     public function actionUpdate($id)
     {
         /** @var Field $model */
@@ -124,7 +135,7 @@ class FieldsController extends BaseAdminController
             }
             return $this->redirect(['view', 'id' => $model->id]);
         }
-        $dataProvider = $this->specialPriceSearch->search();        
+        $dataProvider = $this->specialPriceSearch->search($id);        
         return $this->render('update', [
             'model' => $form,
             'enumsList' => $enumsList,

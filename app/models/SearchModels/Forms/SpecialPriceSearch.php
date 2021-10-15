@@ -18,30 +18,19 @@ use yii\data\ActiveDataProvider;
  * @author kotov
  */
 class SpecialPriceSearch extends Model
-{
-   public function search(array $params=[]): ActiveDataProvider
+{  
+   public function functionName()
    {
-        $query = SpecialPrice::find();
+       
+   }
+   public function search(int $fieldId): ActiveDataProvider
+   {
+        $query = SpecialPrice::find()
+                ->andWhere(['field_id' => $fieldId]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => false
         ]);
         return $dataProvider;                
-   }
-   
-    public function actionCreate()
-    {
-        $form = new CityForm();
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            try {
-                $post = $this->service->create($form);
-                return $this->redirect(['view', 'id' => $post->id]);
-            } catch (DomainException $e) {
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
-        }
-        return $this->render('create', [
-            'model' => $form,
-        ]);
-    }    
+   }  
 }

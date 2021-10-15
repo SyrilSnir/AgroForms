@@ -5,7 +5,7 @@ use yii\helpers\Html;
 ?>
 <div id="attributes-enum-list" class="card">
               <div class="card-header">
-                <h3 class="card-title">Перечисляемые элементы</h3>
+                  <h3 class="card-title"><?php echo t('Enumerated items') ?></h3>
               </div>
               <!-- /.card-header -->              
               <div class="card-body">
@@ -13,9 +13,9 @@ use yii\helpers\Html;
                   <thead>                  
                     <tr>
                       <th style="width: 10px">#</th>
-                      <th>Название элемента</th>
-                      <th>Название элемента (ENG)</th>
-                      <th>Значение</th>
+                      <th><?php echo t('Item name') ?></th>
+                      <th><?php echo t('Item name') ?> (ENG)</th>
+                      <th><?php echo t('Value') ?></th>
                       <th style="width: 10px"></th>
                     </tr>
                     </thead>                    
@@ -43,19 +43,19 @@ use yii\helpers\Html;
                   <div class="container">
                       <div class="row align-items-end">
                           <div class="col-4">
-                              <div class="field">Имя поля: </div>
+                              <div class="field"><?php echo t('Field name') ?>: </div>
                               <?php echo Html::input('text', 'enum-name', '', [
                                   'class' => 'form-control enum-field-name',
                               ]);?>
                           </div>
                           <div class="col-4">
-                            <div class="field">Имя поля (eng): </div>
+                            <div class="field"><?php echo t('Field name') ?> (eng): </div>
                               <?php echo Html::input('text', 'enum-name_eng', '', [
                                   'class' => 'form-control enum-field-name-eng',
                               ]);?>
                           </div>                            
                           <div class="col-4">
-                            <div class="field">Значение: </div>
+                            <div class="field"><?php echo t('Value') ?>: </div>
                               <?php echo Html::input('text', 'enum-name', '', [
                                   'class' => 'form-control enum-field-value',
                               ]);?>

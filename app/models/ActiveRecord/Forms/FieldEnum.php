@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Forms;
 
+use app\core\traits\ActiveRecord\MultilangTrait;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -18,6 +19,8 @@ use yii\db\ActiveRecord;
  */
 class FieldEnum extends ActiveRecord
 {
+    use MultilangTrait;
+    
     const SESSION_IDENTIFIER = 'FIELD_ENUMS';
     /**
      * {@inheritdoc}
@@ -62,9 +65,9 @@ class FieldEnum extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'field_id' => 'Поле',
-            'name' => 'Название группы аттрибутов',
-            'value' => 'Значение',
+            'field_id' => t('Field'),
+            'name' => t('Item name'),
+            'value' => t('Value'),
         ];
     }
 

@@ -1,7 +1,11 @@
 <?php
 
+use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Forms\FieldEnum;
+use app\models\ActiveRecord\Forms\SpecialPrice;
 use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -40,4 +44,92 @@ $this->title = $model->name;
         ]); ?>
     </div>
 </div>
+<div class="card">
+    <div class="card-header">        
+        <div class="card-title"><?php echo Yii::t('app', 'Extra options') ?></div>
+    </div>           
+    <div class="card-body">
+        <?php
+        
+$fieldParameters = $model->fieldParams;     
+$attributes = [
+    'required' => [
+        'attribute' => 'required',
+        'value' => $fieldParameters->required ? t('Yes'): t('No')        
+    ],
+    'isComputed' => [
+        'attribute' => 'isComputed',
+        'value' => $fieldParameters->isComputed ? t('Yes'): t('No')          
+    ],
+];
+if ($fieldParameters->isComputed) { 
+    $attributes['unitPrice'] = [
+        'attribute' => 'unitPrice',
+        'value' => $fieldParameters->unitPrice
+    ];
+}
+echo DetailView::widget([
+    'model' => $fieldParameters,
+    'attributes' => $attributes,
+]);        
+        ?>
+    </div>
+</div>
+    <?php if(in_array($model->element_type_id,ElementType::COMPUTED_FIELDS )): ?>
+        <?php 
+    $specialPricesQuery = SpecialPrice::find()->where(['field_id' => $model->id]);
+    $specialPricesProvider = new ActiveDataProvider([
+        'query' => $specialPricesQuery,
+        'sort' => false,      
+    ]);          
+        ?>
+<div class="card">
+    <div class="card-header">        
+        <div class="card-title"><?php echo t('Special price rules') ?></div>
+    </div>           
+    <div class="card-body">  
+    <?php 
+    echo GridView::widget([
+        'columns' => [
+            'start_date:date:' . Yii::t('app', 'Start date'),
+            'end_date:date:' . Yii::t('app', 'End date'), 
+            'price:text:' . Yii::t('app', 'Price'),
+        ],
+
+        'dataProvider'=>$specialPricesProvider,                
+    ]);     
+    ?>         
+    </div>           
+</div> 
+<?php endif; ?>
+    <?php if(in_array($model->element_type_id,ElementType::HAS_ENUM_ATTRIBUTES)): ?>    
+    
+<?php 
+    $query = FieldEnum::find()->where(['field_id' => $model->id]);
+    $fieldEnumProvider = new ActiveDataProvider([
+        'query' => $query,
+        'sort' => false,      
+    ]);      
+?>
+    
+
+<div class="card">
+    <div class="card-header">        
+        <div class="card-title"><?php echo t('Enumerated items') ?></div>
+    </div>           
+    <div class="card-body">  
+    <?php 
+    echo GridView::widget([
+        'columns' => [
+            'name',
+            'value'
+        ],
+
+        'dataProvider'=>$fieldEnumProvider,                
+    ]);     
+    ?>         
+    </div>           
+</div>
+    <?php endif; ?>
+
 
