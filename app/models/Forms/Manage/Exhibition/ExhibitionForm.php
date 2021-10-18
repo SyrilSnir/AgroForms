@@ -56,7 +56,7 @@ class ExhibitionForm extends Model
     public function rules()
     {
         return [
-            [['title', 'startDate', 'endDate','status'], 'required'],
+            [['title', 'startDate', 'endDate','status','companyId'], 'required'],
             [['startDate', 'endDate','startAssembling','endAssembling','startDisassembling','endDisassembling'], 'date'],
             [['title', 'titleEng', 'description', 'descriptionEng','address'], 'string', 'max' => 255],
             [['titleEng', 'description', 'descriptionEng'], 'default', 'value' => ''],

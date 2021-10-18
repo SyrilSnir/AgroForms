@@ -5,9 +5,11 @@ use app\core\helpers\View\Exhibition\ExhibitionStatusHelper;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\SearchModels\Exhibition\ExhibitionSearch;
 use kartik\grid\GridView;
+use kotchuprik\sortable\grid\Column;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 
 /* @var $this View */
@@ -30,7 +32,13 @@ $columnsConfig = [
                     ],    
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,    
-                    'columns' => [                    
+                    'rowOptions' => function ($model, $key, $index, $grid) {
+                        return ['data-sortable-id' => $model->id];
+                    },     
+                    'columns' => [
+                        [
+                            'class' => Column::className(),
+                        ],                        
                         'title:text:' . Yii::t('app','Name'),
                         'description:text:' . Yii::t('app','Description'),
                         [
@@ -61,7 +69,13 @@ $columnsConfig = [
                             }
                         ],                                
                         ['class' => ActionColumn::class],
-                    ],    
+                    ], 
+                    'options' => [
+                        'data' => [
+                            'sortable-widget' => 1,
+                            'sortable-url' => Url::toRoute(['sorting']),
+                        ]
+                    ],
 ];
 $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
 $fullGridConfig = array_merge($columnsConfig,$gridConfig);        
