@@ -1,23 +1,41 @@
 <?php
 
 use app\core\helpers\View\Form\FormStatusHelper;
+use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
+use app\models\Forms\Manage\Forms\CopyForm;
 use app\models\SearchModels\Forms\FieldSearch;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
+use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 
 /* @var $this View */
 /* @var $model Form */
 /* @var $formFieldsDataProvider ActiveDataProvider */
 /* @var $formFieldsModel FieldSearch */
-
 $this->title = $model->name;
+
+$anotherExhibitions = ArrayHelper::map(Exhibition::find()->andFilterWhere(['!=', 'id', $model->exhibition_id ])->orderBy('id')->asArray()->all(), 'id', 'title');
 ?>
 <div class="category-view">
+    <?php if (!empty($anotherExhibitions)): ?>
+    <div class="clone-form-block">
+        <?php $cloneExhibitionForm = ActiveForm::begin(['action' => ['copy']]); ?>
+        <?php echo $cloneExhibitionForm->field($cloneForm, 'exhibitionId')->dropDownList($anotherExhibitions)->label(false); ?>
+        <?php echo $cloneExhibitionForm->field($cloneForm, 'formId')->hiddenInput()->label(false); ?>
+        <?php echo  Html::submitButton(t('Create copy'),[
+             //'id' => 'form-copy',
+            'class' => 'btn btn-secondary'
+            ]) 
+        ?>
+        <?php ActiveForm::end(); ?>
+    </div>
+    <?php endif; ?>
     <p>
         <?= Html::a(Yii::t('app', 'Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?php if ($model->status === Form::STATUS_DRAFT): ?>
@@ -87,4 +105,5 @@ $this->title = $model->name;
             ?>
         </div>        
     </div>
+</div>
 

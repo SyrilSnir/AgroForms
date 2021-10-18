@@ -13,6 +13,7 @@ use app\core\services\operations\Forms\FormService;
 use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\Form;
+use app\models\Forms\Manage\Forms\CopyForm;
 use app\models\Forms\Manage\Forms\FormsForm;
 use app\models\SearchModels\Forms\FieldSearch;
 use app\models\SearchModels\Forms\FormSearch;
@@ -74,9 +75,12 @@ class FormsController extends BaseAdminController
             'query' => $fieldsList,
             'sort' => false
         ]);        
+        $copyForm = new CopyForm();
+        $copyForm->formId = $id;
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'fieldDataProvider' => $fieldDataProvider
+            'fieldDataProvider' => $fieldDataProvider,
+            'cloneForm' => $copyForm
         ]);
     }
     
@@ -125,4 +129,14 @@ class FormsController extends BaseAdminController
             'formFieldsModel' => $formFieldsSearchModel,            
         ]);                        
     }  
+    
+    public function actionCopy()
+    {
+        $form = new CopyForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $model = $this->service->copy($form);
+            return $this->redirect(['view', 'id' => $model->id]);            
+        }        
+      //  dump(Yii::$app->request->post());
+    }
 }

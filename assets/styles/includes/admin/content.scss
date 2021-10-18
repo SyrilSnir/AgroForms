@@ -22,3 +22,14 @@
         margin-right: .5rem;
     }
 }
+
+.clone-form-block {
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: start;
+        button {
+            margin-left: 1rem;
+        }
+    }
+}

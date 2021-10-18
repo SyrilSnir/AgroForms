@@ -36,6 +36,7 @@ use yii\db\ActiveRecord;
  * @property string $headerName Заголовок
  * 
  * @property FormType $formType Тип формы
+ * @property Fields[] $formFields Тип формы
  * @property Valute $valute Валюта
  * @property Exhibition $exhibition Выставка, связанная с формой
  * 
@@ -132,6 +133,12 @@ class Form extends ActiveRecord
         return $this->title . ' : ' . mb_convert_case($this->name, MB_CASE_UPPER);
     }
     
+    public function getFormFields()
+    {
+        return $this->hasMany(Field::class, ['form_id' => 'id']);
+    }
+
+
     public function getValute() : ActiveQuery
     {
         return $this->hasOne(Valute::class, ['id' => 'valute_id']);
