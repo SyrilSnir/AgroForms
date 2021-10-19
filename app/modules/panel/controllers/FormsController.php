@@ -87,13 +87,13 @@ class FormsController extends BaseAdminController
     public function actionPublish($id)
     {
         $this->service->publish($id);
-        return $this->redirect(['view', 'id' => $id]);
+        return $this->redirect(Url::previous());
     }    
     
     public function actionUnpublish($id)
     {
         $this->service->unpublish($id);
-        return $this->redirect(['view', 'id' => $id]);
+        return $this->redirect(Url::previous());
     }     
     
      public function actionCreate()

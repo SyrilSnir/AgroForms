@@ -58,7 +58,30 @@ $columnsConfig = [
                             }
                         ],                         
                         [
-                            'class' => ActionColumn::class,                           
+                            'class' => ActionColumn::class,  
+                            'template' => '{view}{update}{delete}&nbsp;&nbsp;&nbsp;{status}',
+                            'width' => '140px',
+                            'buttons' => [
+                                'status' => function ($url, $model, $key) {
+                                    /** @var Form $model */
+                                    if ($model->status == Form::STATUS_DRAFT) {
+                                        $title = 'Опубликовать';
+                                        $iconName = "ok-sign";
+                                        $url = Url::current(['publish', 'id' => $key]);
+                                    } 
+                                    if ($model->status == Form::STATUS_ACTIVE) {
+                                        $title = 'Снять с бубликации';
+                                        $iconName = "remove-circle";
+                                        $url = Url::current(['unpublish', 'id' => $key]);
+                                    }
+                                    $options = [
+                                        'title' => $title,
+                                        'aria-label' => $title,
+                                    ];                                  
+                                    $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                    return Html::a($icon, $url,$options);                            
+                                }
+                            ]
                         ],
                     ],  
                     'options' => [
