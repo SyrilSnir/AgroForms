@@ -97,6 +97,6 @@ class FormsForm extends Model
     
     public function formTypesList():array
     {
-        return ArrayHelper::map(FormType::find()->where(['!=','id', FormType::SPECIAL_STAND_FORM])->orderBy('id')->asArray()->all(),'id','name');
+        return ArrayHelper::map(FormType::find()->orderBy('id')->asArray()->all(),'id','name');
     }
 }

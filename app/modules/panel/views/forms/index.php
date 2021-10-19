@@ -4,10 +4,10 @@ use app\core\helpers\View\Form\FormStatusHelper;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\SearchModels\Forms\FormSearch;
+use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use kotchuprik\sortable\grid\Column;
 use yii\data\ActiveDataProvider;
-use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -58,15 +58,7 @@ $columnsConfig = [
                             }
                         ],                         
                         [
-                            'class' => ActionColumn::class,
-                             'visibleButtons' => [
-                                'update' => function (Form $model) {
-                                    return $model->form_type_id != FormType::SPECIAL_STAND_FORM ;
-                                },
-                                'delete' => function (Form $model) {
-                                    return $model->form_type_id != FormType::SPECIAL_STAND_FORM;
-                                }
-                            ]                             
+                            'class' => ActionColumn::class,                           
                         ],
                     ],  
                     'options' => [
