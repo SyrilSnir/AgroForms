@@ -6,6 +6,7 @@ use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 
 /* @var $this View */
@@ -51,7 +52,24 @@ $columnsConfig = [
                         ],                        
                         [
                             'class' => ActionColumn::class,                            
-                            'width' => '100px',
+                            'width' => '140px',
+                            'template' => '{view}{update}{delete}&nbsp;&nbsp;&nbsp;{member}',                            
+                            'buttons' => [
+                                'member' => function ($url, $model, $key) {
+                                    /** @var Company $model */
+                                    if (!$model->member) {
+                                        $title = t('Create new member','user');
+                                        $iconName = "user";
+                                        $url = Url::current(['add-member', 'id' => $key]);
+                                    }
+                                    $options = [
+                                        'title' => $title,
+                                        'aria-label' => $title,
+                                    ];                                  
+                                    $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                    return Html::a($icon, $url,$options);                            
+                                }
+                                ],                            
                             'visibleButtons' => [
                                 'delete' => Yii::$app->user->can('adminMenu')
                             ]                            

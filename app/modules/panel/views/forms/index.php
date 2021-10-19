@@ -65,12 +65,12 @@ $columnsConfig = [
                                 'status' => function ($url, $model, $key) {
                                     /** @var Form $model */
                                     if ($model->status == Form::STATUS_DRAFT) {
-                                        $title = 'Опубликовать';
+                                        $title = t('Publish');
                                         $iconName = "ok-sign";
                                         $url = Url::current(['publish', 'id' => $key]);
                                     } 
                                     if ($model->status == Form::STATUS_ACTIVE) {
-                                        $title = 'Снять с бубликации';
+                                        $title = t('To draft');
                                         $iconName = "remove-circle";
                                         $url = Url::current(['unpublish', 'id' => $key]);
                                     }
