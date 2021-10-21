@@ -33,3 +33,11 @@
         }
     }
 }
+.item__deleted {
+    color: lightgray;
+}
+#show_deleted-form {
+    .form-group {
+        margin-bottom: 0;
+    }
+}

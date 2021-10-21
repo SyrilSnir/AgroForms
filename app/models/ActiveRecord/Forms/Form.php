@@ -27,12 +27,13 @@ use yii\db\ActiveRecord;
  * @property int|null $updated_at Дата модификации
  * @property int $order Порядок
  * @property int $status Статус
+ * @property bool $deleted Флаг удаления
+ * @property string|null $deleted_at Дата удаления
  * @property boolean $has_file Может содержать вложенный файл
  * @property int $base_price Базовая стоимость
  * @property int $form_type_id Id типа формы
  * @property int $exhibition_id Id выставки
  * @property int $valute_id Id валюты
- * 
  * @property string $headerName Заголовок
  * 
  * @property FormType $formType Тип формы

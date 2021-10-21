@@ -3,9 +3,11 @@
 namespace app\modules\panel\controllers;
 
 use app\core\repositories\readModels\ReadRepositoryInterface;
+use app\modules\panel\controllers\AccessRule\BaseController;
 use DomainException;
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -13,7 +15,7 @@ use yii\web\NotFoundHttpException;
  *
  * @author kotov
  */
-class ManageController extends AccessRule\BaseController
+class ManageController extends BaseController
 {
     /**
      *
@@ -56,7 +58,7 @@ class ManageController extends AccessRule\BaseController
         } catch (DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
-        return $this->redirect(['index']);
+        return $this->redirect(Url::previous());
     }      
 
 }

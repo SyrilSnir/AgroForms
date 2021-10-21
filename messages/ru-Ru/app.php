@@ -132,6 +132,7 @@ return [
     'Item name' => 'Название элемента',
     'Value' => 'Значение',
     'Field name' => 'Имя поля',
-    'Create copy' => 'Создать копию'
+    'Create copy' => 'Создать копию',
+    'Show deleted entries' => 'Показать удаленные записи'
 ];
 

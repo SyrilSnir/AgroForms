@@ -7,6 +7,7 @@ use app\core\repositories\manage\DataManipulationTrait;
 use app\core\repositories\manage\RepositoryInterface;
 use app\models\ActiveRecord\Forms\Field;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * Description of FieldRepository
@@ -24,4 +25,16 @@ class FieldRepository implements RepositoryInterface
         }
         return $model;
     }
+
+    /**
+     * 
+     * @param ActiveRecord $model
+     */
+    public function remove(ActiveRecord $model) 
+    {
+        /** @var Field $model */
+        $model->deleted = true;
+        $model->deleted_at = new Expression('NOW()');
+        $model->save();
+    }    
 }

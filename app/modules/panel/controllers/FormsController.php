@@ -15,6 +15,7 @@ use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\Forms\Manage\Forms\CopyForm;
 use app\models\Forms\Manage\Forms\FormsForm;
+use app\models\Forms\ShowDeletedForm;
 use app\models\SearchModels\Forms\FieldSearch;
 use app\models\SearchModels\Forms\FormSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
@@ -115,7 +116,12 @@ class FormsController extends BaseAdminController
     public function actionUpdate($id)
     {
         Url::remember();
-        $formFieldsSearchModel = new FieldSearch();        
+        $showDeletedForm = new ShowDeletedForm(); 
+        $showDeletedForm->load(Yii::$app->request->get());
+        
+        $formFieldsSearchModel = new FieldSearch();  
+        $formFieldsSearchModel->deleted = $showDeletedForm->showDeleted;
+        
         $formFieldsDataProvider = $formFieldsSearchModel->searchForForm($id , Yii::$app->request->queryParams); 
         $model = $this->findModel($id);
         $form = new FormsForm($model);        
@@ -126,7 +132,8 @@ class FormsController extends BaseAdminController
         return $this->render('update', [
             'model' => $form,
             'formFieldsDataProvider' => $formFieldsDataProvider,
-            'formFieldsModel' => $formFieldsSearchModel,            
+            'formFieldsModel' => $formFieldsSearchModel,
+            'showDeletedForm' => $showDeletedForm         
         ]);                        
     }  
     

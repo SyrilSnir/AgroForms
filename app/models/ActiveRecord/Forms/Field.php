@@ -21,7 +21,8 @@ use yii\db\ActiveRecord;
  * @property int $order Позиция на экране
  * @property string|null $default_value Значение по умолчанию
  * @property string|null $parameters Параметры
- * 
+ * @property bool $deleted Флаг удаления
+ * @property string|null $deleted_at Дата удаления
  * @property ElementType $elementType Тип элемента
  * @property FieldGroup $fieldGroup Позиция на экране
  * @property Form $form Форма

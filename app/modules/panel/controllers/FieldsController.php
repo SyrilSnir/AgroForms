@@ -66,7 +66,7 @@ class FieldsController extends BaseAdminController
     
     public function actionCreate($formId = null)
     {        
-        $previousPage = '/panel/forms/update?id=' .$formId;        
+        $previousPage = '/panel/forms/update?id=' .$formId;
         Url::remember();
         $form = new FieldForm();
         $loadFormData = $form->load(Yii::$app->request->post());

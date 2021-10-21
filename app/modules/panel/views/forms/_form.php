@@ -1,10 +1,8 @@
 <?php
 
-use app\core\helpers\View\Form\FormStatusHelper;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\Forms\Manage\Forms\FormsForm;
-use dosamigos\multiselect\MultiSelectListBox;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use kartik\switchinput\SwitchInput;
@@ -85,11 +83,14 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
 
 <?php if (in_array($model->formType, FormType::HAS_DYNAMIC_FIELDS)): ?>
 <?php 
+$action = Yii::$app->getRequest()->getPathInfo(); //.  Yii::$app->getRequest()->getQueryString();
+//dump($action); die();
+$showDeletedTemplate = require_once Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'show_deleted-button.php';
 $columnsConfig = [
                     'toolbar' => [
                         [
                             'header' => 'rrrgrg',
-                            'content'=> //$rowsCountTemplate .
+                            'content'=> $showDeletedTemplate .
                                 Html::a('<i class="fas fa-plus"></i>',['fields/create', 'formId' => $model->id], [
                                     'class' => 'btn btn-sm btn-success',
                                 ])                            
@@ -102,7 +103,12 @@ $columnsConfig = [
                     'dataProvider' => $formFieldsDataProvider,
                     'filterModel' => $formFieldsModel,
                     'rowOptions' => function ($model, $key, $index, $grid) {
-                        return ['data-sortable-id' => $model->id];
+                        /** @var Field $model */
+                        $optionsList = ['data-sortable-id' => $model->id];
+                        if ($model->deleted) {
+                            $optionsList['class'] = 'item__deleted';
+                        }
+                        return $optionsList;
                     },    
                     'columns' => [  
                         [

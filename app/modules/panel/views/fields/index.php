@@ -16,10 +16,11 @@ $this->title = Yii::t('app/title', 'Directory of fields');
 $this->params['breadcrumbs'][] = $this->title;
 $action = Yii::$app->getRequest()->getPathInfo();
 $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$showDeletedTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'show_deleted-button.php';
 $columnsConfig = [
                     'toolbar' => [
                         [
-                            'content'=> $rowsCountTemplate .
+                            'content'=> $rowsCountTemplate . $showDeletedTemplate .
                                 Html::a('<i class="fas fa-plus"></i>',['create'], [
                                     'class' => 'btn btn-sm btn-success',
                                     'title' => Yii::t('app', 'Add field'),

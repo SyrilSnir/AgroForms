@@ -92,5 +92,10 @@ class FieldService
             $enumModel->save();            
         }
     }     
-    
+    public function remove($id)
+    {
+        /** @var Field $field */
+        $field = $this->fieldRepository->get($id); 
+        $this->fieldRepository->remove($field);
+    }
 }

@@ -12,6 +12,7 @@ $this->title = Yii::t('app/title', 'Edit form') . ': ' . $model->name;
     <?php echo $this->render('_form', [
         'model' => $model,
         'formFieldsDataProvider' => $formFieldsDataProvider,
-        'formFieldsModel' => $formFieldsModel,         
+        'formFieldsModel' => $formFieldsModel,    
+        'showDeletedForm' => $showDeletedForm           
     ]) ?>
 </div>

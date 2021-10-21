@@ -30,11 +30,13 @@ class FieldSearch extends Model
 
     public $formId;
 
-
+    public $deleted;
+    
     public function rules(): array
     {
         return [
             [['name', 'description'], 'safe'],
+            [['deleted'], 'boolean'],
             [['fieldGroupId','formId','elementTypeId'], 'number'],
         ];
     } 
@@ -58,6 +60,9 @@ class FieldSearch extends Model
         if (!$this->validate()) {
             $query->where('0=1');
             return $dataProvider;
+        }
+        if (!$this->deleted) {
+            $query->andFilterWhere(['deleted' => $this->deleted]);
         }
         $query->andFilterWhere(['like','name', $this->name]);
         $query->andFilterWhere(['like','description', $this->description]);
