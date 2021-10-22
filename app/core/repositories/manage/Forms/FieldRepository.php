@@ -37,4 +37,16 @@ class FieldRepository implements RepositoryInterface
         $model->deleted_at = new Expression('NOW()');
         $model->save();
     }    
+    
+    /**
+     * 
+     * @param ActiveRecord $model
+     */
+    public function restore(ActiveRecord $model) 
+    {
+        /** @var Field $model */
+        $model->deleted = false;
+        $model->deleted_at = null;
+        $model->save();
+    }     
 }

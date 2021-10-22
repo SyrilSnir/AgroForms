@@ -136,8 +136,30 @@ $columnsConfig = [
                             ],
                         [
                             'class' => ActionColumn::class,
-                           // 'header' => 'Действия',
-                            'controller' => 'fields'                       
+                            'template' => '{view} {update} {delete} {restore}',
+                            'controller' => 'fields',
+                            'visibleButtons' => [
+                                'delete' => function(Field $model) {
+                                    return !$model->deleted;
+                                },
+                                'restore' => function(Field $model) {
+                                    return $model->deleted;
+                                }                                
+                            ],
+                            'buttons' => [
+                                'restore' => function ($url, $model, $key) {
+                                    /** @var Field $model */
+                                    $title = t('Restore');
+                                    $iconName = "ok-circle";
+                                    $url = Url::toRoute(['fields/restore', 'id' => $key]);                                    
+                                    $options = [
+                                        'title' => $title,
+                                        'aria-label' => $title,
+                                    ];                                  
+                                    $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                    return Html::a($icon, $url,$options);                            
+                                }                                
+                            ]
                         ],
                     ],  
                     'options' => [

@@ -98,4 +98,12 @@ class FieldService
         $field = $this->fieldRepository->get($id); 
         $this->fieldRepository->remove($field);
     }
+    
+    public function restore($id)
+    {
+        /** @var Field $field */
+        $field = $this->fieldRepository->get($id); 
+        $this->fieldRepository->restore($field);
+    }    
 }
+

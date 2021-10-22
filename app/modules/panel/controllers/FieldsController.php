@@ -155,5 +155,19 @@ class FieldsController extends BaseAdminController
                 $form->parameters->setScenario(FieldParametersForm::SCENARIO_HTML_BLOCK);
                 break;
         }
-    }    
+    } 
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionRestore($id)
+    {
+        try {
+            $this->service->restore($id);
+        } catch (DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(Url::previous());
+    }     
 }
