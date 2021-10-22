@@ -18,4 +18,14 @@ class FieldReadRepository implements ReadRepositoryInterface
             ->andWhere(['id' => $id])
             ->one();
     }
+    
+    public static function findForForm(int $formId = null):array
+    {
+        return Field::find()
+                ->andFilterWhere(['form_id' => $formId])
+                ->andFilterWhere(['deleted' => false])
+                ->orderBy(['order' => SORT_ASC])
+                ->asArray()
+                ->all();        
+    }    
 }

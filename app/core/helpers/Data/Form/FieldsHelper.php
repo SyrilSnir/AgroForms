@@ -16,8 +16,8 @@ class FieldsHelper
     public static function getUncategorizedFields(int $formId = null):array
     {
         return Field::find()
-                ->where(['field_group_id' => FieldGroup::UNDEFINED_FIELD_GROUP])
                 ->andFilterWhere(['form_id' => $formId])
+                ->andFilterWhere(['deleted' => false])
                 ->orderBy(['order' => SORT_ASC])
                 ->asArray()
                 ->all();        

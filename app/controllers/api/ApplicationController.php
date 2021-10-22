@@ -2,10 +2,9 @@
 
 namespace app\controllers\api;
 
-use app\core\helpers\Data\Form\FieldGroupsHelper;
-use app\core\helpers\Data\Form\FieldsHelper;
 use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\manage\Requests\RequestRepository;
+use app\core\repositories\readModels\Forms\FieldReadRepository;
 use app\core\services\Forms\FieldService;
 use app\core\services\operations\Requests\ApplicationService;
 use app\core\services\operations\View\Requests\ApplicationViewService;
@@ -14,7 +13,6 @@ use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationForm;
-use app\models\Forms\Requests\DynamicForm;
 use DomainException;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -74,14 +72,14 @@ class ApplicationController extends FormController
         $this->applicationService = $applicationService;
         $this->applicationViewService = $applicationViewService;
     }    
-    public function actionGetForm()
+    public function actionGetForm($readonly = false)
     {
         /** @var Form $form */
         $formId = Yii::$app->session->get('OPENED_FORM_ID');
         $userId = Yii::$app->user->getId();  
         $valuesList = [];
         if (!$formId) {
-            throw new DomainException('Запрашиваемая форма не найдена на сервере');
+            throw new DomainException(t('The requested form was not found on the server', 'exception'));
         }
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
         $form = $this->formRepository->get($formId);
@@ -92,6 +90,7 @@ class ApplicationController extends FormController
           'formId' => $form->id,
           'hasFile' => (bool) $form->has_file,
           'language' => Yii::$app->language,
+          'readOnly' => $readonly,
           'dict' => [
               'fileAttach' => [
                   'browse' => t('Browse'),
@@ -125,17 +124,10 @@ class ApplicationController extends FormController
             $baseConfiguration['computed'] = false;
             $baseConfiguration['basePrice'] = 0;
         }
-
-       $groups = FieldGroupsHelper::getGroupsWithFields($formId);
-       $groups = array_map(function($elem) {
-                $elem['isGroup'] = true;
-                return $elem;
-            }, $groups);
-       $fields = FieldsHelper::getUncategorizedFields($formId);
-       $formElements = ArrayHelper::merge($groups, $fields);
+        $formElements = FieldReadRepository::findForForm($form->id);
         ArrayHelper::multisort($formElements,['order'],[SORT_ASC]);
        
-       $this->fieldService->postProcessFields($formElements,$valuesList);
+        $this->fieldService->postProcessFields($formElements,$valuesList);
         $baseConfiguration['elements'] = $formElements;
         return $baseConfiguration;
         
@@ -159,7 +151,7 @@ class ApplicationController extends FormController
                 ];               
             }
         } catch (Exception $e) {
-            $message = 'Произошла ошибка при сохранении формы заявки';            
+            $message = t('An error occurred while saving the application form', 'exception');            
             return $this->getErrorMessage($message);
         }        
     }

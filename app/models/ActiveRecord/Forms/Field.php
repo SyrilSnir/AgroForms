@@ -163,7 +163,7 @@ class Field extends ActiveRecord
         if (!$this->fieldParams->isComputed) {
             return null;
         }        
-        return $this->actualSpecialPrice ? $this->actualSpecialPrice->price : $this->fieldParams->unitPrice;
+        return  $this->actualSpecialPrice ? (int) $this->actualSpecialPrice->price : (int) $this->fieldParams->unitPrice;
     }
     
     public function getActualSpecialPrice(): ?SpecialPrice
