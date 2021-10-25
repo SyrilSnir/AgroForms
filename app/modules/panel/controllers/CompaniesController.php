@@ -12,6 +12,7 @@ use app\models\Forms\Manage\Users\MemberForm;
 use app\models\SearchModels\Companies\CompanySearch;
 use DomainException;
 use Yii;
+use yii\helpers\Url;
 
 /**
  * Description of CompaniesController
@@ -71,13 +72,13 @@ class CompaniesController extends ManageController
     public function actionUnblock($id)
     {
         $this->service->unblock($id);
-        return $this->redirect(['view', 'id' => $id]);
+        return $this->redirect(Url::previous());
     }
 
     public function actionBlock($id)
     {
         $this->service->block($id);
-        return $this->redirect(['view', 'id' => $id]);
+        return $this->redirect(Url::previous());
     }
     
     public function actionAddMember($id)

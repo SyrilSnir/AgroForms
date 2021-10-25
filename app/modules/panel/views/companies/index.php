@@ -51,9 +51,10 @@ $columnsConfig = [
                                 }
                         ],                        
                         [
-                            'class' => ActionColumn::class,                            
+                            'class' => ActionColumn::class,
+                            'hAlign' => GridView::ALIGN_LEFT,
                             'width' => '140px',
-                            'template' => '{view}{update}{delete}&nbsp;&nbsp;&nbsp;{member}',                            
+                            'template' => '{view}{update}{delete}&nbsp;&nbsp;&nbsp;{block}{member}',                            
                             'buttons' => [
                                 'member' => function ($url, $model, $key) {
                                     /** @var Company $model */
@@ -68,8 +69,28 @@ $columnsConfig = [
                                     ];                                  
                                     $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
                                     return Html::a($icon, $url,$options);                            
+                                },
+                                'block' => function ($url, $model, $key) {
+                                    /** @var Company $model */
+                                    if ($model->isBlocked()) {
+                                        $title = Yii::t('app/company','Unblock company');
+                                        $iconName = "ok-sign";
+                                        $url = Url::current(['unblock', 'id' => $key]);
+                                    } 
+                                    else {
+                                        $title = Yii::t('app/company','Block company');
+                                        $iconName = "remove-circle";
+                                        $url = Url::current(['block', 'id' => $key]);
+                                    }
+                                    $options = [
+                                        'title' => $title,
+                                        'aria-label' => $title,
+                                    ];                                  
+                                    $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                    return Html::a($icon, $url,$options);                                    
                                 }
-                                ],                            
+                                ],
+                                
                             'visibleButtons' => [
                                 'delete' => Yii::$app->user->can('adminMenu')
                             ]                            
