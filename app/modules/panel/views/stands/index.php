@@ -33,6 +33,7 @@ $this->title = Yii::t('app/title', 'Available stands');
                     'columns' => [                    
                         'name:text:' . Yii::t('app', 'Name'),
                         'description:html:' . Yii::t('app', 'Description'),
+                        'exhibition.title:text:' . Yii::t('app', 'Exhibition'),
                         [
                             'label' => Yii::t('app', 'Stand image'),
                             'value' => function (Stand $model) {

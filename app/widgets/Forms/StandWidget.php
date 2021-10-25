@@ -2,10 +2,7 @@
 
 namespace app\widgets\Forms;
 
-use app\core\manage\Auth\UserIdentity;
-use app\models\ActiveRecord\Forms\Form;
-use app\models\ActiveRecord\Forms\Stand;
-use yii\base\Widget;
+use Yii;
 
 /**
  * Description of StandWidget
@@ -17,6 +14,7 @@ class StandWidget extends FormWidget
     
     public function run(): string
     {
+        Yii::$app->session->set('OPENED_FORM_ID', $this->formId);        
         return $this->render('stand',[
             'user' => $this->user,            
         ]);

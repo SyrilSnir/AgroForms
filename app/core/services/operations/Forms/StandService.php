@@ -29,6 +29,7 @@ class StandService
     public function create(StandForm $form)
     {
         $stand = Stand::create(
+                $form->formId,
                 $form->name,
                 $form->description, 
                 $form->nameEng,
@@ -52,6 +53,7 @@ class StandService
         /** @var Stand $stand */
         $stand = $this->stands->get($id);
         $stand->edit(
+                $form->formId,
                 $form->name,
                 $form->description, 
                 $form->nameEng,

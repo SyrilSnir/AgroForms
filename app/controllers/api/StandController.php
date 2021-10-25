@@ -62,9 +62,11 @@ class StandController extends FormController
     public function actionGetForm()
     {
         /** @var Form $stand */
+        $formId = Yii::$app->session->get('OPENED_FORM_ID');
+        $stand = $this->formRepository->get($formId);        
         $userId = Yii::$app->user->getId();
-        $stand = $this->formRepository->get(FormType::SPECIAL_STAND_FORM);
-        $standsList = StandsHelper::standsList();
+        //$stand = $this->formRepository->get(FormType::SPECIAL_STAND_FORM);
+        $standsList = StandsHelper::standsList($stand->exhibition_id);
         $baseConfiguration = [
           'title' => $stand->headerName,
           'stands' => $standsList,          

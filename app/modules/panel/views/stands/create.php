@@ -15,6 +15,7 @@ $this->title = Yii::t('app/title', 'New stand');
     
 <?php echo $this->render('_form', [
         'model' => $model,
+        'newModel' => true
 ]) ?>
 
 </div>

@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
 /** @var View $this */
 /** @var ActiveForm $form */
 /** @var StandForm $model */
+/** @var bool $newModel */
 
 if (!$model->imageFile) {
     $pluginOptions = [];
@@ -33,7 +34,12 @@ if (!$model->imageFile) {
                     <div class="row">
                         <div class="col-md-6">                           
     <?php $form = ActiveForm::begin(); ?>
-
+    <?php //if($newModel) :?>
+    <?php echo $form->field($model, 'formId')->dropDownList($model->formsList()); ?>
+    <?php // else: ?>
+        <?php // echo $form->field($model, 'formId')->hiddenInput()->label(false) ?>
+    <?php // endif; ?>
+                            
     <?= $form->field($model, 'name')->textInput() ?>
 
     <?= $form->field($model, 'description')->widget(CKEditor::className(),[

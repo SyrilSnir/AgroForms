@@ -12,8 +12,8 @@ use yii\helpers\ArrayHelper;
  */
 class StandsHelper
 {
-    public static function standsList() :array 
+    public static function standsList($exhibitionId) :array 
     {
-        return ArrayHelper::toArray(Stand::find()->all());
+        return ArrayHelper::toArray(Stand::find()->joinWith(['form'])->andWhere(['forms.exhibition_id' => $exhibitionId])->all());
     }
 }

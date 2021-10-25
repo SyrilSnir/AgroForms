@@ -134,6 +134,7 @@ return [
     'Value' => 'Значение',
     'Field name' => 'Имя поля',
     'Create copy' => 'Создать копию',
-    'Show deleted entries' => 'Показать удаленные записи'
+    'Show deleted entries' => 'Показать удаленные записи',
+    'Exhibition' => 'Выставка'
 ];
 

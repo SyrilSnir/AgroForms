@@ -30,10 +30,10 @@ $this->title = $model->name;
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id',
                     'name:text:' . Yii::t('app','Name'),
                     'description:html:' . Yii::t('app','Description'),
                     'price:text:' . Yii::t('app','Price'),
+                    'exhibition.title:text:' . Yii::t('app','Exhibition')
                 ],
             ]); ?>
     <?php if ($model->image_url) :?>

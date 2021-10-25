@@ -3,6 +3,7 @@
 namespace app\models\ActiveRecord\Forms;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
+use app\models\ActiveRecord\Exhibition\Exhibition;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
@@ -13,6 +14,7 @@ use yiidreamteam\upload\FileUploadBehavior;
  *
  * @property int $id
  * @property string $name Название
+ * @property int $form_id Id формы
  * @property string|null $description Описание
  * @property string|null $name_eng Название (ENG)
  * @property string|null $description_eng Описание (ENG)
@@ -21,6 +23,9 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property string|null $image_url Url файла с изображением
  * @property string|null $plan_path Путь к файлу с планом стенда
  * @property int $price Цена за м2
+ * 
+ * @property Form|null $form Форма, ассоциированная со стендом
+ * @property Exhibition|null $exhibition Выставка
  */
 class Stand extends ActiveRecord
 {
@@ -51,6 +56,7 @@ class Stand extends ActiveRecord
     
     /**
      * 
+     * @param int $formId
      * @param string $name
      * @param string $description
      * @param string $nameEng
@@ -59,6 +65,7 @@ class Stand extends ActiveRecord
      * @return \self
      */
     public static function create(
+            int $formId,
             string $name,
             string $description,
             string $nameEng,
@@ -67,6 +74,7 @@ class Stand extends ActiveRecord
             ): self
     {
         $stand = new self();
+        $this->form_id = $formId;
         $stand->name = $name;
         $stand->description = $description;
         $stand->name_eng = $nameEng;
@@ -76,7 +84,7 @@ class Stand extends ActiveRecord
     }
 
     /**
-     * 
+     * @param int $formId
      * @param string $name
      * @param string $description
      * @param string $nameEng
@@ -85,6 +93,7 @@ class Stand extends ActiveRecord
      * @return void
      */
     public function edit(
+            int $formId,
             string $name,
             string $description,
             string $nameEng,
@@ -92,6 +101,7 @@ class Stand extends ActiveRecord
             int $price   
             ):void
     {
+        $this->form_id = $formId;
         $this->name = $name;
         $this->description = $description;
         $this->name_eng = $nameEng;
@@ -104,5 +114,16 @@ class Stand extends ActiveRecord
         $this->photo = $photo;
     }   
 
-
+    public function getForm()
+    {
+        return $this->hasOne(Form::class, ['id' => 'form_id']);
+    }
+    
+    public function getExhibition()
+    {
+        if (!$this->form) {
+            return null;
+        }
+        return $this->form->hasOne(Exhibition::class, ['id' => 'exhibition_id']);
+    }
 }

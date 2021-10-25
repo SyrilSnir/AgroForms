@@ -2,9 +2,13 @@
 
 namespace app\models\Forms\Manage\Forms;
 
+use app\core\traits\Lists\GetFormsListTrait;
+use app\models\ActiveRecord\Forms\Form;
+use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Forms\Stand;
 use Yii;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -27,8 +31,12 @@ class StandForm extends Model
     public $imageFile;
     
     public $photo;
+    
+    public $formId;
 
 
+    use GetFormsListTrait;
+    
     public function __construct(Stand $model = null, $config = array())
     {
         if ($model) {
@@ -38,6 +46,7 @@ class StandForm extends Model
             $this->descriptionEng = $model->description_eng;
             $this->price = $model->price;
             $this->imageFile = $model->image_url;
+            $this->formId = $model->form_id;
         }
         parent::__construct($config);
     }
@@ -49,8 +58,8 @@ class StandForm extends Model
     {
         return [
             [['description','nameEng','descriptionEng'], 'string'],
-            [['price'], 'required'],
-            [['price'], 'integer'],
+            [['price','formId'], 'required'],
+            [['price','formId'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['imageFile','photo'], 'image'],
         ];
@@ -64,7 +73,8 @@ class StandForm extends Model
         return [
             'id' => 'ID',
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
+            'formId' => Yii::t('app', 'Form'),
+            'description' => Yii::t('app', 'Description'),      
             'nameEng' => Yii::t('app', 'Name') . ' (ENG)',
             'descriptionEng' => Yii::t('app', 'Description') . ' (ENG)',            
             'photo' => Yii::t('app','The name of the original image file'),
@@ -81,6 +91,14 @@ class StandForm extends Model
             return true;
         }
         return false;
+    }   
+
+    public function formsList():array
+    {
+        $stand = Form::find()->with('exhibition')->andWhere(['form_type_id' => FormType::SPECIAL_STAND_FORM])->orderBy('id')->all();
+        return ArrayHelper::map($stand, 'id', function($model) {
+            return $model->name . ' (' . $model->exhibition->title .  ')';
+        });         
     }    
 }
 
