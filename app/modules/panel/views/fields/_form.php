@@ -135,6 +135,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
             <div id="unit-price__container"<?php if ($model->hasEnums ):?> style="display: none;"<?php endif; ?>>
                 <?= $form->field($model->parameters, 'unitPrice')->textInput() ?>
             </div>
+            <?php if (!$isNew): ?>
             <div class="special-price-params__container">
                 <h5><?php echo t('Special price rules')?> </h5>
             <section class="content">
@@ -145,6 +146,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                 </div>
             </section>                
             </div>
+            <?php endif ;?>
         </div>
     </div>                
                             

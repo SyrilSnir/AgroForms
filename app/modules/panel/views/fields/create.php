@@ -18,7 +18,7 @@ $this->title = Yii::t('app/title', 'New field');
         'formId' => $formId,
         'enumsList' => $enumsList,
         'isNew' => true,
-        'previousPage' => $previousPage, 
+        'previousPage' => $previousPage,    
         
 ]) ?>
 
