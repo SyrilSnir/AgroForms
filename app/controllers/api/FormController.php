@@ -3,6 +3,7 @@
 namespace app\controllers\api;
 
 use app\controllers\JsonController;
+use app\core\manage\Auth\Rbac;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
@@ -21,7 +22,7 @@ abstract class FormController extends JsonController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['member'],
+                        'roles' => [Rbac::PERMISSION_MEMBER_MENU, Rbac::PERMISSION_ADMINISTRATOR_MENU],
                     ],
                 ],
             ],

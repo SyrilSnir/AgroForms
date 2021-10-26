@@ -16,7 +16,8 @@ class StandWidget extends FormWidget
     {
         Yii::$app->session->set('OPENED_FORM_ID', $this->formId);        
         return $this->render('stand',[
-            'user' => $this->user,            
+            'user' => $this->user,     
+            'readOnly' => $this->readOnly,
         ]);
     }    
 }

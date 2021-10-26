@@ -25,6 +25,12 @@ abstract class FormWidget extends Widget
      */
     protected $user; 
     
+    /**
+     * 
+     * @var bool
+     */
+    protected $readOnly;
+    
     public function setUser(UserIdentity $user)
     {
         $this->user = $user;
@@ -34,4 +40,9 @@ abstract class FormWidget extends Widget
     {
         $this->formId = $formId;
     }
+    
+    public function setReadOnly(bool $val)
+    {
+        $this->readOnly = $val;
+    }    
 }

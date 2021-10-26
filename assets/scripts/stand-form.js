@@ -1,5 +1,6 @@
 import StandApp from './components/vue/Stand/StandApp';
 const Vue = window.Vue;
+const isReadOnly = !!document.getElementById('stand-app').getAttribute('data-read_only');
 /*
 (function() {
     console.log('Stand Form loading!!!');
@@ -18,7 +19,11 @@ Vue.filter('formatPrice',function(price) {
 )
 new Vue({
   el: '#stand-app',
-  render: h => h(StandApp)
+  render: h => h(StandApp, {
+    props: {
+        isReadOnly
+      }      
+  })
 })
 
 //console.log(Vue);

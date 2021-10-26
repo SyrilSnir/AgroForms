@@ -13,6 +13,7 @@ use app\core\services\operations\Forms\FormService;
 use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\Form;
+use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Manage\Forms\CopyForm;
 use app\models\Forms\Manage\Forms\FormsForm;
 use app\models\Forms\ShowDeletedForm;
@@ -22,7 +23,6 @@ use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
 use kotchuprik\sortable\actions\Sorting;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 
 /**
@@ -71,7 +71,16 @@ class FormsController extends BaseAdminController
     public function actionView($id)
     {
         Url::remember();
-        $fieldsList = Field::find()->availableForForm($id)->orderBy(['order'  => SORT_ASC]);
+        $user = Yii::$app->user->getIdentity();
+        $form = $this->readRepository->findById($id);
+        Yii::$app->session->remove('REQUEST_ID'); 
+        Yii::$app->session->set('FORM_CHANGE_TYPE', Request::FORM_VIEW);
+        return $this->render('load', [
+            'form' => $form,
+            'readOnly' => true,
+            'user' => $user,
+        ]);        
+     /*   $fieldsList = Field::find()->availableForForm($id)->orderBy(['order'  => SORT_ASC]);
         $fieldDataProvider = new ActiveDataProvider([
             'query' => $fieldsList,
             'sort' => false
@@ -82,7 +91,7 @@ class FormsController extends BaseAdminController
             'model' => $this->findModel($id),
             'fieldDataProvider' => $fieldDataProvider,
             'cloneForm' => $copyForm
-        ]);
+        ]);*/
     }
     
     public function actionPublish($id)

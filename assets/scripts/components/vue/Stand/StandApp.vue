@@ -95,9 +95,10 @@
                 </h4>
      </div>
      <div class="card-footer">
-                <button type="button" @click="saveDraft" class="btn btn-primary">{{ dict.buttons.draft }}</button>
-                <button type="button" @click="formSubmit" class="btn btn-success">{{ dict.buttons.send }}</button>
-                <button type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.cancel }}</button>
+                <button v-if="!isReadOnly" type="button" @click="saveDraft" class="btn btn-primary">{{ dict.buttons.draft }}</button>
+                <button v-if="!isReadOnly" type="button" @click="formSubmit" class="btn btn-success">{{ dict.buttons.send }}</button>
+                <button v-if="!isReadOnly" type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.cancel }}</button>
+                <button v-if="isReadOnly" type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.close }}</button>
                 </div>
 </div>
 </template>
@@ -106,6 +107,9 @@ import axios from "axios";
 import { numberFormatMixin } from "./Mixins/numberFormatMixin"
 import StandList from "./Stands";
 export default {
+    props: [
+        'isReadOnly'
+    ],    
     data() {
         return {
             update: false,

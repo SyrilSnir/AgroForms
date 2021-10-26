@@ -65,7 +65,7 @@ class FormsController extends BaseMemberController
         $form = $this->formsRepository->get($id);
         return $this->render('load', [
             'form' => $form,
-            //'formId' => 
+            'readOnly' => false,
             'user' => $user,
         ]);
     }

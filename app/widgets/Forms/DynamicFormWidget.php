@@ -16,6 +16,7 @@ class DynamicFormWidget extends FormWidget
         Yii::$app->session->set('OPENED_FORM_ID', $this->formId);
         return $this->render('dynamic-form',[
             'user' => $this->user,
+            'readOnly' => $this->readOnly
         ]);
     }
 }

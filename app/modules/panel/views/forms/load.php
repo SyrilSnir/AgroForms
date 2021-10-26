@@ -8,11 +8,16 @@ use app\widgets\Forms\StandWidget;
 
 /** @var Form $form */
 /** @var UserIdentity $user */
-
-$this->title = Yii::t('app/title','Add request');
+/** @var bool $readOnly */
+if ($readOnly) {
+    $this->title = Yii::t('app/title','Show form');    
+} else {
+    $this->title = Yii::t('app/title','Add request');
+}
 $widgetConfig = [
             'user' => $user,
-            'formId' => $form->id
+            'formId' => $form->id,
+            'readOnly' => $readOnly
         ];
 
 switch ($form->form_type_id) {

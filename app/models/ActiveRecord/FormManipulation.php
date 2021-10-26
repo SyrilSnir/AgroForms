@@ -13,4 +13,5 @@ class FormManipulation extends ActiveRecord
 {
     const FORM_CREATE = 'create';
     const FORM_UPDATE = 'update';
+    const FORM_VIEW = 'view';
 }

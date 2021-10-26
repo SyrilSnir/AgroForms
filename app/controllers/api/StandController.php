@@ -106,7 +106,8 @@ class StandController extends FormController
             'buttons' => [
               'send' => t('Send application','requests'),
               'draft' => t('Save draft', 'requests'),
-              'cancel' => t('Cancel', 'requests'),
+              'cancel' => t('Cancel'),
+              'close' => t('Close'),
             ],            
             
         ];        

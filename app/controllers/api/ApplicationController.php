@@ -106,6 +106,7 @@ class ApplicationController extends FormController
                 'send' => t('Send application','requests'),
                 'draft' => t('Save draft', 'requests'),
                 'cancel' => t('Cancel'),
+                'close' => t('Close'),
               ]
           ]
         ]; 

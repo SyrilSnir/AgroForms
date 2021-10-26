@@ -37,9 +37,10 @@
                 :dic="dict"
             ></computed>
             <div class="card-footer">
-                <button type="button" @click="saveDraft" class="btn btn-primary">{{ dict.buttons.draft }}</button>
-                <button type="button" @click="formSubmit" class="btn btn-success">{{ dict.buttons.send }}</button>
-                <button type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.cancel }}</button>
+                <button v-if="!isReadOnly" type="button" @click="saveDraft" class="btn btn-primary">{{ dict.buttons.draft }}</button>
+                <button v-if="!isReadOnly" type="button" @click="formSubmit" class="btn btn-success">{{ dict.buttons.send }}</button>
+                <button v-if="!isReadOnly" type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.cancel }}</button>
+                <button v-if="isReadOnly" type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.close }}</button>
             </div>
         </div>
     </div>
@@ -51,13 +52,15 @@ import Group from './FormElements/Group'
 import Computed from './FormElements/ComputedEl'
 import { eventBus } from './eventBus'
 import { languages } from '../lang'
-export default {
+export default {    
     components: {
         el: Element,
         group: Group,
         computed: Computed
     },
-
+    props: [
+        'isReadOnly'
+    ],
     data() {
         return {
             title: '',
