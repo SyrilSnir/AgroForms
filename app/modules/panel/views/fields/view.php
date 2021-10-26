@@ -63,6 +63,12 @@ $attributes = [
     ],
 ];
 if ($fieldParameters->isComputed) { 
+    if (in_array($model->element_type_id, ElementType::NUMBER_PARAMS)) {
+        $attributes['unit'] = [
+            'attribute' => 'unit',
+            'value' => $fieldParameters->unitModel->name
+        ];
+    }
     $attributes['unitPrice'] = [
         'attribute' => 'unitPrice',
         'value' => $fieldParameters->unitPrice

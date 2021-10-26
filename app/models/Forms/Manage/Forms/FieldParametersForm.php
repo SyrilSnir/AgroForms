@@ -3,6 +3,7 @@
 namespace app\models\Forms\Manage\Forms;
 
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Nomenclature\Unit;
 use Yii;
 use yii\base\Model;
 use function GuzzleHttp\json_decode;
@@ -10,6 +11,7 @@ use function GuzzleHttp\json_decode;
 /**
  * Description of FieldParametersForm
  *
+ * @property Unit|null $unitModel Description
  * @author kotov
  */
 class FieldParametersForm extends Model
@@ -94,5 +96,10 @@ class FieldParametersForm extends Model
             'unitPrice' => Yii::t('app','Price per one'),
             'isComputed' => Yii::t('app','Calculated field'),
         ];
+    }
+    
+    public function getUnitModel() :?Unit
+    {
+        return Unit::findOne(['id' => $this->unit]);
     }
 }
