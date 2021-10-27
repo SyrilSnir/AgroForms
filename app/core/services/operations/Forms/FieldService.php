@@ -3,7 +3,9 @@
 namespace app\core\services\operations\Forms;
 
 use app\core\repositories\manage\Forms\FieldRepository;
+use app\core\repositories\manage\Forms\FormRepository;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FieldEnum;
 use app\models\Forms\Manage\Forms\FieldForm;
 use function GuzzleHttp\json_encode;
@@ -27,14 +29,21 @@ class FieldService
      */
     protected $fieldEnumService;
 
-
+    /**
+     *
+     * @var  FormRepository
+     */
+    private $formRepository;    
+    
     public function __construct(
             FieldRepository $fieldRepository,
-            FieldEnumService $fieldEnumService
+            FieldEnumService $fieldEnumService,
+            FormRepository $formRepository
             )
     {
         $this->fieldRepository = $fieldRepository;
         $this->fieldEnumService = $fieldEnumService;
+        $this->formRepository = $formRepository;
     }
     
     public function create(FieldForm $form): Field
@@ -54,6 +63,7 @@ class FieldService
                 $parameters
                 );
         $this->fieldRepository->save($field);
+        $this->changeFormToDraft($field->form_id);
         return $field;
         
     }
@@ -75,7 +85,8 @@ class FieldService
                 $form->defaultValue,
                 $parameters
                 );
-         $this->fieldRepository->save($field);
+        $this->fieldRepository->save($field);
+        $this->changeFormToDraft($field->form_id);        
         return $field;       
     }
 
@@ -104,6 +115,14 @@ class FieldService
         /** @var Field $field */
         $field = $this->fieldRepository->get($id); 
         $this->fieldRepository->restore($field);
-    }    
+    }
+
+    private function changeFormToDraft(int $formId)
+    {
+        /** @var Form $form */
+        $form = $this->formRepository->get($formId);
+        $form->toDraft();
+        $form->save();
+    }
 }
 
