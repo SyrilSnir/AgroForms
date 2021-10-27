@@ -87,8 +87,8 @@ class Form extends ActiveRecord
         $model->has_file = $form->hasFile;
         $model->description_eng = $form->descriptionEng;        
         $model->valute_id = $form->valute;  
-        $model->status = self::STATUS_DRAFT;
         $model->exhibition_id = $form->exhibitionId;
+        $model->toDraft();
         return $form;
     }
     
@@ -122,6 +122,7 @@ class Form extends ActiveRecord
         $this->description_eng = $form->descriptionEng;        
         $this->valute_id = $form->valute; 
         $this->exhibition_id = $form->exhibitionId;
+        $this->toDraft();
     }
     
     public function getFormType() : ActiveQuery
