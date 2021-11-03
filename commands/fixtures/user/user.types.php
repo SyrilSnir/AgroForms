@@ -16,6 +16,12 @@ return [
         'slug' => UserType::MEMBER_USER_TYPE,
     ],
     [
+        'id' => UserType::ORGANIZER_USER_ID,
+        'name' => 'Организатор',
+        'name_eng' => 'Organizer',
+        'slug' => UserType::ORGANIZER_USER_TYPE,
+    ],    
+    [
         'id' => UserType::MANAGER_USER_ID,
         'name' => 'Менеджер',
         'name_eng' => 'Manager',

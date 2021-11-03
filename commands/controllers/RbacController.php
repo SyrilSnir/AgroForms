@@ -35,6 +35,10 @@ class RbacController extends Controller
         $member->description = 'Роль участника выставки';
         $auth->add($member);
         
+        $organizer = $auth->createRole(UserType::ORGANIZER_USER_TYPE);
+        $organizer->description = 'Роль организатора';
+        $auth->add($organizer);
+        
         $accountant = $auth->createRole(UserType::ACCOUNTANT_USER_TYPE);
         $accountant->description = 'Роль бухгалтера';
         $auth->add($accountant);
@@ -52,6 +56,11 @@ class RbacController extends Controller
         $memberMenu->description = 'Меню участника выставки';
         $auth->add($memberMenu);
         $auth->addChild($member, $memberMenu);
+        
+        $organizerMenu = $auth->createPermission(Rbac::PERMISSION_ORGANIZER_MENU);
+        $organizerMenu->description = 'Меню организатора';
+        $auth->add($organizerMenu);
+        $auth->addChild($organizer, $organizerMenu);
         
         $managerMenu = $auth->createPermission(Rbac::PERMISSION_MANAGER_MENU);
         $managerMenu->description = 'Меню менеджера выставки';

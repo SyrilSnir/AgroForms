@@ -46,6 +46,7 @@ class AdminController extends Controller
         $memberRole = $auth->getRole(UserType::MEMBER_USER_TYPE);
         $managerRole = $auth->getRole(UserType::MANAGER_USER_TYPE);
         $accountantRole = $auth->getRole(UserType::ACCOUNTANT_USER_TYPE);
+        $organizerRole = $auth->getRole(UserType::ORGANIZER_USER_TYPE);
         $superAdminRole = $auth->getRole(UserType::SUPER_ADMIN);
         $adminList = Yii::$app->params['rootUsers'] ?? [];        
         $users = User::find()->all();
@@ -78,7 +79,14 @@ class AdminController extends Controller
         return ExitCode::OK;
         
     }
-
+/**
+ * Обновление ролей
+ */
+    public function actionRenewUserTypes() 
+    {
+         UserType::deleteAll();  
+         $this->addData(UserType::class, './../fixtures/user/user.types.php');          
+    }
     /**
      * Добавление данных
      */

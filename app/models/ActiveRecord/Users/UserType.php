@@ -49,9 +49,13 @@ class UserType extends ActiveRecord
     const ACCOUNTANT_USER_ID = 4;
     const ACCOUNTANT_USER_TYPE = 'accountant';
     
+    const ORGANIZER_USER_ID = 5;
+    const ORGANIZER_USER_TYPE = 'organizer';
+    
     const ROLES = [
         self::ROOT_USER_ID => self::ROOT_USER_TYPE,
         self::MEMBER_USER_ID => self::MEMBER_USER_TYPE,
+        self::ORGANIZER_USER_ID => self::ORGANIZER_USER_TYPE,
         self::MANAGER_USER_ID => self::MANAGER_USER_TYPE,
         self::ACCOUNTANT_USER_ID => self::ACCOUNTANT_USER_TYPE
     ];    
