@@ -4,6 +4,7 @@ use app\core\helpers\Menu\AccountantMenuHelper;
 use app\core\helpers\Menu\AdminMenuHelper;
 use app\core\helpers\Menu\ManagerMenuHelper;
 use app\core\helpers\Menu\MemberMenuHelper;
+use app\core\helpers\Menu\OrganizerMenuHelper;
 use app\core\manage\Auth\Rbac;
 use app\widgets\AdminLTE\Menu\MenuWidget;
 /** @var string $directoryAsset */
@@ -50,7 +51,11 @@ use app\widgets\AdminLTE\Menu\MenuWidget;
             echo MenuWidget::widget(AccountantMenuHelper::getMenu())
         ?>
             <?php endif ;?>
-          
+            <?php if (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU)): ?>
+        <?php 
+            echo MenuWidget::widget(OrganizerMenuHelper::getMenu())
+        ?>
+            <?php endif ;?>          
         </nav>
     </div>
 </aside>

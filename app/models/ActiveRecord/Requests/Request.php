@@ -171,4 +171,29 @@ class Request extends FormManipulation
     {
         return new RequestQuery(static::class);
     }
+    
+    /**
+     * Заявку принята
+     */
+    public function accept()
+    {
+        $this->status = BaseRequest::STATUS_ACCEPTED;
+    }
+    
+    
+    /**
+     * Заявку отклонена
+     */
+    public function reject()
+    {
+        $this->status = BaseRequest::STATUS_REJECTED;
+    }  
+    
+    /**
+     * Выставлен счет
+     */
+    public function invoice() 
+    {
+        $this->status = BaseRequest::STATUS_INVOICED;
+    }
 }

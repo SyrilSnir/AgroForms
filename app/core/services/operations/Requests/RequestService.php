@@ -43,4 +43,40 @@ class RequestService
         }
         $this->requests->remove($request);
     }
+    
+    /**
+     * Принять заявку
+     * @param int $id Идентификатор заявки
+     */
+    public function accept(int $id)
+    {
+        /** @var Request $request */        
+        $request = $this->requests->get($id);
+        $request->accept();
+        $request->save();        
+    }
+    
+    /**
+     * Отклонить заявку
+     * @param int $id Идентификатор заявки
+     */
+    public function reject(int $id)
+    {
+        /** @var Request $request */
+        $request = $this->requests->get($id);
+        $request->reject();
+        $request->save();
+    }   
+    
+    /**
+     * Выставить счет
+     * @param int $id Идентификатор заявки
+     */
+    public function invoice(int $id)
+    {
+        /** @var Request $request */
+        $request = $this->requests->get($id);
+        $request->invoice();
+        $request->save();
+    }      
 }

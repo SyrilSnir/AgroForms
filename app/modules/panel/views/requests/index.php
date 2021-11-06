@@ -2,6 +2,8 @@
 
 use app\core\helpers\Data\FormsHelper;
 use app\core\helpers\View\Request\RequestStatusHelper;
+use app\core\manage\Auth\Rbac;
+use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\SearchModels\Requests\RequestStandSearch;
@@ -9,6 +11,7 @@ use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 
 /* @var $this View */
@@ -49,14 +52,72 @@ $columnsConfig = [
 
                     [
                         'class' => ActionColumn::class,
+                        'hAlign' => GridView::ALIGN_LEFT,
+                        'template' => '{view}{update}{delete}&nbsp;&nbsp;&nbsp;{invoice}{accept}&nbsp;{reject}', 
+                        'buttons' => [
+                            'accept' => function ($url, $model, $key) {
+                                    /** @var Request $model */
+                                $title = t('Accept application','requests');
+                                $iconName = "thumbs-up";
+                                $url = Url::current(['accept', 'id' => $key]);
+                                $options = [
+                                    'title' => $title,
+                                    'aria-label' => $title,
+                                ];                                  
+                                $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                return Html::a($icon, $url,$options);                            
+                            },
+                              'reject' => function ($url, $model, $key) {
+                                    /** @var Request $model */
+                                $title = t('Reject application','requests');
+                                $iconName = "thumbs-down";
+                                $url = Url::current(['reject', 'id' => $key]);
+                                $options = [
+                                    'title' => $title,
+                                    'aria-label' => $title,
+                                ];                                  
+                                $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                return Html::a($icon, $url,$options);                            
+                            },   
+                            'invoice' => function ($url, $model, $key) {
+                                    /** @var Request $model */
+                                $title = t('Invoice','requests');
+                                $iconName = "usd";
+                                $url = Url::current(['invoice', 'id' => $key]);
+                                $options = [
+                                    'title' => $title,
+                                    'aria-label' => $title,
+                                ];                                  
+                                $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                return Html::a($icon, $url,$options);                            
+                            },  
+                        ],
                         'visibleButtons' => [
+                            'invoice' => function($model) {
+                                /** @var Request $model */
+                                return Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU) &&
+                                        $model->status === BaseRequest::STATUS_ACCEPTED;
+                            },
+                            'accept' => function ($model) {
+                                /** @var Request $model */
+                                return ($model->status === BaseRequest::STATUS_NEW || 
+                                        $model->status === BaseRequest::STATUS_CHANGED) &&
+                                        !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
+                            },   
+                            'reject' => function ($model) {
+                                /** @var Request $model */
+                                return ($model->status === BaseRequest::STATUS_NEW || 
+                                        $model->status === BaseRequest::STATUS_CHANGED) &&
+                                        !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
+                            },                                     
                             'update' => function ($model) {
                                 /** @var Request $model */
                                 return ($model->status === BaseRequest::STATUS_DRAFT);
                             },
                             'delete' => function ($model) {
                                 /** @var Request $model */
-                                return !Yii::$app->user->can('accountantMenu');
+                                return !Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&
+                                        !Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU);
                             }
                         ]                        
                     ],

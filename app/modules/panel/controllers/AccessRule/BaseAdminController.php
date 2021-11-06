@@ -11,5 +11,5 @@ use app\modules\panel\controllers\ManageController;
  */
 abstract class BaseAdminController extends ManageController
 {
-    protected $roles = ['adminMenu'];       
+    protected $roles = ['adminMenu','organizerMenu'];       
 }

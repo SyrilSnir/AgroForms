@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $statusForm ChangeStatusForm */
 ?>    
-<?php if (in_array($statusForm->status, [BaseRequest::STATUS_INVOICED, BaseRequest::STATUS_PARTIAL_PAID])):?>
+<?php if (in_array($statusForm->status, [BaseRequest::STATUS_INVOICED,BaseRequest::STATUS_PARTIAL_PAID])):?>
 <div class="status-buttons-wrapper">
         
     <?php 

@@ -8,11 +8,16 @@
 
 namespace app\modules\panel\controllers;
 
+use app\core\manage\Auth\Rbac;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
 use app\core\traits\GridViewTrait;
 use app\core\traits\RequestViewTrait;
+use app\models\SearchModels\Requests\AccountantRequestSearch;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
+use DomainException;
+use Yii;
+use yii\helpers\Url;
 
 /**
  * Description of RequestController
@@ -22,14 +27,19 @@ use app\models\SearchModels\Requests\ManagerRequestSearch;
 class RequestsController extends ManageController
 {
     
-    protected $roles = ['adminMenu','managerMenu','accountantMenu'];
+    protected $roles = [
+        Rbac::PERMISSION_ADMINISTRATOR_MENU,
+        Rbac::PERMISSION_MANAGER_MENU,
+        Rbac::PERMISSION_ACCOUNTANT_MENU,
+        Rbac::PERMISSION_ORGANIZER_MENU];
 
     use GridViewTrait,RequestViewTrait;
     
     public function __construct(
             $id, 
             $module, 
-            ManagerRequestSearch $searchModel,
+            ManagerRequestSearch $managerSearchModel,
+            AccountantRequestSearch $accountantSearchModel,
             RequestReadRepository $repository, 
             RequestService $requestService,
             $config = array()
@@ -38,8 +48,42 @@ class RequestsController extends ManageController
         parent::__construct($id, $module, $config);
      //   $this->readRepository = $repository;
     //    $this->service = $service;
-        $this->searchModel = $searchModel;
+        if (Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)) {
+            $this->searchModel = $accountantSearchModel;
+        } else {
+            $this->searchModel = $managerSearchModel;
+        }
         $this->readRepository = $repository;
         $this->service = $requestService;
-    }        
+    }  
+    
+    public function actionAccept($id)
+    {
+        try {
+            $this->service->accept($id);
+        } catch (DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }        
+        return $this->redirect(Url::previous());        
+    }
+    
+    public function actionReject($id)
+    {
+        try {
+            $this->service->reject($id);
+        } catch (DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }        
+        return $this->redirect(Url::previous());        
+    }
+
+    public function actionInvoice($id)
+    {
+        try {
+            $this->service->invoice($id);
+        } catch (DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }        
+        return $this->redirect(Url::previous());        
+    }    
 }

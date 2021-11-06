@@ -84,8 +84,17 @@ class AdminController extends Controller
  */
     public function actionRenewUserTypes() 
     {
-         UserType::deleteAll();  
-         $this->addData(UserType::class, './../fixtures/user/user.types.php');          
+        chdir(__DIR__);
+        $items = require './../fixtures/user/user.types.php';
+        foreach ($items as $item) {
+            $currentModel = UserType::findOne(['id' => $item['id']]);
+            if (!$currentModel) {
+                $model = new UserType();
+                $model->setAttributes($item,false);
+                $model->save(false);
+                unset($model);
+            }
+        }         
     }
     /**
      * Добавление данных
