@@ -130,7 +130,8 @@ $columnsConfig = [
                             'delete' => function ($model) {
                                 /** @var Request $model */
                                 return !Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&
-                                        !Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU);
+                                        !Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) &&
+                                        !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
                             }
                         ]                        
                     ],

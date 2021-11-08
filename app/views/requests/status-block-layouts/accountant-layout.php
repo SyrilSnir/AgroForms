@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $statusForm ChangeStatusForm */
 ?>    
-<?php if (in_array($statusForm->status, [BaseRequest::STATUS_INVOICED,BaseRequest::STATUS_PARTIAL_PAID])):?>
+<?php if (in_array($statusForm->status, [BaseRequest::STATUS_ACCEPTED, BaseRequest::STATUS_INVOICED,BaseRequest::STATUS_PARTIAL_PAID])):?>
 <div class="status-buttons-wrapper">
         
     <?php 
@@ -15,8 +15,13 @@ use yii\widgets\ActiveForm;
         $form = ActiveForm::begin([
             'id' => 'status-change-form'
         ]);
-        echo $form->field($statusForm, 'status')->hiddenInput(['value' => null])->label(false);
-        echo Html::tag('div',Yii::t('app/requests', 'Application paid'),['data-status' => BaseRequest::STATUS_PAID, 'class' => 'btn bg-gradient-success status-change-btn']);
+        echo $form->field($statusForm, 'status')->hiddenInput(['value' => null])->label(false);                
+        if ($statusForm->status == BaseRequest::STATUS_ACCEPTED) {
+            echo Html::tag('div',Yii::t('app/requests', 'Invoice'),['data-status' => BaseRequest::STATUS_INVOICED, 'class' => 'btn bg-gradient-success status-change-btn']);
+        }
+        else {
+            echo Html::tag('div',Yii::t('app/requests', 'Application paid'),['data-status' => BaseRequest::STATUS_PAID, 'class' => 'btn bg-gradient-success status-change-btn']);            
+        }
         if ($statusForm->status == BaseRequest::STATUS_INVOICED) {
             echo Html::tag('div',Yii::t('app/requests', 'Partial payment'),['data-status' => BaseRequest::STATUS_PARTIAL_PAID, 'class' => 'btn bg-gradient-success status-change-btn']);
         }        
