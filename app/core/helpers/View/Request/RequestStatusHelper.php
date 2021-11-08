@@ -25,9 +25,21 @@ class RequestStatusHelper extends StatusHelper
             case BaseRequest::STATUS_NEW:
                 $className = 'badge badge-info';
                 break;
+            case BaseRequest::STATUS_ACCEPTED:
+                $className = 'badge badge-primary';
+                break;            
+            case BaseRequest::STATUS_INVOICED:
+                $className = 'badge badge-purple';
+                break;
+            case BaseRequest::STATUS_PARTIAL_PAID:
+                $className = 'badge badge-olive';
+                break;
             case BaseRequest::STATUS_PAID:
                 $className = 'badge badge-success';
-                break;            
+                break;  
+            case BaseRequest::STATUS_REJECTED:
+                $className = 'badge badge-danger';
+                break;
             default:
                 $className = 'badge badge-warning';
                 break;
