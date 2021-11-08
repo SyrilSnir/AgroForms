@@ -13,6 +13,8 @@ use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
 use app\core\traits\GridViewTrait;
 use app\core\traits\RequestViewTrait;
+use app\models\ActiveRecord\Requests\Request;
+use app\models\Forms\Requests\ChangeStatusForm;
 use app\models\SearchModels\Requests\AccountantRequestSearch;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
 use DomainException;
@@ -56,6 +58,20 @@ class RequestsController extends ManageController
         $this->readRepository = $repository;
         $this->service = $requestService;
     }  
+    
+    public function actionChangeStatus($id) 
+    {
+        /** @var Request $model */
+        $model =  $this->findModel($id);
+        $changeStatusForm = new ChangeStatusForm($model->id, $model->status); 
+        if ($changeStatusForm->load(Yii::$app->request->post()) && $changeStatusForm->validate()) {
+            $this->service->changeStatus($changeStatusForm);
+            return $this->redirect(['view', 'id' => $id]);            
+        }
+        return $this->render('change-status', [
+            'model' => $changeStatusForm,
+        ]);           
+    }
     
     public function actionAccept($id)
     {

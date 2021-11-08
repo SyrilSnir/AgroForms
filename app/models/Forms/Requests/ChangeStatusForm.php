@@ -15,7 +15,7 @@ class ChangeStatusForm extends Model
     public $requestId;
     
     public $status;
-        
+
     public function __construct(int $requestId, int $status)
     {
         $this->status = $status;
@@ -26,7 +26,7 @@ class ChangeStatusForm extends Model
     {
         $range = array_keys(RequestStatusHelper::statusList());
         return [
-          [['status'],'in', 'range' => $range]  
+          [['status'],'in', 'range' => $range],
         ];
     }
     
