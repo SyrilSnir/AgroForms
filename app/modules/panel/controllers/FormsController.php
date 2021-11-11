@@ -80,18 +80,6 @@ class FormsController extends BaseAdminController
             'readOnly' => true,
             'user' => $user,
         ]);        
-     /*   $fieldsList = Field::find()->availableForForm($id)->orderBy(['order'  => SORT_ASC]);
-        $fieldDataProvider = new ActiveDataProvider([
-            'query' => $fieldsList,
-            'sort' => false
-        ]);        
-        $copyForm = new CopyForm();
-        $copyForm->formId = $id;
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'fieldDataProvider' => $fieldDataProvider,
-            'cloneForm' => $copyForm
-        ]);*/
     }
     
     public function actionPublish($id)
