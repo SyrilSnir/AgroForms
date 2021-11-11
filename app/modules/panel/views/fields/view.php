@@ -28,7 +28,7 @@ $this->title = $model->name;
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a(Yii::t('app','Back'), [Url::previous()], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Back'), ['/panel/forms/update', 'id' => $model->form_id ], ['class' => 'btn btn-secondary']) ?>
     </p>
 
 <div class="card">
