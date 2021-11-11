@@ -125,6 +125,8 @@ class FormsController extends BaseAdminController
     public function actionUpdate($id)
     {
         Url::remember();
+        $copyForm = new CopyForm();
+        $copyForm->formId = $id;        
         $showDeletedForm = new ShowDeletedForm(); 
         $showDeletedForm->load(Yii::$app->request->get());
         
@@ -142,7 +144,8 @@ class FormsController extends BaseAdminController
             'model' => $form,
             'formFieldsDataProvider' => $formFieldsDataProvider,
             'formFieldsModel' => $formFieldsSearchModel,
-            'showDeletedForm' => $showDeletedForm         
+            'showDeletedForm' => $showDeletedForm,
+            'cloneForm' => $copyForm            
         ]);                        
     }  
     
