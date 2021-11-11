@@ -4,6 +4,7 @@
     <select  @change="change" :name="id" :id="id" class="form-control" v-model="selected">
         <option v-for="element in enums" :value="element.value">{{ getName(element.name, element.name_eng) }}</option>
     </select>
+    <div class="field__desc">{{ descriptionLabel }}</div>
 </div>
 
 </template>

@@ -6,6 +6,12 @@ export const labelMixin = {
                 return this.params.name;
             }
             return this.params.name_eng;               
-        }
+        },
+        descriptionLabel() {
+            if (this.lang == languages.russian || !this.params.description_eng) {
+                return this.params.description;
+            }
+            return this.params.description;
+        }        
     },    
 }
