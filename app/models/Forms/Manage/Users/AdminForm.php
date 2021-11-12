@@ -27,13 +27,13 @@ class AdminForm extends UserManageForm
     {
         $rules = [
             [['login','email'],'required'],
-            [
+          /*  [
                 ['login'],
                 'unique',
                 'targetClass'=> User::class,
-                'filter' => ['<>', 'id', $this->userId],
+                'filter' => ['<>', 'login', $this->login,],
                 'message' => 'Пользователь с указанными данными уже зарегистрирован'
-            ],             
+            ],             */
         ];     
         return ArrayHelper::merge(parent::rules(), $rules);
     }     

@@ -63,13 +63,13 @@ class UserManageForm extends ActiveRecord
             [['company'], 'validateMemberUnique'],
             [['phone','fio'], 'string', 'max' => 255],
             [['birthday'], 'safe'],  
-            [
+        /*    [
                 ['login'],
                 'unique',
                 'targetClass'=> User::class,
-                'filter' => ['deleted' => false],
+                'filter' => ['deleted' => false, 'login' => $this->login],
                 'message' => t('The user with the specified data is already registered')
-            ],            
+           ],            */
         ];
     }
     
