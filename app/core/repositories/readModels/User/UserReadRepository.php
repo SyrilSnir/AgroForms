@@ -27,7 +27,8 @@ class UserReadRepository implements ReadRepositoryInterface
     {
         return User::find()
                 ->where(['active' => User::STATUS_ACTIVE])
-                ->andWhere(['login' => $value])              
+                ->andWhere(['login' => $value]) 
+                ->andWhere(['deleted' => false])
                 ->one();
     }
     public function findByAuthKey($authKey):? User

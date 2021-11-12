@@ -102,6 +102,8 @@ class UsersController extends BaseAdminController
                 }
                 break;
             case UserType::ROOT_USER_ID:
+            case UserType::ACCOUNTANT_USER_ID:
+            case UserType::MANAGER_USER_ID:
                 $form = new AdminForm($model);
                 $view = 'create-admin';                
                 if ($form->load(Yii::$app->request->post()) && $form->validate()) {
