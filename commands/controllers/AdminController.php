@@ -73,7 +73,10 @@ class AdminController extends Controller
                     break;
                 case UserType::ACCOUNTANT_USER_ID:
                     $auth->assign($accountantRole, $user->id);
-                     Console::output("Установлена роль 'Бухгалтер' для пользователя {$user->login}");                    
+                     Console::output("Установлена роль 'Бухгалтер' для пользователя {$user->login}");
+                case UserType::ORGANIZER_USER_ID:
+                    $auth->assign($organizerRole, $user->id);
+                     Console::output("Установлена роль 'Организатор' для пользователя {$user->login}");                      
             }
         }
         return ExitCode::OK;

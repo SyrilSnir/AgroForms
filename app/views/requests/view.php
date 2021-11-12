@@ -42,7 +42,7 @@ if (!empty($dopAttributes)) {
         ]) ?>
     
     <?php endif; ?>
-    
+   
     <?php if (Yii::$app->user->can('managerMenu')):?>
     
         <?php echo $this->render('status-block-layouts/manager-layout.php',[
@@ -51,7 +51,8 @@ if (!empty($dopAttributes)) {
     
     <?php endif; ?>    
     
-    <?php if (Yii::$app->user->can('accountantMenu')):?>
+    <?php if (Yii::$app->user->can('accountantMenu') ||
+            Yii::$app->user->can('organizerMenu')):?>
     
         <?php echo $this->render('status-block-layouts/accountant-layout.php',[
             'statusForm' => $statusForm
