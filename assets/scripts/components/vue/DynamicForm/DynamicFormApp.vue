@@ -40,7 +40,7 @@
                 <button v-if="!isReadOnly" type="button" @click="saveDraft" class="btn btn-primary">{{ dict.buttons.draft }}</button>
                 <button v-if="!isReadOnly" type="button" @click="formSubmit" class="btn btn-success">{{ dict.buttons.send }}</button>
                 <button v-if="!isReadOnly" type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.cancel }}</button>
-                <button v-if="isReadOnly" type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.close }}</button>
+                <button v-if="isReadOnly" type="button" @click="close" class="btn btn-secondary">{{ dict.buttons.close }}</button>
             </div>
         </div>
     </div>
@@ -205,7 +205,10 @@ export default {
       },
       cancel() {
             window.history.back();         
-      }
+      },
+      close() {
+            window.location.href = '/panel/forms';
+     },
   }
 }
 </script>
