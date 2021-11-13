@@ -2,7 +2,6 @@
 
 namespace app\models\Forms\Manage\Users;
 
-use app\models\ActiveRecord\Users\User;
 use yii\helpers\ArrayHelper;
 
 
@@ -29,13 +28,14 @@ class MemberForm extends UserManageForm
         $userId = $this->userId;
         $rules = [
             [['login','email'],'required'],
-         /*   ['login','unique',
+            ['login','unique',
                 'targetClass'=> User::class,
                 'filter' => function(\yii\db\Query $query) use ($userId) {
-                    $query->andFilterWhere(['<>', 'id', $userId]);
+                    $query->andFilterWhere(['<>', 'id', $userId])
+                            ->andWhere(['deleted' => false]);
                 },
                 'message' => t('The user with the specified data is already registered')
-            ],*/
+            ],
             ['email','unique',
                 'targetClass'=> User::class,
                 'filter' => function(\yii\db\Query $query) use ($userId) {
