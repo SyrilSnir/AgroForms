@@ -38,7 +38,7 @@ abstract class BaseRequest extends ActiveRecord
      */
     const STATUS_DRAFT = 3; 
     /**
-     * Выставлен счет
+     * Выставлен счет_
      */
     const STATUS_INVOICED = 7; 
     const STATUS_ACCEPTED = 8; // Принята
