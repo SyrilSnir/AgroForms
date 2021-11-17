@@ -58,17 +58,16 @@ $columnsConfig = [
                             'buttons' => [
                                 'member' => function ($url, $model, $key) {
                                     /** @var Company $model */
-                                    if (!$model->member) {
-                                        $title = t('Create new member','user');
-                                        $iconName = "user";
-                                        $url = Url::current(['add-member', 'id' => $key]);
-                                    }
+                                    $title = t('Create new member','user');
+                                    $iconName = "user";
+                                    $url = Url::current(['add-member', 'id' => $key]);
                                     $options = [
                                         'title' => $title,
                                         'aria-label' => $title,
                                     ];                                  
                                     $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
                                     return Html::a($icon, $url,$options);                            
+                                    
                                 },
                                 'block' => function ($url, $model, $key) {
                                     /** @var Company $model */
@@ -92,7 +91,11 @@ $columnsConfig = [
                                 ],
                                 
                             'visibleButtons' => [
-                                'delete' => Yii::$app->user->can('adminMenu')
+                                'delete' => Yii::$app->user->can('adminMenu'),
+                                'member' => function ($model) {
+                                    /** @var Company $model */                                    
+                                    return !$model->member;
+                                },
                             ]                            
                         ],
                     ],
