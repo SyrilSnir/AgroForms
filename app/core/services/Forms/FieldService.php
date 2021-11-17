@@ -137,12 +137,14 @@ class FieldService
         if ($element['parameters']) {
             $params = &$element['parameters'];
             $params = json_decode($params,true);
-            $params['required'] = !!$params['required'];
-            $params['isComputed'] = !!$params['isComputed'];
-            $params['checked'] = !!$params['checked'];
-            $unitId = $params['unit'] = (int) $params['unit'];
-            $unit = $this->unitRepository->findById($unitId);            
-            $unit ? $params['unitName'] = $unit->short_name : '';
+            $params['required'] = array_key_exists('required', $params) ? !!$params['required'] : false;
+            $params['isComputed'] = array_key_exists('isComputed', $params) ? !!$params['isComputed'] : false;
+            $params['checked'] = array_key_exists('checked', $params) ? !!$params['checked'] : false;
+            $unitId = $params['unit'] = array_key_exists('unit', $params) ? (int) $params['unit'] : null;
+            if ($unitId) {
+                $unit = $this->unitRepository->findById($unitId);            
+                $unit ? $params['unitName'] = $unit->short_name : '';
+            }
             $params['unitPrice'] = $field->price;
         }
         if (in_array($element['element_type_id'], ElementType::HAS_ENUM_ATTRIBUTES)) {
