@@ -110,7 +110,9 @@ class RequestStandService
         $stand = $this->stands->get($form->standId);
         $request = $this->requests->get($requestStand->request_id);
         if (!$form->draft) {
-            $request->setStatusNew();
+            $request->was_rejected ? 
+                    $request->setStatusChanged() : 
+                    $request->setStatusNew();
             $this->requests->save($request);            
         } else {
             if (!$request->isDraft()) {

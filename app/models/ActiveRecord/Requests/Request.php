@@ -24,6 +24,7 @@ use yii\db\ActiveQuery;
  * @property int $exhibition_id
  * @property int $type_id Тип заявки
  * @property int $form_id Тип заявки
+ * @property bool $was_rejected Была отклонена
  * 
  * @property FormType $formType
  * @property Form $form
@@ -187,6 +188,7 @@ class Request extends FormManipulation
     public function reject()
     {
         $this->status = BaseRequest::STATUS_REJECTED;
+        $this->was_rejected = true;
     }  
     
     /**
@@ -221,5 +223,5 @@ class Request extends FormManipulation
     public function getActualRejectLog()
     {
         return $this->hasOne(ApplicationRejectLog::class, ['request_id' => 'id'])->andWhere(['actual' => true]);
-    }
+    }        
 }

@@ -87,7 +87,11 @@ class ApplicationService
         $request->edit(
                 $form->userId
                 );
-        $form->draft ? $request->setStatusDraft() : $request->setStatusNew();        
+        $form->draft ? 
+                $request->setStatusDraft() : (
+                    $request->was_rejected ? 
+                        $request->setStatusChanged() : 
+                        $request->setStatusNew() );
         $this->requests->save($request);        
         $dynamicForm = $this->application->findByRequest($id);
         $dynamicForm->edit($serializedFields, $total);
