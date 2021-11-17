@@ -2,13 +2,16 @@
 
 use app\core\helpers\Data\FormsHelper;
 use app\core\helpers\View\Request\RequestStatusHelper;
+use app\core\manage\Auth\Rbac;
 use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\SearchModels\Requests\RequestSearch;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
+use yii\bootstrap4\Modal;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 
 /* @var $this View */
@@ -86,15 +89,42 @@ $this->title = Yii::t('app/title','My requests');
                         
                         [
                             'class' => ActionColumn::class,
+                            'width' => '120px',
+                            'hAlign' => GridView::ALIGN_LEFT,
+                            'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;&nbsp;{inform}',  
+                            'buttons' => [
+                                'inform' => function ($url, $model, $key) {
+                            
+                                        /** @var Request $model */
+                                    $title = t('Information');
+                                    $iconName = "info-sign color__red";
+                                    $options = [
+                                        'title' => $title,
+                                        'aria-label' => $title,
+                                        'data-toggle' => 'modal',
+                                        'data-target' => '#modal-request__information',
+                                        'data-request' => $model->id
+                                    ];                                  
+                                    $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                    return Html::a($icon, ['#'],$options);                            
+                                },                                
+                            ],
                             'visibleButtons' => [
                                 'delete' => function ($model) {
                                     /** @var Request $model */
-                                    return ($model->status === BaseRequest::STATUS_DRAFT);                            
+                                    return ($model->status === BaseRequest::STATUS_DRAFT ||
+                                            $model->status === BaseRequest::STATUS_REJECTED);                            
                                 },
                                 'update' => function ($model) {
                                     /** @var Request $model */
-                                    return ($model->status === BaseRequest::STATUS_DRAFT);
-                                }
+                                    return ($model->status === BaseRequest::STATUS_DRAFT ||
+                                            $model->status === BaseRequest::STATUS_REJECTED);
+                                },
+                                'inform' => function ($model) {                                    
+                                    /** @var Request $model */
+                                    return Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU) &&
+                                            $model->isNeedToChange();
+                                },                                        
                             ]                        
                         ],
                     ],
@@ -103,4 +133,15 @@ $this->title = Yii::t('app/title','My requests');
 
 
 </div>
+<?php
+ Modal::begin([
+     'title' => '<h3>' . t('Information from the organizer') .'</h3>',
+     'options' => [
+         'id' => 'modal-request__information'
+     ],
+     'bodyOptions' => [
+         'id' => 'modal-request__content'
+     ]
+ ]);
+Modal::end();
 

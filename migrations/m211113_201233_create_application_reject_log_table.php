@@ -16,6 +16,7 @@ class m211113_201233_create_application_reject_log_table extends Migration
             'id' => $this->primaryKey(),
             'request_id' => $this->integer()->notNull()->comment('Id заявки'),
             'comment' => $this->text()->comment('Комментарий'),
+            'comment_eng' => $this->text()->comment('Комментарий на английском'),
             'actual' => $this->boolean()->notNull()->defaultValue(true)->comment('Актуальность'),
             'date' => $this->dateTime()->notNull()->comment('Дата')
         ]);

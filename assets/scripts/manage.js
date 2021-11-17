@@ -7,7 +7,7 @@ const $ = window.$;
 const managerActivateLink = document.getElementById('get-activare-link');
 const getFormRequestButton = document.getElementById('get-form-request');
 const fieldsConfig = document.getElementById('fields-config');
-
+const modalRequestInfo = document.getElementById('modal-request__information');
 if (fieldsConfig) {
     const fieldParams = new FieldParams(); 
     const enumList = new EnumList('#attributes-enum-list');
@@ -20,6 +20,19 @@ if (managerActivateLink) {
 
 if (getFormRequestButton) {
     getFormRequestButton.addEventListener('click', getFormRequestHandler);
+}
+
+if (modalRequestInfo) {
+    $(modalRequestInfo).on('show.bs.modal',(e) => {
+        let modalRequestContent = $('#modal-request__content');        
+        let requestId = $(e.relatedTarget).data('request');
+        modalRequestContent.html('');
+        $.get('/panel/member/requests/get-reject-info',{
+            id: requestId
+        },(data) => {
+            modalRequestContent.html(data);
+        })
+    });
 }
 
 function managerActivateHandler(e) {

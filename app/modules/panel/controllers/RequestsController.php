@@ -14,6 +14,7 @@ use app\core\services\operations\Requests\RequestService;
 use app\core\traits\GridViewTrait;
 use app\core\traits\RequestViewTrait;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\Forms\Requests\ApplicationRejectForm;
 use app\models\Forms\Requests\ChangeStatusForm;
 use app\models\SearchModels\Requests\AccountantRequestSearch;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
@@ -85,12 +86,27 @@ class RequestsController extends ManageController
     
     public function actionReject($id)
     {
+        /** @var Request $model */
+        $model =  $this->findModel($id);
+        $applicationRejectForm = new ApplicationRejectForm($model->id);
+        if($applicationRejectForm->load(Yii::$app->request->post()) && $applicationRejectForm->validate()) {
+            try {
+                $this->service->reject($applicationRejectForm);
+            } catch (DomainException $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }            
+            return $this->redirect(Url::previous()); 
+        }
+        return $this->render('application-reject-log', [
+            'model' => $applicationRejectForm,
+        ]);         
+        /*
         try {
-            $this->service->reject($id);
+            //$this->service->reject($id);
         } catch (DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }        
-        return $this->redirect(Url::previous());        
+        return $this->redirect(Url::previous());        */
     }
 
     public function actionInvoice($id)

@@ -96,7 +96,7 @@
      </div>
      <div class="card-footer">
                 <button v-if="!isReadOnly" type="button" @click="saveDraft" class="btn btn-primary">{{ dict.buttons.draft }}</button>
-                <button v-if="!isReadOnly" type="button" @click="formSubmit" class="btn btn-success">{{ dict.buttons.send }}</button>
+                <button v-if="activeSendButton" type="button" @click="formSubmit" class="btn btn-success">{{ dict.buttons.send }}</button>
                 <button v-if="!isReadOnly" type="button" @click="cancel" class="btn btn-secondary">{{ dict.buttons.cancel }}</button>
                 <button v-if="isReadOnly" type="button" @click="close" class="btn btn-secondary">{{ dict.buttons.close }}</button>
                 </div>
@@ -113,6 +113,7 @@ export default {
     data() {
         return {
             update: false,
+            needToChange: false,
             id: null,
             standId: '',
             defaultSelectedStand: 1,
@@ -142,6 +143,9 @@ export default {
         }
     },
     computed: {
+        activeSendButton: function() {
+            return !(this.isReadOnly || this.needToChange);
+        },
         paiedFrizeSigns: function() {
             let symsLength = this.frizeName.replace(/[\s]/g,"").length;
             return (symsLength > this.frizeFreeDigits) ? symsLength - this.frizeFreeDigits : 0;
@@ -227,6 +231,7 @@ export default {
         this.frizeFreeDigits = response.data.frizeFreeDigits;
         this.userId = response.data.userId;
         this.update = response.data.update;
+        this.needToChange = response.data.needToChange;
         this.addedFile = response.data.fileName;
         this.dict = response.data.dict;
         console.log(response.data);

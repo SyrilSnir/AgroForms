@@ -3,7 +3,9 @@
 namespace app\core\services\operations\Requests;
 
 use app\core\repositories\manage\Requests\RequestRepository;
+use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\Forms\Requests\ApplicationRejectForm;
 use app\models\Forms\Requests\ChangeStatusForm;
 
 /**
@@ -60,11 +62,16 @@ class RequestService
      * Отклонить заявку
      * @param int $id Идентификатор заявки
      */
-    public function reject(int $id)
+    public function reject(ApplicationRejectForm $form)
     {
         /** @var Request $request */
-        $request = $this->requests->get($id);
+        $request = $this->requests->get($form->requestId);
+        $logField = ApplicationRejectLog::create(
+                $form->requestId, 
+                $form->comment,
+                $form->commentEng);
         $request->reject();
+        $logField->save();
         $request->save();
     }   
     

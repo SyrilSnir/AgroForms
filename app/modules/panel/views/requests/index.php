@@ -53,7 +53,7 @@ $columnsConfig = [
                     [
                         'class' => ActionColumn::class,
                         'hAlign' => GridView::ALIGN_LEFT,
-                        'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;&nbsp;{invoice}{accept}&nbsp;{reject}', 
+                        'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;&nbsp;{invoice}{inform}{accept}&nbsp;{reject}', 
                         'buttons' => [
                             'accept' => function ($url, $model, $key) {
                                     /** @var Request $model */
@@ -102,10 +102,16 @@ $columnsConfig = [
                                 ];                                  
                                 $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
                                 return Html::a($icon, $url,$options);                            
-                            },                                    
+                            },
                         ],
                         'visibleButtons' => [
                             'change_status' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),
+                            'inform' => function ($model) {
+                                /** @var Request $model */
+                                return true;
+                                return Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU) &&
+                                        $model->status === BaseRequest::STATUS_REJECTED;
+                            },
                             'invoice' => function($model) {
                                 /** @var Request $model */
                                 return Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU) &&

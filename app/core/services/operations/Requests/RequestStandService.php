@@ -107,11 +107,16 @@ class RequestStandService
         /** @var Request $request */
         $requestStand = $this->requestStands->get($id);        
         $stand = $this->stands->get($form->standId);
+        $request = $this->requests->get($requestStand->request_id);
         if (!$form->draft) {
-            $request = $this->requests->get($requestStand->request_id);
             $request->setStatusNew();
             $this->requests->save($request);            
-        }        
+        } else {
+            if (!$request->isDraft()) {
+                $request->setStatusDraft();
+                $this->requests->save($request);                 
+            }
+        }
         $amount = $this->calculatePrice(
                 $form,
                 $stand

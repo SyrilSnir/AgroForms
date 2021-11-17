@@ -117,6 +117,11 @@ class StandController extends FormController
             /** @var Request $request */
             /** @var RequestStand $requestStand */
            $request = $this->requestRepository->getForUser($requestId, $userId);
+           if ($request->isRejected()) {
+                $baseConfiguration['needToChange'] = true;
+           } else {
+               $baseConfiguration['needToChange'] = false;
+           }
            $requestStand = $request->requestForm;
            $baseConfiguration['update'] = true;
            $baseConfiguration['frizeName'] = $requestStand->frize_name;

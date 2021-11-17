@@ -9,6 +9,7 @@
         v-model="val"
         @change="onChange($event)"
         placeholder="Enter ...">
+    <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>         
     <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>        
 </div>
 </template>

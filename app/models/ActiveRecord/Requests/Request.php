@@ -6,8 +6,8 @@ use app\core\repositories\readModels\Requests\ApplicationReadRepository;
 use app\core\repositories\readModels\Requests\RequestStandReadRepository;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\FormManipulation;
-use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
+use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Query\RequestQuery;
 use app\models\ActiveRecord\Users\User;
 use app\models\CreatedTimestampTrait;
@@ -26,6 +26,7 @@ use yii\db\ActiveQuery;
  * @property User $user
  * @property Exhibition $exhibition
  * @property BaseRequest $requestForm
+ * @property ApplicationRejectLog|null $actualRejectLog
  * 
  */
 class Request extends FormManipulation
@@ -75,22 +76,11 @@ class Request extends FormManipulation
     {
         $this->status = BaseRequest::STATUS_DRAFT;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    
+    public function setStatusChanged()
     {
-        return [];
-        /*
-        return [
-            [['user_id', 'form_type_id',  'status'], 'required'],
-            [['user_id', 'form_type_id', 'amount', 'status'], 'integer'],
-            [['data'], 'string'],
-            [['form_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => FormType::className(), 'targetAttribute' => ['form_type_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-        ];*/
-    }
+        $this->status = BaseRequest::STATUS_CHANGED;
+    }    
 
     /**
      * {@inheritdoc}
@@ -195,5 +185,31 @@ class Request extends FormManipulation
     public function invoice() 
     {
         $this->status = BaseRequest::STATUS_INVOICED;
+    }
+    
+    public function isNeedToChange(): bool
+    {
+        if ($this->isRejected()) {
+            return true;
+        }
+        if ($this->isDraft()) {
+            return (!empty($this->actualRejectLog));
+        }
+        return false;
+    }
+    
+    public function isRejected(): bool
+    {
+        return $this->status === BaseRequest::STATUS_REJECTED;
+    }
+    
+    public function isDraft(): bool 
+    {
+        return $this->status === BaseRequest::STATUS_DRAFT;
+    }
+    
+    public function getActualRejectLog()
+    {
+        return $this->hasOne(ApplicationRejectLog::class, ['request_id' => 'id'])->andWhere(['actual' => true]);
     }
 }

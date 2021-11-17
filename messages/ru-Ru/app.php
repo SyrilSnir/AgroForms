@@ -5,11 +5,14 @@ return [
    'Russian' => 'Русский',
    'English' => 'Английский',
    'Note' => 'Внимание',
+   'Comment' => 'Комментарий',
+   'Information' =>'Информация',
    'Restore' => 'Восстановить',
    'Change' => 'Изменить',
    'Save' => 'Сохранить', 
    'Close' => 'Закрыть', 
    'Delete' => 'Удалить', 
+   'Reject' => 'Отклонить',
    'Exit' => 'Выход',
    'Role' => 'Роль',
    'Enter' => 'Вход',
@@ -136,6 +139,7 @@ return [
     'Field name' => 'Имя поля',
     'Create copy' => 'Создать копию',
     'Show deleted entries' => 'Показать удаленные записи',
-    'Exhibition' => 'Выставка'
+    'Exhibition' => 'Выставка',
+    'Information from the organizer' => 'Информация от организатора',
 ];
 

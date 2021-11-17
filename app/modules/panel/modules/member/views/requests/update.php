@@ -17,6 +17,7 @@ $widgetConfig = [
 
 switch ($request->type_id) {
     case FormType::SPECIAL_STAND_FORM:
+        $widgetConfig['formId'] = $request->requestForm->form_id;
         echo StandWidget::widget($widgetConfig);
         break;
     case FormType::DYNAMIC_INFORMATION_FORM:

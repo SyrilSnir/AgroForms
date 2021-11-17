@@ -2,7 +2,6 @@
 
 namespace app\models\Forms\Requests;
 
-use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use yii\base\Model;
 
 /**
@@ -13,15 +12,32 @@ use yii\base\Model;
 class ApplicationRejectForm extends Model
 {
     public $comment;
+    
+    public $commentEng;
+    
     public $requestId;
 
 
-    public function __construct(ApplicationRejectLog $model = null, $config = [])
+    public function __construct(int $requestId, $config = [])
     {
-        if ($model) {
-            $this->comment = $model->comment;
-            $this->requestId = $model->request_id;
-        }
+        $this->requestId = $requestId;
         parent::__construct($config);
+    }
+    
+    public function rules(): array
+    {
+        return [
+            ['requestId','required'],
+            ['requestId','integer'],
+            [['comment','commentEng'],'safe']
+        ];
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'comment' => t('Comment'),
+            'commentEng' => t('Comment') . ' (ENG)',
+        ];
     }
 }

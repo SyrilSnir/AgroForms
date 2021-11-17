@@ -4,6 +4,7 @@ namespace app\modules\panel\modules\member\controllers;
 
 use app\core\helpers\Data\FormsHelper;
 use app\core\repositories\manage\Forms\FormRepository;
+use app\core\repositories\readModels\Logs\ApplicationRejectLogReadRepository;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\operations\Requests\RequestService;
 use app\core\services\operations\View\Requests\RequestViewFactory;
@@ -36,6 +37,12 @@ class RequestsController extends BaseMemberController
      */
     protected $formsRepository;
     
+    /**
+     * 
+     * @var ApplicationRejectLogReadRepository
+     */
+    protected $applicationRejectLogReadRepository;
+    
     protected $searchModel;
     
     use RequestViewTrait;
@@ -46,7 +53,8 @@ class RequestsController extends BaseMemberController
             RequestReadRepository $repository,
             RequestService $requestService,
             ManagerRequestSearch $searchModel,
-            FormRepository $formRepository,            
+            FormRepository $formRepository, 
+            ApplicationRejectLogReadRepository $applicationRejectLogReadRepository,
             $config = array()
             )
     {
@@ -54,6 +62,7 @@ class RequestsController extends BaseMemberController
         $this->readRepository = $repository;
         $this->service = $requestService;
         $this->formsRepository = $formRepository;
+        $this->applicationRejectLogReadRepository = $applicationRejectLogReadRepository;
         $this->searchModel = $searchModel;
     }
 
@@ -94,7 +103,8 @@ class RequestsController extends BaseMemberController
         if (!$request) {
             throw new DomainException(t('The application with the specified number does not exist','exception'));
         }
-        if($request->status !== BaseRequest::STATUS_DRAFT) {
+        if($request->status !== BaseRequest::STATUS_DRAFT &&
+                $request->status !== BaseRequest::STATUS_REJECTED) {
             throw new DomainException(t('This application is not available for editing','exception'));
         }
         Yii::$app->session->set('FORM_CHANGE_TYPE', Request::FORM_UPDATE);
@@ -139,5 +149,14 @@ class RequestsController extends BaseMemberController
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
         return $this->redirect(Url::previous());
-    }      
+    }   
+
+    public function actionGetRejectInfo(int $id) 
+    {
+        $this->viewPath = Yii::getAlias('@elements');
+        $appicationRejectLogModel = $this->applicationRejectLogReadRepository->findActualForRequest($id);
+        return $this->renderAjax('application-reject-log', [
+             'model' => $appicationRejectLogModel
+            ]);
+    }    
 }

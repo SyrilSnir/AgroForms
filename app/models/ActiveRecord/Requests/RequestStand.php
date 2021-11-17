@@ -14,6 +14,7 @@ use yiidreamteam\upload\FileUploadBehavior;
  *
 
  * @property int $stand_id Тип стенда
+ * @property int $form_id Id формы
  * @property int|null $width Ширина
  * @property int|null $length Длинна
  * @property int $square Площадь
@@ -151,7 +152,7 @@ class RequestStand extends BaseRequest
     
     public function getForm()
     {
-        return FormReadRepository::findStandForm();
+        return $this->hasOne(Form::class,['id' => 'form_id']);
     }
 
     public function getHeader(): string
