@@ -24,13 +24,7 @@ class UserService
      *
      * @var UserRepository 
      */
-    protected $users;
-    
-    /**
-     *
-     * @var MemberProfileRepository
-     */
-    protected $memberProfiles;
+    protected $users;    
     
     /**
      *
@@ -44,7 +38,6 @@ class UserService
             )
     {
         $this->users = $userRepository;
-        $this->memberProfiles = $memberProfileRepository;
         $this->roleManager = $roleManager;
     }   
     
