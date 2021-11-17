@@ -29,6 +29,7 @@ $anotherExhibitions = ArrayHelper::map(Exhibition::find()->andFilterWhere(['!=',
     <?php endif; ?>    
     <?php echo $this->render('_form', [
         'model' => $model,
+        'newForm' => false,
         'formFieldsDataProvider' => $formFieldsDataProvider,
         'formFieldsModel' => $formFieldsModel,    
         'showDeletedForm' => $showDeletedForm           

@@ -18,6 +18,7 @@ use yii\widgets\ActiveForm;
 /** @var View $this */
 /** @var ActiveForm $form */
 /** @var FormsForm $model */
+/** @var bool $newForm */
 $dynamicFormId = FormType::DYNAMIC_ORDER_FORM;
 ?>
 <section class="content">
@@ -49,13 +50,14 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
 
     ]);    
 ?>                           
-
+<?php if ($newForm):?>
 <?= $form->field($model, 'formType',[
         'options' => [
             'onchange' => "(function(e) { $(e.target).find('option:selected').val() == {$dynamicFormId} ? $('#price-block').removeClass('hide') :
                         $('#price-block').addClass('hide'); })(event)"
         ]
     ])->dropDownList($model->formTypesList()) ?>
+<?php endif ; ?>
 <div id="price-block"<?php if (!($model->formType == $dynamicFormId)):?> class="hide"<?php endif; ?>>
     <?= $form->field($model, 'basePrice')->textInput() ?>                            
 </div>
