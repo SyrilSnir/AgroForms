@@ -12,7 +12,7 @@ $config = [
         'type' => GridView::TYPE_DEFAULT,
     ]
 ];
-if ($pagination) {
+if (isset($pagination)) {
     $config['pager'] = [       
         'maxButtonCount' => 10, // максимум 5 кнопок
         'options' => [

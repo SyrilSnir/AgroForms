@@ -8,6 +8,7 @@ $this->title = Yii::t('app/title','Edit field');
     <?php echo $this->render('_form', [
         'model' => $model,
         'enumsList' => $enumsList,
+        'formId' => null,
         'isNew' => false,                    
         'dataProvider' => $dataProvider,
         'previousPage' => $previousPage, 

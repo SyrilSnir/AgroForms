@@ -20,9 +20,6 @@ use function GuzzleHttp\json_encode;
 /** @var int|null $formId */
 /** @var bool $isNew */
 
-if ($formId) {
-    $model->formId = $formId;
-}
 if (!$isNew) {
 $columnsConfig = [
                     'toolbar' => [
@@ -35,7 +32,6 @@ $columnsConfig = [
                         ],
                     ],      
                     'dataProvider' => $dataProvider,
-                    'filterModel' => $searchModel,
                     'columns' => [
                         [
                             'attribute' => 'start_date',

@@ -35,27 +35,23 @@ use app\widgets\AdminLTE\Menu\MenuWidget;
     <?php echo MenuWidget::widget(
             AdminMenuHelper::getMenu()
         ) ?>
-            <?php endif ; ?>
-            <?php if (Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU)): ?>        
-    <?php echo MenuWidget::widget(
-         MemberMenuHelper::getMenu()
-        ) ?>
-            <?php endif ; ?>   
-            <?php if (Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU)): ?>
+    <?php elseif (Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU)): ?>        
+        <?php echo MenuWidget::widget(
+             MemberMenuHelper::getMenu()
+    ) ?>        
+    <?php elseif (Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU)): ?>
         <?php 
             echo MenuWidget::widget(ManagerMenuHelper::getMenu())
-        ?>
-            <?php endif ; ?>
-            <?php if (Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)): ?>
-        <?php 
-            echo MenuWidget::widget(AccountantMenuHelper::getMenu())
-        ?>
-            <?php endif ;?>
-            <?php if (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU)): ?>
+        ?>        
+    <?php elseif (Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)): ?>
+    <?php 
+        echo MenuWidget::widget(AccountantMenuHelper::getMenu())
+    ?>    
+    <?php elseif (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU)): ?>
         <?php 
             echo MenuWidget::widget(OrganizerMenuHelper::getMenu())
         ?>
-            <?php endif ;?>          
+    <?php endif ;?>          
         </nav>
     </div>
 </aside>
