@@ -21,12 +21,13 @@ class StandForm extends Model
     public $frizeName;
     public $frizeDigitPrice;
     public $loadedFile;
+    public $formId;    
 
 
     public function rules() 
     {   
         return [
-            [['userId'],'required'],
+            [['userId','formId'],'required'],
             [['frizeName'],'safe'],
             [['loadedFile'],'file'],
             [['draft'],'boolean'],

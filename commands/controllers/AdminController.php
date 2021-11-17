@@ -196,4 +196,24 @@ class AdminController extends Controller
             unset($model);
         }                    
     }
+    
+    public function actionFillFormIds()
+    {
+        $requests = \app\models\ActiveRecord\Requests\Request::find()->all();
+        foreach ($requests as $request)
+        {
+            /** @var \app\models\ActiveRecord\Requests\Request $request */
+            /** @var \app\models\ActiveRecord\Requests\RequestStand $stand */
+            if (!$request->form_id) {
+                if ($request->formType->id === FormType::SPECIAL_STAND_FORM) {
+                    $stand = \app\models\ActiveRecord\Requests\RequestStand::findOne(['request_id' => $request->id]);
+                    $request->form_id = $stand->form_id;
+                } else {
+                    $app = \app\models\ActiveRecord\Requests\Application::findOne(['request_id' => $request->id]);
+                    $request->form_id = $app->form_id;                    
+                }
+                $request->save();
+            }
+        }
+    }
 }

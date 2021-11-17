@@ -104,25 +104,5 @@ class Application extends BaseRequest
             'amount' => 'Amount',
             'fields' => 'Fields',
         ];
-    }
-
-    /**
-     * Gets query for [[Request]].
-     *
-     * @return ActiveQuery
-     */
-    public function getRequest()
-    {
-        return $this->hasOne(Request::className(), ['id' => 'request_id']);
-    }
-    
-    public function getForm()
-    {
-        return $this->hasOne(Form::class, ['id' => 'form_id']);
-    }
-    
-    public function getHeader():string 
-    {
-        return $this->form->headerName;
-    }
+    } 
 }

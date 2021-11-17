@@ -67,11 +67,7 @@ class RequestSearch extends Model
         }
         $query->andFilterWhere(['form_type_id' => $this->formType]);
         $query->andFilterWhere(['status' => $this->status]);
-        if($this->formId == 1)  {
-            $query->andWhere([ 'form_id' => null]);
-        } else {
-            $query->andFilterWhere([ 'form_id' => $this->formId]);            
-        }
+        $query->andFilterWhere(['requests.form_id' => $this->formId]);            
         return $dataProvider;
     }
 }

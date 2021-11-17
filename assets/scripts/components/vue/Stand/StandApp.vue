@@ -127,6 +127,7 @@ export default {
             frizeDigitPrice : 0,
             frizeName : '',
             userId : null,
+            formId : null,            
             draft: false,
             formData : new FormData(),
             addedFile: false,            
@@ -200,6 +201,9 @@ export default {
                 'StandForm[frizeName]', this.frizeName
             );
             this.formData.append(
+                'StandForm[formId]', +this.formId
+            );            
+            this.formData.append(
                 'StandForm[frizeDigitPrice]', this.frizeDigitPrice
             );            
             this.formData.append(
@@ -233,8 +237,8 @@ export default {
         this.update = response.data.update;
         this.needToChange = response.data.needToChange;
         this.addedFile = response.data.fileName;
+        this.formId = response.data.formId;
         this.dict = response.data.dict;
-        console.log(response.data);
         if (Object.prototype.hasOwnProperty.call(response.data,'frizeName')) {
             this.frizeName = response.data.frizeName;
         }

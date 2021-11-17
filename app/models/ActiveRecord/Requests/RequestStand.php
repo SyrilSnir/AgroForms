@@ -148,16 +148,5 @@ class RequestStand extends BaseRequest
     public function getStand()
     {
         return $this->hasOne(Stand::className(), ['id' => 'stand_id']);
-    }  
-    
-    public function getForm()
-    {
-        return $this->hasOne(Form::class,['id' => 'form_id']);
     }
-
-    public function getHeader(): string
-    {
-        return $this->form->headerName;
-    }
-
 }

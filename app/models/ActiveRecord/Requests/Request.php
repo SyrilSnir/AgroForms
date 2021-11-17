@@ -6,6 +6,7 @@ use app\core\repositories\readModels\Requests\ApplicationReadRepository;
 use app\core\repositories\readModels\Requests\RequestStandReadRepository;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\FormManipulation;
+use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Query\RequestQuery;
@@ -22,7 +23,10 @@ use yii\db\ActiveQuery;
  * @property int $created_at
  * @property int $exhibition_id
  * @property int $type_id Тип заявки
+ * @property int $form_id Тип заявки
+ * 
  * @property FormType $formType
+ * @property Form $form
  * @property User $user
  * @property Exhibition $exhibition
  * @property BaseRequest $requestForm
@@ -41,8 +45,18 @@ class Request extends FormManipulation
         return '{{%requests}}';
     }
 
+    /**
+     * 
+     * @param int $userId
+     * @param int $formId
+     * @param int $exhibitionId
+     * @param int $typeId
+     * @param bool $draft
+     * @return self
+     */
     public static function create(
             int $userId,
+            int $formId,
             int $exhibitionId,
             int $typeId,
             bool $draft = false
@@ -50,6 +64,7 @@ class Request extends FormManipulation
     {
         $request = new self();
         $request->user_id = $userId;
+        $request->form_id = $formId;
         $request->exhibition_id = $exhibitionId;
         $request->type_id = $typeId;
         if ($draft) {
@@ -83,20 +98,6 @@ class Request extends FormManipulation
     }    
 
     /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [/*
-            'id' => 'ID',
-            'form_type_id' => 'Тип формы',
-            'data' => 'Данные запроса',
-            'amount' => 'К оплате',
-            'status' => 'Status',*/
-        ];
-    }
-
-    /**
      * Gets query for [[FormType]].
      *
      * @return ActiveQuery
@@ -106,7 +107,16 @@ class Request extends FormManipulation
         return $this->hasOne(FormType::class, ['id' => 'type_id']);
     }
     
-  
+    /**
+     * Gets query for [[Form]].
+     *
+     * @return ActiveQuery
+     */
+    public function getForm()
+    {
+        return $this->hasOne(Form::class, ['id' => 'form_id']);
+    }
+    
     public function getStand()
     {
         return $this->hasOne(RequestStand::class, ['request_id' => 'id' ]);

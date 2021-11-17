@@ -3,6 +3,7 @@
 
 namespace app\models\ActiveRecord\Requests;
 
+use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Users\User;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
@@ -14,7 +15,8 @@ use yii\web\UploadedFile;
  * @property string|null $file Файл, приложенный к форме
  * 
  * @property User $user
- * 
+ * @property Request $request
+ * @property Form $form
  * @author kotov
  */
 abstract class BaseRequest extends ActiveRecord
@@ -54,5 +56,18 @@ abstract class BaseRequest extends ActiveRecord
         $this->file = $file;
     } 
     
-    abstract public function getHeader():string;
+    public function getHeader():string 
+    {
+        return $this->form->headerName;
+    }
+    
+    public function getRequest()
+    {
+        return $this->hasOne(Request::class, ['id' => 'request_id']);
+    }
+    
+    public function getForm()
+    {
+        return $this->request->form;
+    }
 }
