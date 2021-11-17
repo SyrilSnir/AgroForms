@@ -2,6 +2,7 @@
 
 namespace app\modules\panel\controllers;
 
+use app\core\manage\Auth\Rbac;
 use app\core\repositories\readModels\Companies\CompanyReadRepository;
 use app\core\services\operations\Companies\CompanyService;
 use app\core\services\operations\Users\UserService;
@@ -21,7 +22,11 @@ use yii\helpers\Url;
  */
 class CompaniesController extends ManageController
 {
-    public $roles = ['managerMenu', 'adminMenu'];
+    public $roles = [
+        Rbac::PERMISSION_MANAGER_MENU,
+        Rbac::PERMISSION_ADMINISTRATOR_MENU,
+        Rbac::PERMISSION_ORGANIZER_MENU
+    ];
 
     use GridViewTrait;
     /**
