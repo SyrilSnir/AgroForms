@@ -46,7 +46,7 @@ $columnsConfig = [
                             'label' => Yii::t('app/title','List of exhibitions'),
                             'format' => 'raw',
                             'filter' => $searchModel->getExhibitionsList(),
-                            'value' => function (Form $model) { return $model->exhibition->title ;}
+                            'value' => function (Form $model) { return $model->exhibition ? $model->exhibition->title: '' ;}
                         ],                        
                         [
                             'attribute' => 'status',
@@ -63,23 +63,25 @@ $columnsConfig = [
                             'width' => '140px',
                             'buttons' => [
                                 'status' => function ($url, $model, $key) {
-                                    /** @var Form $model */
-                                    if ($model->status == Form::STATUS_DRAFT) {
-                                        $title = t('Publish');
-                                        $iconName = "ok-sign";
-                                        $url = Url::current(['publish', 'id' => $key]);
-                                    } 
-                                    if ($model->status == Form::STATUS_ACTIVE) {
-                                        $title = t('To draft');
-                                        $iconName = "remove-circle";
-                                        $url = Url::current(['unpublish', 'id' => $key]);
+                                    /** @var Form $model */ 
+                                    if ($model->isStatusShowed()) {
+                                        if ($model->status == Form::STATUS_DRAFT) {
+                                            $title = t('Publish');
+                                            $iconName = "ok-sign";
+                                            $url = Url::current(['publish', 'id' => $key]);
+                                        } 
+                                        if ($model->status == Form::STATUS_ACTIVE) {                                        
+                                            $title = t('To draft');
+                                            $iconName = "remove-circle";
+                                            $url = Url::current(['unpublish', 'id' => $key]);
+                                        }
+                                        $options = [
+                                            'title' => $title,
+                                            'aria-label' => $title,
+                                        ];                                  
+                                        $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                        return Html::a($icon, $url,$options);
                                     }
-                                    $options = [
-                                        'title' => $title,
-                                        'aria-label' => $title,
-                                    ];                                  
-                                    $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
-                                    return Html::a($icon, $url,$options);                            
                                 }
                             ]
                         ],

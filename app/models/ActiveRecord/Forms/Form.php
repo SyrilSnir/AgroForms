@@ -159,5 +159,10 @@ class Form extends ActiveRecord
     public function publish()
     {
         $this->status = self::STATUS_ACTIVE;
-    }    
+    }  
+    
+    public function isStatusShowed(): bool 
+    {
+        return ($this->status === self::STATUS_DRAFT || $this->status === self::STATUS_ACTIVE);
+    }
 }
