@@ -3,6 +3,7 @@
 namespace app\core\services\operations\Requests;
 
 use app\core\repositories\manage\Requests\RequestRepository;
+use app\core\services\operations\Logs\ApplicationRejectLogService;
 use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationRejectForm;
@@ -21,9 +22,20 @@ class RequestService
      */
     protected $requests;
     
-    public function __construct(RequestRepository $requests)
+    /**
+     * 
+     * @var ApplicationRejectLogService
+     */
+    protected $applicationRejectLogService;
+
+
+    public function __construct(
+            RequestRepository $requests,
+            ApplicationRejectLogService $applicationRejectLogService
+            )
     {
         $this->requests = $requests;
+        $this->applicationRejectLogService = $applicationRejectLogService;
     }
     
     public function changeStatus(ChangeStatusForm $form)
@@ -55,6 +67,7 @@ class RequestService
         /** @var Request $request */        
         $request = $this->requests->get($id);
         $request->accept();
+        $this->applicationRejectLogService->clearActualStatusForRequest($id);
         $request->save();        
     }
     

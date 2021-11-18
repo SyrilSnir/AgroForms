@@ -1,6 +1,7 @@
 <?php
 
 use app\core\helpers\View\Request\RequestStatusHelper;
+use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ChangeStatusForm;
 use yii\helpers\ArrayHelper;
@@ -12,6 +13,7 @@ use yii\widgets\DetailView;
 /* @var $this View */
 /* @var $model Request */
 /* @var $statusForm ChangeStatusForm */
+/* @var array $logs */
 $this->title = t('Application №','requests') . $model->id;
 $attributes = [
     'formType.name:text:' . t('Form type', 'requests'),
@@ -75,4 +77,39 @@ if (!empty($dopAttributes)) {
             ]); ?>
         </div>
     </div>
+<?php
+ /** @var ApplicationRejectLog $activeMessage */
+ /** @var ApplicationRejectLog[] $historyMessages */
+
+$activeMessage = $logs['active'];
+$historyMessages = $logs['history'];
+
+?>
+<?php if(!empty($activeMessage) || !empty($historyMessages)): ?>
+<div class="content organizer__comments">    
+    <div class="container-fluid">
+        <h2><?php echo t('Information from the organizer') ?></h2>        
+            <?php if(!empty($activeMessage)): ?>
+        <div class="row">
+            <div class="card">
+                <div class="card-header"><div class="title__text"><?php echo t('Important information') ?></div><div class="date"><span><?php echo $activeMessage->formatDate ?></span></div></div>
+                <div class="card-body"><?php echo $activeMessage->comment ?></div>
+            </div>
+        </div>  
+            <?php endif; ?>
+            <?php if(!empty($historyMessages)): ?>        
+        <div class="row">
+            <h3><?php echo t('Message history') ?></h3>
+            
+                    <?php foreach ($historyMessages as $message):?>
+            <div class="card">
+                <div class="date__wrapper"><span class="date"><?php echo $message->formatDate ?></span></div>
+                <div class="card-body"><?php echo $message->comment?></div>
+            </div>
+                    <?php endforeach; ?>
+        </div>         
+            <?php endif; ?>
+    </div>        
+</div>    
 </div>
+<?php endif; ?>

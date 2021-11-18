@@ -3,6 +3,7 @@
 namespace app\models\ActiveRecord\Logs;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
+use DateTime;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -17,6 +18,8 @@ use yii\db\Expression;
  * @property string|null $comment_eng Комментарий (ENG)
  * @property int $actual Актуальность
  * @property string $date Дата
+ * @property string $formatDate Отформатированная дата
+ * @property string $formatDateEng Отформатированная дата
  *
  * @property Requests $request
  */
@@ -37,6 +40,13 @@ class ApplicationRejectLog extends ActiveRecord
         ];
     } 
     
+    public function extraMultilangFields()
+    {
+        return [
+            'formatDate',
+            'formatDateEng'
+        ];
+    }
     /**
      * 
      * @param int $requestId
@@ -73,4 +83,18 @@ class ApplicationRejectLog extends ActiveRecord
     {
         return $this->hasOne(Requests::className(), ['id' => 'request_id']);
     }
+    
+    public function getFormatDate()
+    {
+        return DateTime::createFromFormat('Y-m-d H:i:s',$this->date)->format('d.m.Y H:i');;
+    }
+    
+    public function getFormatDateEng()
+    {
+        return DateTime::createFromFormat('Y-m-d H:i:s',$this->date)->format('Y-m-d H:i');;
+    } 
+    
+    
+    
+    
 }

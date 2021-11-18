@@ -33,7 +33,8 @@ trait RequestViewTrait
     public function actionView($id)
     {        
         /** @var Request $model */
-        $this->viewPath = Yii::getAlias('@views') .  DIRECTORY_SEPARATOR .'requests';        
+        $this->viewPath = Yii::getAlias('@views') .  DIRECTORY_SEPARATOR .'requests';    
+        $rejectLogs = $this->applicationRejectLogService->getLogsForRequest($id);        
         $model = $this->findModel($id);
         $requestForm = $model->requestForm;
         $viewService = RequestViewFactory::getViewService($model);
@@ -47,6 +48,7 @@ trait RequestViewTrait
             'model' => $model,
             'dopAttributes' => $dopAttributes,
             'statusForm' => $statusForm,
+            'logs' => $rejectLogs            
         ]);
     }
 }

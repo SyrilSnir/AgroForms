@@ -1,0 +1,27 @@
+.organizer__comments {
+    .card {
+        width: 100%;
+    }
+    .date__wrapper {
+        background-color: #17a2b8;
+        padding: 5px 0;
+        text-align: right;
+        .date {
+            padding-right: 1rem;
+            color: #fff;
+        }
+    }
+    .card-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        background-color: #007bff;
+        color: #fff;
+        .date {
+            text-align: right;
+        }
+        > div {
+            width: 50%;
+        }
+    }
+}

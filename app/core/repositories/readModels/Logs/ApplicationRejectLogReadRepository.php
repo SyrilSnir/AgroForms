@@ -31,4 +31,14 @@ class ApplicationRejectLogReadRepository implements ReadRepositoryInterface
                 ->andWhere(['actual' => true])
                 ->one();
     }
+    
+    public function findArchiveLogsForRequest(int $requestId): array
+    {
+        return ApplicationRejectLog::find()
+                ->andWhere(['request_id' => $requestId])
+                ->andWhere(['actual' => false]) 
+                ->orderBy(['date' => SORT_DESC])
+                ->all();
+                
+    }
 }

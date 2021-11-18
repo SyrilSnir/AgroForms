@@ -10,6 +10,7 @@ namespace app\modules\panel\controllers;
 
 use app\core\manage\Auth\Rbac;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
+use app\core\services\Log\ApplicationRejectLogService;
 use app\core\services\operations\Requests\RequestService;
 use app\core\traits\GridViewTrait;
 use app\core\traits\RequestViewTrait;
@@ -29,6 +30,11 @@ use yii\helpers\Url;
  */
 class RequestsController extends ManageController
 {
+    /**
+     * 
+     * @var ApplicationRejectLogService
+     */
+    protected  $applicationRejectLogService;
     
     protected $roles = [
         Rbac::PERMISSION_ADMINISTRATOR_MENU,
@@ -45,6 +51,7 @@ class RequestsController extends ManageController
             AccountantRequestSearch $accountantSearchModel,
             RequestReadRepository $repository, 
             RequestService $requestService,
+            ApplicationRejectLogService $applicationRejectLogService,
             $config = array()
             )
     {
@@ -58,6 +65,7 @@ class RequestsController extends ManageController
         }
         $this->readRepository = $repository;
         $this->service = $requestService;
+        $this->applicationRejectLogService = $applicationRejectLogService;
     }  
     
     public function actionChangeStatus($id) 
@@ -73,7 +81,7 @@ class RequestsController extends ManageController
             'model' => $changeStatusForm,
         ]);           
     }
-    
+           
     public function actionAccept($id)
     {
         try {

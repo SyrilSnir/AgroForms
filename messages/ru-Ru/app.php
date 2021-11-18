@@ -141,5 +141,7 @@ return [
     'Show deleted entries' => 'Показать удаленные записи',
     'Exhibition' => 'Выставка',
     'Information from the organizer' => 'Информация от организатора',
+    'Message history' => 'Истроия сообщений',
+    'Important information' => 'Важная информация',
 ];
 
