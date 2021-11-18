@@ -104,11 +104,10 @@ class CompaniesController extends ManageController
         $form->login = $model->contacts->manager_email;
         $form->email = $model->contacts->manager_email;
         $form->phone = $model->contacts->manager_phone;
-    //    $form->member->proposalSignatureName = $model->contacts->chief_fio;
-    //    $form->member->proposalSignaturePost = $model->contacts->chief_email;
        
         return $this->render('../users/create-member', [
             'model' => $form,
+            'update' => false
         ]);   
         
     }

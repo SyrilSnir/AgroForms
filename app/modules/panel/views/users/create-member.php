@@ -25,8 +25,7 @@ $this->title = Yii::t('app/title', 'New member')
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">                           
-    <?php $form = ActiveForm::begin([ 
-        'action' => Url::to($action)]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'login')->textInput() ?>
     <?= $form->field($model, 'fio')->textInput() ?>
