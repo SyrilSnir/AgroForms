@@ -24,7 +24,7 @@ class ManagerMenuHelper implements MenuHelperInterface
                         ]
                     ],
                     [
-                        'label' => Yii::t('app/menu', 'Request management'), 'icon' => 'tasks', 'url' => ['/panel/requests'],
+                        'label' => Yii::t('app/menu', 'Viewing requests'), 'icon' => 'tasks', 'url' => ['/panel/requests'],
                     ]
                 ]
             ];
