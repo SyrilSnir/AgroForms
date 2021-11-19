@@ -141,11 +141,11 @@ $this->title = Yii::t('app/title','Company info') . ': ' . $model->name;
                         'rowOptions'=>['class'=>'table-success']
                     ], 
                     [
-                        'value' => $profile->contacts->proposal_signature_name,
+                        'value' => $model->contacts->proposal_signature_name,
                         'label' => Yii::t('app/company','Signer\'s full name'),
                     ],                    
                     [
-                        'value' => $profile->contacts->proposal_signature_post,
+                        'value' => $model->contacts->proposal_signature_post,
                         'label' => Yii::t('app/company','Signer\'s position'),
                     ],                    
                     [
