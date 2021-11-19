@@ -22,7 +22,7 @@ abstract class FormController extends JsonController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => [Rbac::PERMISSION_MEMBER_MENU, Rbac::PERMISSION_ADMINISTRATOR_MENU],
+                        'roles' => [Rbac::PERMISSION_MEMBER_MENU, Rbac::PERMISSION_ADMINISTRATOR_MENU, Rbac::PERMISSION_ORGANIZER_MENU],
                     ],
                 ],
             ],
