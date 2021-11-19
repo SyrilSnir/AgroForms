@@ -2,7 +2,8 @@
 
 Yii::setAlias('@views', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
         'app' .DIRECTORY_SEPARATOR .'views');
-
+Yii::setAlias('@modules', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
+        'app' .DIRECTORY_SEPARATOR .'modules');
 Yii::setAlias('@mail', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
         'app' .DIRECTORY_SEPARATOR .'views' . DIRECTORY_SEPARATOR . 'mail');
 Yii::setAlias('@pdf', dirname(__DIR__) . DIRECTORY_SEPARATOR . 

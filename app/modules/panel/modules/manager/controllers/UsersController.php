@@ -49,6 +49,9 @@ class UsersController extends BaseManagerController
     
     public function actionCreateMember()
     {
+        $this->viewPath = Yii::getAlias('@modules') .
+                DIRECTORY_SEPARATOR .'panel' .
+                DIRECTORY_SEPARATOR .'views' . DIRECTORY_SEPARATOR . 'users';
         $form = new MemberForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
