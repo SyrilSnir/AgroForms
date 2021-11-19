@@ -37,7 +37,7 @@ $this->title = Yii::t('app/user','User edit') . ': ' . $model->login;
                    'options' => ['placeholder' => $model->attributeLabels()['birthday']],
                     'value' => $model->birthday,
                     'removeButton' => false,
-                    'pickerIcon' => false,
+                    'type' => DatePicker::TYPE_COMPONENT_PREPEND,
                     'pluginOptions' => [
                        'autoclose'=>true,
                        'format' => 'dd.mm.yyyy'

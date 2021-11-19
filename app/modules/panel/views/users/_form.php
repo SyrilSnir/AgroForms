@@ -32,7 +32,7 @@ use app\models\Forms\Manage\Users\CreateForm;
            'options' => ['placeholder' => 'Дата рождения'],
             'value' => $model->birthday,
             'removeButton' => false,
-            'pickerIcon' => false,
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,
             'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'

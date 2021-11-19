@@ -48,7 +48,7 @@ $action = ($update) ? Url::to(['/manage/users/update', 'id' => $model->userId ])
            'options' => ['placeholder' => 'Дата рождения'],
             'value' => $model->birthday,
             'removeButton' => false,
-            'pickerIcon' => false,
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,
            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'

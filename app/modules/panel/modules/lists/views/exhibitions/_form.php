@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
            'options' => ['placeholder' => ''],
             'value' => $model->startDate,
             'removeButton' => false,
-            'pickerIcon' => false,
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,        
            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'
@@ -45,7 +45,7 @@ use yii\widgets\ActiveForm;
            'options' => ['placeholder' => ''],
             'value' => $model->endDate,
             'removeButton' => false,
-            'pickerIcon' => false,
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,
            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'
@@ -55,7 +55,7 @@ use yii\widgets\ActiveForm;
            'options' => ['placeholder' => ''],
             'value' => $model->startAssembling,
             'removeButton' => false,
-            'pickerIcon' => false,
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,
            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'
@@ -65,7 +65,7 @@ use yii\widgets\ActiveForm;
            'options' => ['placeholder' => ''],
             'value' => $model->endAssembling,
             'removeButton' => false,
-            'pickerIcon' => false,
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,
            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'
@@ -75,7 +75,7 @@ use yii\widgets\ActiveForm;
            'options' => ['placeholder' => ''],
             'value' => $model->startDisassembling,
             'removeButton' => false,
-            'pickerIcon' => false,
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,
            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'
@@ -85,7 +85,7 @@ use yii\widgets\ActiveForm;
            'options' => ['placeholder' => ''],
             'value' => $model->endDisassembling,
             'removeButton' => false,
-            'pickerIcon' => false,
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,
            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'

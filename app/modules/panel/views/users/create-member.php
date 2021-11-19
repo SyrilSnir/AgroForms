@@ -42,8 +42,8 @@ $this->title = Yii::t('app/title', 'New member')
         echo $form->field($model, 'birthday')->widget(DatePicker::class, [
            'options' => ['placeholder' => t('Date of birthday','user')],
             'value' => $model->birthday,
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,
             'removeButton' => false,
-            'pickerIcon' => false,
             'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'
