@@ -125,7 +125,7 @@ use yii\widgets\ActiveForm;
 
                             <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="card card-info">
-                                    <div class="card-header"><?php echo t('Head of company', 'Руководитель компании') ?></div>
+                                    <div class="card-header"><?php echo t('Head of company', 'company') ?></div>
                                     <div class="card-body">
                                         <?= $form->field($model->contacts, 'chiefPosition')->textInput() ?>
                                         <?= $form->field($model->contacts, 'chiefFio')->textInput() ?>
