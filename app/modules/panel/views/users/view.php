@@ -32,6 +32,7 @@ $attributes = [
                         'value' => UserStatusHelper::getStatusLabel($model->active)
                     ]
                 ];
+/*
 switch ($model->user_type_id) {
     case UserType::MEMBER_USER_ID:
         $dopAttributes = [
@@ -43,6 +44,8 @@ switch ($model->user_type_id) {
         $attributes = ArrayHelper::merge($attributes, $dopAttributes);
         break;
 }
+ * 
+ */
 ?>
 <div class="full-view">
     <p>
