@@ -72,7 +72,7 @@ class SetupApplication implements BootstrapInterface
             $form->setAttributes($mailConfig);
             $smtp = true;
             if (!$form->validate()) {
-                $mailConfig = Yii::$app->params['mailSettinga'];
+                $mailConfig = Yii::$app->params['mailSettings'];
                 $form->setAttributes($mailConfig);
                 if (!$form->validate()) {
                     $smtp = false;

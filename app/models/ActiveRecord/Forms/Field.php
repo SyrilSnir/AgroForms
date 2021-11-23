@@ -3,6 +3,7 @@
 namespace app\models\ActiveRecord\Forms;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
+use app\models\ActiveRecord\Forms\Query\FieldQuery;
 use app\models\Forms\Manage\Forms\FieldParametersForm;
 use DateTime;
 use yii\db\ActiveRecord;
@@ -36,6 +37,7 @@ class Field extends ActiveRecord
 {
 
     use MultilangTrait;
+  
 /**
  * 
  * @param string $name
@@ -139,7 +141,7 @@ class Field extends ActiveRecord
     
     public function getEnums()
     {
-        return $this->hasMany(FieldEnum::class, ['field_id' => 'id']);
+        return $this->hasMany(FieldEnum::class, ['field_id' => 'id'])->orderBy(['order' => SORT_ASC])->indexBy('id');
     }
     
     public function hasEnums():bool
@@ -176,8 +178,8 @@ class Field extends ActiveRecord
                 ->one();        
     }
     
-    public static function find(): Query\FieldQuery
+    public static function find(): FieldQuery
     {
-        return new Query\FieldQuery(static::class);
+        return new FieldQuery(static::class);
     }
 }

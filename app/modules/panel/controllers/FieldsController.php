@@ -2,19 +2,21 @@
 
 namespace app\modules\panel\controllers;
 
-use app\core\providers\Data\FieldEnumProvider;
 use app\core\repositories\readModels\Forms\FieldReadRepository;
+use app\core\services\operations\Forms\FieldEnumService;
 use app\core\services\operations\Forms\FieldService;
 use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\FieldEnum;
+use app\models\Forms\Manage\Forms\FieldEnumForm;
 use app\models\Forms\Manage\Forms\FieldForm;
 use app\models\Forms\Manage\Forms\FieldParametersForm;
 use app\models\SearchModels\Forms\FieldSearch;
 use app\models\SearchModels\Forms\SpecialPriceSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
+use kotchuprik\sortable\actions\Sorting;
 use Yii;
 use yii\helpers\Url;
 
@@ -34,9 +36,9 @@ class FieldsController extends BaseAdminController
     
     /**
      *
-     * @var FieldEnumProvider
+     * @var FieldEnumService
      */
-    protected $fieldEnumProvider;
+    protected $fieldEnumService;
     
     /**
      * 
@@ -44,13 +46,22 @@ class FieldsController extends BaseAdminController
      */
     protected $specialPriceSearch;
 
-
+    public function actions()
+    {
+        return [
+            'enums-sorting' => [
+                'class' => Sorting::className(),
+                'query' => FieldEnum::find(),
+            ],
+        ];
+    }
+    
     public function __construct(
             $id, 
             $module, 
             FieldReadRepository $repository,
             FieldService $service,
-            FieldEnumProvider $fieldEnumProvider,
+            FieldEnumService $fieldEnumService,
             FieldSearch $searchModel,
             SpecialPriceSearch $specialPriceSearch,
             $config = array()
@@ -59,7 +70,7 @@ class FieldsController extends BaseAdminController
         parent::__construct($id, $module, $config);
         $this->readRepository = $repository;
         $this->service = $service;
-        $this->fieldEnumProvider = $fieldEnumProvider;
+        $this->fieldEnumService = $fieldEnumService;
         $this->searchModel = $searchModel;
         $this->specialPriceSearch = $specialPriceSearch;
     }
@@ -117,33 +128,30 @@ class FieldsController extends BaseAdminController
         $loadFormData = $form->load(Yii::$app->request->post());
         $this->setFieldParamsScenario($form); 
         $enumsPresent = $model->hasEnums();
-        if (!$enumsPresent) {
-            Yii::$app->session->remove(FieldEnum::SESSION_IDENTIFIER); 
-            $enumsList = [];            
-        } else {
-            if (!$loadFormData) {
-                $enumsList = $this->fieldEnumProvider->getEnumsList($model);
-                Yii::$app->session->set(FieldEnum::SESSION_IDENTIFIER, $enumsList);                
-            } else {
-                $enumsList = Yii::$app->session->get(FieldEnum::SESSION_IDENTIFIER, []);                
-            }
-        }
+        if (!$loadFormData) {
+            $enumsList = $model->enums;
+            $enumsForm = new FieldEnumForm();
+            $enumsForm->fieldId = $id;
+            if ($enumsForm->load(Yii::$app->request->post()) && $enumsForm->validate() ) {
+                $this->fieldEnumService->create($enumsForm);
+                $this->response->refresh();
+            }                            
+        }        
         if ($loadFormData && $form->validate()) {
             $this->service->edit($id, $form);
-            if ($enumsPresent) {
-                $this->service->addEnums($model, $enumsList);
-            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
         $dataProvider = $this->specialPriceSearch->search($id);        
         return $this->render('update', [
             'model' => $form,
             'enumsList' => $enumsList,
+            'enumsPresent' => $enumsPresent,
             'previousPage' => $previousPage,
             'dataProvider' => $dataProvider,
+            'enumsForm' => $enumsForm
         ]);                        
     }
-
+    
     protected function setFieldParamsScenario(FieldForm $form) 
     {
         switch ($form->elementTypeId) {

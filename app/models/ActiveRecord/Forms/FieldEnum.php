@@ -14,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property string $name Название группы аттрибутов
  * @property string $name_eng Название группы аттрибутов
  * @property string $value Значение
+ * @property int $order Порядковый номер
  *
  * @property Fields $field
  */
@@ -44,18 +45,12 @@ class FieldEnum extends ActiveRecord
         $model->name_eng = $nameEng;
         return $model;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function rules()
     {
         return [
-            [['field_id', 'name', 'value'], 'required'],
-            [['field_id'], 'integer'],
-            [['name', 'value'], 'string', 'max' => 255],
-            [['field_id'], 'exist', 'skipOnError' => true, 'targetClass' => Field::className(), 'targetAttribute' => ['field_id' => 'id']],
-        ];
+            [['name','name_eng','value'], 'safe']
+            ];
     }
 
     /**
@@ -67,6 +62,7 @@ class FieldEnum extends ActiveRecord
             'id' => 'ID',
             'field_id' => t('Field'),
             'name' => t('Item name'),
+            'name_eng' => t('Item name') . ' (ENG)',
             'value' => t('Value'),
         ];
     }

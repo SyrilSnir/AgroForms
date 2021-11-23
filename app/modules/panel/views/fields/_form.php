@@ -181,9 +181,24 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                             
                         </div>
                         <div id="attribute-enums-wrapper" class="col-md-6<?php if (!$model->hasEnums ):?> hide<?php endif; ?>"> 
+                            <div id="attributes-enum-list" class="card">
+                                          <div class="card-header">
+                                              <h3 class="card-title"><?php echo t('Enumerated items') ?></h3>
+                                          </div>
+                                          <!-- /.card-header -->              
+
+                            <div class="card-body">                            
+                            <?php if(!$isNew): ?>
                             <?php echo $this->render('enum-elements-table.php',[
-                                'enumsList' => $enumsList
+                                'enumsList' => $enumsList,
+                                'enumsForm' => $enumsForm                                 
                             ]) ?>
+                            <?php else: ?>
+                                <p style="color:red"><?php echo t('Adding list items will be available after saving the field') ?></p>
+                            <?php endif; ?>
+                            </div>
+                            </div>
+                            
                         </div>                        
                     </div>
                 </div>

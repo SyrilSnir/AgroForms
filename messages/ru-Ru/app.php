@@ -5,6 +5,7 @@ return [
    'Russian' => 'Русский',
    'English' => 'Английский',
    'Note' => 'Внимание',
+   'Add' => 'Добавить',
    'Comment' => 'Комментарий',
    'Information' =>'Информация',
    'Restore' => 'Восстановить',
@@ -143,5 +144,6 @@ return [
     'Information from the organizer' => 'Информация от организатора',
     'Message history' => 'Истроия сообщений',
     'Important information' => 'Важная информация',
+    'Adding list items will be available after saving the field' => 'Добавление элементов списка будет доступно после сохранения поля',
 ];
 

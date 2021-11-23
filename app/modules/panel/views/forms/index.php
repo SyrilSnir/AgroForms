@@ -56,7 +56,7 @@ $columnsConfig = [
                             'value' => function (Form $model) {
                                 return FormStatusHelper::getStatusLabel($model->status);
                             }
-                        ],                         
+                        ],          
                         [
                             'class' => ActionColumn::class,  
                             'template' => '{view}{update}{delete}&nbsp;&nbsp;&nbsp;{status}',

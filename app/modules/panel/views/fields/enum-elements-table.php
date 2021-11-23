@@ -1,71 +1,113 @@
-<?php 
+<?php
+
+use kartik\grid\ActionColumn;
+use kartik\grid\EditableColumn;
+use kartik\grid\GridView;
+use kotchuprik\sortable\grid\Column;
+use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+use app\models\ActiveRecord\Forms\FieldEnum;
 
 /** @var array $enumsList */
+/** @var array FieldEnum $model */
 ?>
-<div id="attributes-enum-list" class="card">
-              <div class="card-header">
-                  <h3 class="card-title"><?php echo t('Enumerated items') ?></h3>
-              </div>
-              <!-- /.card-header -->              
-              <div class="card-body">
-                <table class="table table-bordered attributes-enum-table">
-                  <thead>                  
-                    <tr>
-                      <th style="width: 10px">#</th>
-                      <th><?php echo t('Item name') ?></th>
-                      <th><?php echo t('Item name') ?> (ENG)</th>
-                      <th><?php echo t('Value') ?></th>
-                      <th style="width: 10px"></th>
-                    </tr>
-                    </thead>                    
-                  <tbody>                    
-                    <?php $enumIndex = 1; ?>
-                    <?php foreach ($enumsList as $enum): ?>
-                      <tr data-number="<?php echo $enumIndex ?>">
-                            <td><?php echo $enumIndex ?></td>
-                            <td class="attribute-enum-name"><?php echo $enum['name'] ?></td>
-                            <td class="attribute-enum-name"><?php echo $enum['name_eng'] ?></td>
-                            <td class="attribute-enum-value"><?php echo $enum['value'] ?></td>
-                            <td>    
-                                <a class="btn btn-app delete-enum-field">
-                                    <i class="fas fa-times"></i>Удалить
-                                </a> 
-                            </td>
-                        </tr>
-                        <?php $enumIndex++ ;?>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer clearfix">
+
+        <?php 
+    $dataProvider = new ArrayDataProvider([
+        'allModels' => $enumsList,
+    ]);
+    echo GridView::widget([
+        'columns' => [
+            [
+                'class' => Column::className(),
+            ],            
+            [
+                'class'=> EditableColumn::class,
+                'attribute'=>'name',
+                'value' => function (FieldEnum $model) {
+                    $model->disableMultilang();
+                    return $model->name;
+                },
+                'editableOptions' => function ($model, $key, $index) {
+                    return [                
+                        'formOptions' => [
+                            'action' => Url::toRoute(['/api/enum-elements/edit','id' => $model->id])
+                        ]  
+                    ];
+                }
+                               
+            ],
+            [
+                'class'=> EditableColumn::class,
+                'attribute'=>'name_eng',
+                'editableOptions' => function ($model, $key, $index) {
+                    return [                
+                        'formOptions' => [
+                            'action' => Url::toRoute(['/api/enum-elements/edit','id' => $model->id])
+                        ]  
+                    ];
+                }                
+                
+            ],
+            [
+                'class'=> EditableColumn::class,
+                'attribute'=>'value',
+                'editableOptions' => function ($model, $key, $index) {
+                    return [                
+                        'formOptions' => [
+                            'action' => Url::toRoute(['/api/enum-elements/edit','id' => $model->id])
+                        ]  
+                    ];
+                }                
+            ],  
+            [
+                'class' => ActionColumn::class,
+                'controller' => 'field-enum',
+                'visibleButtons' => [
+                    'update' => false,
+                    'view' => false
+                ]
+            ]
+            
+        ],
+        'rowOptions' => function ($model, $key, $index, $grid) {
+            return ['data-sortable-id' => $model->id];
+        },  
+        'options' => [
+            'data' => [
+                'sortable-widget' => 1,
+                'sortable-url' => Url::toRoute(['enums-sorting']),
+            ]
+        ],                 
+        'dataProvider' => $dataProvider
+        
+    ]);
+        ?>
+                              <?php 
+                            $newEnumItemForm = ActiveForm::begin();
+                          ?>
+    
                   <div class="container">
                       <div class="row align-items-end">
+    <?= $newEnumItemForm->field($enumsForm, 'fieldId')->hiddenInput(['maxLength' => true])->label(false) ?>
                           <div class="col-4">
-                              <div class="field"><?php echo t('Field name') ?>: </div>
-                              <?php echo Html::input('text', 'enum-name', '', [
-                                  'class' => 'form-control enum-field-name',
-                              ]);?>
+    <?= $newEnumItemForm->field($enumsForm, 'name')->textInput(['maxLength' => true])->error(false) ?>
                           </div>
                           <div class="col-4">
-                            <div class="field"><?php echo t('Field name') ?> (eng): </div>
-                              <?php echo Html::input('text', 'enum-name_eng', '', [
-                                  'class' => 'form-control enum-field-name-eng',
-                              ]);?>
+    <?= $newEnumItemForm->field($enumsForm, 'nameEng')->textInput(['maxLength' => true])->error(false) ?>
                           </div>                            
                           <div class="col-4">
-                            <div class="field"><?php echo t('Value') ?>: </div>
-                              <?php echo Html::input('text', 'enum-name', '', [
-                                  'class' => 'form-control enum-field-value',
-                              ]);?>
+    <?= $newEnumItemForm->field($enumsForm, 'value')->textInput(['maxLength' => true])->error(false) ?>
                           </div>                        
                           <div class="col-3 align-items-end">
-                              <button type="button" class="btn btn-block btn-success enum-field-add-button">Добавить</button>
+        <?= Html::submitButton(Yii::t('app','Add'), ['class' => 'btn btn-block btn-success enum-field-add-button']) ?>                             
                           </div>
+
                       </div>
                   </div> 
                   
-              </div>
-            </div>
+                              <?php  ActiveForm::end(); ?>
+
 
