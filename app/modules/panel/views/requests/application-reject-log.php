@@ -17,14 +17,14 @@ $this->title = Yii::t('app/requests', 'Reject application');
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'comment')->widget(CKEditor::className(),[
         'editorOptions' => [
-            'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+            'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
             'inline' => false, //по умолчанию false
         ],
 
     ]); ?>
     <?= $form->field($model, 'commentEng')->widget(CKEditor::className(),[
         'editorOptions' => [
-            'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+            'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
             'inline' => false, //по умолчанию false
         ],
 

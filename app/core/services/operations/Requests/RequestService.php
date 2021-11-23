@@ -79,6 +79,7 @@ class RequestService
     {
         /** @var Request $request */
         $request = $this->requests->get($form->requestId);
+        $this->applicationRejectLogService->clearActualStatusForRequest($form->requestId);
         $logField = ApplicationRejectLog::create(
                 $form->requestId, 
                 $form->comment,

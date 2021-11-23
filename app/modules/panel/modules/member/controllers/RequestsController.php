@@ -6,8 +6,8 @@ use app\core\helpers\Data\FormsHelper;
 use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\readModels\Logs\ApplicationRejectLogReadRepository;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
+use app\core\services\Log\ApplicationRejectLogService;
 use app\core\services\operations\Requests\RequestService;
-use app\core\services\operations\View\Requests\RequestViewFactory;
 use app\core\traits\RequestViewTrait;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Requests\BaseRequest;
@@ -43,6 +43,12 @@ class RequestsController extends BaseMemberController
      */
     protected $applicationRejectLogReadRepository;
     
+    /**
+     * 
+     * @var ApplicationRejectLogService
+     */
+    protected  $applicationRejectLogService;    
+    
     protected $searchModel;
     
     use RequestViewTrait;
@@ -55,6 +61,7 @@ class RequestsController extends BaseMemberController
             ManagerRequestSearch $searchModel,
             FormRepository $formRepository, 
             ApplicationRejectLogReadRepository $applicationRejectLogReadRepository,
+            ApplicationRejectLogService $applicationRejectLogService,            
             $config = array()
             )
     {
@@ -64,6 +71,7 @@ class RequestsController extends BaseMemberController
         $this->formsRepository = $formRepository;
         $this->applicationRejectLogReadRepository = $applicationRejectLogReadRepository;
         $this->searchModel = $searchModel;
+        $this->applicationRejectLogService = $applicationRejectLogService;        
     }
 
     public function actionIndex($id)
@@ -119,24 +127,6 @@ class RequestsController extends BaseMemberController
     //    return $this->redirect(Url::to(['/panel/member/forms/load', 'id' => $requestForm->id, 'requestId' => $request->id]));
     }
     
-    /**
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {        
-        /** @var Request $model */
-        $model = $this->findModel($id);
-        $requestForm = $model->requestForm;
-        $viewService = RequestViewFactory::getViewService($model);
-        $dopAttributes = $viewService->getFieldAttributes($requestForm);
-
-        return $this->render('view', [
-            'model' => $model,
-            'dopAttributes' => $dopAttributes
-        ]);
-    }
-
     /**
      * @param integer $id
      * @return mixed
