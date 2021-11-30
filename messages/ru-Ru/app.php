@@ -7,6 +7,7 @@ return [
    'Note' => 'Внимание',
    'Add' => 'Добавить',
    'Comment' => 'Комментарий',
+   'Message' => 'Сообщение',
    'Information' =>'Информация',
    'Restore' => 'Восстановить',
    'Change' => 'Изменить',
@@ -19,7 +20,7 @@ return [
    'Enter' => 'Вход',
    'Back' => 'Вернуться',
    'Cancel' => 'Отмена',
-   'Home' => 'Домой',
+   'Home' => 'На главную',
    'New' => 'Новый',
    'Title' => 'Заголовок',
    'Status' => 'Статус',
@@ -145,5 +146,6 @@ return [
     'Message history' => 'Истроия сообщений',
     'Important information' => 'Важная информация',
     'Adding list items will be available after saving the field' => 'Добавление элементов списка будет доступно после сохранения поля',
+    'The message has been sent' => 'Сообщение было отправлено',
 ];
 

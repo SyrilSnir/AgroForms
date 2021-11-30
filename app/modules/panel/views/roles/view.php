@@ -29,4 +29,5 @@ $this->title = $model->name;
         ]); ?>
     </div>
 </div>
+    </div>
 
