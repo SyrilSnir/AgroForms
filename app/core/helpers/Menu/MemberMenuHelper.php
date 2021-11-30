@@ -33,7 +33,12 @@ class MemberMenuHelper implements MenuHelperInterface
                                     'label' => t('Company profile','menu'), 'icon' => 'building', 'url' => ['/panel/member/profile/company'],
                                 ],                                                                       
                             ]
-                        ]                                        
+                        ],
+                        [
+                            'label' => t('Feedback form','menu'),
+                            'icon' => 'comment',
+                             'url' => ['/panel/member/feedback']
+                        ],                        
                     ]
                 ];
     }

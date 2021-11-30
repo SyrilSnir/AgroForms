@@ -50,5 +50,6 @@ return [
     'Stand orders' => 'Заказы стендов',
     'New price rule' => 'Новое ценовое правило',
     'Edit price rule' => 'Изменить ценовое правило',    
-    'Show form' => 'Просмотр формы'
+    'Show form' => 'Просмотр формы',
+    'To write a message' => 'Написать сообщение'
 ];

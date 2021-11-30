@@ -37,6 +37,7 @@ return [
     'Add. equipment' => 'Доп. оборудование',
     'Units measurement' => 'Единицы измерения',
     'Mail server' => 'Почтовый сервер',
-    'Viewing requests' => 'Просмотр заявок'
+    'Viewing requests' => 'Просмотр заявок',
+    'Feedback form' => 'Форма обратной связи'
 ];
 
