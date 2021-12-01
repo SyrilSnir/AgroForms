@@ -55,7 +55,6 @@ class ActivateController extends Controller
                     'user' => $user,
                     'model' => $setNewPasswordForm
                 ]);
-
     }
     
     public function actionSuccess()

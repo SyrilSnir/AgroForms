@@ -31,4 +31,10 @@ class FeedbackService
         $this->feedbackRepository->save($model);
         return $model;
     }
+
+    public function remove ($id) 
+    {               
+        $model = $this->feedbackRepository->get($id);
+        $this->feedbackRepository->remove($model);
+    }     
 }

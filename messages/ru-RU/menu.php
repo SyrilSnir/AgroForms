@@ -38,6 +38,7 @@ return [
     'Units measurement' => 'Единицы измерения',
     'Mail server' => 'Почтовый сервер',
     'Viewing requests' => 'Просмотр заявок',
-    'Feedback form' => 'Форма обратной связи'
+    'Feedback form' => 'Форма обратной связи',
+    'Feedback' => 'Обратная связь',
 ];
 

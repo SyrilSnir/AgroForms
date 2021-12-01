@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
  * @property string|null $message
  * @property int $created_at
  *
- * @property Users $user
+ * @property User $user
  */
 class FeedbackFormModel extends ActiveRecord
 {

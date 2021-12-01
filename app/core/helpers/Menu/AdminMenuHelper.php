@@ -89,7 +89,13 @@ class AdminMenuHelper implements MenuHelperInterface
                         ],                        
                         [ 'label' => Yii::t('app/menu', 'Mail server'), 'icon' => 'envelope-o', 'url' => ['/panel/config/mail-settings'],],
                     ]
-                ]                 
+                ],
+                [
+                    'label' => t('Feedback','menu'),
+                    'icon' => 'comment',
+                     'url' => ['/panel/feedback']
+                ],                  
+                
             ]
         ];
     }
