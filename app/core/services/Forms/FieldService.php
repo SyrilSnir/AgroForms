@@ -103,7 +103,9 @@ class FieldService
          $total = $basePrice;
          foreach ($fields as $id => $field) {
              $isCheckbox = $field['checkbox'];
-             if (!key_exists('computed', $field) || $field['computed'] == false) {
+             $field['checked'] ??= false;
+             $field['computed'] ??= false;
+             if (!$field['computed']) {
                  continue;
              }
              if ($isCheckbox && $field['checked'] == false) {

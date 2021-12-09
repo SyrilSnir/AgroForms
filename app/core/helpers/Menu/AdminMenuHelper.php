@@ -36,7 +36,26 @@ class AdminMenuHelper implements MenuHelperInterface
                             'label' => Yii::t('app/menu', 'Request management'),
                             'icon' => 'tasks',
                             'url' => ['/panel/requests']
-                        ],                                                
+                        ],                        
+                        [
+                            'label' => Yii::t('app/menu', 'Form management'),
+                            'icon' => 'tasks',
+                            'items' => [
+                                [
+                                    'label' => Yii::t('app/menu', 'Forms constructor'),
+                                    'url' => ['/panel/forms'],
+                                    'icon' => 'pencil-square ',
+                                ], 
+                                [
+                                    'label' =>  Yii::t('app/menu', 'Standard stand'),
+                                    'icon' => 'share',
+                                    'items' => [
+                                        ['label' => Yii::t('app/menu', 'Stand management'), 'icon' => 'tasks', 'url' => ['/panel/stands'],],
+                                        ['label' => Yii::t('app/menu', 'Stand settings'), 'icon' => 'cogs', 'url' => ['/panel/stands/settings'],],
+                                    ]
+                                ],                                
+                            ]
+                        ],                         
                     ],
                 ], 
                 [
@@ -66,27 +85,7 @@ class AdminMenuHelper implements MenuHelperInterface
                 [
                     'label' => Yii::t('app/menu', 'Settings'), 
                     'icon' => 'cog', 
-                    'items' => [
-                        [
-                            'label' => Yii::t('app/menu', 'Forms constructor'),
-                            'url' => ['/panel/forms'],
-                            'icon' => 'tasks',
-                      /*      'items' => [
-                                ['label' => Yii::t('app/menu', 'List of forms'), 'icon' => 'tasks', 'url' => ['/panel/forms'],],
-                        //        ['label' => Yii::t('app/menu', 'Form types'), 'icon' => 'tasks', 'url' => ['/panel/form/form-types'],],
-                                ['label' => Yii::t('app/menu', 'Form fields'), 'icon' => 'tasks', 'url' => ['/panel/form/fields'],],
-                        //       ['label' => Yii::t('app/menu', 'Field groups'), 'icon' => 'tasks', 'url' => ['/panel/form/field-groups'],],
-                        //        ['label' => Yii::t('app/menu', 'Form elements'), 'icon' => 'tasks', 'url' => ['/panel/form/element-types'],],
-                            ]*/
-                        ], 
-                        [
-                            'label' =>  Yii::t('app/menu', 'Standard stand'),
-                            'icon' => 'share',
-                            'items' => [
-                                ['label' => Yii::t('app/menu', 'Stand management'), 'icon' => 'tasks', 'url' => ['/panel/stands'],],
-                                ['label' => Yii::t('app/menu', 'Stand settings'), 'icon' => 'cogs', 'url' => ['/panel/stands/settings'],],
-                            ]
-                        ],                        
+                    'items' => [                        
                         [ 'label' => Yii::t('app/menu', 'Mail server'), 'icon' => 'envelope-o', 'url' => ['/panel/config/mail-settings'],],
                     ]
                 ],
