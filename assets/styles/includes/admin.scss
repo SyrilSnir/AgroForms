@@ -1,11 +1,13 @@
-.wrapper {
-    .main-sidebar, .main-sidebar::before {
-        transition: margin-left .3s ease-in-out,width .3s ease-in-out;
-        width: 300px;
-    }
-    .content-wrapper, nav.main-header {
-        margin-left: 300px!important;
-    }
+@media screen and (min-width: map_get($grid-breakpoints,'lg')) {
+    .wrapper {
+        .main-sidebar, .main-sidebar::before {
+            transition: margin-left .3s ease-in-out,width .3s ease-in-out;
+            width: 300px;
+        }
+        .content-wrapper, nav.main-header {
+            margin-left: 300px!important;
+        }
+    }    
 }
 
 .create-form, .update-form, .dynamic-form {
