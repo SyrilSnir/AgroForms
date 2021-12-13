@@ -100,4 +100,28 @@ class RequestService
         $request->invoice();
         $request->save();
     }      
+
+    /**
+     * Оплата заявки
+     * @param int $id Идентификатор заявки
+     */
+    public function pay(int $id)
+    {
+        /** @var Request $request */
+        $request = $this->requests->get($id);
+        $request->paid();
+        $request->save();
+    } 
+
+    /**
+     * Частичная оплата
+     * @param int $id Идентификатор заявки
+     */
+    public function partialPay(int $id)
+    {
+        /** @var Request $request */
+        $request = $this->requests->get($id);
+        $request->parialPaid();
+        $request->save();
+    }     
 }

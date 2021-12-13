@@ -199,6 +199,22 @@ class Request extends FormManipulation
         $this->status = BaseRequest::STATUS_INVOICED;
     }
     
+    /**
+     * Оплата заявки
+     */
+    public function paid()
+    {
+        $this->status = BaseRequest::STATUS_PAID;
+    }
+    
+    /**
+     * Частичная оплата
+     */
+    public function parialPaid()
+    {
+        $this->status = BaseRequest::STATUS_PARTIAL_PAID;
+    }
+
     public function isNeedToChange(): bool
     {
         if ($this->isRejected()) {

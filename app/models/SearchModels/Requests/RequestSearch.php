@@ -2,6 +2,7 @@
 
 namespace app\models\SearchModels\Requests;
 
+use app\core\traits\Lists\GetCompanyNamesTrait;
 use app\core\traits\Lists\GetFormTypesListTrait;
 use app\models\ActiveRecord\Requests\Request;
 use yii\base\Model;
@@ -16,15 +17,16 @@ class RequestSearch extends Model
 {
     public $formType; 
     public $status;
-    public $form;
-    public $formId;
+    public $form_id;
+    public $company;
 
     use GetFormTypesListTrait;
+    use GetCompanyNamesTrait;
     
     public function rules(): array
     {
         return [
-            [['formType','formId','status'], 'safe'],
+            [['formType','form_id','status','company'], 'safe'],
         ];
     }
     
@@ -49,13 +51,20 @@ class RequestSearch extends Model
 
     protected function baseSearch(array $params = [], $exhibitionId = null): ActiveDataProvider
     {
-        $query = Request::find()->joinWith(['application','stand']); //->joinWith('stands');
+        $query = Request::find()->select(['{{%requests}}.*','{{%users}}.company_id AS company'])->joinWith(['application','stand','user']); //->joinWith('stands');
         if ($exhibitionId) {
             $query->forExhibition($exhibitionId);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
+                'attributes' => [
+                    'id',
+                    'company',
+                    'form_id',
+                    'status',
+                    'created_at'
+                ],                
                 'defaultOrder' => ['id' => SORT_ASC]
             ]
         ]);
@@ -67,7 +76,8 @@ class RequestSearch extends Model
         }
         $query->andFilterWhere(['form_type_id' => $this->formType]);
         $query->andFilterWhere(['status' => $this->status]);
-        $query->andFilterWhere(['requests.form_id' => $this->formId]);            
+        $query->andFilterWhere(['requests.form_id' => $this->form_id]);            
+        $query->andFilterWhere(['users.company_id' => $this->company]);            
         return $dataProvider;
     }
 }

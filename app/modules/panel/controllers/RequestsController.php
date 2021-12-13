@@ -125,5 +125,25 @@ class RequestsController extends ManageController
             Yii::$app->session->setFlash('error', $e->getMessage());
         }        
         return $this->redirect(Url::previous());        
+    }
+
+    public function actionPay($id)
+    {
+        try {
+            $this->service->pay($id);
+        } catch (DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }        
+        return $this->redirect(Url::previous());        
     }    
+
+    public function actionPartialPay($id)
+    {
+        try {
+            $this->service->partialPay($id);
+        } catch (DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }        
+        return $this->redirect(Url::previous());        
+    }      
 }

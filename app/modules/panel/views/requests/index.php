@@ -6,6 +6,7 @@ use app\core\manage\Auth\Rbac;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\SearchModels\Requests\RequestSearch;
 use app\models\SearchModels\Requests\RequestStandSearch;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
@@ -15,7 +16,7 @@ use yii\helpers\Url;
 use yii\web\View;
 
 /* @var $this View */
-/* @var $searchModel RequestStandSearch */
+/* @var $searchModel RequestSearch */
 /* @var $modificationsProvider ActiveDataProvider */
 
 $this->title = Yii::t('app/title', 'Requests list');
@@ -31,9 +32,20 @@ $columnsConfig = [
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel, 
                 'columns' => [
-                    'user.company.name:text:' . Yii::t('app','Customer'),
                     [
-                      'attribute' => 'formId',
+                        'label' => Yii::t('app/company','Company'),
+                        'value' => 'user.company.name',
+                        'attribute' => 'company',
+                        'format' => 'text',
+                        'filter' => $searchModel->companiesList(),
+                        'filterType' => GridView::FILTER_SELECT2,
+                        'filterWidgetOptions' => [
+                            'options' => ['prompt' => ''],
+                            'pluginOptions' => ['allowClear' => true],
+                        ],                        
+                    ],
+                    [
+                      'attribute' => 'form_id',
                       'label' => Yii::t('app','Form'),
                       'filter' => FormsHelper::formsList(),                        
                       'value' => 'header'
@@ -53,7 +65,7 @@ $columnsConfig = [
                     [
                         'class' => ActionColumn::class,
                         'hAlign' => GridView::ALIGN_LEFT,
-                        'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;&nbsp;{invoice}{inform}{accept}&nbsp;{reject}', 
+                        'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;&nbsp;{partial_paid}&nbsp;{paid}{inform}{accept}&nbsp;{reject}', 
                         'buttons' => [
                             'accept' => function ($url, $model, $key) {
                                     /** @var Request $model */
@@ -78,17 +90,29 @@ $columnsConfig = [
                                 ];                                  
                                 $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
                                 return Html::a($icon, $url,$options);                            
-                            },   
-                            'invoice' => function ($url, $model, $key) {
+                            },  
+                            'partial_paid' => function ($url, $model, $key) {
                                     /** @var Request $model */
-                                $title = t('Invoice','requests');
+                                $title = t('Partial paid','requests');
                                 $iconName = "usd";
-                                $url = Url::current(['invoice', 'id' => $key]);
+                                $url = Url::current(['partial-pay', 'id' => $key]);
                                 $options = [
                                     'title' => $title,
                                     'aria-label' => $title,
                                 ];                                  
-                                $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                $icon = Html::tag('span', '', ['class' => "fa fa-$iconName"]);
+                                return Html::a($icon, $url,$options);                            
+                            },                                     
+                            'paid' => function ($url, $model, $key) {
+                                    /** @var Request $model */
+                                $title = t('Application paid','requests');
+                                $iconName = "money";
+                                $url = Url::current(['pay', 'id' => $key]);
+                                $options = [
+                                    'title' => $title,
+                                    'aria-label' => $title,
+                                ];                                  
+                                $icon = Html::tag('span', '', ['class' => "fa fa-$iconName"]);
                                 return Html::a($icon, $url,$options);                            
                             },  
                             'change_status' => function ($url, $model, $key) {
@@ -108,16 +132,22 @@ $columnsConfig = [
                             'change_status' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),
                             'inform' => function ($model) {
                                 /** @var Request $model */
-                                return true;
                                 return Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU) &&
                                         $model->status === BaseRequest::STATUS_REJECTED;
                             },
-                            'invoice' => function($model) {
+                            'paid' => function($model) {
                                 /** @var Request $model */
                                 return (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
                                         Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)) &&
-                                        $model->status === BaseRequest::STATUS_ACCEPTED;
+                                        ($model->status === BaseRequest::STATUS_INVOICED ||
+                                        $model->status === BaseRequest::STATUS_PARTIAL_PAID);
                             },
+                            'partial_paid' => function($model) {
+                                /** @var Request $model */
+                                return (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
+                                        Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)) &&
+                                        $model->status === BaseRequest::STATUS_INVOICED;
+                            },                                    
                             'accept' => function ($model) {
                                 /** @var Request $model */
                                 return ($model->status === BaseRequest::STATUS_NEW || 
