@@ -18,6 +18,16 @@ $this->title = t('Application №','requests') . $model->id;
 $attributes = [
     'formType.name:text:' . t('Form type', 'requests'),
     [
+        'attribute' => 'company',
+        'label' => t('Company','company'),
+        'value' => $model->user->company->name
+    ],
+    [
+        'attribute' => 'email',
+        'label' => t('Member email','user'),
+        'value' => $model->user->email
+    ],    
+    [
         'attribute' => 'status',
         'label' => t('Status'),
         'format' => 'raw',

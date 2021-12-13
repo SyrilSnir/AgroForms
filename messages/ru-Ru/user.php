@@ -15,6 +15,7 @@ return [
   'Language' => 'Язык',
   'Gender' => 'Пол',
   'Phone number' => 'Номер телефона',
+  'Member email' => 'E-mail участника',
   'Company' => 'Компания',
   'Status' => 'Статус',
   'Male' => 'Мужской',

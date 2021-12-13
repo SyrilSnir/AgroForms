@@ -60,6 +60,13 @@ $columnsConfig = [
                             return RequestStatusHelper::getStatusLabel($model->status);
                         }
                     ],
+                    [
+                    'attribute' => 'price',
+                      'label' => Yii::t('app','Price'),
+                      'value' => function (Request $model) {
+                        return $model->requestForm->amount . ' ' .$model->form->valute->symbol;
+                      }
+                      ],
                     'created_at:datetime:' . Yii::t('app','Created at'),
 
                     [
