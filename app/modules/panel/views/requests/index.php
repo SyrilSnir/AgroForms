@@ -10,6 +10,7 @@ use app\models\SearchModels\Requests\RequestSearch;
 use app\models\SearchModels\Requests\RequestStandSearch;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
+use yii\bootstrap4\Modal;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -72,7 +73,8 @@ $columnsConfig = [
                     [
                         'class' => ActionColumn::class,
                         'hAlign' => GridView::ALIGN_LEFT,
-                        'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;&nbsp;{partial_paid}&nbsp;{paid}{inform}{accept}&nbsp;{reject}', 
+                        'width' => '160px',
+                        'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;{partial_paid}&nbsp;{paid}{inform}{accept}&nbsp;{reject}{pdf}', 
                         'buttons' => [
                             'accept' => function ($url, $model, $key) {
                                     /** @var Request $model */
@@ -98,6 +100,20 @@ $columnsConfig = [
                                 $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
                                 return Html::a($icon, $url,$options);                            
                             },  
+                              'pdf' => function ($url, $model, $key) {
+                                    /** @var Request $model */
+                                $title = t('Open for print');
+                                $iconName = "print";
+                                $url = Url::current(['reject', 'id' => $key]);
+                                $options = [
+                                    'title' => $title,
+                                    'aria-label' => $title,
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal__information',                                   
+                                ];                                  
+                                $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                return Html::a($icon, $url,$options);                            
+                            },                                      
                             'partial_paid' => function ($url, $model, $key) {
                                     /** @var Request $model */
                                 $title = t('Partial paid','requests');
@@ -202,3 +218,11 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         </div>
 </div>
 
+<?php
+ Modal::begin([
+     'title' => '<h3>' . t('Will be soon') .'...</h3>',
+     'options' => [
+         'id' => 'modal__information'
+     ],
+ ]);
+Modal::end();

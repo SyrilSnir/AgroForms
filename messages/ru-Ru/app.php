@@ -147,6 +147,8 @@ return [
     'Important information' => 'Важная информация',
     'Adding list items will be available after saving the field' => 'Добавление элементов списка будет доступно после сохранения поля',
     'The message has been sent' => 'Сообщение было отправлено',
-    'Date and time' => 'Дата и время'
+    'Date and time' => 'Дата и время',
+    'Open for print' => 'Открыть для печати',
+    'Will be soon' => 'Будет скоро'
 ];
 
