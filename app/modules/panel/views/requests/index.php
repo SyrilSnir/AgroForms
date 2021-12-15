@@ -104,12 +104,12 @@ $columnsConfig = [
                                     /** @var Request $model */
                                 $title = t('Open for print');
                                 $iconName = "print";
-                                $url = Url::current(['reject', 'id' => $key]);
+                                $url = Url::current(['print', 'id' => $key]);
                                 $options = [
                                     'title' => $title,
                                     'aria-label' => $title,
-                                    'data-toggle' => 'modal',
-                                    'data-target' => '#modal__information',                                   
+                              //      'data-toggle' => 'modal',
+                             //       'data-target' => '#modal__information',                                   
                                 ];                                  
                                 $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
                                 return Html::a($icon, $url,$options);                            

@@ -20,6 +20,7 @@ use app\models\Forms\Requests\ChangeStatusForm;
 use app\models\SearchModels\Requests\AccountantRequestSearch;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
 use DomainException;
+use kartik\mpdf\Pdf;
 use Yii;
 use yii\helpers\Url;
 
@@ -108,13 +109,6 @@ class RequestsController extends ManageController
         return $this->render('application-reject-log', [
             'model' => $applicationRejectForm,
         ]);         
-        /*
-        try {
-            //$this->service->reject($id);
-        } catch (DomainException $e) {
-            Yii::$app->session->setFlash('error', $e->getMessage());
-        }        
-        return $this->redirect(Url::previous());        */
     }
 
     public function actionInvoice($id)
@@ -145,5 +139,6 @@ class RequestsController extends ManageController
             Yii::$app->session->setFlash('error', $e->getMessage());
         }        
         return $this->redirect(Url::previous());        
-    }      
+    }  
+
 }
