@@ -16,7 +16,9 @@ use yii\helpers\ArrayHelper;
  * @author kotov
  */
 class UserManageForm extends ActiveRecord
-{
+{        
+    const SCENARIO_UPDATE = 'update';
+    
     public $fio;
     public $login;
     public $phone;
@@ -51,7 +53,16 @@ class UserManageForm extends ActiveRecord
             $this->userType = UserType::MEMBER_USER_ID;
         }
         
-    }    
+    }  
+    
+    public function scenarios(): array
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_UPDATE] = $scenarios[self::SCENARIO_DEFAULT];
+        return $scenarios;
+        
+    }
+    
     public function rules()
     {
         return [
@@ -60,7 +71,7 @@ class UserManageForm extends ActiveRecord
             [['position','login'],'string'],
             [['position'],'default' ,'value' => ''],
             [['userType','company', 'gender','language'],'integer'],
-            [['company'], 'validateMemberUnique'],
+            [['company'], 'validateMemberUnique','on' => self::SCENARIO_DEFAULT],
             [['phone','fio'], 'string', 'max' => 255],
             [['birthday'], 'safe'],  
             [

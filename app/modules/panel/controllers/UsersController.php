@@ -95,6 +95,7 @@ class UsersController extends BaseAdminController
         switch ($model->user_type_id) {
             case UserType::MEMBER_USER_ID: 
                 $form = new MemberForm($model);
+                $form->setScenario(MemberForm::SCENARIO_UPDATE);
                 $view = 'create-member';
                 if ($form->load(Yii::$app->request->post()) && $form->validate()) {
                     $this->service->edit($id, $form);
@@ -105,6 +106,7 @@ class UsersController extends BaseAdminController
             case UserType::ACCOUNTANT_USER_ID:
             case UserType::MANAGER_USER_ID:
                 $form = new AdminForm($model);
+                $form->setScenario(AdminForm::SCENARIO_UPDATE);                
                 $view = 'create-admin';                
                 if ($form->load(Yii::$app->request->post()) && $form->validate()) {
                     $this->service->edit($id, $form);
