@@ -1,0 +1,12 @@
+@import '../../_variables';
+
+.agro {
+    table {
+        a {
+            color: $base-agrosalon-color;
+            &:hover {
+                color: lighten($base-agrosalon-color, 10);
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+@import '../../_variables';
+.agro {
+    .page-link {
+        color: $base-agrosalon-color;
+    }
+    .page-item.active .page-link {
+        background-color: $base-agrosalon-color;
+        border-color: $base-agrosalon-color;
+      }    
+}

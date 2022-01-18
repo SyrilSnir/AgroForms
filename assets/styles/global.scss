@@ -3,16 +3,42 @@
 @import "includes/glyphicons.scss";
 @import "includes/forms.scss";
 @import "includes/admin.scss";
+@import "includes/fonts.scss";
 @import "includes/admin/toolbar.scss";
 @import "includes/admin/content.scss";
 @import "includes/admin/badges.scss";
 @import "includes/admin/colors.scss";
 @import "includes/admin/comments.scss";
-@import "includes/grid.scss";
+@import "includes/admin/icons.scss";
+@import "includes/admin/buttons.scss";
+@import "includes/admin/pagination.scss";
+@import "includes/admin/tables.scss";
+@import "includes/admin/grid.scss";
+
+body {
+    font-family:Roboto,sans-serif!important;
+}
 
 .clr {
     clear:both;
 }
 .hide {
     display: none;
+}
+#company-tabs {
+    li {
+        a {
+            color: $base-agrosalon-color;
+            &.active {
+                background-color: $base-agrosalon-color;
+                color: #fff;
+                &:hover {
+                    border: 0;
+                }
+            }
+            &:hover {
+                border-color: $base-agrosalon-color;
+            }
+        }
+    }
 }

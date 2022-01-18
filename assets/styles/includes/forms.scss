@@ -1,3 +1,4 @@
+@import '../_variables';
 .form-group {
     &.required {
         label::after {
@@ -8,4 +9,50 @@
 .field__desc {
     font-style: italic;
     font-size: 12px;
+}
+.agro {
+    form {
+        color: $font-agrosalon-color;
+    }
+    .form-control {
+        border:none;
+        border-left:1px solid $font-agrosalon-color;
+        border-bottom:1px solid $font-agrosalon-color;   
+        background-color: $bg-agrosalon-color;  
+        border-radius: 0;
+        &:focus,&:active {
+            background-color: lighten($bg-agrosalon-color, 6);
+            border-color: lighten($base-agrosalon-color, 10);
+        }
+    }
+    .select2-container--krajee-bs4 .select2-selection {
+        border:none;
+        border-left:1px solid $font-agrosalon-color;
+        border-bottom:1px solid $font-agrosalon-color;   
+        background-color: $bg-agrosalon-color;    
+        border-radius: 0;     
+        box-shadow: none;
+    }
+    .select2-dropdown {
+        border:none;
+        border-left:1px solid $font-agrosalon-color;
+        border-bottom:1px solid $font-agrosalon-color;   
+        background-color: $bg-agrosalon-color; 
+
+    }
+    .select2-container--krajee-bs4 .select2-selection--single .select2-selection__rendered {
+        color: $font-agrosalon-color;        
+      }
+      .select2-container--krajee-bs4 .select2-selection--single .select2-selection__arrow {
+          border-left: none;
+      }          
+    .dynamic-form, .stand-form {
+        .card-primary {
+            > .card-header {
+                background-color: $base-agrosalon-color;
+                color: #fff;
+                font-weight: 600;
+            }
+        }
+    }
 }

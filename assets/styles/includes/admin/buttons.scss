@@ -1,0 +1,26 @@
+@import '../../_variables';
+@import '../../mixins';
+
+.btn {
+    &.btn-primary, &.btn-danger, &.btn-secondary {
+        @include def-button();
+    }
+    &.btn-primary {      
+        background-color: $base-agrosalon-color;
+        color: #fff;
+        &:hover {
+            background-color: lighten($base-agrosalon-color, 10);
+        }    
+    }
+}
+.agro {
+    .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary, .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary {
+        background-color: $base-agrosalon-color;
+    }
+    .bootstrap-switch.bootstrap-switch-focused {
+        border-color: lighten($base-agrosalon-color, 10);
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 107, 76, 0.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 107, 76, 0.6);        
+    }
+}

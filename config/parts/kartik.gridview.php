@@ -9,7 +9,7 @@ $config = [
     'filterRowOptions' => ['class' => 'kartik-sheet-style'], 
     'toggleDataContainer' => ['class' => 'btn-group-sm'],      
     'panel' => [
-        'type' => GridView::TYPE_DEFAULT,
+        'type' => 'agro',
     ]
 ];
 if (isset($pagination)) {

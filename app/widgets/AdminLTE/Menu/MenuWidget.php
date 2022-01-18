@@ -85,8 +85,8 @@ class MenuWidget extends Menu
     protected function renderItem($item)
     {
         if (isset($item['items'])) {
-            $labelTemplate = '<a class="nav-link" href="{url}">{icon} <p>{label}<i class="right fas fa-angle-left"></i></p></a>';
-            $linkTemplate = '<a class="nav-link" href="{url}">{icon} <p>{label}<i class="right fas fa-angle-left"></i></p></a>';
+            $labelTemplate = '<a class="nav-link" href="{url}">{icon} <p>{label}<i class="arrow"></i></p></a>';
+            $linkTemplate = '<a class="nav-link" href="{url}">{icon} <p>{label}<i class="arrow"></i></p></a>';
         } else {
             $labelTemplate = $this->labelTemplate;
             $linkTemplate = $this->linkTemplate;
@@ -96,7 +96,7 @@ class MenuWidget extends Menu
 
         return strtr($template,[
                 '{label}' => $item['label'],
-                '{icon}' => empty($item['icon']) ? $this->defaultIconHtml : '<i class="' . static::$iconClassPrefix . $item['icon'] . '"></i> ',
+                '{icon}' => empty($item['icon']) ? $this->defaultIconHtml : '<i class="' . (strpos($item['icon'],'icon-') !== false ? 'fa ' : static::$iconClassPrefix) . $item['icon'] . '"></i> ',
                 '{url}' => isset($item['url']) ? Url::to($item['url']) : '#',
             ]);
     }

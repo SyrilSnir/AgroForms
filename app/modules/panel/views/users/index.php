@@ -37,7 +37,7 @@ $action = Yii::$app->getRequest()->getPathInfo();
                                 Html::a('<i class="fas fa-plus"></i>',['create-user'], [
                                     'class' => 'btn btn-success',
                                     'title' => Yii::t('app/user', 'Add user'),
-                                ])                            
+                                ]),
                         ],
                     ],                   
                     'dataProvider' => $dataProvider,

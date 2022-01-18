@@ -9,12 +9,11 @@ use app\core\manage\Auth\Rbac;
 use app\widgets\AdminLTE\Menu\MenuWidget;
 /** @var string $directoryAsset */
 ?>
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-black-primary elevation-4">
         <!-- Brand Logo -->
     <a href="http://www.agrosalon.ru" class="brand-link">
-      <img src="/build/images/agrosalon.png" alt="Agrosalon Logo" class="agrosalon-logo elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">Agrosalon</span>
+      <img src="/build/images/agrosalon.png" alt="Agrosalon Logo" class="agrosalon-logo elevation-3">
+      <img src="/build/images/as.png" alt="Agrosalon Logo" class="agrosalon-small-logo elevation-3">
     </a>
     <div class="sidebar">
 <div class="user-panel mt-3 pb-3 mb-3 d-flex">

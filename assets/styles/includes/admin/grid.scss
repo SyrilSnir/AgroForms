@@ -1,3 +1,4 @@
+@import '../../_variables';
 .card-body {
     .kv-grid-bs4 a.asc:after,
     .kv-grid-bs4 a.desc:after {
@@ -6,3 +7,9 @@
     }
 }
 
+.card.border-agro {
+    .card-header {
+        background-color: $base-agrosalon-color;
+        color: #fff;
+    }
+}

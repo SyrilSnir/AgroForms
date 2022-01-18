@@ -1,11 +1,113 @@
+@import '../_variables';
+.agrosalon-logo {
+    display: block;
+}
+.agrosalon-small-logo {
+    display: none;
+}
+.sidebar-collapse {
+    .main-sidebar {
+        .agrosalon-logo {
+            display: none;
+        }
+        .agrosalon-small-logo {
+            display: block;
+        }      
+        &:hover {
+            .agrosalon-logo {
+                display: block;
+            } 
+            .agrosalon-small-logo {
+                display: none;
+            }      
+        }
+    }
+}
+.agro {   
+    .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: $base-agrosalon-color;
+        border-color: $base-agrosalon-color;
+    }         
+    .content-wrapper {
+        background-color: $bg-agrosalon-color;
+    }
+    .card {
+        background-color: $bg-agrosalon-color;
+        .card-header {
+            &.bg-agro {
+                background-color: $base-agrosalon-color;
+                color: #fff;
+            }
+        }
+        .card-info {
+            .card-header {
+                background-color: black;            
+                color: $base-agrosalon-color;
+                font-weight: 600;
+            }
+        }
+    }
+}
+.sidebar-mini.sidebar-collapse .main-sidebar.sidebar-focused, .sidebar-mini.sidebar-collapse .main-sidebar:hover {
+    width: $sidebar-size!important;
+  }
+
+[class*="sidebar-black-"] {    
+    background-color: #000;
+    .sidebar {
+        a {
+            color: #fff;
+            &:hover {
+                color: $base-agrosalon-color;
+            }
+            &.user-dropdown:hover {
+                color: #fff;                
+            }
+        }
+        .nav-pills {
+            .nav-link  {
+                color: #fff;
+                &:not(.active):hover {
+                    color: $base-agrosalon-color;
+                }
+            }
+        }
+    }
+    .has-treeview {
+        > a {
+            border-bottom: 1px solid gray;            
+        }
+    }
+  }
+  .menu-is-opening {
+     > .nav-link i.arrow {
+        transform: rotate(135deg);
+        top: .5rem;
+      }
+  }
+  .arrow {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    background: transparent;
+    border-top: .2rem solid $base-agrosalon-color;
+    border-right: .2rem solid $base-agrosalon-color;
+    box-shadow: 0 0 0 lightgray;
+    transition: all 200ms ease;   
+    transform: translate(-40%, -60%) rotate(45deg)       
+  }
+
 @media screen and (min-width: map_get($grid-breakpoints,'lg')) {
     .wrapper {
         .main-sidebar, .main-sidebar::before {
             transition: margin-left .3s ease-in-out,width .3s ease-in-out;
-            width: 300px;
+            width: $sidebar-size;
         }
         .content-wrapper, nav.main-header {
-            margin-left: 300px!important;
+            margin-left: $sidebar-size!important;
         }
     }    
 }
@@ -39,15 +141,24 @@
     }    
     .nav-item {
         .nav-link {
-            width: calc(300px - .5rem * 2)!important;
+            width: calc(#{$sidebar-size} - .5rem * 2)!important;
         }
         .nav-treeview {
-           margin-left: .3rem;
+           margin-left: 1rem;
        }
     }    
     .user-dropdown.dropdown-item:hover {
         background-color: #E4461E;
     } 
+}
+.sidebar-collapse {
+    .sidebar {
+        .nav-item {
+            .nav-treeview {
+                margin-left: 0;
+            }
+        }
+    }
 }
 .dynamic-form {
     .price {
@@ -92,7 +203,6 @@
         clear: both;
     }
 }
-
 table {
     tr.active-exhibition {
         background-color: #cdf2e6;

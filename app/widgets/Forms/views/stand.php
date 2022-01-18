@@ -10,6 +10,8 @@ use app\widgets\Forms\assets\StandAsset;
 
 StandAsset::register($this);
 ?>
-<div id="stand-app" data-read_only="<?php echo $readOnly ?>">
-    <template></template>
+<div class="stand-form">
+    <div id="stand-app" data-read_only="<?php echo $readOnly ?>">
+        <template></template>
+    </div>
 </div>

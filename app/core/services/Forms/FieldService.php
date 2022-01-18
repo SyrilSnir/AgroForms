@@ -58,7 +58,7 @@ class FieldService
         $this->fieldEnumProvider = $fieldEnumProvider;
         $this->equipmentRepository = $equipmentRepository;
     }
-    
+  
      public function postProcessFields(array &$fields, array $valuesList)
      {
         foreach ($fields as &$field) {
