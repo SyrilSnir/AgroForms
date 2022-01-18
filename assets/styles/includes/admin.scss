@@ -47,6 +47,18 @@
             }
         }
     }
+    .table-agro-head {
+        th, tr {
+            background-color:  lighten($base-agrosalon-color,8);
+            color: #fff;
+        }
+    }
+    .table-agro-subhead {
+        th, tr {
+            background-color: lighten($base-agrosalon-color,24);
+            color: #fff;
+        }
+    }    
 }
 .sidebar-mini.sidebar-collapse .main-sidebar.sidebar-focused, .sidebar-mini.sidebar-collapse .main-sidebar:hover {
     width: $sidebar-size!important;
@@ -57,6 +69,9 @@
     .sidebar {
         a {
             color: #fff;
+            &.user-dropdown {
+                color: #000;
+            }
             &:hover {
                 color: $base-agrosalon-color;
             }

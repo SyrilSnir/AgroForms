@@ -19,18 +19,18 @@ class MemberMenuHelper implements MenuHelperInterface
                     'items' => [
                         [
                             'label' => t('My exhibitions','menu'),
-                            'icon' => 'folder',
+                            'icon' => 'icon-exhibitions',
                             'items' => self::getExhibitionList()
                         ],
                         [
                             'label' => t('Personal data','menu'),
-                            'icon' => 'user',
+                            'icon' => 'icon-users-companies',
                             'items' => [                                                                    
                                 [
-                                    'label' => t('User profile','menu'), 'icon' => 'user-circle-o', 'url' => ['/panel/member/profile/user']
+                                    'label' => t('User profile','menu'), 'icon' => 'icon-users', 'url' => ['/panel/member/profile/user']
                                 ],
                                 [
-                                    'label' => t('Company profile','menu'), 'icon' => 'building', 'url' => ['/panel/member/profile/company'],
+                                    'label' => t('Company profile','menu'), 'icon' => 'icon-companies', 'url' => ['/panel/member/profile/company'],
                                 ],                                                                       
                             ]
                         ],
@@ -52,10 +52,10 @@ class MemberMenuHelper implements MenuHelperInterface
             array_push($menuList,
                 [
                     'label' => $exhibition->title,
-                    'icon' => 'folder',
+                    'icon' => 'icon-exhibitions',
                     'items' => [
                         [
-                            'label' => t('My applications','menu'), 'icon' => 'wpforms', 'url' => ["/panel/member/{$exhibition->id}/requests"],
+                            'label' => t('My applications','menu'), 'icon' => 'icon-requests', 'url' => ["/panel/member/{$exhibition->id}/requests"],
                         ],
                     ]   
                 ]                

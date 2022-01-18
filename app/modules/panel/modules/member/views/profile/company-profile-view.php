@@ -27,7 +27,7 @@ $this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
                     [
                         'group'=>true,
                         'label'=> Yii::t('app/company', 'About company'),
-                        'rowOptions'=>['class'=>'table-info']
+                        'rowOptions'=>['class'=>'table-agro-head']
                     ],
                     'name:text:'.Yii::t('app/company','Name'),
                     'full_name:text:' . Yii::t('app/company','Full name'),
@@ -39,12 +39,12 @@ $this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
                     [
                         'group'=>true,
                         'label'=> t('Address','company'),
-                        'rowOptions'=>['class'=>'table-info']
+                        'rowOptions'=>['class'=>'table-agro-head']
                     ],
                     [
                         'group'=>true,
                         'label'=> t('Legal address','company'),
-                        'rowOptions'=>['class'=>'table-success']
+                        'rowOptions'=>['class'=>'table-agro-subhead']
                     ],
                     [
                         'value' => $profile->legalAddress->index,
@@ -61,7 +61,7 @@ $this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
                     [
                         'group'=>true,
                         'label'=> t('Mailing address','company'),
-                        'rowOptions'=>['class'=>'table-success']
+                        'rowOptions'=>['class'=>'table-agro-subhead']
                     ],
                     [
                         'value' => $profile->postalAddress->index,
@@ -78,12 +78,12 @@ $this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
                     [
                         'group'=>true,
                         'label'=> t('Contacts','company'),
-                        'rowOptions'=>['class'=>'table-info']
+                        'rowOptions'=>['class'=>'table-agro-head']
                     ],
                     [
                         'group'=>true,
                         'label'=> t('Head of company','company'),
-                        'rowOptions'=>['class'=>'table-success']
+                        'rowOptions'=>['class'=>'table-agro-subhead']
                     ], 
                     [
                         'value' => $profile->contacts->chief_position,
@@ -104,7 +104,7 @@ $this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
                     [
                         'group'=>true,
                         'label'=> t('Project manager','company'),
-                        'rowOptions'=>['class'=>'table-success']
+                        'rowOptions'=>['class'=>'table-agro-subhead']
                     ], 
                     [
                         'value' => $profile->contacts->manager_position,
@@ -129,7 +129,7 @@ $this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
                     [
                         'group'=>true,
                         'label'=> t('Signer (used in proposal)','company'),
-                        'rowOptions'=>['class'=>'table-success']
+                        'rowOptions'=>['class'=>'table-agro-subhead']
                     ], 
                     [
                         'value' => $profile->contacts->proposal_signature_name,
@@ -142,7 +142,7 @@ $this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
                     [
                         'group'=>true,
                         'label'=> t('Bank details','company'),
-                        'rowOptions'=>['class'=>'table-info']
+                        'rowOptions'=>['class'=>'table-agro-head']
                     ],
                     [
                         'value' => $profile->bankDetails->rs_schet,

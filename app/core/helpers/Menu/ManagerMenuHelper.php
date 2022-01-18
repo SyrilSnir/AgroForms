@@ -17,14 +17,14 @@ class ManagerMenuHelper implements MenuHelperInterface
                 'items' => [
                     [
                         'label' => Yii::t('app/menu', 'Users and companies'),
-                        'icon' => 'user-circle',
+                        'icon' => 'icon-users-companies',
                         'items' => [
-                            ['label' => Yii::t('app/menu', 'Users'), 'icon' => 'user', 'url' => ['/panel/manager/users'],],
-                            ['label' => Yii::t('app/menu', 'Companies'), 'icon' => 'university ', 'url' => ['/panel/manager/companies'],],                            
+                            ['label' => Yii::t('app/menu', 'Users'), 'icon' => 'icon-users', 'url' => ['/panel/manager/users'],],
+                            ['label' => Yii::t('app/menu', 'Companies'), 'icon' => 'icon-companies', 'url' => ['/panel/manager/companies'],],                            
                         ]
                     ],
                     [
-                        'label' => Yii::t('app/menu', 'Viewing requests'), 'icon' => 'tasks', 'url' => ['/panel/requests'],
+                        'label' => Yii::t('app/menu', 'Viewing requests'), 'icon' => 'icon-requests', 'url' => ['/panel/requests'],
                     ]
                 ]
             ];
