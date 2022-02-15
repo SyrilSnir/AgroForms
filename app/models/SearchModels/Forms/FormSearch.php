@@ -31,7 +31,7 @@ class FormSearch extends Model
     }    
     public function search(array $params): ActiveDataProvider
     {
-        $query = Form::find();
+        $query = Form::find()->actual();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => false

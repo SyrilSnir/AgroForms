@@ -25,4 +25,18 @@ class FormRepository implements RepositoryInterface
         }
         return $model;
     }
+    
+    /**
+     * 
+     * @param ActiveRecord $model
+     * @throws RuntimeException
+     */
+    public function remove(ActiveRecord $model) 
+    {
+        /** @var Form $model */
+        $model->deleted = true;
+        if (!$model->save()) {
+            throw new RuntimeException('Ошибка удаления');
+        }
+    }    
 }

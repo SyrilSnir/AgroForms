@@ -5,6 +5,7 @@ namespace app\models\ActiveRecord\Forms;
 use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\ActiveRecord\Common\Valute;
 use app\models\ActiveRecord\Exhibition\Exhibition;
+use app\models\ActiveRecord\Forms\Query\FormQuery;
 use app\models\AddSlugTrait;
 use app\models\Forms\Manage\Forms\FormsForm;
 use app\models\TimestampTrait;
@@ -66,6 +67,11 @@ class Form extends ActiveRecord
     public static function tableName()
     {
         return '{{%forms}}';
+    }
+
+    public static function find():FormQuery
+    {
+        return new FormQuery(static::class);
     }
     
 /**
@@ -164,5 +170,5 @@ class Form extends ActiveRecord
     public function isStatusShowed(): bool 
     {
         return ($this->status === self::STATUS_DRAFT || $this->status === self::STATUS_ACTIVE);
-    }
+    }        
 }

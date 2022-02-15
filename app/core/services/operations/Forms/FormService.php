@@ -97,6 +97,10 @@ class FormService
         return $formCopy;
     }
     
-    
-    
+    public function remove(int $id) :void
+    {
+        /** @var Form $model */
+        $model = $this->forms->get($id); 
+        $this->forms->remove($model);
+    }    
 }
