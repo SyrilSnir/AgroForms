@@ -123,6 +123,7 @@ class FieldsController extends BaseAdminController
         /** @var Field $model */
         Url::remember();          
         $model = $this->findModel($id);
+        $model->disableMultilang();
         $previousPage = '/panel/forms/update?id=' .$model->form_id;  
         $form = new FieldForm($model);
         $loadFormData = $form->load(Yii::$app->request->post());
