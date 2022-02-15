@@ -19,7 +19,7 @@ class FormsHelper
      */
     public static function formsList(int $exhibitionId = null):array
     {
-        $formsList = ArrayHelper::toArray(Form::find()
+        $formsList = ArrayHelper::toArray(Form::find()->actual()
               //  ->andFilterWhere(['!=','status', Form::STATUS_DRAFT])
                 ->andFilterWhere(['!=','forms.status', Form::STATUS_DRAFT])
                 ->andFilterWhere(['exhibition_id'=> $exhibitionId])
