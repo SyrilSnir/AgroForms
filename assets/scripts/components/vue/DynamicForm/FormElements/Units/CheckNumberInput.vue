@@ -1,5 +1,5 @@
 <template>
-<div class="form-group">
+<div class="form-group check__number">
         <div class="custom-control custom-checkbox">
         <input @change="change" class="custom-control-input" type="checkbox" :id="id" v-model="checked">
         <label :for="id" class="custom-control-label">{{ titleLabel }}</label>
@@ -142,4 +142,17 @@
        } 
     }
 </script>
-<style></style>
+<style scoped>
+    .check__number {
+       display: flex; 
+       flex-wrap: wrap;
+       align-items: center;
+       justify-content: left;
+    }
+    .check__number .custom-checkbox {
+        margin-right: 2rem;
+    }
+    .check__number .input-block {
+        flex-grow: 1;
+    }
+</style>
