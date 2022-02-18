@@ -15,12 +15,14 @@ import MultiSelectBlock from './Units/MultiSelectBlock';
 import UndefinedBlock from './Units/UndefinedBlock';
 import RadioBlock from './Units/RadioBlock';
 import EquipmentBlock from './Units/EquipmentBlock';
+import ImportantInformationBlock from './Units/ImportantInformation';
 export default {
     props: [
         'unitData','lang','dic'
     ],
     components: {
-        important: ImportantBlock,
+        'important': ImportantBlock,
+        'important-information': ImportantInformationBlock,
         'header-blck': HeaderBlock,
         'text-input': TextInputBlock,
         'number-input': NumberInputBlock,
@@ -42,6 +44,7 @@ export default {
                 blockNumberInput: 7,
                 blockCheckNumber: 8,
                 blockTextInput: 9,
+                blockImportantInformation: 12,
                 blockImportant: 13,
                 blockHeader: 14,
                 blockEquipment: 15
@@ -73,7 +76,9 @@ export default {
                 case this.typesList.blockImportant:
                     return 'important';
                 case this.typesList.blockHeader:
-                    return 'header-blck';    
+                    return 'header-blck';   
+                case this.typesList.blockImportantInformation:
+                    return 'important-information';
                 case this.typesList.blockEquipment:
                     return 'equipment';                               
                 default:

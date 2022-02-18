@@ -106,7 +106,6 @@ class FieldForm extends MultiForm
         $notAvailable =[
             ElementType::ELEMENT_DATE,
             ElementType::ELEMENT_DATE_MULTIPLE,
-            ElementType::ELEMENT_INFORMATION_IMPORTANT,
             ElementType::ELEMENT_GROUP
         ];
         return ArrayHelper::map(ElementType::find()->where(['NOT IN', 'id',$notAvailable])->orderBy('id')->asArray()->all(),'id','name');       

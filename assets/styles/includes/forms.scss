@@ -1,4 +1,7 @@
 @import '../_variables';
+.custom-control {
+    min-height: 1.2rem;
+}
 .form-group {
     &.required {
         label::after {
@@ -16,6 +19,8 @@
     }
     .form-control {
         border:none;
+        font-weight: 500;
+        text-align: right;
         border-left:1px solid $font-agrosalon-color;
         border-bottom:1px solid $font-agrosalon-color;   
         background-color: $bg-agrosalon-color;  
@@ -47,6 +52,11 @@
           border-left: none;
       }          
     .dynamic-form, .stand-form {
+        max-width: 1000px;
+        line-height: 1.2;
+        input {
+            text-align: right;
+        }
         .card-primary {
             > .card-header {
                 background-color: $base-agrosalon-color;

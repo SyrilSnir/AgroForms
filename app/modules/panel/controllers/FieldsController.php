@@ -86,6 +86,7 @@ class FieldsController extends BaseAdminController
         } else {
             Yii::$app->session->remove(FieldEnum::SESSION_IDENTIFIER);
             $form->elementTypeId = ElementType::DEFAULT_ELEMENT_TYPE;
+            $form->formId = $formId;
         }
         $enumsList = Yii::$app->session->get(FieldEnum::SESSION_IDENTIFIER, []);        
         if ($loadFormData && $form->validate()) {

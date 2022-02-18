@@ -1,5 +1,5 @@
 <template>
-<div class="inform" v-html="title"></div>
+<div class="important" v-html="title"></div>
 </template>
 <script>
     import { unitMixin } from './Mixins/unitMixin'
@@ -14,16 +14,12 @@
        computed: {
            title() {
                // this.parameters.html
-               if (this.lang == languages.russian || !this.parameters.htmlEng) {
-                   return this.parameters.html;
+               if (this.lang == languages.russian || !this.parameters.textEng) {
+                   return this.parameters.text;
                }
-               return this.parameters.htmlEng;
+               return this.parameters.textEng;
            }
        }
     }
 </script>
-<style scoped>
-.inform {
-    font-weight: 500;
-}
-</style>
+<style></style>

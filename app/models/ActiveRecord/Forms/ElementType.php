@@ -48,10 +48,10 @@ class ElementType extends ActiveRecord
     
     const HTML_BLOCKS = [
         self::ELEMENT_INFORMATION,
-        self::ELEMENT_INFORMATION_IMPORTANT
     ];
     
     const TEXT_BLOCKS = [
+        self::ELEMENT_INFORMATION_IMPORTANT,
         self::ELEMENT_HEADER
     ];
     

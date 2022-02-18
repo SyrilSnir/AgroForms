@@ -40,7 +40,8 @@
 p {
     margin-bottom: 0;
 }
-.description {    
+.description {   
+    margin-bottom: 1rem; 
 }
 .info {
     font-size: .9rem;
