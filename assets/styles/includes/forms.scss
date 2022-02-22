@@ -1,4 +1,4 @@
-@import '../_variables';
+@import '../_variables.scss';
 .custom-control {
     min-height: 1.2rem;
 }
@@ -52,7 +52,7 @@
           border-left: none;
       }          
     .dynamic-form, .stand-form {
-        max-width: 1000px;
+        max-width: $form-max-size;
         line-height: 1.2;
         input {
             text-align: right;
@@ -65,4 +65,8 @@
             }
         }
     }
+}
+
+.request__view {
+    max-width: $form-max-size;
 }

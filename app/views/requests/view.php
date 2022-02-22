@@ -115,3 +115,11 @@ $historyMessages = $logs['history'];
 </div>    
 </div>
 <?php endif; ?>
+<div class="request__view">
+    <div class="card card-primary">
+        <div class="card-header">
+            <?php echo $model->form->headerName ?>
+        </div>
+        <?php dump($dopAttributes)?>
+    </div>
+</div>

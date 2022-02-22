@@ -140,5 +140,4 @@ class RequestsController extends ManageController
         }        
         return $this->redirect(Url::previous());        
     }  
-
 }
