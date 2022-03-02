@@ -19,7 +19,7 @@ class ElementSelect extends FormElement
     //put your code here
     public function renderHtml(array $valuesList = []): string
     {
-        
+        return '';
     }
 
 }
