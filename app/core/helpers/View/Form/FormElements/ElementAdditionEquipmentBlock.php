@@ -10,9 +10,9 @@ namespace app\core\helpers\View\Form\FormElements;
 class ElementAdditionEquipmentBlock extends FormElement
 {
     //put your code here
-    public function renderHtml(): string
+    public function renderHtml(array $valuesList = []): string
     {
-        
+        return '';
     }
 
 }
