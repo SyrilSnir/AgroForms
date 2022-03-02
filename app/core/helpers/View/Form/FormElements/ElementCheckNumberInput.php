@@ -39,7 +39,7 @@ class ElementCheckNumberInput extends FormElement
         $fieldList['parameters'] = json_decode($fieldList['parameters']);
         if (!empty($valuesList)) {
             $fieldList['value'] = $valuesList['value'];
-            $fieldList['checked'] = $valuesList['checked'];
+            $fieldList['checked'] = key_exists('checked', $valuesList) ?  $valuesList['checked'] : false;
         }
         return $fieldList;
     }
