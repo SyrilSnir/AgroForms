@@ -57,9 +57,13 @@ export default {
     computed: {
         total() {
             let total = 0;
-            const keys = Object.keys(this.values);
+            let currentVal;
+            const keys = Object.keys(this.values);            
             for (const key of keys) {
-                total+= this.values[key].count * this.values[key].price;
+                currentVal = Number.parseInt(this.values[key].count) * Number.parseInt(this.values[key].price);
+                if (!isNaN(currentVal)) {
+                    total+= currentVal;
+                }
             }
             return total;
         }
