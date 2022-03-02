@@ -149,6 +149,7 @@ return [
     'The message has been sent' => 'Сообщение было отправлено',
     'Date and time' => 'Дата и время',
     'Open for print' => 'Открыть для печати',
-    'Will be soon' => 'Будет скоро'
+    'Will be soon' => 'Будет скоро',
+    'Show in application' => 'Показывать в заявке'
 ];
 

@@ -14,6 +14,7 @@ use yii\widgets\DetailView;
 /* @var $model Request */
 /* @var $statusForm ChangeStatusForm */
 /* @var array $logs */
+/* @var $requestHtml string */
 $this->title = t('Application №','requests') . $model->id;
 $attributes = [
     'formType.name:text:' . t('Form type', 'requests'),
@@ -36,11 +37,8 @@ $attributes = [
     
 ];
 
-if (!empty($dopAttributes)) {
-    $attributes = ArrayHelper::merge($attributes, $dopAttributes);
-}
 ?>
-<div class="view">
+<div class="request__view">
     <?php if (Yii::$app->session->hasFlash('success')):?>
     <div class="alert alert-primary" role="alert">
             <?php echo Yii::$app->session->getFlash('success')?>
@@ -67,7 +65,7 @@ if (!empty($dopAttributes)) {
     <p>
         <?= Html::a(t('Back'), Url::previous(), ['class' => 'btn btn-secondary']) ?>
     </p>      
-
+    <?php if (!Yii::$app->user->can(\app\core\manage\Auth\Rbac::PERMISSION_MEMBER_MENU)):?>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title"><?php echo $this->title ?></h3>        
@@ -79,6 +77,9 @@ if (!empty($dopAttributes)) {
             ]); ?>
         </div>
     </div>
+    <?php endif ; ?>
+    <?php  echo $requestHtml ?>
+    
 <?php
  /** @var ApplicationRejectLog $activeMessage */
  /** @var ApplicationRejectLog[] $historyMessages */
@@ -115,11 +116,4 @@ $historyMessages = $logs['history'];
 </div>    
 </div>
 <?php endif; ?>
-<div class="request__view">
-    <div class="card card-primary">
-        <div class="card-header">
-            <?php echo $model->form->headerName ?>
-        </div>
-        <?php dump($dopAttributes)?>
-    </div>
-</div>
+

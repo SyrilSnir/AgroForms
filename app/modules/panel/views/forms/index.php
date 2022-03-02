@@ -41,6 +41,13 @@ $columnsConfig = [
                         ],                        
                         'name:text:' . Yii::t('app', 'Name'),
                         'title:text:' . Yii::t('app', 'Title'),
+                    /*    [
+                            'attribute' => 'formTypeId',
+                            'label' => Yii::t('app/title','Form type'),
+                            'value' => function (Form $model) {
+                                return $model->formType->name;
+                            }
+                        ],*/
                         [
                             'attribute' => 'exhibitionId',
                             'label' => Yii::t('app/title','List of exhibitions'),

@@ -51,8 +51,9 @@
       .select2-container--krajee-bs4 .select2-selection--single .select2-selection__arrow {
           border-left: none;
       }          
-    .dynamic-form, .stand-form {
+    .dynamic-form, .stand-form, .request__view {
         max-width: $form-max-size;
+        width: 100%;
         line-height: 1.2;
         input {
             text-align: right;
@@ -68,5 +69,18 @@
 }
 
 .request__view {
-    max-width: $form-max-size;
+    .input__field {
+        &.total {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 5px solid $base-agrosalon-color;
+        }
+        display: flex;
+        justify-content: left;
+    }
+    .field__name {
+        font-weight: 700;
+        min-width: 200px;
+        margin-right: 1rem;
+    }
 }

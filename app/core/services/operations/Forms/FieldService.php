@@ -59,6 +59,7 @@ class FieldService
                 $form->elementTypeId, 
                 $form->fieldGroupId,
                 $form->order,
+                $form->showInRequest,
                 $form->defaultValue,
                 $parameters
                 );
@@ -82,6 +83,7 @@ class FieldService
                 $form->elementTypeId, 
                 $form->fieldGroupId,
                 $form->order,
+                $form->showInRequest,
                 $form->defaultValue,
                 $parameters
                 );

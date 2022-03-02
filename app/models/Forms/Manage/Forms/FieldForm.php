@@ -29,6 +29,7 @@ class FieldForm extends MultiForm
     public $elementTypeId;
     public $fieldGroupId;
     public $order;
+    public $showInRequest;
     public $defaultValue;
     
     
@@ -62,6 +63,7 @@ class FieldForm extends MultiForm
             $this->formId = $model->form_id;
             $this->order = $model->order;
             $this->defaultValue = $model->default_value;
+            $this->showInRequest = $model->showed_in_request;
             $this->parameters = new FieldParametersForm($model);
             $this->hasEnums = $model->hasEnums();
         } else {
@@ -76,6 +78,7 @@ class FieldForm extends MultiForm
         return [
             [['formId', 'elementTypeId', 'fieldGroupId'], 'required'],
             [['formId', 'elementTypeId', 'fieldGroupId', 'order'], 'integer'],
+            ['showInRequest', 'boolean'],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'string', 'max' => 255],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'default','value' => ''],
             [['order','fieldGroupId'], 'default','value' => 0],
@@ -98,6 +101,7 @@ class FieldForm extends MultiForm
             'fieldGroupId' => Yii::t('app', 'Field group'),
             'order' => Yii::t('app', 'Position'),
             'defaultValue' => Yii::t('app', 'Default falue'),
+            'showInRequest' => Yii::t('app', 'Show in application')
         ];
     }
  

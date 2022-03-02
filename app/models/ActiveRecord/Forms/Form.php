@@ -144,7 +144,7 @@ class Form extends ActiveRecord
     
     public function getFormFields()
     {
-        return $this->hasMany(Field::class, ['form_id' => 'id']);
+        return $this->hasMany(Field::class, ['form_id' => 'id'])->orderBy(['order' => SORT_ASC]);
     }
 
 

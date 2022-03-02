@@ -1,0 +1,46 @@
+<?php
+
+namespace app\core\helpers\View\Form\FormElements;
+
+/**
+ * Description of ElementCheckNumberInput
+ *
+ * @author kotov
+ */
+class ElementCheckNumberInput extends FormElement
+{
+    public function renderHtml(array $valuesList = []): string
+    {        
+        $unitTitle = '';
+        $fieldParams = $this->field->getFieldParams();
+        if ($fieldParams->unitModel) {
+            $unitTitle = ' ' . $fieldParams->unitModel->short_name;
+        }
+
+         if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {
+            $text = '<div class="input__field"><div class="field__name">' . $this->field->name . ':</div>';
+            if (($price = $this->field->getPrice()) > 0) {
+                $text .= '<div class="field__value form-control">';
+                if (key_exists('value', $valuesList)) {
+                    $summ = $valuesList['value'] * $price;
+                    $text.= $valuesList['value'] . $unitTitle   . ' x ' . $price . ' '. $this->field->form->valute->symbol . '=' . $summ . ' '. $this->field->form->valute->symbol;
+                } else {
+                    $text.= $price . $this->field->form->valute->char_code;
+                }
+                $text.= '</div>';
+            }
+            return $text . '</div>';
+         }
+         return '';
+    }
+    
+    protected function transformData(array $fieldList, array $valuesList = []): array
+    {
+        $fieldList['parameters'] = json_decode($fieldList['parameters']);
+        if (!empty($valuesList)) {
+            $fieldList['value'] = $valuesList['value'];
+            $fieldList['checked'] = $valuesList['checked'];
+        }
+        return $fieldList;
+    }
+}

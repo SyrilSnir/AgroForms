@@ -2,6 +2,7 @@
 
 namespace app\controllers\api;
 
+use app\core\helpers\View\Form\FormHelper;
 use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\manage\Requests\RequestRepository;
 use app\core\repositories\readModels\Forms\FieldReadRepository;
@@ -76,47 +77,22 @@ class ApplicationController extends FormController
     {
         /** @var Form $form */
         /** @var Request $request */
-         $formId = Yii::$app->session->get('OPENED_FORM_ID');
+        $formId = Yii::$app->session->get('OPENED_FORM_ID');
+        $langCode = Yii::$app->language;
         if (!$formId) {
             throw new DomainException(t('The requested form was not found on the server', 'exception'));
         }
         $form = $this->formRepository->get($formId);
         $userId = Yii::$app->user->getId();  
-        $formHelper = \app\core\helpers\View\Form\FormHelper::createViaForm($userId, Yii::$app->language, $form);
-        /*
-        $valuesList = [];
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
-        $baseConfiguration = [
-          'title' => $form->headerName,
-          'userId' => $userId,
-          'formType' => $form->form_type_id,
-          'formId' => $form->id,
-          'hasFile' => (bool) $form->has_file,
-          'readOnly' => $readonly,
-
-          ]
-        ]; 
-        
         if ($formChangeType === Request::FORM_UPDATE) {
             $requestId = Yii::$app->session->get('REQUEST_ID');            
-           $request = $this->requestRepository->getForUser($requestId,$userId);
-           $valuesList = $this->applicationViewService->getValuesList($request->requestForm);
-           $baseConfiguration['fileName'] = $request->requestForm->file;
-        }               
-        if ($form->form_type_id == FormType::DYNAMIC_ORDER_FORM) {
-            $baseConfiguration['basePrice'] = $form->base_price;
-        } else {
-            $baseConfiguration['computed'] = false;
-            $baseConfiguration['basePrice'] = 0;
+            $request = $this->requestRepository->getForUser($requestId,$userId);            
+            $formHelper = FormHelper::createViaRequest($userId, $langCode, $request);
+        } else {     
+            $formHelper = FormHelper::createViaForm($userId, $langCode, $form);
         }
-        $formElements = FieldReadRepository::findForForm($form->id);
-        ArrayHelper::multisort($formElements,['order'],[SORT_ASC]);
-       
-        $this->fieldService->postProcessFields($formElements,$valuesList);
-        $baseConfiguration['elements'] = $formElements;
-        */
-
-        return $formHelper->getData();
+        return $formHelper->getData($readonly);
     }
 
     public function actionSendForm()

@@ -21,4 +21,9 @@ class FieldQuery extends ActiveQuery
     {
         return $this->andWhere(['form_id' => $formId]);
     }
+    
+    public function availableInRequests() 
+    {
+        return $this->andWhere(['showed_in_request' => true]);
+    }
 }

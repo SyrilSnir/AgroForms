@@ -84,6 +84,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
     <?php else: ?>   
        <?php echo $form->field($model,'formId')->hiddenInput()->label(false) ;?>                      
     <?php endif; ?> 
+                            
     <?php if ($isNew):?>
         <?= $form->field($model, 'elementTypeId',['inputOptions' => [
             'id' => 'element-type-selector',
@@ -91,6 +92,13 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
             ]])
                 ->dropDownList($model->elementTypesList()) ?>                        
     <?php endif; ?>
+        <?= $form->field($model, 'showInRequest')->widget(SwitchInput::class,[
+                'pluginOptions' => [
+                        'onText' => Yii::t('app', 'Yes'),
+                        'offText' => Yii::t('app', 'No'),
+                    ]
+            ]) 
+        ?>                            
     <?php //$form->field($model, 'fieldGroupId')->dropDownList($model->fieldGroupList()) ?>
     <?= $form->field($model, 'fieldGroupId')->hiddenInput(['value' => 0])->label(false) ?>
     <?php // $form->field($model, 'order')->textInput() ?>
