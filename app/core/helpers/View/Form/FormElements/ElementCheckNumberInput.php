@@ -24,7 +24,7 @@ class ElementCheckNumberInput extends FormElement
                 if (key_exists('value', $valuesList)) {
                     $valuesList['value'] = empty($valuesList['value']) ? 0 : $valuesList['value'];
                     $summ = (int) $valuesList['value'] * $price;
-                    $text.= $valuesList['value'] . $unitTitle   . ' x ' . $price . ' '. $this->field->form->valute->symbol . '=' . $summ . ' '. $this->field->form->valute->symbol;
+                    $text.= $valuesList['value'] . $unitTitle  . ' x ' . $price . ' '. $this->field->form->valute->symbol . '=' . $summ . ' '. $this->field->form->valute->symbol;
                 } else {
                     $text.= $price . $this->field->form->valute->char_code;
                 }
