@@ -31,7 +31,7 @@ export default {
                    return 0;
                }
                let total = +this.selected;
-               if (isNan(total)) {
+               if (isNaN(total)) {
                    return 0;
                }
                return total;
