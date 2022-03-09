@@ -79,8 +79,10 @@ class FieldService
          $resultArray = [];
          foreach ($fieldsArray as $key => $field)
          {
-             
-             $index = StringHelper::extractNumberFromString($key);
+             if (!key_exists('value', $field['data'])) {
+                 $field['data']['value'] = null;
+             }
+             $index = StringHelper::extractNumberFromString($key);             
              $element = [
                             'computed' => $field['computed'],
                             'value' => $field['data']['value']
