@@ -55,7 +55,7 @@ class FormHelper extends BaseFormHelper
         $this->formElements = [];
         if ($this->form) {
             foreach ($this->form->formFields as $field) {
-                $formElement = FormElement::getElement($field);
+                $formElement = FormElement::getElement($field, $this->langCode);
                 if ($formElement) {
                     array_push($this->formElements,$formElement);
                 }

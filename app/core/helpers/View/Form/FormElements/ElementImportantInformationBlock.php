@@ -13,10 +13,7 @@ class ElementImportantInformationBlock extends FormElement
     public function renderHtml(array $valuesList = []): string
     {
         $field = $this->getField();
-        return "<div class=\"header__block\">
-                <h4>{$field->name}</h4>
-                <p class=\"description\">{$field->description}</p>
-        <p class=\"info\">{$this->getParameters()['text']}</p>";        
+        return "<div class=\"important\">{$this->getTranslatableParameter('text')}</div>";        
     }
 
 }

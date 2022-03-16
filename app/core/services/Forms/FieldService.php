@@ -10,6 +10,7 @@ use app\core\repositories\readModels\Nomenclature\UnitReadRepository;
 use app\core\traits\Data\EquipmentValuesPrepareTrait;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Forms\FieldEnum;
 use app\models\ActiveRecord\Nomenclature\Unit;
 use function GuzzleHttp\json_decode;
 
@@ -120,8 +121,18 @@ class FieldService
                 $unitPrice = (int) $formField->price;
             }
              if ($field['equip'] != true) {
-                $val = $isCheckbox ? 1 : (int) $field['value'];
-                $total = $total + ($val * $unitPrice);
+                 if ($formField->element_type_id === ElementType::ELEMENT_SELECT_MULTIPLE) {
+                     foreach ($field['value'] as $element) {
+                         /** @var FieldEnum $fieldEnum */
+                         $fieldEnum = FieldEnum::findOne($element);
+                         if ($fieldEnum && floatval($fieldEnum->value)) {                             
+                            $total+= $unitPrice * $fieldEnum->value;
+                         }
+                     }
+                 } else {
+                    $val = $isCheckbox ? 1 : (int) $field['value'];
+                    $total = $total + ($val * $unitPrice);
+                 }
              } else {
                  foreach ($field['value'] as $element) {
                      $total = $total + ($element['price'] * $element['count']);

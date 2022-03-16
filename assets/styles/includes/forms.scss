@@ -70,8 +70,9 @@
 
 .request__view {
     .input__field {
+        margin-top: 1rem;
         &.total {
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             padding-top: 1.5rem;
             border-top: 5px solid $base-agrosalon-color;
         }

@@ -23,6 +23,7 @@ class FieldEnumProvider
         foreach ($enumsList as $enum)
         {
             $enumsArray[] = [
+                'id' => $enum->id,
                 'name' => $enum->name,
                 'value' => $enum->value,
                 'name_eng' => $enum->name_eng

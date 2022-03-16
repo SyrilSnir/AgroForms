@@ -19,14 +19,16 @@ class ElementCheckNumberInput extends FormElement
 
          if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {
             $text = '<div class="input__field"><div class="field__name">' . $this->field->name . ':</div>';
-            if (($price = $this->field->getPrice()) > 0) {
-                $text .= '<div class="field__value form-control">';
-                if (key_exists('value', $valuesList)) {
-                    $valuesList['value'] = empty($valuesList['value']) ? 0 : $valuesList['value'];
-                    $summ = (int) $valuesList['value'] * $price;
-                    $text.= $valuesList['value'] . $unitTitle  . ' x ' . $price . ' '. $this->field->form->valute->symbol . '=' . $summ . ' '. $this->field->form->valute->symbol;
-                } else {
-                    $text.= $price . $this->field->form->valute->char_code;
+            if (key_exists('value', $valuesList)) {
+                $valuesList['value'] = empty($valuesList['value']) ? 0 : $valuesList['value'];
+                $text .= '<div class="field__value form-control">' . $valuesList['value'] . $unitTitle;
+                if ($this->isComputed()) {
+                    if (($price = $this->field->getPrice()) > 0) {
+                        $summ = (int) $valuesList['value'] * $price;
+                        $text.= ' x ' . $price . ' '. $this->field->form->valute->symbol . '=' . $summ . ' '. $this->field->form->valute->symbol;
+                    } else {
+                        $text.= $price . $this->field->form->valute->char_code;
+                    }
                 }
                 $text.= '</div>';
             }

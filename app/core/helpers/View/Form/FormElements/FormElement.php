@@ -22,6 +22,12 @@ abstract class FormElement implements FormElementInterface
     
     /**
      * 
+     * @var array
+     */
+    protected $fieldParameters;
+    
+    /**
+     * 
      * @var FieldEnumProvider|null
      */
     protected $fieldEnumProvider; 
@@ -29,6 +35,7 @@ abstract class FormElement implements FormElementInterface
     public function __construct(Field $field, FieldEnumProvider $enumProvider = null, string $langCode = Languages::RUSSIAN)
     {
         $this->field = $field;
+        $this->fieldParameters = json_decode($this->field->parameters, true);
         $this->langCode = $langCode;
         $this->fieldEnumProvider = $enumProvider;
     }
@@ -57,7 +64,28 @@ abstract class FormElement implements FormElementInterface
 
     public function getParameters(): array
     {
-        return json_decode($this->field->parameters, true);
+        return $this->fieldParameters;
+    }
+    
+    public function isComputed(): bool
+    {
+        return !!$this->field->getFieldParams()->isComputed;
+    }
+
+
+    public function getTranslatableParameter(string $parameterName): string 
+    {
+        if (!key_exists($parameterName, $this->fieldParameters)) {
+            return '';
+        }
+        if ($this->langCode == Languages::RUSSIAN) {
+            return $this->fieldParameters[$parameterName];
+        }
+        $parameterEng = $parameterName . 'Eng';
+        if (key_exists($parameterEng, $this->fieldParameters) && !empty($this->fieldParameters[$parameterEng])) {
+            return $this->fieldParameters[$parameterEng];
+        }
+        return $this->fieldParameters[$parameterName];
     }
 
     public function isShowInRequest():bool 
@@ -71,30 +99,39 @@ abstract class FormElement implements FormElementInterface
         return $fieldList;
     }
 
-    public static function getElement(Field $field) : ?FormElementInterface
+    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN) : ?FormElementInterface
     {
         $formElement = null;
         switch ($field->element_type_id) {
             case ElementType::ELEMENT_HEADER:
-                $formElement = new ElementHeader($field);
+                $formElement = new ElementHeader($field, null, $langCode);
                 break;
             case ElementType::ELEMENT_INFORMATION:
-                $formElement = new ElementInformationBlock($field);
+                $formElement = new ElementInformationBlock($field, null, $langCode);
                 break;
             case ElementType::ELEMENT_INFORMATION_IMPORTANT:
-                $formElement = new ElementImportantInformationBlock($field);
+                $formElement = new ElementImportantInformationBlock($field, null, $langCode);
+                break;
+            case ElementType::ELEMENT_TEXT_INPUT:
+                $formElement = new ElementTextField($field, null, $langCode);
                 break;
             case ElementType::ELEMENT_SELECT:
-                $formElement = new ElementSelect($field, new FieldEnumProvider());
+                $formElement = new ElementSelect($field, new FieldEnumProvider(), $langCode);
                 break;
             case ElementType::ELEMENT_CHECKBOX:
-                $formElement = new ElementCheckbox($field);
+                $formElement = new ElementCheckbox($field, null, $langCode);
                 break;
             case ElementType::ELEMENT_CHECK_NUMBER_INPUT:
-                $formElement = new ElementCheckNumberInput($field);
+                $formElement = new ElementCheckNumberInput($field, null, $langCode);
                 break;
             case ElementType::ELEMET_ADDITIONAL_EQUIPMENT:
-                $formElement = new ElementAdditionEquipmentBlock($field);
+                $formElement = new ElementAdditionEquipmentBlock($field, null, $langCode);
+                break;
+            case ElementType::ELEMENT_SELECT_MULTIPLE:
+                $formElement = new ElementSelectMultiple($field, new FieldEnumProvider(), $langCode);
+                break;
+            default: 
+                $formElement = new ElementUnknown($field, null, $langCode);
                 break;
         }
         

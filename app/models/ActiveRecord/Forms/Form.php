@@ -96,7 +96,7 @@ class Form extends ActiveRecord
         $model->valute_id = $form->valute;  
         $model->exhibition_id = $form->exhibitionId;
         $model->toDraft();
-        return $form;
+        return $model;
     }
     
 /**

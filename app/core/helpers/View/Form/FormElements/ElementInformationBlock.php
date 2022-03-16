@@ -16,7 +16,7 @@ class ElementInformationBlock extends FormElement
         return "<div class=\"header__block\">
                 <h4>{$field->name}</h4>
                 <p class=\"description\">{$field->description}</p>
-        <p class=\"info\">{$this->getParameters()['text']}</p>";        
+        <p class=\"info\">{$this->getTranslatableParameter('text')}</p>";        
     }    
 
 }
