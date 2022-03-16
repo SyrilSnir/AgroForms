@@ -48,7 +48,11 @@ export default {
             if (!this.isComputed) {
                 return 0;
             }
-            return  +this.selected;
+            let total = +this.selected;
+            if(isNaN(total)) {
+                return 0;
+            }
+            return  total;
         }
     },     
     mixins: [
