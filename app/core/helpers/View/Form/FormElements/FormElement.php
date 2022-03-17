@@ -121,6 +121,9 @@ abstract class FormElement implements FormElementInterface
             case ElementType::ELEMENT_TEXT_INPUT:
                 $formElement = new ElementTextField($field, null, $langCode);
                 break;
+            case ElementType::ELEMENT_NUMBER_INPUT:
+                $formElement = new ElementNumberInput($field, null, $langCode);
+                break;
             case ElementType::ELEMENT_SELECT:
                 $formElement = new ElementSelect($field, new FieldEnumProvider(), $langCode);
                 break;
