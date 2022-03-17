@@ -129,6 +129,11 @@ class FieldService
                             $total+= $unitPrice * $fieldEnum->value;
                          }
                      }
+                 } elseif (in_array($formField->element_type_id, [ElementType::ELEMENT_SELECT, ElementType::ELEMENT_RADIO_BUTTON])) {
+                         $fieldEnum = FieldEnum::findOne($field['value']);  
+                         if ($fieldEnum && floatval($fieldEnum->value)) {                             
+                            $total+= $unitPrice * $fieldEnum->value;
+                         }                         
                  } else {
                     $val = $isCheckbox ? 1 : (int) $field['value'];
                     $total = $total + ($val * $unitPrice);

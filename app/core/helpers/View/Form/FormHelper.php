@@ -91,8 +91,10 @@ class FormHelper extends BaseFormHelper
             $val = [];
             if (key_exists($fieldId, $this->valuesList)) {
                 $val = $this->valuesList[$fieldId];
-            }                    
-            array_push($result, $element->getData($val));
+            } 
+            if (!$element->isDeleted() || !empty($val)) { 
+                array_push($result, $element->getData($val));
+            }
         }
         return $result;
     }

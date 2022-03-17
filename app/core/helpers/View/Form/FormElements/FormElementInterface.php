@@ -19,4 +19,8 @@ interface FormElementInterface
     public function getOrder(): int;
     
     public function isShowInRequest():bool ;
+
+    public function isComputed(): bool; 
+    
+    public function isDeleted(): bool;
 }

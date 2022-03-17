@@ -88,11 +88,17 @@ abstract class FormElement implements FormElementInterface
         return $this->fieldParameters[$parameterName];
     }
 
-    public function isShowInRequest():bool 
+    public function isShowInRequest(): bool 
     {
         return (bool) $this->field->showed_in_request;
     }
     
+    public function isDeleted(): bool
+    {
+        return  (bool) $this->field->deleted;
+    }
+
+
     protected function transformData(array $fieldList, array $valuesList):array
     {
         $fieldList['parameters'] = json_decode($fieldList['parameters']);
@@ -117,6 +123,9 @@ abstract class FormElement implements FormElementInterface
                 break;
             case ElementType::ELEMENT_SELECT:
                 $formElement = new ElementSelect($field, new FieldEnumProvider(), $langCode);
+                break;
+            case ElementType::ELEMENT_RADIO_BUTTON:
+                $formElement = new ElementRadio($field, new FieldEnumProvider(), $langCode);
                 break;
             case ElementType::ELEMENT_CHECKBOX:
                 $formElement = new ElementCheckbox($field, null, $langCode);

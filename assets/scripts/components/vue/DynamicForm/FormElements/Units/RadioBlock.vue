@@ -2,7 +2,7 @@
 <div class="form-group">
     <div class="label">{{ params.name }}</div>
                         <div v-for="element in enums" class="form-check">
-                          <input @change="change" class="form-check-input" type="radio" v-model="selected" :name="id" :value="element.value">
+                          <input @change="change" class="form-check-input" type="radio" v-model="selected" :name="id" :value="element.id">
                           <label class="form-check-label">{{ element.name }}</label>
                         </div>
                       </div>    
@@ -45,11 +45,16 @@ export default {
     },    
     computed: {
         total() {
+            let total = 0;
             if (!this.isComputed) {
                 return 0;
             }
-            let total = +this.selected;
-            if(isNaN(total)) {
+            for (const el of this.enums) {
+                if (el.id == this.selected) {
+                    total = +el.value;
+                }                   
+            }
+            if (isNaN(total)) {
                 return 0;
             }
             return  total;

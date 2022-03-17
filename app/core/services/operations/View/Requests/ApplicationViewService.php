@@ -67,7 +67,7 @@ class ApplicationViewService implements RequestViewInterface
         $valute = $requestForm->form->valute->symbol;            
         foreach ($fields as $id => $field) {
             $fieldModel = $this->fields->get($id);  
-            if ($fieldModel->element_type_id == ElementType::ELEMENT_CHECKBOX && $field['checked'] == false) {
+            if ($fieldModel->element_type_id == ElementType::ELEMENT_CHECKBOX && (!key_exists('checked', $field) || $field['checked'] == false)) {
                 continue;
             }
             if(in_array($fieldModel->element_type_id, ElementType::HAS_ENUM_VALUES)) {

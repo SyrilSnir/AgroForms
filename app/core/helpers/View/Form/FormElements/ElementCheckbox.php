@@ -24,7 +24,7 @@ class ElementCheckbox extends FormElement
     protected function transformData(array $fieldList, array $valuesList = []): array
     {    
         $fieldList = parent::transformData($fieldList, $valuesList);
-        if (!empty($valuesList)) {
+        if (!empty($valuesList) && key_exists('checked', $valuesList)) {
             $fieldList['value'] = $valuesList['value'];
             $fieldList['checked'] = $valuesList['checked'];
         }
