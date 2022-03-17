@@ -63,11 +63,17 @@
        },
        computed: {          
            total() {
+               let total = 0;
                if (!this.isComputed) {
                    return 0;
                }
                let val = +this.val;
-               return val * (+this.unitPrice);
+               total = val * (+this.unitPrice);
+               if (isNaN(total)) {
+                   return 0;
+               }
+               return total;               
+
            }
        },
        mixins: [
