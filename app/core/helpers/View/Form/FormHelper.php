@@ -2,9 +2,9 @@
 
 namespace app\core\helpers\View\Form;
 
+use app\core\helpers\View\Form\FormElements\CountableElementInterface;
 use app\core\helpers\View\Form\FormElements\FormElement;
 use app\core\helpers\View\Form\FormElements\FormElementInterface;
-use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Application;
@@ -18,7 +18,6 @@ use Yii;
  */
 class FormHelper extends BaseFormHelper
 {
-
     
     /**
      * 
@@ -99,6 +98,23 @@ class FormHelper extends BaseFormHelper
         return $result;
     }
     
+    protected function renderPDFElements(): string 
+    {
+        $result = '';
+        foreach ($this->formElements as $element) {
+            if (!$element->isShowInRequest()) {
+                continue;
+            }
+            $fieldId = $element->getFieldId();
+            $val = [];
+            if (key_exists($fieldId, $this->valuesList)) {
+                $val = $this->valuesList[$fieldId];
+            } 
+            $result.= $element->renderPDF($val);
+        }
+        return $result;        
+    }
+    
     protected function renderHtmlElements(): string 
     {
         $result = '';
@@ -116,6 +132,26 @@ class FormHelper extends BaseFormHelper
         return $result;
     }
 
+    public function getFormPrice() :int 
+    {
+        $price = 0;
+        foreach ($this->formElements as $element) {
+            
+            if (!$element->isComputed() || !is_subclass_of($element, CountableElementInterface::class)) {
+                continue;                
+            }
+            /** @var CountableElementInterface $element */
+            $fieldId = $element->getFieldId();
+            if (key_exists($fieldId, $this->valuesList)) {
+                $val = $this->valuesList[$fieldId];
+                if (!empty($val)) {
+                    $price += $element->getPrice($val);
+                }
+            }            
+            
+        }        
+        return $price;
+    }
     public function renderHtmlRequest() :string 
     {
         $requestData = [
@@ -166,5 +202,27 @@ class FormHelper extends BaseFormHelper
             $formData['basePrice'] = 0;
         }
         return $formData;
-    }      
+    }
+
+    public function renderPDF(): mixed
+    {
+        $exhibitionName = $this->form->exhibition->title;
+        
+        $content = Yii::$app->view->renderFile('@pdf/dynamic-form.php',[
+            'model' => $this->request,
+            'fields' => $this->formElements,
+            'values' => $this->valuesList
+        ]);
+        $footer = $this->getPdfFooter();
+        
+        //$content = 'Превед';
+        $this->pdfHelper->methods = [
+                'SetHeader'=>[$exhibitionName], 
+                'SetFooter'=>[$footer],
+                'SetTitle' =>  t('Application №','requests') . $this->request->id,
+        ];
+        $this->pdfHelper->content = $content;
+        return $this->pdfHelper->render();
+    }
+
 }

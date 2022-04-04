@@ -107,4 +107,9 @@ class StandHelper extends BaseFormHelper
         return $instance;        
     }
 
+    public function getFormPrice(): int 
+    {
+        return 0;
+    }
+
 }

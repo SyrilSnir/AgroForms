@@ -16,4 +16,9 @@ class ElementUnknown extends FormElement
    </div>';
     }
 
+    public function renderPDF(array $valuesList = []): string 
+    {
+        return '<div style="position:relative;"><span style="font-weight:bold">Неизвестный тип блока </span><div>';
+    }
+
 }

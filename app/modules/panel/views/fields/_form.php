@@ -102,7 +102,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
     <?php //$form->field($model, 'fieldGroupId')->dropDownList($model->fieldGroupList()) ?>
     <?= $form->field($model, 'fieldGroupId')->hiddenInput(['value' => 0])->label(false) ?>
     <?php // $form->field($model, 'order')->textInput() ?>
-            <div id="field-options" class="card card-default"<?php if ($model->elementTypeId == ElementType::ELEMET_ADDITIONAL_EQUIPMENT): ?> style="display: none;"<?php endif; ?>>
+            <div id="field-options" class="card card-default">
                 <div class="card-header">
                   <h3 class="card-title"><?= Yii::t('app', 'Extra options') ?></h3>
                 </div>

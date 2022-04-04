@@ -16,4 +16,9 @@ class ElementImportantInformationBlock extends FormElement
         return "<div class=\"important\">{$this->getTranslatableParameter('text')}</div>";        
     }
 
+    public function renderPDF(array $valuesList = []): string
+    {
+        return $this->getTranslatableParameter('text');
+    }
+
 }

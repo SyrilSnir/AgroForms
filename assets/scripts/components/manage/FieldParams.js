@@ -20,7 +20,7 @@ export default class FieldParams {
     }
     elementTypeSelectorChangeHandler(e) {
         const value = parseInt(e.target.value);
-        console.log(value,this.textType,this.htmlType);
+        console.log(value,this.textType,this.htmlType,this.computedType);
 
         if(this.enumValues.indexOf(value) !== -1) {
             this.$enumWrapper.removeClass('hide');
@@ -28,11 +28,6 @@ export default class FieldParams {
         } else {
             this.$enumWrapper.addClass('hide');
             $('#unit-price__container').show();
-        }
-        if (value == this.equipment) {
-            $('#field-options').hide();
-        } else {
-            $('#field-options').show();
         }
         (this.textType.indexOf(value) !== -1) ?
             this.textParamsShow(true) :

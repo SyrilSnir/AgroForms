@@ -28,4 +28,15 @@ class ElementTextField extends FormElement
         }
         return $fieldList;
     }
+
+    public function renderPDF(array $valuesList = []): string 
+    {
+        $text = '<div style="position:relative;"><span style="font-weight:bold">' . $this->field->name . ': </span>';
+        $text .= '<span>';
+        if (key_exists('value', $valuesList)) {
+            $text.= $valuesList['value'];
+        }
+        return $text  . '</span></div>';        
+    }
+
 }

@@ -9,7 +9,7 @@ use app\models\ActiveRecord\Forms\FieldEnum;
  *
  * @author kotov
  */
-class ElementSelect extends FormElement
+class ElementSelect extends FormElement implements CountableElementInterface
 {
     protected function transformData(array $fieldList,  array $valuesList = []): array
     {
@@ -33,6 +33,35 @@ class ElementSelect extends FormElement
                 $fieldText .=  ' - '. "{$fieldEnum->value} {$this->field->form->valute->symbol}";
             }
             $text.= '<div class="form-control">' . $fieldText .'</div>';
+            
+        }
+        return $text  . '</div></div>';
+    }
+
+    public function getPrice(array $valuesList = []): int 
+    {
+        $result = 0;
+        if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
+        /** @var FieldEnum $fieldEnum */
+            $fieldEnum = FieldEnum::findOne($valuesList['value']);
+            if (intval($fieldEnum->value)) {
+                $result = $fieldEnum->value;
+            }
+        }
+        return $result;
+    }
+
+    public function renderPDF(array $valuesList = []): string 
+    {
+        $text = '<div style="position:relative;"><span style="font-weight:bold">' . $this->field->name . ': </span><div>';        
+        if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
+        /** @var FieldEnum $fieldEnum */
+            $fieldEnum = FieldEnum::findOne($valuesList['value']);
+            $fieldText = $fieldEnum->name;
+            if ($this->isComputed()) {
+                $fieldText .=  ' - '. "{$fieldEnum->value} {$this->field->form->valute->symbol}";
+            }
+            $text.= '<div>' . $fieldText .'</div>';
             
         }
         return $text  . '</div></div>';

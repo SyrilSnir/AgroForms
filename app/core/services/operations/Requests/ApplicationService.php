@@ -2,6 +2,7 @@
 
 namespace app\core\services\operations\Requests;
 
+use app\core\helpers\View\Form\FormHelper;
 use app\core\repositories\manage\Requests\ApplicationRepository;
 use app\core\repositories\manage\Requests\RequestRepository;
 use app\core\services\Forms\FieldService;
@@ -9,7 +10,6 @@ use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Application;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationForm;
-use app\models\Forms\Requests\DynamicForm;
 use function GuzzleHttp\json_encode;
 
 /**
@@ -48,7 +48,7 @@ class ApplicationService
     }
     
     public function create(ApplicationForm $form, $exhibitionId)
-    {        
+    {    
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
         $serializedFields = json_encode($fields);
         $total = $this->fieldService->calculateTotal($fields,$form->basePrice); 
@@ -74,16 +74,14 @@ class ApplicationService
         return $dynamicForm;        
     }
     
-    public function edit($id, ApplicationForm $form)
+    public function edit(Request $request, ApplicationForm $form, string $langCode)
     {
         /** @var Application $dynamicForm */
-        /** @var Request $request */
-        
+        $formHelper = FormHelper::createViaRequest($form->userId, $langCode, $request);
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
         $serializedFields = json_encode($fields);    
-        $total = $this->fieldService->calculateTotal($fields,$form->basePrice);
-
-        $request = $this->requests->get($id);
+    //    $total = $this->fieldService->calculateTotal($fields,$form->basePrice);
+        $total = $formHelper->getFormPrice();
         $request->edit(
                 $form->userId
                 );
@@ -93,7 +91,7 @@ class ApplicationService
                         $request->setStatusChanged() : 
                         $request->setStatusNew() );
         $this->requests->save($request);        
-        $dynamicForm = $this->application->findByRequest($id);
+        $dynamicForm = $this->application->findByRequest($request->id);
         $dynamicForm->edit($serializedFields, $total);
         if ($form->loadedFile) {
            $dynamicForm->setFile($form->loadedFile);

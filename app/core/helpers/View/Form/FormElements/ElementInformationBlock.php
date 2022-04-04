@@ -16,7 +16,16 @@ class ElementInformationBlock extends FormElement
         return "<div class=\"header__block\">
                 <h4>{$field->name}</h4>
                 <p class=\"description\">{$field->description}</p>
-        <p class=\"info\">{$this->getTranslatableParameter('text')}</p>";        
-    }    
+        <p class=\"info\">{$this->getTranslatableParameter('html')}</p>";        
+    }
+
+    public function renderPDF(array $valuesList = []): string 
+    {
+        $field = $this->getField();
+        return "<div class=\"header__block\">
+                <h4>{$field->name}</h4>
+                <p class=\"description\">{$field->description}</p>
+        <p class=\"info\">{$this->getTranslatableParameter('html')}</p>";          
+    }
 
 }

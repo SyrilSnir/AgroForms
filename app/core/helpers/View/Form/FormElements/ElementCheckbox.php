@@ -7,7 +7,7 @@ namespace app\core\helpers\View\Form\FormElements;
  *
  * @author kotov
  */
-class ElementCheckbox extends FormElement
+class ElementCheckbox extends FormElement implements CountableElementInterface
 {
     public function renderHtml(array $valuesList = []): string
     {
@@ -29,6 +29,26 @@ class ElementCheckbox extends FormElement
             $fieldList['checked'] = $valuesList['checked'];
         }
         return $fieldList;
+    }
+
+    public function getPrice(array $valuesList = []): int 
+    {
+        if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
+            return $valuesList['value'];
+        }
+        return 0;
+    }
+
+    public function renderPDF(array $valuesList = []): string 
+    {
+        if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {
+            $text = '<div style="position:relative;"><span style="font-weight:bold">' . $this->field->name .  ': </span>'; 
+            if (key_exists('value', $valuesList) && $valuesList['value'] > 0) {
+                $text .= '<span>' . $valuesList['value'] . ' '. $this->field->form->valute->symbol . '</span>';
+            }
+            return $text . '</div>';
+        }
+        return '';
     }
 
 }

@@ -8,14 +8,13 @@
 
 namespace app\core\traits;
 
+use app\core\helpers\View\Form\BaseFormHelper;
 use app\core\helpers\View\Form\FormHelper;
 use app\core\helpers\View\Form\StandHelper;
 use app\core\services\operations\Requests\RequestService;
-use app\core\services\operations\View\Requests\RequestViewFactory;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ChangeStatusForm;
-use kartik\mpdf\Pdf;
 use Yii;
 
 /**
@@ -39,12 +38,10 @@ trait RequestViewTrait
         /** @var Request $model */
         $userId = Yii::$app->user->id;
         $langCode = Yii::$app->language;
+        $model =  $this->findModel($id);
         $this->viewPath = Yii::getAlias('@views') .  DIRECTORY_SEPARATOR .'requests';    
-        $rejectLogs = $this->applicationRejectLogService->getLogsForRequest($id);        
-        $model = $this->findModel($id);
+        $rejectLogs = $this->applicationRejectLogService->getLogsForRequest($id);
         $requestForm = $model->requestForm;
-        $viewService = RequestViewFactory::getViewService($model);
-        $dopAttributes = $viewService->getFieldAttributes($requestForm);
         $statusForm = new ChangeStatusForm($model->id, $model->status);  
         if ($requestForm->form->form_type_id == FormType::SPECIAL_STAND_FORM) {            
             $formHelper = StandHelper::createViaRequest($userId, $langCode, $model);
@@ -58,7 +55,6 @@ trait RequestViewTrait
         }
         return $this->render('view', [
             'model' => $model,
-            'dopAttributes' => $dopAttributes,
             'statusForm' => $statusForm,
             'requestHtml' => $formHtmlData,
             'logs' => $rejectLogs            
@@ -66,8 +62,10 @@ trait RequestViewTrait
     }
     
     public function actionPrint($id)
-    {
+    {        
+        $model =  $this->findModel($id);
         /** @var Request $model */
+        /*
         $model =  $this->findModel($id);
         $exhibitionName = mb_strtoupper($model->form->exhibition->title);
         $requestForm = $model->requestForm;
@@ -109,6 +107,23 @@ trait RequestViewTrait
         ]);
 
         // return the pdf output as per the destination setting
-        return $pdf->render();         
-    }    
+        return $pdf->render();  
+         *        */
+        $helper = $this->getFormHelper($model);
+        return $helper->renderPDF();
+    }  
+    
+    protected function getFormHelper(Request $model) :BaseFormHelper
+    {
+        $userId = Yii::$app->user->id;
+        $langCode = Yii::$app->language;
+        
+        $requestForm = $model->requestForm;
+        if ($requestForm->form->form_type_id == FormType::SPECIAL_STAND_FORM) {            
+            $formHelper = StandHelper::createViaRequest($userId, $langCode, $model);
+        } else {
+            $formHelper = FormHelper::createViaRequest($userId, $langCode, $model);            
+        }
+        return $formHelper;
+    }
 }

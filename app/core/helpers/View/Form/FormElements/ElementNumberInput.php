@@ -12,7 +12,7 @@ namespace app\core\helpers\View\Form\FormElements;
  *
  * @author kotov
  */
-class ElementNumberInput extends FormElement
+class ElementNumberInput extends FormElement implements CountableElementInterface
 {
     public function renderHtml(array $valuesList = []): string
     {        
@@ -45,5 +45,40 @@ class ElementNumberInput extends FormElement
             $fieldList['value'] = $valuesList['value'];
         }
         return $fieldList;
-    }    
+    }
+
+    public function getPrice(array $valuesList = []): int 
+    {
+        $result = 0;
+        if (key_exists('value', $valuesList)) {
+            if (($price = $this->field->getPrice()) > 0) {
+                $result = (int) $valuesList['value'] * $price;                
+            }            
+        }
+        return $result;        
+    }
+    
+    public function renderPDF(array $valuesList = []): string 
+    {
+        $unitTitle = '';
+        $fieldParams = $this->field->getFieldParams();
+        if ($fieldParams->unitModel) {
+            $unitTitle = ' ' . $fieldParams->unitModel->short_name;
+        }
+        $text = '<div style="position:relative;"><span style="font-weight:bold">' . $this->field->name . ': </span>';
+        if (key_exists('value', $valuesList)) {
+            $valuesList['value'] = empty($valuesList['value']) ? 0 : $valuesList['value'];
+            $text .= '<span>' . $valuesList['value'] . $unitTitle;
+            if ($this->isComputed()) {
+                if (($price = $this->field->getPrice()) > 0) {
+                    $summ = (int) $valuesList['value'] * $price;
+                    $text.= ' x ' . $price . ' '. $this->field->form->valute->symbol . '=' . $summ . ' '. $this->field->form->valute->symbol;
+                } else {
+                    $text.= $price . $this->field->form->valute->char_code;
+                }
+            }
+            $text.= '</span>';
+        }
+        return $text . '</div>';
+    }       
 }

@@ -71,7 +71,8 @@ class ElementType extends ActiveRecord
         self::ELEMENT_NUMBER_INPUT,
         self::ELEMENT_SELECT,
         self::ELEMENT_SELECT_MULTIPLE,
-        self::ELEMENT_RADIO_BUTTON            
+        self::ELEMENT_RADIO_BUTTON,
+        self::ELEMET_ADDITIONAL_EQUIPMENT,
     ];
     
     /**

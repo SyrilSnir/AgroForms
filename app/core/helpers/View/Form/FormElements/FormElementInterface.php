@@ -12,6 +12,8 @@ interface FormElementInterface
     
     public function renderHtml(array $valuesList = []): string;
     
+    public function renderPDF(array $valuesList = []): string;
+    
     public function getParameters():array;
     
     public function getFieldId(): int;

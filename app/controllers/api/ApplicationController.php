@@ -127,7 +127,7 @@ class ApplicationController extends FormController
     {
         /** @var Request $request */
         $request = $this->requestRepository->get($requestId);
-        $this->applicationService->edit($requestId, $form);   
+        $this->applicationService->edit($request, $form, Yii::$app->language);   
     }    
 
 }

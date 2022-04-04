@@ -5,7 +5,7 @@
 /** @var bool $isComputed Вычисляемое поле */
 $fullPrice = 0;
 ?>
-<table class="table table-bordered">
+<table class="table">
     <thead>
         <tr>            
             <th style="text-align: center" colspan="5"><?php echo t('Add. equipment','menu')?></th>
