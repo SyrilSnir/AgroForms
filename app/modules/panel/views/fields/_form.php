@@ -98,7 +98,14 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                         'offText' => Yii::t('app', 'No'),
                     ]
             ]) 
-        ?>                            
+        ?> 
+        <?= $form->field($model, 'showInPdf')->widget(SwitchInput::class,[
+                'pluginOptions' => [
+                        'onText' => Yii::t('app', 'Yes'),
+                        'offText' => Yii::t('app', 'No'),
+                    ]
+            ]) 
+        ?>                             
     <?php //$form->field($model, 'fieldGroupId')->dropDownList($model->fieldGroupList()) ?>
     <?= $form->field($model, 'fieldGroupId')->hiddenInput(['value' => 0])->label(false) ?>
     <?php // $form->field($model, 'order')->textInput() ?>

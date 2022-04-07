@@ -92,6 +92,11 @@ abstract class FormElement implements FormElementInterface
     {
         return (bool) $this->field->showed_in_request;
     }
+
+    public function isShowInPdf(): bool 
+    {
+        return (bool) $this->field->showed_in_pdf;
+    }
     
     public function isDeleted(): bool
     {

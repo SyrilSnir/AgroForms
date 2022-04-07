@@ -21,6 +21,7 @@ use yii\db\ActiveRecord;
  * @property int $field_group_id Группа
  * @property int $order Позиция на экране
  * @property boolean $showed_in_request Отображать в заявке
+ * @property boolean $showed_in_pdf Отображать в печатной форме
  * @property string|null $default_value Значение по умолчанию
  * @property string|null $parameters Параметры
  * @property bool $deleted Флаг удаления
@@ -48,6 +49,7 @@ class Field extends ActiveRecord
  * @param int $formId
  * @param int $elementTypeId
  * @param bool $showInRequest
+ * @param bool $showInPdf
  * @param int $fieldGroupId
  * @param string $defaultValue
  * @param string $parameters
@@ -64,6 +66,7 @@ class Field extends ActiveRecord
             int $fieldGroupId,
             int $order,
             bool $showInRequest,
+            bool $showInPdf,
             string $defaultValue = '',
             string $parameters = ''     
             ):self
@@ -80,6 +83,7 @@ class Field extends ActiveRecord
         $model->parameters = $parameters;
         $model->default_value = $defaultValue;
         $model->showed_in_request = $showInRequest;
+        $model->showed_in_pdf = $showInPdf;
         return $model;
     }
 
@@ -98,8 +102,10 @@ class Field extends ActiveRecord
  * @param string $descriptionEng
  * @param int $formId
  * @param int $elementTypeId
+ * @param int $fieldGroupId
  * @param int $order
- * bool $showInRequest,
+ * @param bool $showInRequest
+ * @param bool $showInPdf
  * @param string $defaultValue
  * @param string $parameters
  */    
@@ -113,6 +119,7 @@ class Field extends ActiveRecord
             int $fieldGroupId,            
             int $order,
             bool $showInRequest,            
+            bool $showInPdf,            
             string $defaultValue = '',
             string $parameters = ''              
             )
@@ -126,6 +133,7 @@ class Field extends ActiveRecord
         $this->field_group_id = $fieldGroupId;
         $this->order = $order;
         $this->showed_in_request = $showInRequest;
+        $this->showed_in_pdf = $showInPdf;
         $this->parameters = $parameters;
         $this->default_value = $defaultValue;        
     }

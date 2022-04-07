@@ -30,6 +30,7 @@ class FieldForm extends MultiForm
     public $fieldGroupId;
     public $order;
     public $showInRequest;
+    public $showInPdf;
     public $defaultValue;
     
     
@@ -64,6 +65,7 @@ class FieldForm extends MultiForm
             $this->order = $model->order;
             $this->defaultValue = $model->default_value;
             $this->showInRequest = $model->showed_in_request;
+            $this->showInPdf = $model->showed_in_pdf;
             $this->parameters = new FieldParametersForm($model);
             $this->hasEnums = $model->hasEnums();
         } else {
@@ -78,7 +80,7 @@ class FieldForm extends MultiForm
         return [
             [['formId', 'elementTypeId', 'fieldGroupId'], 'required'],
             [['formId', 'elementTypeId', 'fieldGroupId', 'order'], 'integer'],
-            ['showInRequest', 'boolean'],
+            [['showInRequest','showInPdf'], 'boolean'],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'string', 'max' => 255],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'default','value' => ''],
             [['order','fieldGroupId'], 'default','value' => 0],
@@ -101,7 +103,8 @@ class FieldForm extends MultiForm
             'fieldGroupId' => Yii::t('app', 'Field group'),
             'order' => Yii::t('app', 'Position'),
             'defaultValue' => Yii::t('app', 'Default falue'),
-            'showInRequest' => Yii::t('app', 'Show in application')
+            'showInRequest' => Yii::t('app', 'Show in application'),
+            'showInPdf' => Yii::t('app', 'Show in printed form'),
         ];
     }
  

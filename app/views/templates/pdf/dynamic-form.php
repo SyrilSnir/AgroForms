@@ -27,7 +27,7 @@ $this->title = '';
     <tbody style="text-align: right">        
     <?php foreach ($fields as $field): ?>
         <?php 
-            if (!$field->isShowInRequest()) {
+            if (!$field->isShowInPdf()) {
                 continue;
             }
             $fieldId = $field->getFieldId();
