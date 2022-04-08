@@ -35,6 +35,9 @@ $this->title = '';
             if (key_exists($fieldId, $values)) {
                 $val = $values[$fieldId];
             }
+            if (empty($val) && $field->isDeleted()) {
+                continue;
+            }
             $result = $field->renderPDF($val);
             
         ?>

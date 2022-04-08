@@ -127,6 +127,9 @@ class FormHelper extends BaseFormHelper
             if (key_exists($fieldId, $this->valuesList)) {
                 $val = $this->valuesList[$fieldId];
             } 
+            if (empty($val) && $element->isDeleted()) {
+                continue;
+            }
             $result.= $element->renderHtml($val);
         }
         return $result;
