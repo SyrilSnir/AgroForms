@@ -3,6 +3,7 @@
 namespace app\core\manage\Auth;
 
 use app\core\repositories\readModels\User\UserReadRepository;
+use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Users\Profile\UserProfileInterface;
 use app\models\ActiveRecord\Users\User;
 use yii\base\Model;
@@ -42,6 +43,11 @@ class UserIdentity extends Model implements IdentityInterface
         return $this->user->id;
     }
 
+
+    public function getCompany(): Company
+    {
+        return $this->user->company;
+    }
 
     public function validateAuthKey($authKey): bool
     {

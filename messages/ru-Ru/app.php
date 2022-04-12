@@ -17,6 +17,7 @@ return [
    'Reject' => 'Отклонить',
    'Exit' => 'Выход',
    'Role' => 'Роль',
+   'Edit' => 'Редактировать',
    'Enter' => 'Вход',
    'Back' => 'Вернуться',
    'Cancel' => 'Отмена',
@@ -154,6 +155,7 @@ return [
     'Show in application' => 'Показывать в заявке',
     'Show in printed form' => 'Показывать в печатных формах',
     'New contract' => 'Новый договор',
-    'Number of contract' => 'Номер договора'
+    'Number of contract' => 'Номер договора',
+    'Application status' => 'Статус заявки'
 ];
 

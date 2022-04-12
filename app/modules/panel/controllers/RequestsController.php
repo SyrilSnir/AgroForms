@@ -16,7 +16,7 @@ use app\core\traits\GridViewTrait;
 use app\core\traits\RequestViewTrait;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationRejectForm;
-use app\models\Forms\Requests\ChangeStatusForm;
+use app\models\Forms\Requests\EditRequestForm;
 use app\models\SearchModels\Requests\AccountantRequestSearch;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
 use DomainException;
@@ -69,17 +69,17 @@ class RequestsController extends ManageController
         $this->applicationRejectLogService = $applicationRejectLogService;
     }  
     
-    public function actionChangeStatus($id) 
+    public function actionEdit($id) 
     {
         /** @var Request $model */
         $model =  $this->findModel($id);
-        $changeStatusForm = new ChangeStatusForm($model->id, $model->status); 
-        if ($changeStatusForm->load(Yii::$app->request->post()) && $changeStatusForm->validate()) {
-            $this->service->changeStatus($changeStatusForm);
+        $editRequestForm = new EditRequestForm($model); 
+        if ($editRequestForm->load(Yii::$app->request->post()) && $editRequestForm->validate()) {
+            $this->service->edit($editRequestForm);
             return $this->redirect(['view', 'id' => $id]);            
         }
-        return $this->render('change-status', [
-            'model' => $changeStatusForm,
+        return $this->render('edit', [
+            'model' => $editRequestForm,
         ]);           
     }
            

@@ -74,7 +74,7 @@ $columnsConfig = [
                         'class' => ActionColumn::class,
                         'hAlign' => GridView::ALIGN_LEFT,
                         'width' => '160px',
-                        'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;{partial_paid}&nbsp;{paid}{inform}{accept}&nbsp;{reject}{pdf}', 
+                        'template' => '{view}{update}{change}{delete}&nbsp;&nbsp;{partial_paid}&nbsp;{paid}{inform}{accept}&nbsp;{reject}{pdf}', 
                         'buttons' => [
                             'accept' => function ($url, $model, $key) {
                                     /** @var Request $model */
@@ -138,11 +138,11 @@ $columnsConfig = [
                                 $icon = Html::tag('span', '', ['class' => "fa fa-$iconName"]);
                                 return Html::a($icon, $url,$options);                            
                             },  
-                            'change_status' => function ($url, $model, $key) {
+                            'change' => function ($url, $model, $key) {
                                     /** @var Request $model */
-                                $title = t('Change status','requests');
+                                $title = t('Edit');
                                 $iconName = "pencil";
-                                $url = Url::current(['change-status', 'id' => $key]);
+                                $url = Url::current(['edit', 'id' => $key]);
                                 $options = [
                                     'title' => $title,
                                     'aria-label' => $title,
@@ -152,7 +152,7 @@ $columnsConfig = [
                             },
                         ],
                         'visibleButtons' => [
-                            'change_status' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),
+                            'change' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),
                             'inform' => function ($model) {
                                 /** @var Request $model */
                                 return Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU) &&

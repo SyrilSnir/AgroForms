@@ -7,7 +7,7 @@ use app\core\services\operations\Logs\ApplicationRejectLogService;
 use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationRejectForm;
-use app\models\Forms\Requests\ChangeStatusForm;
+use app\models\Forms\Requests\EditRequestForm;
 
 /**
  * Description of RequestService
@@ -38,11 +38,11 @@ class RequestService
         $this->applicationRejectLogService = $applicationRejectLogService;
     }
     
-    public function changeStatus(ChangeStatusForm $form)
+    public function edit(EditRequestForm $form)
     {
         /** @var Request $request */
         $request = $this->requests->get($form->requestId);
-        $request->status = $form->status;
+        $request->edit($form);
         $this->requests->save($request);
         return $request;
     }

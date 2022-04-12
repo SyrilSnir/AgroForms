@@ -14,7 +14,7 @@ use app\core\helpers\View\Form\StandHelper;
 use app\core\services\operations\Requests\RequestService;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\Forms\Requests\ChangeStatusForm;
+use app\models\Forms\Requests\EditRequestForm;
 use Yii;
 
 /**
@@ -42,7 +42,7 @@ trait RequestViewTrait
         $this->viewPath = Yii::getAlias('@views') .  DIRECTORY_SEPARATOR .'requests';    
         $rejectLogs = $this->applicationRejectLogService->getLogsForRequest($id);
         $requestForm = $model->requestForm;
-        $statusForm = new ChangeStatusForm($model->id, $model->status);  
+        $statusForm = new EditRequestForm($model);  
         if ($requestForm->form->form_type_id == FormType::SPECIAL_STAND_FORM) {            
             $formHelper = StandHelper::createViaRequest($userId, $langCode, $model);
         } else {

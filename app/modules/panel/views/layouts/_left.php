@@ -36,7 +36,7 @@ use app\widgets\AdminLTE\Menu\MenuWidget;
         ) ?>
     <?php elseif (Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU)): ?>        
         <?php echo MenuWidget::widget(
-             MemberMenuHelper::getMenu()
+             MemberMenuHelper::getMenu(['user' => Yii::$app->user->getIdentity()])
     ) ?>        
     <?php elseif (Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU)): ?>
         <?php 

@@ -4,6 +4,7 @@ namespace app\models\ActiveRecord\Requests;
 
 use app\core\repositories\readModels\Requests\ApplicationReadRepository;
 use app\core\repositories\readModels\Requests\RequestStandReadRepository;
+use app\models\ActiveRecord\Contract\Contracts;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\FormManipulation;
 use app\models\ActiveRecord\Forms\Form;
@@ -12,6 +13,7 @@ use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Query\RequestQuery;
 use app\models\ActiveRecord\Users\User;
 use app\models\CreatedTimestampTrait;
+use app\models\Forms\Requests\EditRequestForm;
 use yii\db\ActiveQuery;
 
 /**
@@ -23,11 +25,14 @@ use yii\db\ActiveQuery;
  * @property int $created_at
  * @property int $exhibition_id
  * @property int $type_id Тип заявки
- * @property int $form_id Тип заявки
+ * @property int $form_id Id формы
+ * @property int $contract_id Номер договора
+ * 
  * @property bool $was_rejected Была отклонена
  * 
  * @property FormType $formType
  * @property Form $form
+ * @property Contracts $contract
  * @property User $user
  * @property Exhibition $exhibition
  * @property BaseRequest $requestForm
@@ -77,10 +82,11 @@ class Request extends FormManipulation
     }
     
     public function edit(
-            int $userId       
+            EditRequestForm $form      
             )
     {
-        $this->user_id = $userId;
+        $this->status = $form->status;
+        $this->contract_id = $form->contractId;
     }
     
     public function setStatusNew()
@@ -122,6 +128,11 @@ class Request extends FormManipulation
     {
         return $this->hasOne(RequestStand::class, ['request_id' => 'id' ]);
     }
+    
+    public function getContract()
+    {
+        return $this->hasOne(Contracts::class, ['id' => 'contract_id' ]);
+    }    
     
     public function getApplication()
     {

@@ -2,6 +2,8 @@
 
 namespace app\models\ActiveRecord\Companies;
 
+use app\models\ActiveRecord\Contract\Contracts;
+use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
@@ -158,7 +160,17 @@ class Company extends ActiveRecord
      */
     public function getContacts()
     {
-        return $this->hasOne(Contact::className(), ['id' => 'contacts_id']);
+        return $this->hasOne(Contact::class, ['id' => 'contacts_id']);
+    }
+
+    /**
+     * Gets query for [[Contracts]].
+     *
+     * @return ActiveQuery
+     */    
+    public function getContracts()
+    {
+        return $this->hasMany(Contracts::class, ['company_id' => 'id']);
     }
 
     /**
@@ -211,5 +223,15 @@ class Company extends ActiveRecord
            'user_type_id' => UserType::MEMBER_USER_ID,
            'company_id' => $this->id
         ]); 
+    }
+    
+    public function getAvailableExhibitions()
+    {
+        return Exhibition::find()->
+                joinWith('contracts')->
+                andWhere(['contracts.company_id' => $this->id])->
+                andWhere(['contracts.status' => Contracts::STATUS_ACTIVE])->
+                orderBy(['end_date' => SORT_DESC])->
+                all();
     }
 }

@@ -4,8 +4,10 @@ namespace app\models\ActiveRecord\Exhibition;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\ActiveRecord\Companies\Company;
+use app\models\ActiveRecord\Contract\Contracts;
 use app\models\Forms\Manage\Exhibition\ExhibitionForm;
 use DateTime;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -27,6 +29,7 @@ use yii\db\ActiveRecord;
  * @property int $status Статус
  * 
  * @property Company $company
+ * @property Contracts[] $contracts
  */
 class Exhibition extends ActiveRecord
 {    
@@ -103,4 +106,19 @@ class Exhibition extends ActiveRecord
     {
         return $this->hasOne(Company::class, ['id' => 'company_id']);
     }    
+    
+    /**
+     * Gets query for [[Contracts]].
+     *
+     * @return ActiveQuery
+     */    
+    public function getContracts()
+    {
+        return $this->hasMany(Contracts::class, ['exhibition_id' => 'id']);
+    }
+    
+    public function getConrtactsForCompany(int $companyId)
+    {
+        return $this->getContracts()->andWhere(['company_id' => $companyId])->all();
+    }
 }

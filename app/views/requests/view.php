@@ -3,7 +3,7 @@
 use app\core\helpers\View\Request\RequestStatusHelper;
 use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\Forms\Requests\ChangeStatusForm;
+use app\models\Forms\Requests\EditRequestForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -12,12 +12,17 @@ use yii\widgets\DetailView;
 
 /* @var $this View */
 /* @var $model Request */
-/* @var $statusForm ChangeStatusForm */
+/* @var $statusForm EditRequestForm */
 /* @var array $logs */
 /* @var $requestHtml string */
 $this->title = t('Application №','requests') . $model->id;
 $attributes = [
     'formType.name:text:' . t('Form type', 'requests'),
+    [
+        'attribute' => 'contracr',
+        'label' => t('Number of contract'),
+        'value' => $model->contract ? $model->contract->number : ''
+    ],     
     [
         'attribute' => 'company',
         'label' => t('Company','company'),
@@ -28,6 +33,7 @@ $attributes = [
         'label' => t('Member email','user'),
         'value' => $model->user->email
     ],    
+    
     [
         'attribute' => 'status',
         'label' => t('Status'),
