@@ -3,6 +3,7 @@
 namespace app\models\SearchModels\Contracts;
 
 use app\core\traits\Lists\GetCompanyNamesTrait;
+use app\core\traits\Lists\GetExhibitionsTrait;
 use app\models\ActiveRecord\Contract\Contracts;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -18,10 +19,12 @@ class ContractSearch extends Model
     
     public $company_id;  
     
+    public $exhibition_id;
+    
     public $status;
 
 
-    use GetCompanyNamesTrait;
+    use GetCompanyNamesTrait, GetExhibitionsTrait;
     
     public function search(array $params): ActiveDataProvider   
     {
@@ -46,7 +49,7 @@ class ContractSearch extends Model
     public function rules(): array
     {
         return [
-            [['company_id','status','number'], 'safe']
+            [['company_id','exhibition_id','status','number'], 'safe']
         ];        
     }
 }

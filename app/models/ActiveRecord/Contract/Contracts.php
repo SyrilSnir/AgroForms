@@ -3,6 +3,7 @@
 namespace app\models\ActiveRecord\Contract;
 
 use app\models\ActiveRecord\Companies\Company;
+use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\Forms\Manage\Contract\ContractForm;
 use DateTime;
 use yii\db\ActiveQuery;
@@ -14,10 +15,12 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $number Номер договора
  * @property int $company_id Компания
+ * @property int $exhibition_id Выставка
  * @property int $date Дата заключения договора
  * @property int $status Статус договора
  *
  * @property Company $company
+ * @property Exhibition $exhibition
  */
 class Contracts extends ActiveRecord
 {
@@ -37,6 +40,7 @@ class Contracts extends ActiveRecord
         $contract = new self();
         $contract->number = $form->number;
         $contract->company_id = $form->companyId;
+        $contract->exhibition_id = $form->exhibitionId;
         $contract->status = $form->status;
         $contract->date =  DateTime::createFromFormat('d.m.Y', $form->date)->getTimestamp();
         return $contract;
@@ -46,6 +50,7 @@ class Contracts extends ActiveRecord
     {
         $this->number = $form->number;
         $this->company_id = $form->companyId;
+        $this->exhibition_id = $form->exhibitionId;
         $this->status = $form->status;
         $this->date =  DateTime::createFromFormat('d.m.Y', $form->date)->getTimestamp();
     }
@@ -60,4 +65,15 @@ class Contracts extends ActiveRecord
     {
         return $this->hasOne(Company::class, ['id' => 'company_id']);
     }
+    
+
+    /**
+     * Gets query for [[Exhibition]].
+     *
+     * @return ActiveQuery
+     */
+    public function getExhibition()
+    {
+        return $this->hasOne(Exhibition::class, ['id' => 'exhibition_id']);
+    }    
 }

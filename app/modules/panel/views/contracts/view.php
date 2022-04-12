@@ -33,6 +33,7 @@ $this->title = t('Contract', 'contracts') . ' № ' .$model->number;
             'attributes' => [
                 'number:text:' . Yii::t('app','Number of contract'),
                 'company.name:text:' . t('Company','user'),
+                'exhibition.title:text:' . t('Exhibition'),
                 'date:date:' . Yii::t('app','Date'),
                 [
                     'attribute' => 'status',

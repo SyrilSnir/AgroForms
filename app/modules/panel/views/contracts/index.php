@@ -51,7 +51,14 @@ $columnsConfig = [
                             'filterWidgetOptions' => [
                                 'options' => ['placeholder' => ''],
                             ]
-                        ],                        
+                        ],
+                        [
+                            'attribute' => 'exhibition_id',
+                            'label' => t('Exhibition'),
+                            'format' => 'raw',
+                            'filter' => $searchModel->getExhibitionsList(),
+                            'value' => function (Contracts $model) { return $model->exhibition ? $model->exhibition->title: '' ;}
+                        ],                         
                         [
                             'label' => Yii::t('app','Date'),
                             'attribute' => 'date',
