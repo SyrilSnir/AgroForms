@@ -22,6 +22,7 @@ return [
    'Cancel' => 'Отмена',
    'Home' => 'На главную',
    'New' => 'Новый',
+   'Date' => 'Дата',
    'Title' => 'Заголовок',
    'Status' => 'Статус',
    'Active' => 'Активирован',
@@ -152,5 +153,7 @@ return [
     'Will be soon' => 'Будет скоро',
     'Show in application' => 'Показывать в заявке',
     'Show in printed form' => 'Показывать в печатных формах',
+    'New contract' => 'Новый договор',
+    'Number of contract' => 'Номер договора'
 ];
 

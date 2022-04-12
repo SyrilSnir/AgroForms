@@ -51,5 +51,7 @@ return [
     'New price rule' => 'Новое ценовое правило',
     'Edit price rule' => 'Изменить ценовое правило',    
     'Show form' => 'Просмотр формы',
-    'To write a message' => 'Написать сообщение'
+    'To write a message' => 'Написать сообщение',
+    'Contracts list' => 'Список договоров',
+    'New contract' => 'Новый договор',
 ];

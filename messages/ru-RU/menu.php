@@ -40,5 +40,6 @@ return [
     'Viewing requests' => 'Просмотр заявок',
     'Feedback form' => 'Форма обратной связи',
     'Feedback' => 'Обратная связь',
+    'Contracts' => 'Договоры'
 ];
 

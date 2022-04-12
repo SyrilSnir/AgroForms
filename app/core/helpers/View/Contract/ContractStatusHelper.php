@@ -1,30 +1,25 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-namespace app\core\helpers\View\Exhibition;
+namespace app\core\helpers\View\Contract;
 
 use app\core\helpers\View\StatusHelper;
-use app\models\ActiveRecord\Exhibition\Exhibition;
+use app\models\ActiveRecord\Contract\Contracts;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
- * Description of ExhibitionStatusHelper
+ * Description of ContractStatusHelper
  *
  * @author kotov
  */
-class ExhibitionStatusHelper extends StatusHelper
+class ContractStatusHelper extends StatusHelper
 {
     public static function statusList() :array
     {
         $statusList = [
-            Exhibition::STATUS_COMPLETED => t('Completed','exhibitions'),
-            Exhibition::STATUS_ACTIVE => t('Active','exhibitions'),
+            Contracts::STATUS_ACTIVE => t('Active','contracts'),
+            Contracts::STATUS_COMPLETED => t('Completed','contracts'),
+            Contracts::STATUS_DECLINED => t('Declined','contracts'),
         ];
         return $statusList;
     }
@@ -32,10 +27,10 @@ class ExhibitionStatusHelper extends StatusHelper
     public static function getStatusLabel(string $status): string
     {
         switch ($status) {
-            case Exhibition::STATUS_ACTIVE:
+            case Contracts::STATUS_ACTIVE:
                 $className = 'badge badge-info';
                 break;
-            case Exhibition::STATUS_COMPLETED:
+            case Contracts::STATUS_COMPLETED:
                 $className = 'badge badge-success';
                 break;            
             default:
@@ -46,5 +41,4 @@ class ExhibitionStatusHelper extends StatusHelper
             'class' => $className,
         ]); 
     }
-
 }

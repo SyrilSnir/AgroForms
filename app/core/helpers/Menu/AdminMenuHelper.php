@@ -29,7 +29,12 @@ class AdminMenuHelper implements MenuHelperInterface
                                     'label' => Yii::t('app/menu', 'Request management'),
                                     'icon' => 'icon-requests',
                                     'url' => ['/panel/requests']
-                                ],          
+                                ],   
+                                [
+                                    'label' => Yii::t('app/menu', 'Contracts'),
+                                    'icon' => 'icon-requests',
+                                    'url' => ['/panel/contracts']
+                                ],                                 
                             ]
                         ],
               
