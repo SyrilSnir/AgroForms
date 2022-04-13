@@ -74,33 +74,36 @@ class RequestsController extends BaseMemberController
         $this->applicationRejectLogService = $applicationRejectLogService;        
     }
 
-    public function actionIndex($id)
+    public function actionIndex($exhibitionId,$contractId)
     {
         Url::remember();
         $applicationDataProvider = $this->searchModel->searchForUser(
                 Yii::$app->user->id,
-                $id,
+                $exhibitionId,
+                $contractId,
                 Yii::$app->request->queryParams
                 );        
-        $isActive = (Yii::$app->params['activeExhibition'] == $id);
+        $isActive = (Yii::$app->params['activeExhibition'] == $exhibitionId);
         
         return $this->render('index',[            
             'searchModel' => $this->searchModel,
             'dataProvider' => $applicationDataProvider,            
             'isExhibitionActive' => $isActive,
-            'availableForms' => FormsHelper::formsList($id)
+            'contractId' => $contractId,
+            'availableForms' => FormsHelper::formsList($exhibitionId)
         ]);
     }
  
-    public function actionCreate(int $id) 
+    public function actionCreate(int $formId, int $contractId) 
     {
         /** @var Form $form */
-        $form = $this->formsRepository->get($id);  
+        $form = $this->formsRepository->get($formId);  
         $user = Yii::$app->user->getIdentity();    
         Yii::$app->session->set('FORM_CHANGE_TYPE', Request::FORM_CREATE);
         Yii::$app->session->remove('REQUEST_ID'); 
         return $this->render('create', [
             'form' => $form,
+            'contractId' => $contractId,
             'user' => $user,
         ]);        
     }

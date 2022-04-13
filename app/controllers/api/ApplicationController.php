@@ -5,18 +5,15 @@ namespace app\controllers\api;
 use app\core\helpers\View\Form\FormHelper;
 use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\manage\Requests\RequestRepository;
-use app\core\repositories\readModels\Forms\FieldReadRepository;
 use app\core\services\Forms\FieldService;
 use app\core\services\operations\Requests\ApplicationService;
 use app\core\services\operations\View\Requests\ApplicationViewService;
 use app\core\traits\InfoMessageTrait;
 use app\models\ActiveRecord\Forms\Form;
-use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationForm;
 use DomainException;
 use Yii;
-use yii\helpers\ArrayHelper;
 
 /**
  * Description of DynamicFormController
@@ -97,6 +94,7 @@ class ApplicationController extends FormController
 
     public function actionSendForm()
     {
+        /** @var Form $appForm */
         $form = new ApplicationForm();
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE');
         try {
@@ -108,8 +106,10 @@ class ApplicationController extends FormController
                 } else {
                     $this->createRequest($form);
                 }
+                $appForm = $this->formRepository->get($form->formId);                
                 return [
-                    'exhibitionId' => Yii::$app->params['activeExhibition']
+                    'exhibitionId' => $appForm->exhibition_id,
+                    'contractId' => $form->contractId,
                 ];               
             }
         } catch (Exception $e) {
@@ -120,7 +120,7 @@ class ApplicationController extends FormController
 
     private function createRequest(ApplicationForm $form)
     {
-       $this->applicationService->create($form,Yii::$app->params['activeExhibition']); 
+        $this->applicationService->create($form); 
     }
     
     private function updateRequest(int $requestId, ApplicationForm $form)

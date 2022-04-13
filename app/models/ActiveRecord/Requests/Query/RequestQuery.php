@@ -33,6 +33,17 @@ class RequestQuery extends ActiveQuery
         return $this->andWhere([($alias ? $alias . '.' : '') . 'exhibition_id' => $exhibitionId]);
     }
     
+    /**
+     * 
+     * @param int $contractId
+     * @param type $alias
+     * @return \self
+     */
+    public function forContract(int $contractId, $alias = null) :self
+    {
+        return $this->andWhere([($alias ? $alias . '.' : '') . 'contract_id' => $contractId]);
+    }    
+    
     public function forStands()
     {
         return $this->joinWith('stand',true,'RIGHT JOIN');

@@ -56,6 +56,7 @@ class Request extends FormManipulation
      * @param int $userId
      * @param int $formId
      * @param int $exhibitionId
+     * @param int $contractId
      * @param int $typeId
      * @param bool $draft
      * @return self
@@ -64,6 +65,7 @@ class Request extends FormManipulation
             int $userId,
             int $formId,
             int $exhibitionId,
+            int $contractId,
             int $typeId,
             bool $draft = false
             ):self 
@@ -72,6 +74,7 @@ class Request extends FormManipulation
         $request->user_id = $userId;
         $request->form_id = $formId;
         $request->exhibition_id = $exhibitionId;
+        $request->contract_id = $contractId;
         $request->type_id = $typeId;
         if ($draft) {
             $request->setStatusDraft();

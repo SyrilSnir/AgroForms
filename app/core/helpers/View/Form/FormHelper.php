@@ -137,7 +137,7 @@ class FormHelper extends BaseFormHelper
 
     public function getFormPrice() :int 
     {
-        $price = 0;
+        $price = $this->form->base_price;
         foreach ($this->formElements as $element) {
             
             if (!$element->isComputed() || !is_subclass_of($element, CountableElementInterface::class)) {

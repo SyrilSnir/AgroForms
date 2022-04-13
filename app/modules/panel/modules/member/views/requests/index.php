@@ -35,6 +35,7 @@ $this->title = Yii::t('app/title','My requests');
         ]) ?>
         <?= Html::button(t('Add application'),[
             'id' => 'get-form-request',
+            'data-contract' => $contractId,
             'class' => 'btn btn-secondary'
             ]) ?>
     </p>
