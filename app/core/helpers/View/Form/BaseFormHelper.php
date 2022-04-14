@@ -56,7 +56,6 @@ abstract class BaseFormHelper
             'format' => Pdf::FORMAT_A4,
             'defaultFont' => 'Verdana',
             'defaultFontSize' => '10',
-            
             // portrait orientation
             'orientation' => Pdf::ORIENT_PORTRAIT, 
             // stream to browser inline
@@ -69,6 +68,7 @@ abstract class BaseFormHelper
            // 'options' => ['title' => ''],
             ]
         );
+        $this->pdfHelper->getApi()->defaultfooterline = 0;
     } 
     
     public abstract static function createViaForm(int $userId, string $langCode, Form $form): self;
@@ -109,8 +109,11 @@ abstract class BaseFormHelper
     } 
     
     protected function getPdfFooter(): string
-    {
+    {        
         return  Yii::$app->view->renderFile('@pdf/request-footer.php',[
+            'request' => $this->request
         ]);;
     }
+    
+    
 }

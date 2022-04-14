@@ -178,6 +178,43 @@ class Request extends FormManipulation
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+    
+    /**
+     * Возвращает должность подписанта экспонента
+     * @return string
+     */
+    public function getExponentSignerPosition():string
+    {
+        return $this->user->company->contacts->proposal_signature_post ?? '';
+    }
+    
+    /**
+     * Возвращает ФИО подписанта экспонента
+     * @return string
+     */
+    public function getExponentSignerFullName(): string
+    {
+        return $this->user->company->contacts->proposal_signature_name ?? '';
+    }
+
+    /**
+     * Возвращает должность подписанта организатора
+     * @return string
+     */
+    public function getOrganizerSignerPosition():string
+    {
+        return $this->form->exhibition->company->contacts->proposal_signature_post ?? '';
+    }
+    
+    /**
+     * Возвращает ФИО подписанта организатора
+     * @return string
+     */
+    public function getOrganizerSignerFullName(): string
+    {
+        return $this->form->exhibition->company->contacts->proposal_signature_name ?? '';
+    }    
+
     /**
      * 
      * @return RequestQuery

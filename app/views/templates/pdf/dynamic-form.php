@@ -25,7 +25,7 @@ $this->title = '';
 <?php echo $this->render('block-title.php',[
     'model' => $model
 ]); ?>
-<table style="width: 100%;font-family: Verdana;" class="table">
+<table style="margin-bottom: 0;width: 100%;font-family: Verdana;" class="table">
     <thead>
     </thead>    
     <tbody>        
@@ -51,10 +51,12 @@ $this->title = '';
     <?php endforeach; ?>
             <?php if ($model->form->formType !== app\models\ActiveRecord\Forms\FormType::DYNAMIC_INFORMATION_FORM):?>      
                 <tr style="border: 1px solid black">
-                    <td style="font-size: 10pt;text-align: left;font-weight:bold"><?php echo t('Total amount payable','requests') .':' ?></td>
-                    <td style="font-size: 10pt;text-align: right;font-weight:bold"><?php echo $model->application->amount . ' ' . $model->form->valute->symbol ?></td>
+                    <td style="font-family: Verdana;font-size: 10pt;text-align: left;font-weight:bold"><?php echo t('Total amount payable','requests') .':' ?></td>
+                    <td style="font-family: Verdana;font-size: 10pt;text-align: right;font-weight:bold"><?php echo $model->application->amount . ' ' . $model->form->valute->symbol ?></td>
                         
-                    </tr>
+                </tr>
             <?php endif;?>
     </tbody>
 </table>
+<p style="margin:0;font-family: Verdana;font-size: 6pt;text-align: right;font-weight:bold">Все цены включают НДС 20%.</p>
+<p style="padding:0;font-family: Verdana;font-size: 6pt;text-align: right;">Оплата производится в российских рублях по курсу ЦБ РФ на дату платежа.</p>
