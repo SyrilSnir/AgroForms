@@ -67,10 +67,10 @@ class ElementCheckNumberInput extends FormElement implements CountableElementInt
         }
 
          if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {
-            $text = '<div style="text-align:right"><span style="font-weight:bold">' . $this->field->name . ': </span>';
+            $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td style="font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name . ': </td>';
             if (key_exists('value', $valuesList)) {
                 $valuesList['value'] = empty($valuesList['value']) ? 0 : $valuesList['value'];
-                $text .= '<span>' . $valuesList['value'] . $unitTitle;
+                $text .= '<td style="font-family:Verdana;font-size:10pt;text-align:right"><b>' . $valuesList['value'] . $unitTitle . '</b>';
                 if ($this->isComputed()) {
                     if (($price = $this->field->getPrice()) > 0) {
                         $summ = (int) $valuesList['value'] * $price;
@@ -78,10 +78,12 @@ class ElementCheckNumberInput extends FormElement implements CountableElementInt
                     } else {
                         $text.= $price . $this->field->form->valute->char_code;
                     }
+                } else {                    
+                    $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td colspan="2" style="font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name . ': </td>';
                 }
-                $text.= '</span>';
+                $text.= '</td>';
             }
-            return $text . '</div>';
+            return $text . '</tr>';
          }
          return '';
     }

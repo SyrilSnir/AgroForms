@@ -42,11 +42,13 @@ class ElementCheckbox extends FormElement implements CountableElementInterface
     public function renderPDF(array $valuesList = []): string 
     {
         if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {
-            $text = '<div style="position:relative;"><span style="font-weight:bold">' . $this->field->name .  ': </span>'; 
             if (key_exists('value', $valuesList) && $valuesList['value'] > 0) {
-                $text .= '<span>' . $valuesList['value'] . ' '. $this->field->form->valute->symbol . '</span>';
+                $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td style="font-family:Verdana;font-size: 10pt;font-weight:bold;text-align:left;">' . $this->field->name .  ': </td>'; 
+                $text .= '<td style="font-family:Verdana;font-size:10pt;font-weight:bold;text-align:right;">' . $valuesList['value'] . ' '. $this->field->form->valute->symbol . '</td>';
+            } else {
+                $text = '<tr style="font-family:Verdana;border:none;border-bottom:1px solid #ededed"><td colspan="2" style="font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name .  ': </td>';                 
             }
-            return $text . '</div>';
+            return $text . '</tr>';
         }
         return '';
     }

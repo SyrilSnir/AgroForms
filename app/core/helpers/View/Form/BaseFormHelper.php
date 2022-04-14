@@ -53,17 +53,20 @@ abstract class BaseFormHelper
             // set to use core fonts only
             'mode' => Pdf::MODE_UTF8, 
             // A4 paper format
-            'format' => Pdf::FORMAT_A4, 
+            'format' => Pdf::FORMAT_A4,
+            'defaultFont' => 'Verdana',
+            'defaultFontSize' => '10',
+            
             // portrait orientation
             'orientation' => Pdf::ORIENT_PORTRAIT, 
             // stream to browser inline
             'destination' => Pdf::DEST_BROWSER, 
             // format content from your own css file if needed or use the
             // enhanced bootstrap css built by Krajee for mPDF formatting 
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
+        //    'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
             // any css to be embedded if required
-            'cssInline' => '.kv-heading-1{font-size:18px};.headtext{color:red}',   
-            'options' => ['title' => ''],
+           // 'cssInline' => '.kv-heading-1{font-size:18px};.headtext{color:red}',   
+           // 'options' => ['title' => ''],
             ]
         );
     } 
@@ -84,6 +87,25 @@ abstract class BaseFormHelper
     public function isRequest():bool 
     {
         return !is_null($this->request);
+    } 
+
+    protected function getPdfHeader(): string
+    {
+        return  Yii::$app->view->renderFile('@pdf/request-header.php',[
+            'exhibitionName' => $this->form->exhibition->title,
+            'contractNumber' => $this->getContractNumber(),
+            'dateOfContract' => $this->getContractDate(),
+        ]);;
+    }    
+    
+    protected function getContractNumber() :string
+    {
+        return $this->request->contract ? $this->request->contract->number : '';
+    }
+    
+    protected function getContractDate() :string
+    {
+        return $this->request->contract ? $this->request->contract->translateDateField('date') : '';
     } 
     
     protected function getPdfFooter(): string

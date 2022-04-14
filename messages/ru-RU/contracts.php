@@ -5,5 +5,7 @@ return [
     'Declined' => 'Отменен',
     'Completed' => 'Завершен',  
     'Contract' => 'Договор',
-    'Select contract number...' => 'Выберите номер договора...'
+    'Select contract number...' => 'Выберите номер договора...',
+    'Attachment to agreement' => 'Приложение к договору',
+    'dated' => 'от',
 ];

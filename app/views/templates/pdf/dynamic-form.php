@@ -12,6 +12,7 @@ use yii\web\View;
 
 $this->title = '';
 ?>
+<!--
 <h2 style="text-align: right"><span style="border-bottom: 1px solid black;"><?php echo t('Application №','requests') . $model->id; ?></span></h2>
 <h2 style="text-align: center"><span><?php echo $model->form->headerName; ?></span></h2>
 
@@ -20,11 +21,14 @@ $this->title = '';
     <li><span><?php echo t('Member email','user') ?> : </span><span><?php echo $model->user->email ?></span></li>
     <li><span><?php echo t('Status')?> : </span><span><?php echo RequestStatusHelper::getStatusLabel($model->status) ?></span></li>    
 </ul>
-
-<table class="table">
+-->
+<?php echo $this->render('block-title.php',[
+    'model' => $model
+]); ?>
+<table style="width: 100%;font-family: Verdana;" class="table">
     <thead>
     </thead>    
-    <tbody style="text-align: right">        
+    <tbody>        
     <?php foreach ($fields as $field): ?>
         <?php 
             if (!$field->isShowInPdf()) {
@@ -42,12 +46,13 @@ $this->title = '';
             
         ?>
             <?php if(!empty($result)) :?>
-                <tr><td style="text-align: right"><?php echo $result ?></td></tr>
+               <?php echo $result ?>
             <?php endif; ?>
     <?php endforeach; ?>
             <?php if ($model->form->formType !== app\models\ActiveRecord\Forms\FormType::DYNAMIC_INFORMATION_FORM):?>      
-                <tr>
-                    <td style="text-align: right;font-weight:bold"><?php echo t('Total amount payable','requests') .': '.  $model->application->amount . ' ' . $model->form->valute->symbol ?></td>
+                <tr style="border: 1px solid black">
+                    <td style="font-size: 10pt;text-align: left;font-weight:bold"><?php echo t('Total amount payable','requests') .':' ?></td>
+                    <td style="font-size: 10pt;text-align: right;font-weight:bold"><?php echo $model->application->amount . ' ' . $model->form->valute->symbol ?></td>
                         
                     </tr>
             <?php endif;?>

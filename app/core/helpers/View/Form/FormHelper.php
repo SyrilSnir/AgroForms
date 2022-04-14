@@ -209,18 +209,18 @@ class FormHelper extends BaseFormHelper
 
     public function renderPDF(): mixed
     {
-        $exhibitionName = $this->form->exhibition->title;
         
         $content = Yii::$app->view->renderFile('@pdf/dynamic-form.php',[
             'model' => $this->request,
             'fields' => $this->formElements,
             'values' => $this->valuesList
         ]);
+        $header = $this->getPdfHeader();
         $footer = $this->getPdfFooter();
         
         //$content = 'Превед';
         $this->pdfHelper->methods = [
-                'SetHeader'=>[$exhibitionName], 
+                'SetHeader'=>[$header], 
                 'SetFooter'=>[$footer],
                 'SetTitle' =>  t('Application №','requests') . $this->request->id,
         ];

@@ -17,8 +17,8 @@ class ElementImportantInformationBlock extends FormElement
     }
 
     public function renderPDF(array $valuesList = []): string
-    {
-        return $this->getTranslatableParameter('text');
+    {                
+        return '<tr><td style="font-family:Verdana;font-size:10pt;text-align:left">' .$this->getTranslatableParameter('text') . '<td></tr>';
     }
 
 }

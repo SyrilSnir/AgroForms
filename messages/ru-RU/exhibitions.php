@@ -8,4 +8,5 @@ return [
     'Organizer' => 'Организатор',
     'Archive' => 'Архивная',
     'Draft' => 'Черновик',    
+    'Exhibitor' => 'Экспонент'
     ];

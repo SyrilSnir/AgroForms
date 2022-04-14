@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Contract;
 
+use app\core\traits\ActiveRecord\DateMultilangTrait;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\Forms\Manage\Contract\ContractForm;
@@ -27,6 +28,8 @@ class Contracts extends ActiveRecord
     const STATUS_COMPLETED = 2;
     const STATUS_ACTIVE = 1;
     const STATUS_DECLINED = 0;
+    
+    use DateMultilangTrait;
     /**
      * {@inheritdoc}
      */
