@@ -53,15 +53,15 @@ class ElementSelect extends FormElement implements CountableElementInterface
 
     public function renderPDF(array $valuesList = []): string 
     {
-        $text = '<tr><td style="font-family:Verdana;font-size:10pt" colspan="2"><b>' . $this->field->name . ': </b></td><tr>';        
+        $text = '<tr><td style="color:black;font-family:Verdana;font-size:10pt" colspan="2"><b>' . $this->field->name . ': </b></td><tr>';        
         if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
         /** @var FieldEnum $fieldEnum */
             $fieldEnum = FieldEnum::findOne($valuesList['value']);
             if ($this->isComputed()) {
-                $fieldText = '<tr><td style="font-family:Verdana;font-size:10pt;padding-left:24pt">' . $fieldEnum->name;
-                $fieldText .=   '</td><td style="font-family:Verdana;font-size:10pt;text-align:right">'. "{$fieldEnum->value} {$this->field->form->valute->symbol}";
+                $fieldText = '<tr><td style="color:black;font-family:Verdana;font-size:10pt;padding-left:24pt">' . $fieldEnum->name;
+                $fieldText .=   '</td><td style="color:black;font-family:Verdana;font-size:10pt;text-align:right">'. "{$fieldEnum->value} {$this->field->form->valute->symbol}";
             } else {
-                 $fieldText = '<tr><td colspan="2" style="font-family:Verdana;font-size:10pt;padding-left:24pt">' . $fieldEnum->name;                
+                 $fieldText = '<tr><td colspan="2" style="color:black;font-family:Verdana;font-size:10pt;padding-left:24pt">' . $fieldEnum->name;                
             }
             $text.= $fieldText .'</td></tr>';
             

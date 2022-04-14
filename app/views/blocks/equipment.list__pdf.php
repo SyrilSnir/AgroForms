@@ -12,14 +12,14 @@ $fullPrice = 0;
 <table class="table">
     <thead>
         <tr>            
-            <th style="font-size: 10pt;text-align: center" colspan="5"><?php echo t('Add. equipment','menu')?></th>
+            <th style="color:black;font-size: 10pt;text-align: center" colspan="5"><?php echo t('Add. equipment','menu')?></th>
         </tr>
       <tr> 
-          <th style="font-size: 8pt;width: 15px"><?php echo t('Code','equipment') ?></th>
-        <th style="font-size: 8pt;"><?php echo t('Name','equipment') ?></th>
-        <th style="font-size: 8pt;"><?php echo t('Count','equipment') ?></th>
-        <th style="font-size: 8pt;"><?php echo t('Unit price','equipment') ?></th>
-        <th style="font-size: 8pt;"><?php echo t('Price','equipment') ?></th>
+          <th style="color:black;font-size: 8pt;width: 15px"><?php echo t('Code','equipment') ?></th>
+        <th style="color:black;font-size: 8pt;"><?php echo t('Name','equipment') ?></th>
+        <th style="color:black;font-size: 8pt;"><?php echo t('Count','equipment') ?></th>
+        <th style="color:black;font-size: 8pt;"><?php echo t('Unit price','equipment') ?></th>
+        <th style="color:black;font-size: 8pt;"><?php echo t('Price','equipment') ?></th>
       </tr>
     </thead>
     <tbody>
@@ -29,17 +29,17 @@ $fullPrice = 0;
         $fullPrice+= $count;
       ?>
       <tr>
-          <td style="font-size: 8pt;"><?php echo $element['code']; ?></td>
-          <td style="font-size: 8pt;"><?php echo $element['name']; ?></td>
-          <td style="font-size: 8pt;"><?php echo $element['count'] . ' ' . $element['unit']; ?></td>
-          <td style="font-size: 8pt;"><?php echo $element['price']. ' ' . t($valute,'requests'); ?></td>
-          <td style="font-size: 8pt;text-align: right"><?php echo number_format($count, 0, '.', ' ') . ' ' . t($valute,'requests'); ?></td>
+          <td style="color:black;font-size: 8pt;"><?php echo $element['code']; ?></td>
+          <td style="color:black;font-size: 8pt;"><?php echo $element['name']; ?></td>
+          <td style="color:black;font-size: 8pt;"><?php echo $element['count'] . ' ' . $element['unit']; ?></td>
+          <td style="color:black;font-size: 8pt;"><?php echo $element['price']. ' ' . t($valute,'requests'); ?></td>
+          <td style="color:black;font-size: 8pt;text-align: right"><?php echo number_format($count, 0, '.', ' ') . ' ' . t($valute,'requests'); ?></td>
       </tr>              
       <?php endforeach; ?>
       <?php if($isComputed):  ?>
       <tr style="font-weight: 600">
-          <td colspan="4"><b><?php echo t('Total','requests') ?>:</b></td>
-          <td style="font-size: 10pt;text-align: right"><?php echo number_format($fullPrice, 0, '.', ' ') .' ' .t($valute,'requests') ?></td>
+          <td style="color:black;" colspan="4"><b><?php echo t('Total','requests') ?>:</b></td>
+          <td style="color:black;font-size: 10pt;text-align: right"><?php echo number_format($fullPrice, 0, '.', ' ') .' ' .t($valute,'requests') ?></td>
       </tr>
       <?php endif; ?>
       </tbody>

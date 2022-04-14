@@ -22,9 +22,9 @@ class ElementHeader extends FormElement
     {
         $field = $this->getField();
         return "<tr style=\"border:none;\"><td colspan=\"2\">
-                    <p style=\"font-family:Verdana;font-size:10pt;\">{$field->name}</p>
-                    <p style=\"font-family:Verdana;font-size:7pt;\">{$field->description}</p>
-                    <p style=\"font-family:Verdana;font-size:6pt;\">{$this->getTranslatableParameter('text')}</p>
+                    <p style=\"color:black;font-family:Verdana;font-size:10pt;\">{$field->name}</p>
+                    <p style=\"color:black;font-family:Verdana;font-size:7pt;\">{$field->description}</p>
+                    <p style=\"color:black;font-family:Verdana;font-size:6pt;\">{$this->getTranslatableParameter('text')}</p>
                 </td></tr>";                
     }
 

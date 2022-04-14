@@ -65,12 +65,12 @@ class ElementNumberInput extends FormElement implements CountableElementInterfac
         if ($fieldParams->unitModel) {
             $unitTitle = ' ' . $fieldParams->unitModel->short_name;
         }
-        $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td style="font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name . ': </td>';
+        $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td style="color:black;font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name . ': </td>';
         if (key_exists('value', $valuesList)) {
-            $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td style="font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name . ': </td>';
+            $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td style="color:black;font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name . ': </td>';
             if (key_exists('value', $valuesList)) {
                 $valuesList['value'] = empty($valuesList['value']) ? 0 : $valuesList['value'];
-                $text .= '<td style="font-family:Verdana;font-size:10pt;text-align:right"><b>' . $valuesList['value'] . $unitTitle . '</b>';
+                $text .= '<td style="color:black;font-family:Verdana;font-size:10pt;text-align:right"><b>' . $valuesList['value'] . $unitTitle . '</b>';
                 if ($this->isComputed()) {
                     if (($price = $this->field->getPrice()) > 0) {
                         $summ = (int) $valuesList['value'] * $price;
@@ -81,7 +81,7 @@ class ElementNumberInput extends FormElement implements CountableElementInterfac
                 } 
                 $text.= '</td>';
             } else {
-                $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td colspan="2" style="font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name . ': </td>';
+                $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td colspan="2" style="color:black;font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name . ': </td>';
                 
             }
         }
