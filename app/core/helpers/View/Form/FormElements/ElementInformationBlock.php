@@ -22,7 +22,7 @@ class ElementInformationBlock extends FormElement
     public function renderPDF(array $valuesList = []): string 
     {
         $field = $this->getField();
-        return "<tr style=\"border:none;\"><td>
+        return "<tr style=\"border:none;\"><td colspan=\"2\">
                     <p style=\"font-family:Verdana;font-size:10pt;\">{$field->name}</p>
                     <p style=\"font-family:Verdana;font-size:7pt;\">{$field->description}</p>
                     <p style=\"font-family:Verdana;font-size:6pt;\">{$this->getTranslatableParameter('html')}</p>
