@@ -25,7 +25,7 @@ $this->title = '';
 <?php echo $this->render('block-title.php',[
     'model' => $model
 ]); ?>
-<table style="margin-bottom: 0;width: 100%;font-family: Verdana;" class="table">
+<table style="margin-bottom: 0;width: 100%;font-family: Verdana;color:black" class="table">
     <thead>
     </thead>    
     <tbody>        
