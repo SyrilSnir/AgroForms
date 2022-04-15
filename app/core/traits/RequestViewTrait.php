@@ -64,51 +64,6 @@ trait RequestViewTrait
     public function actionPrint($id)
     {        
         $model =  $this->findModel($id);
-        /** @var Request $model */
-        /*
-        $model =  $this->findModel($id);
-        $exhibitionName = mb_strtoupper($model->form->exhibition->title);
-        $requestForm = $model->requestForm;
-        $viewService = RequestViewFactory::getViewService($model);
-        $dopAttributes = $viewService->getFieldAttributes($requestForm);
-      // dump($dopAttributes); die();
-        
-        // get your HTML raw content without any layouts or scripts
-        $content = $this->renderPartial('_pdf',[
-            'model' => $model,
-            'fields' => $dopAttributes
-        ]);
-
-        // setup kartik\mpdf\Pdf component
-        $pdf = new Pdf([
-            // set to use core fonts only
-            'mode' => Pdf::MODE_UTF8, 
-            // A4 paper format
-            'format' => Pdf::FORMAT_A4, 
-            // portrait orientation
-            'orientation' => Pdf::ORIENT_PORTRAIT, 
-            // stream to browser inline
-            'destination' => Pdf::DEST_BROWSER, 
-            // your html content input
-            'content' => $content,  
-            // format content from your own css file if needed or use the
-            // enhanced bootstrap css built by Krajee for mPDF formatting 
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
-            // any css to be embedded if required
-            'cssInline' => '.kv-heading-1{font-size:18px};.headtext{color:red}', 
-             // set mPDF properties on the fly
-            'options' => ['title' => ''],
-             // call mPDF methods on the fly
-            'methods' => [ 
-                'SetHeader'=>[$exhibitionName], 
-                'SetFooter'=>['{PAGENO}'],
-                'SetTitle' =>  t('Application №','requests') . $model->id,
-            ]
-        ]);
-
-        // return the pdf output as per the destination setting
-        return $pdf->render();  
-         *        */
         $helper = $this->getFormHelper($model);
         return $helper->renderPDF();
     }  

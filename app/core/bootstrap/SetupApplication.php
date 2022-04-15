@@ -3,7 +3,6 @@
 namespace app\core\bootstrap;
 
 use app\core\helpers\Data\ConfigurationHelper;
-use app\core\manage\Auth\Rbac;
 use app\core\manage\Auth\RoleManager;
 use app\core\manage\Configuration\ConfigurationManager;
 use app\core\repositories\manage\Exhibition\ExhibitionRepository;
@@ -12,18 +11,22 @@ use app\core\services\operations\Exhibition\ExhibitionService;
 use app\core\services\operations\Profile\CompanyService;
 use app\core\services\operations\Profile\UserService;
 use app\models\ActiveRecord\Configuration;
+use app\models\ActiveRecord\Document\Documents;
 use app\models\ActiveRecord\Users\User;
 use app\models\Configuration\MailParameters;
+use app\models\Data\Languages;
 use app\models\Forms\Manage\Configuration\MailConfigurationForm;
 use Swift_SmtpTransport;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Yii;
 use yii\base\BootstrapInterface;
+use yii\base\Event;
+use yii\db\ActiveRecord;
+use yii\helpers\FileHelper;
 use yii\rest\Serializer;
 use yii\swiftmailer\Mailer;
 use yii\web\Application;
-use yii\web\Cookie;
 
 
 /**
@@ -102,9 +105,20 @@ class SetupApplication implements BootstrapInterface
             $mailer->useFileTransport = true;
             return new MailService($mailer, 'test@test.ru','test');
         });
-        if (Yii::$app->language == \app\models\Data\Languages::ENGLISH) {
-            Yii::$app->formatter->locale = \app\models\Data\Languages::ENGLISH;
+        if (Yii::$app->language == Languages::ENGLISH) {
+            Yii::$app->formatter->locale = Languages::ENGLISH;
         }
+        $this->handEventHandlers();
+                
+    }
+    
+    private function handEventHandlers()
+    {
+        Event::on(Documents::class, ActiveRecord::EVENT_AFTER_DELETE, function(Event $event) {
+            /** @var Documents $document */
+            $document = $event->sender;
+            FileHelper::unlink($document->getUploadedFilePath('file'));
+        });
     }
 
 }

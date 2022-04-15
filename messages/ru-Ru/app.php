@@ -6,6 +6,7 @@ return [
    'English' => 'Английский',
    'Note' => 'Внимание',
    'Add' => 'Добавить',
+   'File' => 'Файл',
    'Comment' => 'Комментарий',
    'Message' => 'Сообщение',
    'Information' =>'Информация',
@@ -156,6 +157,10 @@ return [
     'Show in printed form' => 'Показывать в печатных формах',
     'New contract' => 'Новый договор',
     'Number of contract' => 'Номер договора',
-    'Application status' => 'Статус заявки'
+    'Application status' => 'Статус заявки',
+    'Document' => 'Документ',
+    'New document' => 'Новый документ',
+    'Date added' => 'Дата добавления',
+    'Attached file' => 'Прикрепленный файл'
 ];
 
