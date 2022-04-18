@@ -9,6 +9,7 @@ use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationRejectForm;
 use app\models\Forms\Requests\EditRequestForm;
 
+
 /**
  * Description of RequestService
  *
@@ -123,5 +124,14 @@ class RequestService
         $request = $this->requests->get($id);
         $request->parialPaid();
         $request->save();
-    }     
+    } 
+
+    public function changeStatus(EditRequestForm $form)
+    {
+        /** @var Request $request */
+        $request = $this->requests->get($form->requestId);
+        $request->status = $form->status;
+        $this->requests->save($request);
+        return $request;
+    }
 }
