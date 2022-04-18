@@ -17,6 +17,11 @@ abstract class BaseDocumentSearch extends Model
     
     public $description;
       
+    public function search(array $params = []) 
+    {
+        return $this->baseSearch($params);
+    }
+
     protected function baseSearch(array $params = [])
     {
         $query = Documents::find();

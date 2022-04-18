@@ -12,7 +12,7 @@ class MemberDocumentSearch extends BaseDocumentSearch
 {
     public function searchForExhibition(int $exhibitionId,int $companyId, array $params = [])
     {       
-        $dp = $this->baseSearch($params);
+        $dp = $this->search($params);
         $dp->query->forExhibition($exhibitionId); 
         $dp->query->forCompany($companyId);
         return $dp;

@@ -4,9 +4,8 @@ namespace app\models\SearchModels\Documents;
 
 use app\core\traits\Lists\GetCompanyNamesTrait;
 use app\core\traits\Lists\GetExhibitionsTrait;
-use app\models\ActiveRecord\Document\Documents;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * Description of DocumentSearch
@@ -21,7 +20,7 @@ class ManagerDocumentSearch extends BaseDocumentSearch
     
     use GetCompanyNamesTrait, GetExhibitionsTrait;
     
-    public function search(array $params): ActiveDataProvider   
+    public function search(array $params = []): ActiveDataProvider   
     {
         $dataProvider = parent::search($params);        
         $this->load($params);
@@ -36,7 +35,7 @@ class ManagerDocumentSearch extends BaseDocumentSearch
     public function rules(): array
     {
         $baseRules = parent::rules();
-        return \yii\helpers\ArrayHelper::merge($baseRules,
+        return ArrayHelper::merge($baseRules,
                 [
                     [['company_id','exhibition_id'], 'safe']
         ]);        

@@ -6,7 +6,7 @@ use app\core\repositories\readModels\Documents\DocumentReadRepository;
 use app\core\services\operations\Documents\DocumentService;
 use app\core\traits\GridViewTrait;
 use app\models\Forms\Manage\Document\DocumentForm;
-use app\models\SearchModels\Documents\DocumentSearch;
+use app\models\SearchModels\Documents\ManagerDocumentSearch;
 use DomainException;
 use Yii;
 
@@ -29,7 +29,7 @@ class DocumentsController extends BaseAdminController
             $module, 
             DocumentReadRepository $repository,
             DocumentService $service,
-            DocumentSearch $searchModel,
+            ManagerDocumentSearch $searchModel,
             $config = array()
             )
     {
