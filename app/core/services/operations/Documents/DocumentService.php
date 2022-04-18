@@ -24,7 +24,7 @@ class DocumentService
         $this->documents = $documents;
     }
     
-    public function create(DocumentForm $form)
+    public function create(DocumentForm $form): Documents
     {
         $document = Documents::create(
                 $form->title, 
@@ -38,6 +38,7 @@ class DocumentService
             $document->setFile($form->file);
         }
         $this->documents->save($document);
+        return $document;
     }
     
     public function edit(int $id, DocumentForm $form) 
@@ -56,7 +57,6 @@ class DocumentService
             $document->setFile($form->file);
         }
         $this->documents->save($document);  
-        return $document;
     }
     
     public function remove ($id) 
