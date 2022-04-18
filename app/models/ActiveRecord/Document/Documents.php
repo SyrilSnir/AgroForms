@@ -4,6 +4,7 @@ namespace app\models\ActiveRecord\Document;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\ActiveRecord\Companies\Company;
+use app\models\ActiveRecord\Document\Query\DocumentQuery;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\CreatedTimestampTrait;
 use Yii;
@@ -112,5 +113,14 @@ class Documents extends ActiveRecord
     public function getExhibition()
     {
         return $this->hasOne(Exhibition::class, ['id' => 'exhibition_id']);
+    }
+    
+    /**
+     * 
+     * @return DocumentQuery
+     */
+    public static function find() 
+    {
+        return new DocumentQuery(static::class);
     }
 }

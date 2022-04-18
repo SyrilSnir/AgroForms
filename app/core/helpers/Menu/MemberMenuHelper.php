@@ -75,6 +75,11 @@ class MemberMenuHelper implements MenuHelperInterface
                     'url' => ["/panel/member/{$exhibition->id}/requests/{$contract->id}"],
                 ];
             }
+            $menuItems[] = [
+                'label' => t('Documents','menu'), 
+                'icon' => 'file', 
+                'url' => ["/panel/member/{$exhibition->id}/documents"],                
+            ];
             $menu['items'] = $menuItems;
             array_push($menuList,$menu);
         }

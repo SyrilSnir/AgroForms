@@ -2,26 +2,22 @@
 
 namespace app\models\SearchModels\Documents;
 
-use app\core\traits\Lists\GetCompanyNamesTrait;
-use app\core\traits\Lists\GetExhibitionsTrait;
 use app\models\ActiveRecord\Document\Documents;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * Description of DocumentSearch
+ * Description of BaseDocumentSearch
  *
  * @author kotov
  */
-class DocumentSearch extends Model
+abstract class BaseDocumentSearch extends Model
 {
-    public $company_id;  
+    public $title;
     
-    public $exhibition_id;
-    
-    use GetCompanyNamesTrait, GetExhibitionsTrait;
-    
-    public function search(array $params): ActiveDataProvider   
+    public $description;
+      
+    protected function baseSearch(array $params = [])
     {
         $query = Documents::find();
         $dataProvider = new ActiveDataProvider([
@@ -30,19 +26,20 @@ class DocumentSearch extends Model
                 //'defaultOrder' => ['order' => SORT_ASC]
             ]
         ]);  
-        $this->load($params);
+        $this->load($params); 
         if (!$this->validate()) {
             $query->where('0=1');
             return $dataProvider;
         }
-        $query->andFilterWhere(['company_id' => $this->company_id]);   
-        return $dataProvider;        
+        $query->andFilterWhere(['like', 'title',$this->title]);   
+        $query->andFilterWhere(['like', 'description',$this->description]);   
+        return $dataProvider;   
     }
-
+    
     public function rules(): array
     {
         return [
-            [['company_id','exhibition_id'], 'safe']
+            [['title','description'], 'safe']
         ];        
-    }    
+    } 
 }
