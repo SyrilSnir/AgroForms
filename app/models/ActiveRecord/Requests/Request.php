@@ -4,6 +4,7 @@ namespace app\models\ActiveRecord\Requests;
 
 use app\core\repositories\readModels\Requests\ApplicationReadRepository;
 use app\core\repositories\readModels\Requests\RequestStandReadRepository;
+use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Contract\Contracts;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\FormManipulation;
@@ -27,12 +28,14 @@ use yii\db\ActiveQuery;
  * @property int $type_id Тип заявки
  * @property int $form_id Id формы
  * @property int $contract_id Номер договора
+ * @property int $company_id Id компании
  * 
  * @property bool $was_rejected Была отклонена
  * 
  * @property FormType $formType
  * @property Form $form
  * @property Contracts $contract
+ * @property Company $company
  * @property User $user
  * @property Exhibition $exhibition
  * @property BaseRequest $requestForm
@@ -56,6 +59,7 @@ class Request extends FormManipulation
      * @param int $userId
      * @param int $formId
      * @param int $exhibitionId
+     * @param int $companyId
      * @param int $contractId
      * @param int $typeId
      * @param bool $draft
@@ -63,9 +67,10 @@ class Request extends FormManipulation
      */
     public static function create(
             int $userId,
-            int $formId,
+            int $formId,            
             int $exhibitionId,
-            int $contractId,
+            int $companyId,
+            int $contractId,            
             int $typeId,
             bool $draft = false
             ):self 
@@ -74,6 +79,7 @@ class Request extends FormManipulation
         $request->user_id = $userId;
         $request->form_id = $formId;
         $request->exhibition_id = $exhibitionId;
+        $request->company_id = $companyId;
         $request->contract_id = $contractId;
         $request->type_id = $typeId;
         if ($draft) {
@@ -135,7 +141,12 @@ class Request extends FormManipulation
     public function getContract()
     {
         return $this->hasOne(Contracts::class, ['id' => 'contract_id' ]);
-    }    
+    }  
+    
+    public function getCompany()
+    {
+        return $this->hasOne(Company::class, ['id' => 'company_id']);
+    }
     
     public function getApplication()
     {

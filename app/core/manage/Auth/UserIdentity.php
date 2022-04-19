@@ -99,4 +99,11 @@ class UserIdentity extends Model implements IdentityInterface
     {
         return $this->user->profile;
     }
+    
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+
 }

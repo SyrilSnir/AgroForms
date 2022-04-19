@@ -70,7 +70,8 @@ export default {
             formData : new FormData(), 
             formId : null,
             isComputed: false,
-            userId : null,            
+            userId : null,
+            companyId: null,            
             basePrice: 0,
             totalPrice: 0,
             hasFile: false,
@@ -89,6 +90,7 @@ export default {
             this.elements = response.data.elements;  
             this.isComputed = response.data.computed ; 
             this.userId = response.data.userId;       
+            this.companyId = response.data.companyId;
             this.basePrice = response.data.basePrice;
             this.totalPrice = this.basePrice;
             this.formId = response.data.formId;
@@ -185,7 +187,10 @@ export default {
             );   
             this.formData.append(
                 'DynamicForm[contractId]', this.contractId
-            );                            
+            );
+            this.formData.append(
+                'DynamicForm[companyId]', this.companyId
+            );                                        
             axios.post( '/api/application/send-form',
                 this.formData,
                 {

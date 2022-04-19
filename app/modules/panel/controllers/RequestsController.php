@@ -9,18 +9,20 @@
 namespace app\modules\panel\controllers;
 
 use app\core\manage\Auth\Rbac;
+use app\core\manage\Auth\UserIdentity;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\Log\ApplicationRejectLogService;
+use app\core\services\operations\Documents\DocumentService;
 use app\core\services\operations\Requests\RequestService;
 use app\core\traits\GridViewTrait;
 use app\core\traits\RequestViewTrait;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\Forms\Manage\Document\DocumentForm;
 use app\models\Forms\Requests\ApplicationRejectForm;
 use app\models\Forms\Requests\EditRequestForm;
 use app\models\SearchModels\Requests\AccountantRequestSearch;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
 use DomainException;
-use kartik\mpdf\Pdf;
 use Yii;
 use yii\helpers\Url;
 
@@ -37,6 +39,13 @@ class RequestsController extends ManageController
      */
     protected  $applicationRejectLogService;
     
+    /**
+     * 
+     * @var DocumentService
+     */
+    protected $documentService;
+
+
     protected $roles = [
         Rbac::PERMISSION_ADMINISTRATOR_MENU,
         Rbac::PERMISSION_MANAGER_MENU,
@@ -52,6 +61,7 @@ class RequestsController extends ManageController
             AccountantRequestSearch $accountantSearchModel,
             RequestReadRepository $repository, 
             RequestService $requestService,
+            DocumentService $documentService,
             ApplicationRejectLogService $applicationRejectLogService,
             $config = array()
             )
@@ -67,6 +77,7 @@ class RequestsController extends ManageController
         $this->readRepository = $repository;
         $this->service = $requestService;
         $this->applicationRejectLogService = $applicationRejectLogService;
+        $this->documentService = $documentService;
     }  
     
     public function actionEdit($id) 
@@ -113,12 +124,30 @@ class RequestsController extends ManageController
 
     public function actionInvoice($id)
     {
-        try {
-            $this->service->invoice($id);
-        } catch (DomainException $e) {
-            Yii::$app->session->setFlash('error', $e->getMessage());
-        }        
-        return $this->redirect(Url::previous());        
+        /** @var Request $request */
+        /** @var UserIdentity $user */
+        $documentForm = new DocumentForm();
+        $request = $this->readRepository->findById($id);
+      //  $user = Yii::$app->user->getIdentity();
+        if ($documentForm->load(Yii::$app->request->post()) && $documentForm->validate()) {
+            try {
+                $this->documentService->create($documentForm);
+                $this->service->invoice($id);
+                return $this->redirect(Url::previous());        
+            } catch (DomainException $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }        
+        }
+        $invoiceData = [
+            'title' => 'Счет № ',
+            'titleEng' => 'Account no ',
+            'exhibitionId' => $request->exhibition_id,
+            'companyId' => $request->company_id,
+        ];        
+        $documentForm->setAttributes($invoiceData);
+        return $this->render('document-form', [
+            'model' => $documentForm,
+        ]);         
     }
 
     public function actionPay($id)

@@ -70,6 +70,7 @@ class ApplicationService
                 $form->userId, 
                 $form->formId,
                 $exhibitionId, 
+                $form->companyId,
                 $form->contractId,
                 FormType::DYNAMIC_ORDER_FORM,
                 $form->draft

@@ -17,6 +17,7 @@ use yii\widgets\ActiveForm;
         ]);
         echo $form->field($statusForm, 'status')->hiddenInput(['value' => null])->label(false);                
         if ($statusForm->status == BaseRequest::STATUS_ACCEPTED) {
+            $form->action = \yii\helpers\Url::to(['invoice','id' => $statusForm->requestId]);
             echo Html::tag('div',Yii::t('app/requests', 'Invoice'),['data-status' => BaseRequest::STATUS_INVOICED, 'class' => 'btn bg-gradient-success status-change-btn']);
         } else {
             echo Html::tag('div',Yii::t('app/requests', 'Application paid'),['data-status' => BaseRequest::STATUS_PAID, 'class' => 'btn bg-gradient-success status-change-btn']);            

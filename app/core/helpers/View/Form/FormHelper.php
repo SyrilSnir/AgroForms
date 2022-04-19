@@ -9,6 +9,7 @@ use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Application;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\ActiveRecord\Users\User;
 use Yii;
 
 /**
@@ -31,17 +32,17 @@ class FormHelper extends BaseFormHelper
      */
     protected $valuesList = [];
   
-    public static function createViaForm(int $userId, string $langCode, Form $form): self
+    public static function createViaForm(User $user, string $langCode, Form $form): self
     {
-        $instance = new self($userId, $langCode);
+        $instance = new self($user, $langCode);
         $instance->form = $form;
         $instance->appendFormElements();
         return $instance;
     }
     
-    public static function createViaRequest(int $userId, string $langCode, Request $request): self
+    public static function createViaRequest(User $user, string $langCode, Request $request): self
     {
-        $instance = new self($userId, $langCode);
+        $instance = new self($user, $langCode);
         $instance->form = $request->form;
         $instance->request = $request;
         $instance->appendFormElements();
@@ -168,10 +169,12 @@ class FormHelper extends BaseFormHelper
     public function getData(bool $isReadOnly = false) :array
     {
         $formData = [
-            'userId' => $this->userId,
+            'userId' => $this->user->id,
+            'companyId' => $this->user->company_id,
             'title' => $this->form->headerName,
             'formType' => $this->form->form_type_id,
             'formId' => $this->form->id,
+          //  'companyId' =>// $this->
             'hasFile' => (bool) $this->form->has_file,
             'readOnly' => $isReadOnly,
             'language' => $this->langCode,

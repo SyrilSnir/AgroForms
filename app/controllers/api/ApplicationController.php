@@ -3,6 +3,7 @@
 namespace app\controllers\api;
 
 use app\core\helpers\View\Form\FormHelper;
+use app\core\manage\Auth\UserIdentity;
 use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\manage\Requests\RequestRepository;
 use app\core\services\Forms\FieldService;
@@ -74,20 +75,22 @@ class ApplicationController extends FormController
     {
         /** @var Form $form */
         /** @var Request $request */
+        /** @var UserIdentity $userIdentity */
         $formId = Yii::$app->session->get('OPENED_FORM_ID');
         $langCode = Yii::$app->language;
         if (!$formId) {
             throw new DomainException(t('The requested form was not found on the server', 'exception'));
         }
+        $userIdentity = Yii::$app->user->getIdentity(); 
         $form = $this->formRepository->get($formId);
-        $userId = Yii::$app->user->getId();  
+        
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
         if ($formChangeType === Request::FORM_UPDATE) {
             $requestId = Yii::$app->session->get('REQUEST_ID');            
-            $request = $this->requestRepository->getForUser($requestId,$userId);            
-            $formHelper = FormHelper::createViaRequest($userId, $langCode, $request);
+            $request = $this->requestRepository->getForUser($requestId,$userIdentity->getUser());            
+            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $request);
         } else {     
-            $formHelper = FormHelper::createViaForm($userId, $langCode, $form);
+            $formHelper = FormHelper::createViaForm($userIdentity->getUser(), $langCode, $form);
         }
         return $formHelper->getData($readonly);
     }

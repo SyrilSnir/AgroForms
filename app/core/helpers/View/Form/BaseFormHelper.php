@@ -4,6 +4,7 @@ namespace app\core\helpers\View\Form;
 
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\ActiveRecord\Users\User;
 use kartik\mpdf\Pdf;
 use Yii;
 
@@ -28,9 +29,9 @@ abstract class BaseFormHelper
     
     /**
      * 
-     * @var int
+     * @var User
      */
-    protected $userId;
+    protected $user;
     
     /**
      * 
@@ -45,9 +46,9 @@ abstract class BaseFormHelper
     protected $pdfHelper;
 
 
-    protected function __construct(int $usetId, string $langCode) 
+    protected function __construct(User $user, string $langCode) 
     {
-        $this->userId = $usetId;
+        $this->user = $user;
         $this->langCode = $langCode;    
         $this->pdfHelper = new Pdf([
             // set to use core fonts only
@@ -71,9 +72,9 @@ abstract class BaseFormHelper
         $this->pdfHelper->getApi()->defaultfooterline = 0;
     } 
     
-    public abstract static function createViaForm(int $userId, string $langCode, Form $form): self;
+    public abstract static function createViaForm(User $user, string $langCode, Form $form): self;
     
-    public abstract static function createViaRequest(int $userId, string $langCode, Request $request): self; 
+    public abstract static function createViaRequest(User $user, string $langCode, Request $request): self; 
     
     public abstract function renderHtmlRequest(): string;
     
@@ -95,7 +96,7 @@ abstract class BaseFormHelper
             'exhibitionName' => $this->form->exhibition->title,
             'contractNumber' => $this->getContractNumber(),
             'dateOfContract' => $this->getContractDate(),
-        ]);;
+        ]);
     }    
     
     protected function getContractNumber() :string
@@ -112,7 +113,7 @@ abstract class BaseFormHelper
     {        
         return  Yii::$app->view->renderFile('@pdf/request-footer.php',[
             'request' => $this->request
-        ]);;
+        ]);
     }
     
     

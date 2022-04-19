@@ -11,6 +11,7 @@ namespace app\core\traits;
 use app\core\helpers\View\Form\BaseFormHelper;
 use app\core\helpers\View\Form\FormHelper;
 use app\core\helpers\View\Form\StandHelper;
+use app\core\manage\Auth\UserIdentity;
 use app\core\services\operations\Requests\RequestService;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
@@ -36,7 +37,9 @@ trait RequestViewTrait
     public function actionView($id)
     {        
         /** @var Request $model */
-        $userId = Yii::$app->user->id;
+        /** @var UserIdentity $userIdentity */
+        $userIdentity = Yii::$app->user->getIdentity();
+
         $langCode = Yii::$app->language;
         $model =  $this->findModel($id);
         $this->viewPath = Yii::getAlias('@views') .  DIRECTORY_SEPARATOR .'requests';    
@@ -44,9 +47,9 @@ trait RequestViewTrait
         $requestForm = $model->requestForm;
         $statusForm = new EditRequestForm($model);  
         if ($requestForm->form->form_type_id == FormType::SPECIAL_STAND_FORM) {            
-            $formHelper = StandHelper::createViaRequest($userId, $langCode, $model);
+            $formHelper = StandHelper::createViaRequest($userIdentity->getUser(), $langCode, $model);
         } else {
-            $formHelper = FormHelper::createViaRequest($userId, $langCode, $model);            
+            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $model);            
         }
         $formHtmlData = $formHelper->renderHtmlRequest();
         if ($statusForm->load(Yii::$app->request->post()) && $statusForm->validate()) {
@@ -70,14 +73,15 @@ trait RequestViewTrait
     
     protected function getFormHelper(Request $model) :BaseFormHelper
     {
-        $userId = Yii::$app->user->id;
+        /** @var UserIdentity $userIdentity */
+        $userIdentity = Yii::$app->user->getIdentity();
         $langCode = Yii::$app->language;
         
         $requestForm = $model->requestForm;
         if ($requestForm->form->form_type_id == FormType::SPECIAL_STAND_FORM) {            
-            $formHelper = StandHelper::createViaRequest($userId, $langCode, $model);
+            $formHelper = StandHelper::createViaRequest($userIdentity->getUser(), $langCode, $model);
         } else {
-            $formHelper = FormHelper::createViaRequest($userId, $langCode, $model);            
+            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $model);            
         }
         return $formHelper;
     }
