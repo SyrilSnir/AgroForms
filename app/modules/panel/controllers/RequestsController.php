@@ -139,8 +139,10 @@ class RequestsController extends ManageController
             }        
         }
         $invoiceData = [
-            'title' => 'Счет № ',
-            'titleEng' => 'Account no ',
+            'title' => '',
+            'titleEng' => '',
+            'description' => 'Счет к договору №' . ($request->contract ? $request->contract->number : ''),
+            'descriptionEng' => 'Invoice to contract No. ' . ($request->contract ? $request->contract->number : ''),
             'exhibitionId' => $request->exhibition_id,
             'companyId' => $request->company_id,
         ];        

@@ -20,6 +20,7 @@ return [
     'Directory of units' => 'Справочник единиц измерения',
     'Directory of valutes' => 'Справочник валют',
     'New member' => 'Новый участник',
+    'Edit member' => 'Редактировать участника',
     'New exhibition' => 'Новая выставка',
     'New equipment' => 'Новое оборудование',
     'Edit equipment' => 'Изменить оборудование',

@@ -1,10 +1,10 @@
 <?php
 
 use app\core\helpers\View\Request\RequestStatusHelper;
+use app\core\manage\Auth\Rbac;
 use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\EditRequestForm;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -71,7 +71,7 @@ $attributes = [
     <p>
         <?= Html::a(t('Back'), Url::previous(), ['class' => 'btn btn-secondary']) ?>
     </p>      
-    <?php if (!Yii::$app->user->can(\app\core\manage\Auth\Rbac::PERMISSION_MEMBER_MENU)):?>
+    <?php if (!Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU)):?>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title"><?php echo $this->title ?></h3>        
