@@ -87,7 +87,7 @@ class ApplicationController extends FormController
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
         if ($formChangeType === Request::FORM_UPDATE) {
             $requestId = Yii::$app->session->get('REQUEST_ID');            
-            $request = $this->requestRepository->getForUser($requestId,$userIdentity->getUser());            
+            $request = $this->requestRepository->getForUser($requestId,$userIdentity->getId());            
             $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $request);
         } else {     
             $formHelper = FormHelper::createViaForm($userIdentity->getUser(), $langCode, $form);
