@@ -6,7 +6,7 @@ use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\SearchModels\Exhibition\ExhibitionSearch;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
-use yii\grid\ActionColumn;
+use kartik\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -23,7 +23,7 @@ $columnsConfig = [
                     'toolbar' => [
                         [
                             'content'=> $rowsCountTemplate .
-                                Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                Html::a('<i class="fas fa-plus"></i>',['create','exhibitionId' => $exhibitionId], [
                                     'class' => 'btn btn-sm btn-success',
                                     'title' => Yii::t('app', 'New document'),
                                 ])                            
@@ -35,10 +35,10 @@ $columnsConfig = [
                         return ['data-sortable-id' => $model->id];
                     },     
                     'columns' => [    
-                        'title:text:' . Yii::t('app', 'Title'),
+                        'title:text:' . Yii::t('app', 'Name'),
                         'description:html:' . Yii::t('app', 'Description'),                        
                         [
-                            'label' => t('File'),
+                            'label' => t('Filename'),
                             'attribute' => 'file',
                             'format' => 'raw',
                             'value' => function (Documents $model) {
@@ -51,9 +51,15 @@ $columnsConfig = [
                             'value' => function (Documents $model) {
                                 /** @var Exhibition $model */
                                 return DateHelper::timestampToDate($model->created_at);
-                            }
-                            
+                            }                            
                         ],
+                        [
+                           'class' => ActionColumn::class,                            
+                            'visibleButtons' => [
+                           //     'update' => false,
+                           //     'view' => false,
+                            ]
+                        ]        
                     ], 
 ];
 $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';

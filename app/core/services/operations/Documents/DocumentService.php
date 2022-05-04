@@ -4,7 +4,7 @@ namespace app\core\services\operations\Documents;
 
 use app\core\repositories\manage\Document\DocumentRepository;
 use app\models\ActiveRecord\Document\Documents;
-use app\models\Forms\Manage\Document\DocumentForm;
+use app\models\Forms\Manage\Document\BaseDocumentForm;
 
 /**
  * Description of DocumentService
@@ -24,7 +24,7 @@ class DocumentService
         $this->documents = $documents;
     }
     
-    public function create(DocumentForm $form): Documents
+    public function create(BaseDocumentForm $form): Documents
     {
         $document = Documents::create(
                 $form->title, 
@@ -41,7 +41,7 @@ class DocumentService
         return $document;
     }
     
-    public function edit(int $id, DocumentForm $form) 
+    public function edit(int $id, BaseDocumentForm $form) 
     {
         /** @var Documents $document */
         $document = $this->documents->get($id);

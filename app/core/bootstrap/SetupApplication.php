@@ -100,6 +100,7 @@ class SetupApplication implements BootstrapInterface
                         ->setUsername($smtpParams->userName)
                         ->setPassword($smtpParams->password);
                 $mailer->setTransport($transport);
+                $mailer->useFileTransport = false;
                 return new MailService($mailer, $smtpParams->senderEmail,$smtpParams->senderName,$smtpParams);
             }
             $mailer->useFileTransport = true;

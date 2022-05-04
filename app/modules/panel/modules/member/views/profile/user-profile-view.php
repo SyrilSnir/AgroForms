@@ -22,18 +22,12 @@ $attributes = [
                     'login:text:'.Yii::t('app/user','Login'),
                     'fio:text:'.Yii::t('app/user','Full name'),
                     'email:text:E-mail',
-                    'phone:text:' . Yii::t('app/user', 'Phone'),
+                    'phone:text:' . Yii::t('app/user', 'Phone number'),
                     'company.name:text:'. Yii::t('app/user', 'Company'),
                     [
                         'label' => Yii::t('app/user', 'Position'),
                         'value' => $profile->position ? $profile->position : '(' . mb_convert_case(t('Undefined'), MB_CASE_LOWER) . ')'
                     ],
-                    [
-                        'attribute' => 'active',
-                        'label' => Yii::t('app/user', 'Status'),
-                        'format' => 'raw',
-                        'value' => UserStatusHelper::getStatusLabel($profile->active)
-                    ]
                 ];
 ?>
 <div class="full-view">

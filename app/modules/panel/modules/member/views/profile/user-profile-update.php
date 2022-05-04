@@ -46,7 +46,7 @@ $this->title = Yii::t('app/user','User edit') . ': ' . $model->login;
             ?>                              
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a(Yii::t('app','Cancel'), ['user'], ['class' => 'btn btn-secondary']) ?>
     </div>                            
                 <?php ActiveForm::end(); ?>
                         </div> 
