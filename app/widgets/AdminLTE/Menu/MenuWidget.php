@@ -209,7 +209,10 @@ class MenuWidget extends Menu
             }
             $route = ltrim($route, '/');
             if ($route != $this->route && $route !== $this->noDefaultRoute && $route !== $this->noDefaultAction) {
-                return false;
+                $route = preg_replace('#/\d#', '', $route) . '/index';
+                if ($route != $this->route && $route !== $this->noDefaultRoute && $route !== $this->noDefaultAction) { 
+                    return false;
+                }
             }
             unset($item['url']['#']);
             if (count($item['url']) > 1) {

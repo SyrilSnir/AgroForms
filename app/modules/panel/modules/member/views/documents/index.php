@@ -46,14 +46,6 @@ $columnsConfig = [
                             }
                         ],
                         [
-                            'label' => Yii::t('app','Date added'),
-                            'attribute' => 'date',
-                            'value' => function (Documents $model) {
-                                /** @var Exhibition $model */
-                                return DateHelper::timestampToDate($model->created_at);
-                            }                            
-                        ],
-                        [
                            'class' => ActionColumn::class,                            
                             'visibleButtons' => [
                            //     'update' => false,

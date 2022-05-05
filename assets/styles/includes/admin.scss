@@ -64,6 +64,7 @@
     width: $sidebar-size!important;
   }
 
+
 [class*="sidebar-black-"] {    
     background-color: #000;
     .sidebar {
@@ -85,6 +86,11 @@
                 &:not(.active):hover {
                     color: $base-agrosalon-color;
                 }
+            }
+            .active:not(.has-treeview) {
+                > .nav-link  {
+                    color: $base-agrosalon-color;                    
+                } 
             }
         }
     }
