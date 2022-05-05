@@ -90,6 +90,7 @@ class RequestsController extends BaseMemberController
             'dataProvider' => $applicationDataProvider,            
             'isExhibitionActive' => $isActive,
             'contractId' => $contractId,
+            'exhibitionId' => $exhibitionId,
             'availableForms' => FormsHelper::formsList($exhibitionId)
         ]);
     }

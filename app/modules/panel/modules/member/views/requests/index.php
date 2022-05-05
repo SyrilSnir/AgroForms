@@ -63,9 +63,9 @@ $this->title = Yii::t('app/title','My requests');
                     ],
                     'filterModel' => $searchModel,
                     'columns' => [                                               [
-                      'attribute' => 'formId',
+                      'attribute' => 'form_id',
                       'label' => Yii::t('app','Form'),
-                      'filter' => FormsHelper::formsList(),                        
+                      'filter' => $searchModel->formsListForExhibition($exhibitionId),
                       'value' => 'header'
                     ],
                     /*    [

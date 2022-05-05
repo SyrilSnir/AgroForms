@@ -92,7 +92,7 @@ class ApplicationService
     public function edit(Request $request, ApplicationForm $form, string $langCode)
     {
         /** @var Application $dynamicForm */
-        $formHelper = FormHelper::createViaRequest($form->userId, $langCode, $request);
+        $formHelper = FormHelper::createViaRequest($request->user, $langCode, $request);
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
         $serializedFields = json_encode($fields);    
     //    $total = $this->fieldService->calculateTotal($fields,$form->basePrice);

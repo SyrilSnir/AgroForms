@@ -3,6 +3,7 @@
 namespace app\models\SearchModels\Requests;
 
 use app\core\traits\Lists\GetCompanyNamesTrait;
+use app\core\traits\Lists\GetFormsListTrait;
 use app\core\traits\Lists\GetFormTypesListTrait;
 use app\models\ActiveRecord\Requests\Request;
 use yii\base\Model;
@@ -22,6 +23,7 @@ class RequestSearch extends Model
 
     use GetFormTypesListTrait;
     use GetCompanyNamesTrait;
+    use GetFormsListTrait;
     
     public function rules(): array
     {
@@ -41,6 +43,7 @@ class RequestSearch extends Model
     {
         $dp = $this->baseSearch($params);
         $dp->query->andFilterWhere(['!=', 'status', Request::STATUS_DRAFT]);
+        $dp->query->andFilterWhere(['!=', 'form_id', Request::STATUS_DRAFT]);
         return $dp;
     }
 
