@@ -209,8 +209,9 @@ class MenuWidget extends Menu
             }
             $route = ltrim($route, '/');
             if ($route != $this->route && $route !== $this->noDefaultRoute && $route !== $this->noDefaultAction) {
-                $route = preg_replace('#/\d#', '', $route) . '/index';
-                if ($route != $this->route && $route !== $this->noDefaultRoute && $route !== $this->noDefaultAction) { 
+               // $route = preg_replace('#/\d#', '', $route) . '/index';
+                $scriptRoute = ltrim(Yii::$app->request->getUrl(), '/');
+                if ($route != $scriptRoute) { 
                     return false;
                 }
             }
