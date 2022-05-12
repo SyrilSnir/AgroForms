@@ -92,7 +92,7 @@ $this->title = Yii::t('app/title','My requests');
                             'class' => ActionColumn::class,
                             'width' => '120px',
                             'hAlign' => GridView::ALIGN_LEFT,
-                            'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;&nbsp;{inform}',  
+                            'template' => '{view} {update} {change_status} {delete} {pdf}&nbsp;&nbsp;&nbsp;{inform}',  
                             'buttons' => [
                                 'inform' => function ($url, $model, $key) {
                             
@@ -108,7 +108,21 @@ $this->title = Yii::t('app/title','My requests');
                                     ];                                  
                                     $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
                                     return Html::a($icon, ['#'],$options);                            
-                                },                                
+                                },     
+                                'pdf' => function ($url, $model, $key) {
+                                      /** @var Request $model */
+                                  $title = t('Open for print');
+                                  $iconName = "print";
+                                  $url = Url::current(['print', 'id' => $key]);
+                                  $options = [
+                                      'title' => $title,
+                                      'aria-label' => $title,
+                                //      'data-toggle' => 'modal',
+                               //       'data-target' => '#modal__information',                                   
+                                  ];                                  
+                                  $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                  return Html::a($icon, $url,$options);                            
+                              },                                         
                             ],
                             'visibleButtons' => [
                                 'delete' => function ($model) {
