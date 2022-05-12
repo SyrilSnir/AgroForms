@@ -90,13 +90,13 @@ $this->title = Yii::t('app/title','My requests');
                         
                         [
                             'class' => ActionColumn::class,
-                            'width' => '120px',
+                            'width' => '160px',
                             'hAlign' => GridView::ALIGN_LEFT,
                             'template' => '<span class="action__wrapper">{view}</span>
                                            <span class="action__wrapper">{update}</span>
                                            <span class="action__wrapper">{delete}</span>
                                            <span class="action__wrapper">{pdf}</span>
-                                           &nbsp;&nbsp;&nbsp;{inform}',  
+                                           <span class="action__wrapper">{inform}</span>',
                             'buttons' => [
                                 'inform' => function ($url, $model, $key) {
                             
