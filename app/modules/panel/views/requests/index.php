@@ -22,6 +22,16 @@ use yii\web\View;
 
 $this->title = Yii::t('app/title', 'Requests list');
 $action = Yii::$app->getRequest()->getPathInfo();
+$actionId = Yii::$app->controller->action->id;
+
+$isAcceptDeclineShowed = ($actionId === 'new');
+$isPayShowed = (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
+    Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU));
+
+$isDeleteShowed = (!Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&
+                                        !Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) &&
+                                        !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU));
+
 $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
 $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
 $columnsConfig = [
@@ -54,6 +64,7 @@ $columnsConfig = [
                   // 'header:text:' . Yii::t('app','Form'),
                     [
                         'attribute' => 'status',
+                        'width' => '160px',
                         'label' => Yii::t('app','Status'),
                         'format' => 'raw',
                         'filter' => RequestStatusHelper::statusList(false),
@@ -73,8 +84,19 @@ $columnsConfig = [
                     [
                         'class' => ActionColumn::class,
                         'hAlign' => GridView::ALIGN_LEFT,
-                        'width' => '160px',
-                        'template' => '{view} {update} {change} {delete} {partial_paid} {paid} {inform} {accept} {reject} {pdf}', 
+                        'width' => '260px',
+                        'template' => '<span class="action__wrapper">{view}</span>' .
+(Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU) ? '<span class="action__wrapper">{change}</span>' : '').
+                        
+($isDeleteShowed ?                     '<span class="action__wrapper">{delete}</span>' : '').
+                        
+($isPayShowed ?                        '<span class="action__wrapper">{partial_paid}</span>
+                                       <span class="action__wrapper">{paid}</span>' : '').
+                        
+($isAcceptDeclineShowed ?               '<span class="action__wrapper">{accept}</span>
+                                       <span class="action__wrapper">{reject}</span>' : '') .
+                        
+                                       '<span class="action__wrapper">{pdf}</span>',
                         'buttons' => [
                             'accept' => function ($url, $model, $key) {
                                     /** @var Request $model */
@@ -153,11 +175,6 @@ $columnsConfig = [
                         ],
                         'visibleButtons' => [
                             'change' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),
-                            'inform' => function ($model) {
-                                /** @var Request $model */
-                                return Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU) &&
-                                        $model->status === BaseRequest::STATUS_REJECTED;
-                            },
                             'paid' => function($model) {
                                 /** @var Request $model */
                                 return (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
@@ -183,10 +200,7 @@ $columnsConfig = [
                                         $model->status === BaseRequest::STATUS_CHANGED) &&
                                         !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
                             },                                     
-                            'update' => function ($model) {
-                                /** @var Request $model */
-                                return ($model->status === BaseRequest::STATUS_DRAFT);
-                            },
+                            'update' => false,
                             'delete' => function ($model) {
                                 /** @var Request $model */
                                 return !Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&
