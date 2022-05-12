@@ -42,5 +42,8 @@ return [
     'Feedback' => 'Обратная связь',
     'Contracts' => 'Договоры',
     'Documents' => 'Документы',
+    'New applications' => 'Новые заявки',
+    'Accepted applications' => 'Принятые заявки',
+    'Rejected applications' => 'Отклоненные заявки',
 ];
 

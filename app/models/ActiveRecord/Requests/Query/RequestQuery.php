@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Requests\Query;
 
+use app\models\ActiveRecord\Requests\BaseRequest;
 use yii\db\ActiveQuery;
 
 /**
@@ -48,4 +49,32 @@ class RequestQuery extends ActiveQuery
     {
         return $this->joinWith('stand',true,'RIGHT JOIN');
     }
+    
+    public function new()
+    {
+        return $this->andWhere(['status' => 
+                                    [
+                                        BaseRequest::STATUS_NEW,
+                                        BaseRequest::STATUS_CHANGED
+                                    ]
+                                ]);
+    }
+    
+    public function accepted()
+    {
+        return $this->andWhere(['status' => 
+                                    [
+                                        BaseRequest::STATUS_ACCEPTED,
+                                        BaseRequest::STATUS_INVOICED,
+                                        BaseRequest::STATUS_PAID,
+                                        BaseRequest::STATUS_PARTIAL_PAID,                                   
+                                    ] 
+                                ]);        
+    }
+    
+    public function rejected()
+    {
+        return $this->andWhere(['status' => BaseRequest::STATUS_REJECTED ]);
+    }
+    
 }

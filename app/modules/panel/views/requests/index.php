@@ -74,7 +74,7 @@ $columnsConfig = [
                         'class' => ActionColumn::class,
                         'hAlign' => GridView::ALIGN_LEFT,
                         'width' => '160px',
-                        'template' => '{view}{update}{change}{delete}&nbsp;&nbsp;{partial_paid}&nbsp;{paid}{inform}{accept}&nbsp;{reject}{pdf}', 
+                        'template' => '{view} {update} {change} {delete} {partial_paid} {paid} {inform} {accept} {reject} {pdf}', 
                         'buttons' => [
                             'accept' => function ($url, $model, $key) {
                                     /** @var Request $model */
@@ -117,25 +117,25 @@ $columnsConfig = [
                             'partial_paid' => function ($url, $model, $key) {
                                     /** @var Request $model */
                                 $title = t('Partial paid','requests');
-                                $iconName = "usd";
+                                $iconName = "icon-ppay";
                                 $url = Url::current(['partial-pay', 'id' => $key]);
                                 $options = [
                                     'title' => $title,
                                     'aria-label' => $title,
                                 ];                                  
-                                $icon = Html::tag('span', '', ['class' => "fa fa-$iconName"]);
+                                $icon = Html::tag('span', '', ['class' => "fa $iconName"]);
                                 return Html::a($icon, $url,$options);                            
                             },                                     
                             'paid' => function ($url, $model, $key) {
                                     /** @var Request $model */
                                 $title = t('Application paid','requests');
-                                $iconName = "money";
+                                $iconName = "icon-pay";
                                 $url = Url::current(['pay', 'id' => $key]);
                                 $options = [
                                     'title' => $title,
                                     'aria-label' => $title,
                                 ];                                  
-                                $icon = Html::tag('span', '', ['class' => "fa fa-$iconName"]);
+                                $icon = Html::tag('span', '', ['class' => "fa $iconName"]);
                                 return Html::a($icon, $url,$options);                            
                             },  
                             'change' => function ($url, $model, $key) {

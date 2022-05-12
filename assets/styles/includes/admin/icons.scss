@@ -1,145 +1,138 @@
-/*
-Icon classes can be used entirely standalone. They are named after their original file names.
-
-Example usage in HTML:
-
-`display: block` sprite:
-<div class="icon-home"></div>
-
-To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
-
-// CSS
-.icon {
-  display: inline-block;
-}
-
-// HTML
-<i class="icon icon-home"></i>
-*/
 .icon-cats {
-    background-image: url('../../../images/sprite.png');
-    background-position: -64px 0px;
-    width: 14px;
-    height: 16px;
-  }
-  .icon-cities {
-    background-image: url('../../../images/sprite.png');
-    background-position: 0px 0px;
-    width: 16px;
-    height: 16px;
-  }
-  .icon-companies {
-    background-image: url('../../../images/sprite.png');
-    background-position: -32px -16px;
-    width: 15px;
-    height: 16px;
-  }
-  .icon-countries {
-    background-image: url('../../../images/sprite.png');
-    background-position: -16px 0px;
-    width: 16px;
-    height: 16px;
-  }
-  .icon-equipment {
-    background-image: url('../../../images/sprite.png');
-    background-position: 0px -16px;
-    width: 16px;
-    height: 16px;
-  }
-  .icon-exhibitions {
-    background-image: url('../../../images/sprite.png');
-    background-position: 0px -32px;
-    width: 15px;
-    height: 16px;
-  }
-  .icon-forms {
-    background-image: url('../../../images/sprite.png');
-    background-position: -16px -16px;
-    width: 16px;
-    height: 16px;
-  }
-  .icon-geo {
-    background-image: url('../../../images/sprite.png');
-    background-position: -15px -32px;
-    width: 16px;
-    height: 15px;
-  }
-  .icon-mail {
-    background-image: url('../../../images/sprite.png');
-    background-position: 0px -64px;
-    width: 16px;
-    height: 12px;
-  }
-  .icon-nomenclature {
-    background-image: url('../../../images/sprite.png');
-    background-position: -31px -32px;
-    width: 16px;
-    height: 15px;
-  }
-  .icon-regions {
-    background-image: url('../../../images/sprite.png');
-    background-position: -32px 0px;
-    width: 16px;
-    height: 16px;
-  }
-  .icon-requests {
-    background-image: url('../../../images/sprite.png');
-    background-position: -48px 0px;
-    width: 16px;
-    height: 15px;
-  }
-  .icon-settings {
-    background-image: url('../../../images/sprite.png');
-    background-position: -48px -15px;
-    width: 15px;
-    height: 16px;
-  }
-  .icon-stand-settings {
-    background-image: url('../../../images/sprite.png');
-    background-position: -48px -31px;
-    width: 15px;
-    height: 16px;
-  }
-  .icon-stand {
-    background-image: url('../../../images/sprite.png');
-    background-position: -46px -48px;
-    width: 16px;
-    height: 14px;
-  }
-  .icon-stands {
-    background-image: url('../../../images/sprite.png');
-    background-position: 0px -48px;
-    width: 15px;
-    height: 16px;
-  }
-  .icon-units {
-    background-image: url('../../../images/sprite.png');
-    background-position: -15px -48px;
-    width: 15px;
-    height: 16px;
-  }
-  .icon-user {
-    background-image: url('../../../images/sprite.png');
-    background-position: -30px -48px;
-    width: 16px;
-    height: 15px;
-  }
-  .icon-users-companies {
-    background-image: url('../../../images/sprite.png');
-    background-position: -64px -16px;
-    width: 14px;
-    height: 16px;
-  }
-  .icon-users {
-    background-image: url('../../../images/sprite.png');
-    background-position: -64px -32px;
-    width: 14px;
-    height: 16px;
-  }
-  .icon-valutes {
-    background-image: url('../../../images/sprite.png');
-    background-position: -16px -64px;
-    width: 16px;
-    height: 11px;
-  }
-  
+  background-image: url('../../../images/sprite.png');
+  background-position: -64px 0px;
+  width: 14px;
+  height: 16px;
+}
+.icon-cities {
+  background-image: url('../../../images/sprite.png');
+  background-position: 0px 0px;
+  width: 16px;
+  height: 16px;
+}
+.icon-companies {
+  background-image: url('../../../images/sprite.png');
+  background-position: -32px -16px;
+  width: 15px;
+  height: 16px;
+}
+.icon-countries {
+  background-image: url('../../../images/sprite.png');
+  background-position: -16px 0px;
+  width: 16px;
+  height: 16px;
+}
+.icon-equipment {
+  background-image: url('../../../images/sprite.png');
+  background-position: 0px -16px;
+  width: 16px;
+  height: 16px;
+}
+.icon-exhibitions {
+  background-image: url('../../../images/sprite.png');
+  background-position: 0px -32px;
+  width: 15px;
+  height: 16px;
+}
+.icon-forms {
+  background-image: url('../../../images/sprite.png');
+  background-position: -16px -16px;
+  width: 16px;
+  height: 16px;
+}
+.icon-geo {
+  background-image: url('../../../images/sprite.png');
+  background-position: -15px -32px;
+  width: 16px;
+  height: 15px;
+}
+.icon-mail {
+  background-image: url('../../../images/sprite.png');
+  background-position: 0px -64px;
+  width: 16px;
+  height: 12px;
+}
+.icon-nomenclature {
+  background-image: url('../../../images/sprite.png');
+  background-position: -31px -32px;
+  width: 16px;
+  height: 15px;
+}
+.icon-pay {
+  background-image: url('../../../images/sprite.png');
+  background-position: -16px -64px;
+  width: 16px;
+  height: 12px;
+}
+.icon-ppay {
+  background-image: url('../../../images/sprite.png');
+  background-position: -32px -64px;
+  width: 16px;
+  height: 12px;
+}
+.icon-regions {
+  background-image: url('../../../images/sprite.png');
+  background-position: -32px 0px;
+  width: 16px;
+  height: 16px;
+}
+.icon-requests {
+  background-image: url('../../../images/sprite.png');
+  background-position: -48px 0px;
+  width: 16px;
+  height: 15px;
+}
+.icon-settings {
+  background-image: url('../../../images/sprite.png');
+  background-position: -48px -15px;
+  width: 15px;
+  height: 16px;
+}
+.icon-stand-settings {
+  background-image: url('../../../images/sprite.png');
+  background-position: -48px -31px;
+  width: 15px;
+  height: 16px;
+}
+.icon-stand {
+  background-image: url('../../../images/sprite.png');
+  background-position: -46px -48px;
+  width: 16px;
+  height: 14px;
+}
+.icon-stands {
+  background-image: url('../../../images/sprite.png');
+  background-position: 0px -48px;
+  width: 15px;
+  height: 16px;
+}
+.icon-units {
+  background-image: url('../../../images/sprite.png');
+  background-position: -15px -48px;
+  width: 15px;
+  height: 16px;
+}
+.icon-user {
+  background-image: url('../../../images/sprite.png');
+  background-position: -30px -48px;
+  width: 16px;
+  height: 15px;
+}
+.icon-users-companies {
+  background-image: url('../../../images/sprite.png');
+  background-position: -64px -16px;
+  width: 14px;
+  height: 16px;
+}
+.icon-users {
+  background-image: url('../../../images/sprite.png');
+  background-position: -64px -32px;
+  width: 14px;
+  height: 16px;
+}
+.icon-valutes {
+  background-image: url('../../../images/sprite.png');
+  background-position: -48px -64px;
+  width: 16px;
+  height: 11px;
+}

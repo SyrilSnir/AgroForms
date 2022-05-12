@@ -20,10 +20,14 @@ use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Manage\Document\DocumentForm;
 use app\models\Forms\Requests\ApplicationRejectForm;
 use app\models\Forms\Requests\EditRequestForm;
+use app\models\SearchModels\Requests\AcceptedRequestSearch;
 use app\models\SearchModels\Requests\AccountantRequestSearch;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
+use app\models\SearchModels\Requests\NewRequestSearch;
+use app\models\SearchModels\Requests\RejectedRequestSearch;
 use DomainException;
 use Yii;
+use yii\base\Action;
 use yii\helpers\Url;
 
 /**
@@ -79,7 +83,40 @@ class RequestsController extends ManageController
         $this->applicationRejectLogService = $applicationRejectLogService;
         $this->documentService = $documentService;
     }  
-    
+    /**
+     * 
+     * @param Action $action
+     * @return bool
+     */
+    public function beforeAction($action): bool
+    {
+        if ($action->id == 'new') {
+            $this->searchModel = new NewRequestSearch();
+        }
+        if ($action->id == 'rejected') {
+            $this->searchModel = new RejectedRequestSearch();
+        }      
+        if ($action->id == 'accepted') {
+            $this->searchModel = new AcceptedRequestSearch();
+        }         
+        return parent::beforeAction($action);
+    }
+
+    public function actionNew()
+    {
+        return $this->actionIndex();
+    }
+
+    public function actionAccepted()
+    {
+        return $this->actionIndex();        
+    }
+ 
+    public function actionRejected()
+    {
+        return $this->actionIndex();        
+    }
+
     public function actionEdit($id) 
     {
         /** @var Request $model */
