@@ -121,6 +121,8 @@ return [
     'Free information' => 'Сводная информация',
     'More info' => 'Больше информации',
     '{member, plural, =1{exhibition participant} other{exhibitions}}' => '{member, plural, one{участник} few{участника} other{участников}} выставки',
+    '{count, plural, =1{application created} other{applications created}}' => '{count, plural, one{заявка создана} few{заявки созданы} other{заявок создано}}',
+    '{count, plural, =1{document created} other{documents created}}' => '{count, plural, one{документ создан} few{документа создано} other{документов создано}}',
     '{stand, plural, =1{ordered stand} other{ordered stands}}' => '{stand, plural, one{заказанный стенд} few{заказанных стенда} other{заказанных стендов}}',
     'The passwords entered do not match' => 'Введенные пароли не совпадают',
     'The user with the specified data is already registered' => 'Пользователь с указанными данными уже зарегистрирован',

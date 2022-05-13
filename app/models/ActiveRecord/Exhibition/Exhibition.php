@@ -121,4 +121,19 @@ class Exhibition extends ActiveRecord
     {
         return $this->getContracts()->andWhere(['company_id' => $companyId])->all();
     }
+    
+    public function isPast(): bool
+    {
+        return (time() > $this->end_date);
+    }
+    
+    public function isActive(): bool
+    {
+        return (time() > $this->start_date && time() < $this->end_date);
+    }
+    
+    public function isFuture(): bool
+    {
+        return (time() < $this->start_date);
+    }    
 }

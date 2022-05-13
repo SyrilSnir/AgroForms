@@ -4,6 +4,7 @@ namespace app\models\ActiveRecord\Contract;
 
 use app\core\traits\ActiveRecord\DateMultilangTrait;
 use app\models\ActiveRecord\Companies\Company;
+use app\models\ActiveRecord\Contract\Query\ContractsQuery;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\Forms\Manage\Contract\ContractForm;
 use DateTime;
@@ -47,6 +48,15 @@ class Contracts extends ActiveRecord
         $contract->status = $form->status;
         $contract->date =  DateTime::createFromFormat('d.m.Y', $form->date)->getTimestamp();
         return $contract;
+    }
+
+    /**
+     * 
+     * @return ContractsQuery
+     */
+    public static function find() 
+    {
+        return new ContractsQuery(static::class);
     }
     
     public function edit(ContractForm $form): void

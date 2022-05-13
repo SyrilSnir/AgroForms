@@ -43,6 +43,11 @@ class RequestQuery extends ActiveQuery
     public function forContract(int $contractId, $alias = null) :self
     {
         return $this->andWhere([($alias ? $alias . '.' : '') . 'contract_id' => $contractId]);
+    } 
+    
+    public function forCompany(int $companyId, $alias = null): self
+    {
+        return $this->andWhere([($alias ? $alias . '.' : '') . 'company_id' => $companyId]);        
     }    
     
     public function forStands()
