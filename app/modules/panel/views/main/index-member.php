@@ -1,5 +1,6 @@
 <?php
 
+use app\models\ActiveRecord\Companies\Company;
 use yii\web\View;
 
 /** @var array $summaryInformation */
@@ -19,7 +20,7 @@ $this->title = Yii::t('app','Free information');
                 <div class="card-header">
                     <h3 class="card-title"><?php echo t('Past exhibitions','exhibitions'); ?></h3>
                 </div>
-            <?php echo $this->render('blocks\exhibitions',[
+            <?php echo $this->render('blocks'. DIRECTORY_SEPARATOR . 'exhibitions',[
                 'exhibitionList' => $summaryInformation['past'],
                 'company' => $company
             ]); ?>
@@ -30,7 +31,7 @@ $this->title = Yii::t('app','Free information');
                 <div class="card-header">
                     <h3 class="card-title"><?php echo t('Current exhibitions','exhibitions'); ?></h3>
                 </div>
-            <?php echo $this->render('blocks\exhibitions',[
+            <?php echo $this->render('blocks'. DIRECTORY_SEPARATOR . 'exhibitions',[
                 'exhibitionList' => $summaryInformation['active'],
                 'company' => $company
             ]); ?>
@@ -41,7 +42,7 @@ $this->title = Yii::t('app','Free information');
                 <div class="card-header">
                     <h3 class="card-title"><?php echo t('Upcomming exhibitions','exhibitions'); ?></h3>
                 </div>
-            <?php echo $this->render('blocks\exhibitions',[
+            <?php echo $this->render('blocks'. DIRECTORY_SEPARATOR . 'exhibitions',[
                 'exhibitionList' => $summaryInformation['future'],
                 'company' => $company
             ]); ?>
