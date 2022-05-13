@@ -15,28 +15,6 @@ $this->title = Yii::t('app','Free information');
     <div class="content">
         <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
-        <?php if(count($summaryInformation['past']) > 0): ?>
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title"><?php echo t('Past exhibitions','exhibitions'); ?></h3>
-                </div>
-            <?php echo $this->render('blocks'. DIRECTORY_SEPARATOR . 'exhibitions',[
-                'exhibitionList' => $summaryInformation['past'],
-                'company' => $company
-            ]); ?>
-            </div>
-        <?php endif; ?>
-        <?php if(count($summaryInformation['active']) > 0): ?>
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title"><?php echo t('Current exhibitions','exhibitions'); ?></h3>
-                </div>
-            <?php echo $this->render('blocks'. DIRECTORY_SEPARATOR . 'exhibitions',[
-                'exhibitionList' => $summaryInformation['active'],
-                'company' => $company
-            ]); ?>
-            </div>
-            <?php endif; ?>
             <?php if(count($summaryInformation['future']) > 0): ?>
             <div class="card">
                 <div class="card-header">
@@ -48,6 +26,28 @@ $this->title = Yii::t('app','Free information');
             ]); ?>
 
             </div>        
+        <?php endif; ?>  
+        <?php if(count($summaryInformation['active']) > 0): ?>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><?php echo t('Current exhibitions','exhibitions'); ?></h3>
+                </div>
+            <?php echo $this->render('blocks'. DIRECTORY_SEPARATOR . 'exhibitions',[
+                'exhibitionList' => $summaryInformation['active'],
+                'company' => $company
+            ]); ?>
+            </div>
+            <?php endif; ?>        
+        <?php if(count($summaryInformation['past']) > 0): ?>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><?php echo t('Past exhibitions','exhibitions'); ?></h3>
+                </div>
+            <?php echo $this->render('blocks'. DIRECTORY_SEPARATOR . 'exhibitions',[
+                'exhibitionList' => $summaryInformation['past'],
+                'company' => $company
+            ]); ?>
+            </div>
         <?php endif; ?>
         </div>
     </div>
