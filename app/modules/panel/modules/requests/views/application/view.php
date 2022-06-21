@@ -4,7 +4,7 @@ use app\core\helpers\View\Request\RequestStatusHelper;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\ActiveRecord\Requests\RequestStand;
 use app\models\ActiveRecord\Users\UserType;
-use app\models\Forms\Requests\ChangeStatusForm;
+use app\models\Forms\Requests\EditRequestForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -12,7 +12,7 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 
-/* @var $statusForm ChangeStatusForm  */
+/* @var $statusForm EditRequestForm  */
 /* @var $this View */
 /* @var $model Request */
 /* @var $requestForm RequestStand */

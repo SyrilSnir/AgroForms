@@ -59,7 +59,7 @@ export default {
         computed: Computed
     },
     props: [
-        'isReadOnly'
+        'isReadOnly','contractId'
     ],
     data() {
         return {
@@ -68,10 +68,10 @@ export default {
             draft: false,
             fields: {},
             formData : new FormData(), 
-            formType : null,
             formId : null,
             isComputed: false,
-            userId : null,            
+            userId : null,
+            companyId: null,            
             basePrice: 0,
             totalPrice: 0,
             hasFile: false,
@@ -89,8 +89,8 @@ export default {
             this.title = response.data.title; 
             this.elements = response.data.elements;  
             this.isComputed = response.data.computed ; 
-            this.userId = response.data.userId;
-            this.formType = response.data.formType,       
+            this.userId = response.data.userId;       
+            this.companyId = response.data.companyId;
             this.basePrice = response.data.basePrice;
             this.totalPrice = this.basePrice;
             this.formId = response.data.formId;
@@ -184,10 +184,13 @@ export default {
             );
             this.formData.append(
                 'DynamicForm[basePrice]', this.basePrice
-            );            
+            );   
             this.formData.append(
-                'DynamicForm[formType]', this.formType
-            );                            
+                'DynamicForm[contractId]', this.contractId
+            );
+            this.formData.append(
+                'DynamicForm[companyId]', this.companyId
+            );                                        
             axios.post( '/api/application/send-form',
                 this.formData,
                 {
@@ -196,7 +199,7 @@ export default {
                     }
                 }
                 ).then(function(response){
-                   location.href = '/panel/member/'+ response.data.exhibitionId +'/requests';
+                   location.href = '/panel/member/'+ response.data.exhibitionId +'/requests/' + response.data.contractId;
                 })
                 .catch(function(){
                     location.href = '/panel/member/requests';

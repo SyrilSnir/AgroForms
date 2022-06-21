@@ -59,86 +59,25 @@ class StandController extends FormController
         $this->requestStandService = $requestStandService;
     }
     
-    public function actionGetForm()
+    public function actionGetForm($readonly = false)
     {
         /** @var Form $stand */
         $formId = Yii::$app->session->get('OPENED_FORM_ID');
-        $stand = $this->formRepository->get($formId);        
+        $langCode = Yii::$app->language;
+        if (!$formId) {
+            throw new DomainException(t('The requested form was not found on the server', 'exception'));
+        }
+        $form = $this->formRepository->get($formId);        
         $userId = Yii::$app->user->getId();
-        //$stand = $this->formRepository->get(FormType::SPECIAL_STAND_FORM);
-        $standsList = StandsHelper::standsList($stand->exhibition_id);
-        $baseConfiguration = [
-          'title' => $stand->headerName,
-          'stands' => $standsList,          
-          'userId' => $userId,
-          'formId' => $stand->id
-        ];
-        $baseConfiguration['dict'] = [
-            'imageInfo' => t('Approximate image of the stand','requests'),
-            'standInfo' => [
-                'space' => t('Space','requests'),  
-                'length' => t('Length','requests'),  
-                'width' => t('Width','requests'),
-                'unit' => t('m','requests')
-            ],
-            'valute' => t($stand->valute->char_code, 'requests'),
-            'fileAttach' => [
-                'browse' => t('Browse'),
-                'selectFile' => t('Select file'),
-                'attachFile' => t('Attach file'),
-            ],            
-            'total' => [
-              'totalMsg' => t('Total','requests'),
-              'totalHead' => t('Total amount payable','requests'),
-            ],            
-            'standSize' => t('Required stand size','requests'),
-            'standLayout' => t('Stand layout','requests'),
-            'frize' => [
-                'frizeName' => t('Fascia name','requests'),
-                'symbol'  => t('symb.','requests'),
-                'name' => t('Name','requests'),
-            ],
-            'standPlan' => [
-                'header' => t('Stand plan','requests'),
-                'download' => t('Download a form \'Stand layout\'','requests'),
-                'downloadInfo' => t('Attach the plan. Also you can download a form.','requests'),
-                'attachInfo' => t('If you need more space for drawing, you can draw the plan on a separate sheet and attach it to this application.', 'requests')
-            ],
-            'buttons' => [
-              'send' => t('Send application','requests'),
-              'draft' => t('Save draft', 'requests'),
-              'cancel' => t('Cancel'),
-              'close' => t('Close'),
-            ],            
-            
-        ];        
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
         if ($formChangeType === Request::FORM_UPDATE) {
             $requestId = Yii::$app->session->get('REQUEST_ID');
-            /** @var Request $request */
-            /** @var RequestStand $requestStand */
-           $request = $this->requestRepository->getForUser($requestId, $userId);
-           if ($request->isRejected()) {
-                $baseConfiguration['needToChange'] = true;
-           } else {
-               $baseConfiguration['needToChange'] = false;
-           }
-           $requestStand = $request->requestForm;
-           $baseConfiguration['update'] = true;
-           $baseConfiguration['frizeName'] = $requestStand->frize_name;
-           $baseConfiguration['width'] = $requestStand->width;
-           $baseConfiguration['length'] = $requestStand->length;
-           $baseConfiguration['square'] = $requestStand->square;
-           $baseConfiguration['standId'] = $requestStand->stand_id;
-           $baseConfiguration['fileName'] = $request->requestForm->file;   
+            $request = $this->requestRepository->getForUser($requestId, $userId);            
+            $formHelper = \app\core\helpers\View\Form\StandHelper::createViaRequest($userId, $langCode, $request);
         } else {
-            $baseConfiguration['update'] = false;
+            $formHelper = \app\core\helpers\View\Form\StandHelper::createViaForm($userId, $langCode, $form);
         }
-        
-        $standConfiguration = ConfigurationHelper::getConfig(Configuration::STAND_SETTINGS_SECTION);
-        
-        return 
-        ArrayHelper::merge($baseConfiguration, $standConfiguration);
+        return $formHelper->getData($readonly);
     }
     
     public function actionSendForm() 

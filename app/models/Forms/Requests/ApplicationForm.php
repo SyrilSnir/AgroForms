@@ -27,15 +27,19 @@ class ApplicationForm extends Model
     public $loadedFile;
     
     public $hasFile;
+    
+    public $contractId;
+    
+    public $companyId;
 
     public function rules()
     {
         return [
-            [['userId','formId'],'required'],            
+            [['userId','formId','contractId','companyId'],'required'],            
             [['fields'],'required'],
             [['loadedFile'],'file'],            
             [['hasFile'],'boolean'],            
-            [['total','basePrice','userId','formId'],'integer'],
+            [['total','basePrice','userId','formId','contractId','companyId'],'integer'],
             [['draft'],'boolean'],
         ];
     }

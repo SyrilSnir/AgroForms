@@ -2,9 +2,11 @@
 
 namespace app\modules\panel\controllers;
 
-use app\core\repositories\readModels\Requests\RequestStandReadRepository;
-use app\core\repositories\readModels\User\UserReadRepository;
+use app\controllers\actions\MainAction;
+use app\controllers\actions\MemberMainAction;
+use app\core\manage\Auth\Rbac;
 use app\modules\panel\controllers\AccessRule\BaseController;
+use Yii;
 
 /**
  * Description of MainController
@@ -13,36 +15,24 @@ use app\modules\panel\controllers\AccessRule\BaseController;
  */
 class MainController extends BaseController
 {    
-    /**
-     * 
-     * @var UserReadRepository
-     */
-    private $userRepository;
-    
-    /**
-     * 
-     * @var RequestStandReadRepository
-     */
-    private $requestStandReadRepository;
+    public function actions(): array
+    {
+        if (Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU)) {
+            $actionClass = MemberMainAction::class;
+        } else {
+            $actionClass = MainAction::class;
+        }
+        return [
+            'index' => $actionClass,
+        ];
+    }
 
     public function __construct(
             $id, 
             $module, 
-            UserReadRepository $userRepository,
-            RequestStandReadRepository $requestStandReadRepository,
             $config = []
             )
-    {
+    {      
         parent::__construct($id, $module, $config);
-        $this->userRepository = $userRepository;
-        $this->requestStandReadRepository = $requestStandReadRepository;
-    }
-    
-    public function actionIndex()
-    {
-        return $this->render('index',[
-            'membersCount' => $this->userRepository->getAllMembers()->getCount(),
-            'standsCount' => $this->requestStandReadRepository->getActiveStands()->getCount()
-        ]);
     }
 }

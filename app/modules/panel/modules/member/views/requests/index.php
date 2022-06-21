@@ -35,6 +35,7 @@ $this->title = Yii::t('app/title','My requests');
         ]) ?>
         <?= Html::button(t('Add application'),[
             'id' => 'get-form-request',
+            'data-contract' => $contractId,
             'class' => 'btn btn-secondary'
             ]) ?>
     </p>
@@ -62,9 +63,9 @@ $this->title = Yii::t('app/title','My requests');
                     ],
                     'filterModel' => $searchModel,
                     'columns' => [                                               [
-                      'attribute' => 'formId',
+                      'attribute' => 'form_id',
                       'label' => Yii::t('app','Form'),
-                      'filter' => FormsHelper::formsList(),                        
+                      'filter' => $searchModel->formsListForExhibition($exhibitionId),
                       'value' => 'header'
                     ],
                     /*    [
@@ -89,9 +90,13 @@ $this->title = Yii::t('app/title','My requests');
                         
                         [
                             'class' => ActionColumn::class,
-                            'width' => '120px',
+                            'width' => '160px',
                             'hAlign' => GridView::ALIGN_LEFT,
-                            'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;&nbsp;{inform}',  
+                            'template' => '<span class="action__wrapper">{view}</span>
+                                           <span class="action__wrapper">{update}</span>
+                                           <span class="action__wrapper">{delete}</span>
+                                           <span class="action__wrapper">{pdf}</span>
+                                           <span class="action__wrapper">{inform}</span>',
                             'buttons' => [
                                 'inform' => function ($url, $model, $key) {
                             
@@ -107,7 +112,21 @@ $this->title = Yii::t('app/title','My requests');
                                     ];                                  
                                     $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
                                     return Html::a($icon, ['#'],$options);                            
-                                },                                
+                                },     
+                                'pdf' => function ($url, $model, $key) {
+                                      /** @var Request $model */
+                                  $title = t('Open for print');
+                                  $iconName = "print";
+                                  $url = Url::current(['print', 'id' => $key]);
+                                  $options = [
+                                      'title' => $title,
+                                      'aria-label' => $title,
+                                //      'data-toggle' => 'modal',
+                               //       'data-target' => '#modal__information',                                   
+                                  ];                                  
+                                  $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                  return Html::a($icon, $url,$options);                            
+                              },                                         
                             ],
                             'visibleButtons' => [
                                 'delete' => function ($model) {

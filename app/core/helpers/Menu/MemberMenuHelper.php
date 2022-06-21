@@ -2,6 +2,8 @@
 
 namespace app\core\helpers\Menu;
 
+use app\core\manage\Auth\UserIdentity;
+use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 
 /**
@@ -11,10 +13,19 @@ use app\models\ActiveRecord\Exhibition\Exhibition;
  */
 class MemberMenuHelper implements MenuHelperInterface
 {
-    //put your code here
-    public static function getMenu($params = array()): array
+    /**
+     * 
+     * @var Company
+     */
+    private static $company;
+    
+    public static function getMenu($params = []): array
     {
-        
+        if (key_exists('user', $params)) {
+            /** @var UserIdentity $user */
+            $user = $params['user'];
+            self::$company = $user->getCompany();
+        }        
         return [
                     'items' => [
                         [
@@ -43,23 +54,34 @@ class MemberMenuHelper implements MenuHelperInterface
                 ];
     }
     
-    public static function getExhibitionList():array
+    private static function getExhibitionList():array
     {
         /** @var Exhibition $exhibition */
         $menuList = [];
-        $exhibitions = Exhibition::find()->orderBy(['end_date' => SORT_DESC])->all();
+        $exhibitions = self::$company->getAvailableExhibitions();
         foreach ($exhibitions as $exhibition) {
-            array_push($menuList,
-                [
-                    'label' => $exhibition->title,
-                    'icon' => 'icon-exhibitions',
-                    'items' => [
-                        [
-                            'label' => t('My applications','menu'), 'icon' => 'icon-requests', 'url' => ["/panel/member/{$exhibition->id}/requests"],
-                        ],
-                    ]   
-                ]                
-            );
+            $menu = [
+                'label' => $exhibition->title,
+                'icon' => 'icon-exhibitions',                
+            ];
+            
+            $menuItems = [];
+            $contracts = $exhibition->getConrtactsForCompany(self::$company->id);
+            foreach ($contracts as $contract) {
+                $menuItems[] = [
+                    'contract' => $contract->number ,
+                    'label' => t('My applications','menu'), 
+                    'icon' => 'icon-requests', 
+                    'url' => ["/panel/member/{$exhibition->id}/requests/{$contract->id}"],
+                ];
+            }
+            $menuItems[] = [
+                'label' => t('Documents','menu'), 
+                'icon' => 'file', 
+                'url' => ["/panel/member/{$exhibition->id}/documents"],                
+            ];
+            $menu['items'] = $menuItems;
+            array_push($menuList,$menu);
         }
         return $menuList;
     }

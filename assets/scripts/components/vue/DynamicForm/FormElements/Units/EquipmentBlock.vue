@@ -22,7 +22,7 @@
                     <td>x{{ val.price | separate }} {{ dic.valute }}</td>
                     <td>={{ (val.price * val.count) | separate }} {{ dic.valute }}</td>                    
                 </tr>
-                <tr>
+                <tr v-if="isComputed">
                     <td colspan="5" class="total">{{ dic.total.totalMsg }}: {{ total | separate }} {{ dic.valute }}</td>
                 </tr>
             </tbody>
@@ -32,6 +32,7 @@
 </template>
 <script>
 import { unitMixin } from './Mixins/unitMixin'
+import { computedMixin } from './Mixins/computedMixin'
 import { numberFormatMixin } from './Mixins/numberFormatMixin'
 import { textTranslateMixin } from './Mixins/textTranslateMixin'
 import axios from "axios"
@@ -51,15 +52,21 @@ export default {
             categories: [],
             bus: new Vue(),// Шина событий
             values: val,
-            isComputed: true,
         }
     },
     computed: {
         total() {
             let total = 0;
-            const keys = Object.keys(this.values);
+            if (!this.isComputed ) {
+                return total;
+            }
+            let currentVal;
+            const keys = Object.keys(this.values);            
             for (const key of keys) {
-                total+= this.values[key].count * this.values[key].price;
+                currentVal = Number.parseInt(this.values[key].count) * Number.parseInt(this.values[key].price);
+                if (!isNaN(currentVal)) {
+                    total+= currentVal;
+                }
             }
             return total;
         }
@@ -67,7 +74,8 @@ export default {
     mixins: [
         unitMixin,
         numberFormatMixin,
-        textTranslateMixin
+        textTranslateMixin,
+        computedMixin,
     ],
     components: {
         EquipmentList

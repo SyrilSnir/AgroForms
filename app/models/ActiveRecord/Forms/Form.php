@@ -8,6 +8,7 @@ use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\Forms\Query\FormQuery;
 use app\models\AddSlugTrait;
 use app\models\Forms\Manage\Forms\FormsForm;
+use app\models\ActiveRecord\Forms\Field;
 use app\models\TimestampTrait;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -38,7 +39,7 @@ use yii\db\ActiveRecord;
  * @property string $headerName Заголовок
  * 
  * @property FormType $formType Тип формы
- * @property Fields[] $formFields Тип формы
+ * @property Field[] $formFields Тип формы
  * @property Valute $valute Валюта
  * @property Exhibition $exhibition Выставка, связанная с формой
  * 
@@ -95,7 +96,7 @@ class Form extends ActiveRecord
         $model->valute_id = $form->valute;  
         $model->exhibition_id = $form->exhibitionId;
         $model->toDraft();
-        return $form;
+        return $model;
     }
     
 /**
@@ -143,7 +144,7 @@ class Form extends ActiveRecord
     
     public function getFormFields()
     {
-        return $this->hasMany(Field::class, ['form_id' => 'id']);
+        return $this->hasMany(Field::class, ['form_id' => 'id'])->orderBy(['order' => SORT_ASC]);
     }
 
 

@@ -22,6 +22,16 @@ use yii\web\View;
 
 $this->title = Yii::t('app/title', 'Requests list');
 $action = Yii::$app->getRequest()->getPathInfo();
+$actionId = Yii::$app->controller->action->id;
+
+$isAcceptDeclineShowed = ($actionId === 'new');
+$isPayShowed = (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
+    Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU));
+
+$isDeleteShowed = (!Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&
+                                        !Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) &&
+                                        !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU));
+
 $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
 $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
 $columnsConfig = [
@@ -54,6 +64,7 @@ $columnsConfig = [
                   // 'header:text:' . Yii::t('app','Form'),
                     [
                         'attribute' => 'status',
+                        'width' => '160px',
                         'label' => Yii::t('app','Status'),
                         'format' => 'raw',
                         'filter' => RequestStatusHelper::statusList(false),
@@ -73,8 +84,19 @@ $columnsConfig = [
                     [
                         'class' => ActionColumn::class,
                         'hAlign' => GridView::ALIGN_LEFT,
-                        'width' => '160px',
-                        'template' => '{view}{update}{change_status}{delete}&nbsp;&nbsp;{partial_paid}&nbsp;{paid}{inform}{accept}&nbsp;{reject}{pdf}', 
+                        'width' => '260px',
+                        'template' => '<span class="action__wrapper">{view}</span>' .
+(Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU) ? '<span class="action__wrapper">{change}</span>' : '').
+                        
+($isDeleteShowed ?                     '<span class="action__wrapper">{delete}</span>' : '').
+                        
+($isPayShowed ?                        '<span class="action__wrapper">{partial_paid}</span>
+                                       <span class="action__wrapper">{paid}</span>' : '').
+                        
+($isAcceptDeclineShowed ?               '<span class="action__wrapper">{accept}</span>
+                                       <span class="action__wrapper">{reject}</span>' : '') .
+                        
+                                       '<span class="action__wrapper">{pdf}</span>',
                         'buttons' => [
                             'accept' => function ($url, $model, $key) {
                                     /** @var Request $model */
@@ -117,32 +139,32 @@ $columnsConfig = [
                             'partial_paid' => function ($url, $model, $key) {
                                     /** @var Request $model */
                                 $title = t('Partial paid','requests');
-                                $iconName = "usd";
+                                $iconName = "icon-ppay";
                                 $url = Url::current(['partial-pay', 'id' => $key]);
                                 $options = [
                                     'title' => $title,
                                     'aria-label' => $title,
                                 ];                                  
-                                $icon = Html::tag('span', '', ['class' => "fa fa-$iconName"]);
+                                $icon = Html::tag('span', '', ['class' => "fa $iconName"]);
                                 return Html::a($icon, $url,$options);                            
                             },                                     
                             'paid' => function ($url, $model, $key) {
                                     /** @var Request $model */
                                 $title = t('Application paid','requests');
-                                $iconName = "money";
+                                $iconName = "icon-pay";
                                 $url = Url::current(['pay', 'id' => $key]);
                                 $options = [
                                     'title' => $title,
                                     'aria-label' => $title,
                                 ];                                  
-                                $icon = Html::tag('span', '', ['class' => "fa fa-$iconName"]);
+                                $icon = Html::tag('span', '', ['class' => "fa $iconName"]);
                                 return Html::a($icon, $url,$options);                            
                             },  
-                            'change_status' => function ($url, $model, $key) {
+                            'change' => function ($url, $model, $key) {
                                     /** @var Request $model */
-                                $title = t('Change status','requests');
+                                $title = t('Edit');
                                 $iconName = "pencil";
-                                $url = Url::current(['change-status', 'id' => $key]);
+                                $url = Url::current(['edit', 'id' => $key]);
                                 $options = [
                                     'title' => $title,
                                     'aria-label' => $title,
@@ -152,12 +174,7 @@ $columnsConfig = [
                             },
                         ],
                         'visibleButtons' => [
-                            'change_status' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),
-                            'inform' => function ($model) {
-                                /** @var Request $model */
-                                return Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU) &&
-                                        $model->status === BaseRequest::STATUS_REJECTED;
-                            },
+                            'change' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),
                             'paid' => function($model) {
                                 /** @var Request $model */
                                 return (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
@@ -183,10 +200,7 @@ $columnsConfig = [
                                         $model->status === BaseRequest::STATUS_CHANGED) &&
                                         !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
                             },                                     
-                            'update' => function ($model) {
-                                /** @var Request $model */
-                                return ($model->status === BaseRequest::STATUS_DRAFT);
-                            },
+                            'update' => false,
                             'delete' => function ($model) {
                                 /** @var Request $model */
                                 return !Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&

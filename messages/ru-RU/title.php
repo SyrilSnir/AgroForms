@@ -20,6 +20,7 @@ return [
     'Directory of units' => 'Справочник единиц измерения',
     'Directory of valutes' => 'Справочник валют',
     'New member' => 'Новый участник',
+    'Edit member' => 'Редактировать участника',
     'New exhibition' => 'Новая выставка',
     'New equipment' => 'Новое оборудование',
     'Edit equipment' => 'Изменить оборудование',
@@ -51,5 +52,10 @@ return [
     'New price rule' => 'Новое ценовое правило',
     'Edit price rule' => 'Изменить ценовое правило',    
     'Show form' => 'Просмотр формы',
-    'To write a message' => 'Написать сообщение'
+    'To write a message' => 'Написать сообщение',
+    'Contracts list' => 'Список договоров',
+    'New contract' => 'Новый договор',
+    'List of documents' => 'Список документов',
+    'New document' => 'Новый документ',
+    'Edit document' => 'Редактирование документа',
 ];

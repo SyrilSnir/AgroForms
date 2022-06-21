@@ -1,10 +1,10 @@
 <?php
 
 use app\core\helpers\View\Request\RequestStatusHelper;
+use app\core\manage\Auth\Rbac;
 use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\Forms\Requests\ChangeStatusForm;
-use yii\helpers\ArrayHelper;
+use app\models\Forms\Requests\EditRequestForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -12,11 +12,17 @@ use yii\widgets\DetailView;
 
 /* @var $this View */
 /* @var $model Request */
-/* @var $statusForm ChangeStatusForm */
+/* @var $statusForm EditRequestForm */
 /* @var array $logs */
+/* @var $requestHtml string */
 $this->title = t('Application №','requests') . $model->id;
 $attributes = [
     'formType.name:text:' . t('Form type', 'requests'),
+    [
+        'attribute' => 'contracr',
+        'label' => t('Number of contract'),
+        'value' => $model->contract ? $model->contract->number : ''
+    ],     
     [
         'attribute' => 'company',
         'label' => t('Company','company'),
@@ -27,6 +33,7 @@ $attributes = [
         'label' => t('Member email','user'),
         'value' => $model->user->email
     ],    
+    
     [
         'attribute' => 'status',
         'label' => t('Status'),
@@ -36,11 +43,8 @@ $attributes = [
     
 ];
 
-if (!empty($dopAttributes)) {
-    $attributes = ArrayHelper::merge($attributes, $dopAttributes);
-}
 ?>
-<div class="view">
+<div class="request__view">
     <?php if (Yii::$app->session->hasFlash('success')):?>
     <div class="alert alert-primary" role="alert">
             <?php echo Yii::$app->session->getFlash('success')?>
@@ -67,7 +71,7 @@ if (!empty($dopAttributes)) {
     <p>
         <?= Html::a(t('Back'), Url::previous(), ['class' => 'btn btn-secondary']) ?>
     </p>      
-
+    <?php if (!Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU)):?>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title"><?php echo $this->title ?></h3>        
@@ -79,6 +83,9 @@ if (!empty($dopAttributes)) {
             ]); ?>
         </div>
     </div>
+    <?php endif ; ?>
+    <?php  echo $requestHtml ?>
+    
 <?php
  /** @var ApplicationRejectLog $activeMessage */
  /** @var ApplicationRejectLog[] $historyMessages */
@@ -115,3 +122,4 @@ $historyMessages = $logs['history'];
 </div>    
 </div>
 <?php endif; ?>
+

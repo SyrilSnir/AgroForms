@@ -99,7 +99,7 @@ $this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
                     ],                    
                     [
                         'value' => $profile->contacts->chief_email,
-                        'label' => t('Head email','company'),
+                        'label' => t('Head E-mail','company'),
                     ], 
                     [
                         'group'=>true,
@@ -124,7 +124,7 @@ $this->title = Yii::t('app/title','Company info') .': ' . $profile->name;
                     ],                    
                     [
                         'value' => $profile->contacts->manager_email,
-                        'label' => t('Manager\'s email','company'),
+                        'label' => t('Manager\'s E-mail','company'),
                     ], 
                     [
                         'group'=>true,

@@ -13,7 +13,11 @@ use yii\widgets\ActiveForm;
 /** @var View $this  */
 /** @var MemberForm $model  */
 /** @var bool $update */
-$this->title = Yii::t('app/title', 'New member')
+if (!$update) {
+    $this->title = Yii::t('app/title', 'New member');
+} else {
+    $this->title = Yii::t('app/title', 'Edit member');    
+}
 ?>
 
 <div class="create-form">

@@ -1,7 +1,7 @@
 <template>
 <div class="form-group">
     <select  @change="change" :name="id" :id="id" class="form-control" multiple v-model="selected">
-        <option v-for="element in enums" :value="element.value">{{ element.name }}</option>
+        <option v-for="element in enums" :value="element.id">{{ element.name }}</option>
     </select>
 </div>
 
@@ -26,8 +26,10 @@ export default {
                    return 0;
                }
                let total = 0;
-               for (const el of this.selected) {
-                   total+= +el;
+               for (const el of this.enums) {
+                   if(this.selected.indexOf(el.id) >= 0) {
+                        total+= +el.value;
+                   }
                }
                return  total;
            }

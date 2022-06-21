@@ -59,6 +59,8 @@ class FieldService
                 $form->elementTypeId, 
                 $form->fieldGroupId,
                 $form->order,
+                $form->showInRequest,
+                $form->showInPdf,
                 $form->defaultValue,
                 $parameters
                 );
@@ -82,6 +84,8 @@ class FieldService
                 $form->elementTypeId, 
                 $form->fieldGroupId,
                 $form->order,
+                $form->showInRequest,
+                $form->showInPdf,
                 $form->defaultValue,
                 $parameters
                 );
@@ -125,4 +129,3 @@ class FieldService
         $form->save();
     }
 }
-

@@ -74,7 +74,7 @@ class Stand extends ActiveRecord
             ): self
     {
         $stand = new self();
-        $this->form_id = $formId;
+        $stand->form_id = $formId;
         $stand->name = $name;
         $stand->description = $description;
         $stand->name_eng = $nameEng;

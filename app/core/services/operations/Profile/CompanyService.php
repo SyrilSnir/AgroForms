@@ -70,8 +70,6 @@ class CompanyService
                 $legalAddress,
                 $postalAddress                
                 );
-        $this->company->save();
-        
-    }
-
+        $this->company->save();        
+    }   
 }

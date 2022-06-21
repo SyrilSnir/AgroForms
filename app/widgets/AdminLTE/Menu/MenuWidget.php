@@ -87,9 +87,12 @@ class MenuWidget extends Menu
         if (isset($item['items'])) {
             $labelTemplate = '<a class="nav-link" href="{url}">{icon} <p>{label}<i class="arrow"></i></p></a>';
             $linkTemplate = '<a class="nav-link" href="{url}">{icon} <p>{label}<i class="arrow"></i></p></a>';
+        } elseif (isset($item['contract'])) {
+            $labelTemplate = '<p class="contract">'. t('Contract','contracts').' № '. 'ggg' .'</p>' . $this->labelTemplate;
+            $linkTemplate =  '<p class="contract">'. t('Contract','contracts').' № '. $item['contract'] .'</p>' . $this->linkTemplate;
         } else {
             $labelTemplate = $this->labelTemplate;
-            $linkTemplate = $this->linkTemplate;
+            $linkTemplate =  $this->linkTemplate;            
         }
 
         $template = ArrayHelper::getValue($item, 'template', isset($item['url']) ? $linkTemplate : $labelTemplate);
@@ -206,7 +209,11 @@ class MenuWidget extends Menu
             }
             $route = ltrim($route, '/');
             if ($route != $this->route && $route !== $this->noDefaultRoute && $route !== $this->noDefaultAction) {
-                return false;
+               // $route = preg_replace('#/\d#', '', $route) . '/index';
+                $scriptRoute = ltrim(Yii::$app->request->getUrl(), '/');
+                if ($route != $scriptRoute) { 
+                    return false;
+                }
             }
             unset($item['url']['#']);
             if (count($item['url']) > 1) {

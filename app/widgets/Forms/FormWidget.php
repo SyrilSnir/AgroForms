@@ -19,6 +19,12 @@ abstract class FormWidget extends Widget
      * @var int
      */
     protected $formId;
+              
+    /**
+     *
+     * @var int
+     */
+    protected $contractId;    
     /**
      *
      * @var UserIdentity
@@ -31,18 +37,25 @@ abstract class FormWidget extends Widget
      */
     protected $readOnly;
     
-    public function setUser(UserIdentity $user)
+    public function setUser(UserIdentity $user): void 
     {
         $this->user = $user;
     }
     
-    public function setFormId(int $formId)
+    public function setFormId(int $formId): void 
     {
         $this->formId = $formId;
     }
     
-    public function setReadOnly(bool $val)
+    public function setReadOnly(bool $val): void 
     {
         $this->readOnly = $val;
-    }    
+    }
+    
+    public function setContractId(int $contractId): void 
+    {
+        $this->contractId = $contractId;
+    }
+
+
 }

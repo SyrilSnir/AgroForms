@@ -20,7 +20,11 @@ trait GetFormsListTrait
 {
     public function formsList():array
     {
-        return ArrayHelper::map(Form::find()->actual()->andWhere(['!=', 'form_type_id' , FormType::SPECIAL_STAND_FORM])->orderBy('id')->asArray()->all(),'id','name'); 
-        
+        return ArrayHelper::map(Form::find()->actual()->orderBy('id')->asArray()->all(),'id','name');        
     }
+    
+    public function formsListForExhibition(int $exhibitionId):array
+    {
+        return ArrayHelper::map(Form::find()->actual()->active()->byExgibition($exhibitionId)->orderBy('id')->asArray()->all(),'id','name');        
+    }    
 }

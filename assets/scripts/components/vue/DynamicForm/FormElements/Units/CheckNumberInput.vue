@@ -72,8 +72,11 @@
                if (!this.isComputed || !this.checked) {
                    return 0;
                }
-               let val = +this.val
-               return val * (+this.unitPrice)
+               let val = +this.val * (+this.unitPrice);
+               if (isNaN(val)) {
+                   return 0;
+               }
+               return val;
            }
        },       
        created() {

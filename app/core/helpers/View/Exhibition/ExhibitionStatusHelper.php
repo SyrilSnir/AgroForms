@@ -23,10 +23,8 @@ class ExhibitionStatusHelper extends StatusHelper
     public static function statusList() :array
     {
         $statusList = [
-            Exhibition::STATUS_ACTIVE => t('Active','exhibitions'),
             Exhibition::STATUS_COMPLETED => t('Completed','exhibitions'),
-            Exhibition::STATUS_DECLINED => t('Declined','exhibitions'),
-            Exhibition::STATUS_PROJECT => t('Project','exhibitions')
+            Exhibition::STATUS_ACTIVE => t('Active','exhibitions'),
         ];
         return $statusList;
     }

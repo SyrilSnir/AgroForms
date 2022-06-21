@@ -40,5 +40,10 @@ return [
     'Viewing requests' => 'Просмотр заявок',
     'Feedback form' => 'Форма обратной связи',
     'Feedback' => 'Обратная связь',
+    'Contracts' => 'Договоры',
+    'Documents' => 'Документы',
+    'New applications' => 'Новые заявки',
+    'Accepted applications' => 'Принятые заявки',
+    'Rejected applications' => 'Отклоненные заявки',
 ];
 

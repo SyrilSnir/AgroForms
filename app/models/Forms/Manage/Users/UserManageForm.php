@@ -79,7 +79,8 @@ class UserManageForm extends ActiveRecord
                 'unique',
                 'targetClass'=> User::class,
                 'filter' => ['deleted' => false, 'login' => $this->login],
-                'message' => t('The user with the specified data is already registered')
+                'message' => t('The user with the specified data is already registered'),
+                'on' => self::SCENARIO_DEFAULT
            ],
         ];
     }

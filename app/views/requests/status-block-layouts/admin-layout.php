@@ -2,11 +2,11 @@
 
 use app\core\helpers\View\Request\RequestStatusHelper;
 use app\models\ActiveRecord\Users\UserType;
-use app\models\Forms\Requests\ChangeStatusForm;
+use app\models\Forms\Requests\EditRequestForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/* @var $statusForm ChangeStatusForm */
+/* @var $statusForm EditRequestForm */
 ?>    
 <div class="change-status-block">
         

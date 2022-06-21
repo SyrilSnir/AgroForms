@@ -2,7 +2,7 @@
 <div class="form-group">
     <label class="control-label">{{ titleLabel }}</label>
     <select  @change="change" :name="id" :id="id" class="form-control" v-model="selected">
-        <option v-for="element in enums" :value="element.value">{{ getName(element.name, element.name_eng) }}</option>
+        <option v-for="element in enums" :value="element.id">{{ getName(element.name, element.name_eng) }}</option>
     </select>
     <div class="field__desc">{{ descriptionLabel }}</div>
 </div>
@@ -27,10 +27,19 @@ export default {
        },  
        computed: {
            total() {
+               let total = 0;
                if (!this.isComputed) {
+                   return total;
+               }               
+               for (const el of this.enums) {
+                   if (el.id == this.selected) {
+                       total = +el.value;
+                   }                   
+                }
+               if (isNaN(total)) {
                    return 0;
                }
-               return  +this.selected;
+               return total;
            }
        },       
        created() {

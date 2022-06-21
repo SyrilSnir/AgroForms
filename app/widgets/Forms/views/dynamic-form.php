@@ -5,10 +5,15 @@ use app\widgets\Forms\assets\DynamicFormAsset;
 
 /** @var UserIdentity $user */
 /** @var bool $readOnly */
+/** @var int $contractId */
 
 DynamicFormAsset::register($this);
 ?>
 <div class="dynamic-form">
-    <div id="dynamic-form-app" data-read_only="<?php echo $readOnly ?>">
+    <div 
+        id="dynamic-form-app" 
+        data-read-only="<?php echo $readOnly ?>"
+        data-contract-id="<?php echo $contractId ?>"
+        >
     </div>
 </div>

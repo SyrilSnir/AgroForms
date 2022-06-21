@@ -61,6 +61,7 @@ return [
                         'app/error' => 'error.php',
                         'app/user' => 'user.php',
                         'app/company' => 'company.php',
+                        'app/contracts' => 'contracts.php',
                         'app/menu' => 'menu.php',
                         'app/requests' => 'requests.php',
                         'app/equipment' => 'equipment.php',

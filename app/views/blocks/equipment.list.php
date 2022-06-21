@@ -2,11 +2,15 @@
 
 /** @var array $values */
 /** @var string $valute */
+/** @var bool $isComputed Вычисляемое поле */
 $fullPrice = 0;
 ?>
 <table class="table table-bordered">
-    <thead>                  
-      <tr>                      
+    <thead>
+        <tr>            
+            <th style="text-align: center" colspan="5"><?php echo t('Add. equipment','menu')?></th>
+        </tr>
+      <tr> 
           <th style="width: 15px"><?php echo t('Code','equipment') ?></th>
         <th><?php echo t('Name','equipment') ?></th>
         <th><?php echo t('Count','equipment') ?></th>
@@ -28,10 +32,12 @@ $fullPrice = 0;
           <td><?php echo number_format($count, 0, '.', ' ') ?></td>
       </tr>              
       <?php endforeach; ?>
-      <tr style="background: lightgoldenrodyellow">
+      <?php if($isComputed):  ?>
+      <tr style="font-weight: 600">
           <td colspan="4"><?php echo t('Total','requests') ?>:</td>
           <td><?php echo number_format($fullPrice, 0, '.', ' ') ?></td>
       </tr>
+      <?php endif; ?>
       </tbody>
 
 </table>

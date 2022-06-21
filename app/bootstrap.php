@@ -2,6 +2,9 @@
 
 Yii::setAlias('@views', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
         'app' .DIRECTORY_SEPARATOR .'views');
+Yii::setAlias('@blocks', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
+        'app' .DIRECTORY_SEPARATOR . 'views' .
+        DIRECTORY_SEPARATOR .'blocks');
 Yii::setAlias('@modules', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
         'app' .DIRECTORY_SEPARATOR .'modules');
 Yii::setAlias('@mail', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
@@ -31,6 +34,12 @@ Yii::setAlias('@formsUploadPath', dirname(__DIR__)
         . DIRECTORY_SEPARATOR . 'upload'
         . DIRECTORY_SEPARATOR . 'forms'
         );
+Yii::setAlias('@documentsUploadPath', dirname(__DIR__)
+        . DIRECTORY_SEPARATOR . 'web' 
+        . DIRECTORY_SEPARATOR . 'upload'
+        . DIRECTORY_SEPARATOR . 'documents'
+        );
 Yii::setAlias('@uploadUrl','/upload');
 Yii::setAlias('@standUploadUrl','/upload/stand');
 Yii::setAlias('@formsUploadUrl','/upload/forms');
+Yii::setAlias('@documentsUploadUrl','/upload/documents');

@@ -3,7 +3,7 @@ export default class FormManager {
     constructor() {
         this.$form = $('#status-change-form');
         this.$formButtons = this.$form.find('.status-change-btn');
-        this.$statusInput = $('#changestatusform-status');
+        this.$statusInput = $('#editrequestform-status');
         this.$formButtons.on('click',this.changeStatus.bind(this));
     }
     changeStatus(e) {

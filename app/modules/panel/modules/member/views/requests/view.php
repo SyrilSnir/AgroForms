@@ -10,6 +10,7 @@ use yii\widgets\DetailView;
 
 /* @var $this View */
 /* @var $model Request */
+/* @var $requestHtml string */
 //dump($model->requestForm); die();
 $this->title = t('Application №','requests') . $model->id;
 $attributes = [

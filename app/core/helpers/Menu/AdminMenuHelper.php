@@ -29,23 +29,28 @@ class AdminMenuHelper implements MenuHelperInterface
                                     'label' => Yii::t('app/menu', 'Request management'),
                                     'icon' => 'icon-requests',
                                     'url' => ['/panel/requests']
-                                ],          
+                                ],   
+                                [
+                                    'label' => Yii::t('app/menu', 'Contracts'),
+                                    'icon' => 'icon-requests',
+                                    'url' => ['/panel/contracts']
+                                ],
+                                [
+                                    'label' => Yii::t('app/menu', 'Documents'),
+                                    'icon' => 'file',
+                                    'url' => ['/panel/documents']
+                                ],                                 
                             ]
                         ],
-              
                         [
-                            'label' => Yii::t('app/menu', 'Form management'),
-                            'icon' => 'tasks',
+                            'label' => Yii::t('app/menu', 'Request management'),
+                            'icon' => 'arrow-right',
                             'items' => [
-                                [
-                                    'label' =>  Yii::t('app/menu', 'Standard stand'),
-                                    'icon' => 'share',
-                                    'items' => [
-                                    ]
-                                ],                                
-                            ]
-                        ],                         
-  
+                                ['label' => Yii::t('app/menu', 'New applications'), 'icon' => 'icon-requests', 'url' => ['/panel/requests/new'],],
+                                ['label' => Yii::t('app/menu', 'Accepted applications'), 'icon' => 'icon-requests', 'url' => ['/panel/requests/accepted'],],
+                                ['label' => Yii::t('app/menu', 'Rejected applications'), 'icon' => 'icon-requests', 'url' => ['/panel/requests/rejected'],],
+                            ]   
+                        ],                        
                         ['label' => Yii::t('app/menu', 'Geography'), 
                             'icon' => 'icon-geo', 
                             'items' => [

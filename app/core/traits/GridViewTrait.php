@@ -8,9 +8,11 @@
 
 namespace app\core\traits;
 
+use app\models\Data\PageDataProvider;
 use app\models\Forms\RowsCountForm;
 use app\models\SearchModels\SearchInterface;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 
 /**
@@ -34,20 +36,32 @@ trait GridViewTrait
     public function actionIndex() 
     {
         Url::remember();
-        $dataProvider = $this->searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $this->getDataProvider();
+        $pageDataProvider = $this->configurePagination($dataProvider);
+        return $this->render('index',[            
+            'searchModel' => $this->searchModel,
+            'dataProvider' => $pageDataProvider->getDataProvider(),
+            'rowsCountForm' => $pageDataProvider->getRowsCountForm(),
+            'pagination' => $this->showPagination
+        ]);
+    } 
+    
+    protected function getDataProvider() : ActiveDataProvider
+    {
+        return $this->searchModel->search(Yii::$app->request->queryParams);
+    }
+    
+    protected function configurePagination(ActiveDataProvider $dataProvider): PageDataProvider
+    {
+        $rowsCountForm = new RowsCountForm();        
         if ($this->showPagination) {
-            $rowsCountForm = new RowsCountForm();        
             if (!($rowsCountForm->load(Yii::$app->request->get()) && $rowsCountForm->validate())) {       
                 $rowsCountForm->rowsCount = RowsCountForm::DEFAULT_ROWS_COUNT;
             }   
             $dataProvider->pagination = ['pageSize' => $rowsCountForm->rowsCount];
         }
-        return $this->render('index',[            
-            'searchModel' => $this->searchModel,
-            'dataProvider' => $dataProvider,
-            'rowsCountForm' => $rowsCountForm,
-            'pagination' => $this->showPagination
-        ]);
-    }    
+        $pageDataProvider = PageDataProvider::create($dataProvider, $rowsCountForm);
+        return $pageDataProvider;
+    }
     
 }

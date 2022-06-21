@@ -76,7 +76,7 @@ switch ($model->user_type_id) {
         <?php 
             $activateFornModel = new ActivateForm($model->email);
             $activateForm = ActiveForm::begin([
-                'action' => Url::to(['/manage/users/invite', 'id' => $model->id ])
+                'action' => Url::to(['/panel/users/invite', 'id' => $model->id ])
             ]);
         ?>            
             <div class="card card-secondary">

@@ -8,7 +8,7 @@ use app\core\services\operations\View\Requests\RequestViewFactory;
 use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\Forms\Requests\ChangeStatusForm;
+use app\models\Forms\Requests\EditRequestForm;
 use app\models\SearchModels\Requests\ManagerApplicationSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use kartik\mpdf\Pdf;
@@ -54,7 +54,7 @@ class ApplicationController extends BaseAdminController
         /** @var Request $model */
         $model = $this->findModel($id);
         $requestForm = $model->requestForm;
-        $statusForm = new ChangeStatusForm($model->id, $model->status);
+        $statusForm = new EditRequestForm($model->id, $model->status);
         $viewService = RequestViewFactory::getViewService($model);
         $dopAttributes = $viewService->getFieldAttributes($requestForm);                
         if ($statusForm->load(Yii::$app->request->post()) && $statusForm->validate()) {

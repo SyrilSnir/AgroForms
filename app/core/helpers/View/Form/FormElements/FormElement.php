@@ -1,0 +1,157 @@
+<?php
+
+namespace app\core\helpers\View\Form\FormElements;
+
+use app\core\providers\Data\FieldEnumProvider;
+use app\models\ActiveRecord\Forms\ElementType;
+use app\models\ActiveRecord\Forms\Field;
+use app\models\Data\Languages;
+/**
+ * Description of FormElement
+ *
+ * @author kotov
+ */
+abstract class FormElement implements FormElementInterface
+{
+    protected string $langCode;
+    /**
+     * 
+     * @var Field
+     */
+    protected $field;
+    
+    /**
+     * 
+     * @var array
+     */
+    protected $fieldParameters;
+    
+    /**
+     * 
+     * @var FieldEnumProvider|null
+     */
+    protected $fieldEnumProvider; 
+    
+    public function __construct(Field $field, FieldEnumProvider $enumProvider = null, string $langCode = Languages::RUSSIAN)
+    {
+        $this->field = $field;
+        $this->fieldParameters = json_decode($this->field->parameters, true);
+        $this->langCode = $langCode;
+        $this->fieldEnumProvider = $enumProvider;
+    }
+    
+    public function getData(array $valuesList = []): array
+    {
+        $fieldList = $this->field->toArray();
+        return $this->transformData($fieldList, $valuesList);
+        
+    }  
+    
+    public function getFieldId(): int
+    {
+        return $this->field->id;
+    }
+    
+    public function getField(): Field
+    {
+        return $this->field;
+    }    
+    
+    public function getOrder(): int
+    {
+        return $this->field->order;
+    }
+
+    public function getParameters(): array
+    {
+        return $this->fieldParameters;
+    }
+    
+    public function isComputed(): bool
+    {
+        return !!$this->field->getFieldParams()->isComputed;
+    }
+
+
+    public function getTranslatableParameter(string $parameterName): string 
+    {
+        if (!key_exists($parameterName, $this->fieldParameters)) {
+            return '';
+        }
+        if ($this->langCode == Languages::RUSSIAN) {
+            return $this->fieldParameters[$parameterName];
+        }
+        $parameterEng = $parameterName . 'Eng';
+        if (key_exists($parameterEng, $this->fieldParameters) && !empty($this->fieldParameters[$parameterEng])) {
+            return $this->fieldParameters[$parameterEng];
+        }
+        return $this->fieldParameters[$parameterName];
+    }
+
+    public function isShowInRequest(): bool 
+    {
+        return (bool) $this->field->showed_in_request;
+    }
+
+    public function isShowInPdf(): bool 
+    {
+        return (bool) $this->field->showed_in_pdf;
+    }
+    
+    public function isDeleted(): bool
+    {
+        return  (bool) $this->field->deleted;
+    }
+
+
+    protected function transformData(array $fieldList, array $valuesList):array
+    {
+        $fieldList['parameters'] = json_decode($fieldList['parameters']);
+        return $fieldList;
+    }
+
+    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN) : ?FormElementInterface
+    {
+        $formElement = null;
+        switch ($field->element_type_id) {
+            case ElementType::ELEMENT_HEADER:
+                $formElement = new ElementHeader($field, null, $langCode);
+                break;
+            case ElementType::ELEMENT_INFORMATION:
+                $formElement = new ElementInformationBlock($field, null, $langCode);
+                break;
+            case ElementType::ELEMENT_INFORMATION_IMPORTANT:
+                $formElement = new ElementImportantInformationBlock($field, null, $langCode);
+                break;
+            case ElementType::ELEMENT_TEXT_INPUT:
+                $formElement = new ElementTextField($field, null, $langCode);
+                break;
+            case ElementType::ELEMENT_NUMBER_INPUT:
+                $formElement = new ElementNumberInput($field, null, $langCode);
+                break;
+            case ElementType::ELEMENT_SELECT:
+                $formElement = new ElementSelect($field, new FieldEnumProvider(), $langCode);
+                break;
+            case ElementType::ELEMENT_RADIO_BUTTON:
+                $formElement = new ElementRadio($field, new FieldEnumProvider(), $langCode);
+                break;
+            case ElementType::ELEMENT_CHECKBOX:
+                $formElement = new ElementCheckbox($field, null, $langCode);
+                break;
+            case ElementType::ELEMENT_CHECK_NUMBER_INPUT:
+                $formElement = new ElementCheckNumberInput($field, null, $langCode);
+                break;
+            case ElementType::ELEMET_ADDITIONAL_EQUIPMENT:
+                $formElement = new ElementAdditionEquipmentBlock($field, null, $langCode);
+                break;
+            case ElementType::ELEMENT_SELECT_MULTIPLE:
+                $formElement = new ElementSelectMultiple($field, new FieldEnumProvider(), $langCode);
+                break;
+            default: 
+                $formElement = new ElementUnknown($field, null, $langCode);
+                break;
+        }
+        
+        return $formElement;
+    }
+}

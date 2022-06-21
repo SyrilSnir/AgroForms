@@ -36,14 +36,16 @@ class MemberForm extends UserManageForm
                     $query->andFilterWhere(['<>', 'id', $userId])
                             ->andWhere(['deleted' => false]);
                 },
-                'message' => t('The user with the specified data is already registered')
+                'message' => t('The user with the specified data is already registered'),
+                'on' => self::SCENARIO_UPDATE
             ],
             ['email','unique',
                 'targetClass'=> User::class,
                 'filter' => function(Query $query) use ($userId) {
                     $query->andFilterWhere(['<>', 'id', $userId]);
                 },
-                'message' => t('The user with the specified data is already registered')
+                'message' => t('The user with the specified data is already registered'),
+                'on' => self::SCENARIO_UPDATE                        
             ],            
         ];     
         return ArrayHelper::merge(parent::rules(), $rules);

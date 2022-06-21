@@ -54,7 +54,8 @@ function managerActivateHandler(e) {
 function getFormRequestHandler(e) {
     const selectedOption = document.querySelector('[name="requests-list"] option:checked');
     let selectedValue = selectedOption.value;
-    location.href = '/panel/member/requests/create?id=' + selectedValue;
+    let contractId = getFormRequestButton.dataset.contract;
+    location.href = '/panel/member/requests/create?formId=' + selectedValue + '&contractId=' + contractId;
 }
 
 const formManager = new FormManager();

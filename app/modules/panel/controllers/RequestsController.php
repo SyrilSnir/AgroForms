@@ -9,19 +9,25 @@
 namespace app\modules\panel\controllers;
 
 use app\core\manage\Auth\Rbac;
+use app\core\manage\Auth\UserIdentity;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
 use app\core\services\Log\ApplicationRejectLogService;
+use app\core\services\operations\Documents\DocumentService;
 use app\core\services\operations\Requests\RequestService;
 use app\core\traits\GridViewTrait;
 use app\core\traits\RequestViewTrait;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\Forms\Manage\Document\DocumentForm;
 use app\models\Forms\Requests\ApplicationRejectForm;
-use app\models\Forms\Requests\ChangeStatusForm;
+use app\models\Forms\Requests\EditRequestForm;
+use app\models\SearchModels\Requests\AcceptedRequestSearch;
 use app\models\SearchModels\Requests\AccountantRequestSearch;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
+use app\models\SearchModels\Requests\NewRequestSearch;
+use app\models\SearchModels\Requests\RejectedRequestSearch;
 use DomainException;
-use kartik\mpdf\Pdf;
 use Yii;
+use yii\base\Action;
 use yii\helpers\Url;
 
 /**
@@ -37,6 +43,13 @@ class RequestsController extends ManageController
      */
     protected  $applicationRejectLogService;
     
+    /**
+     * 
+     * @var DocumentService
+     */
+    protected $documentService;
+
+
     protected $roles = [
         Rbac::PERMISSION_ADMINISTRATOR_MENU,
         Rbac::PERMISSION_MANAGER_MENU,
@@ -52,6 +65,7 @@ class RequestsController extends ManageController
             AccountantRequestSearch $accountantSearchModel,
             RequestReadRepository $repository, 
             RequestService $requestService,
+            DocumentService $documentService,
             ApplicationRejectLogService $applicationRejectLogService,
             $config = array()
             )
@@ -67,19 +81,53 @@ class RequestsController extends ManageController
         $this->readRepository = $repository;
         $this->service = $requestService;
         $this->applicationRejectLogService = $applicationRejectLogService;
+        $this->documentService = $documentService;
     }  
-    
-    public function actionChangeStatus($id) 
+    /**
+     * 
+     * @param Action $action
+     * @return bool
+     */
+    public function beforeAction($action): bool
+    {
+        if ($action->id == 'new') {
+            $this->searchModel = new NewRequestSearch();
+        }
+        if ($action->id == 'rejected') {
+            $this->searchModel = new RejectedRequestSearch();
+        }      
+        if ($action->id == 'accepted') {
+            $this->searchModel = new AcceptedRequestSearch();
+        }         
+        return parent::beforeAction($action);
+    }
+
+    public function actionNew()
+    {
+        return $this->actionIndex();
+    }
+
+    public function actionAccepted()
+    {
+        return $this->actionIndex();        
+    }
+ 
+    public function actionRejected()
+    {
+        return $this->actionIndex();        
+    }
+
+    public function actionEdit($id) 
     {
         /** @var Request $model */
         $model =  $this->findModel($id);
-        $changeStatusForm = new ChangeStatusForm($model->id, $model->status); 
-        if ($changeStatusForm->load(Yii::$app->request->post()) && $changeStatusForm->validate()) {
-            $this->service->changeStatus($changeStatusForm);
+        $editRequestForm = new EditRequestForm($model); 
+        if ($editRequestForm->load(Yii::$app->request->post()) && $editRequestForm->validate()) {
+            $this->service->edit($editRequestForm);
             return $this->redirect(['view', 'id' => $id]);            
         }
-        return $this->render('change-status', [
-            'model' => $changeStatusForm,
+        return $this->render('edit', [
+            'model' => $editRequestForm,
         ]);           
     }
            
@@ -113,12 +161,32 @@ class RequestsController extends ManageController
 
     public function actionInvoice($id)
     {
-        try {
-            $this->service->invoice($id);
-        } catch (DomainException $e) {
-            Yii::$app->session->setFlash('error', $e->getMessage());
-        }        
-        return $this->redirect(Url::previous());        
+        /** @var Request $request */
+        /** @var UserIdentity $user */
+        $documentForm = new DocumentForm();
+        $request = $this->readRepository->findById($id);
+      //  $user = Yii::$app->user->getIdentity();
+        if ($documentForm->load(Yii::$app->request->post()) && $documentForm->validate()) {
+            try {
+                $this->documentService->create($documentForm);
+                $this->service->invoice($id);
+                return $this->redirect(Url::previous());        
+            } catch (DomainException $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }        
+        }
+        $invoiceData = [
+            'title' => '',
+            'titleEng' => '',
+            'description' => 'Счет к договору №' . ($request->contract ? $request->contract->number : ''),
+            'descriptionEng' => 'Invoice to contract No. ' . ($request->contract ? $request->contract->number : ''),
+            'exhibitionId' => $request->exhibition_id,
+            'companyId' => $request->company_id,
+        ];        
+        $documentForm->setAttributes($invoiceData);
+        return $this->render('document-form', [
+            'model' => $documentForm,
+        ]);         
     }
 
     public function actionPay($id)
@@ -140,5 +208,4 @@ class RequestsController extends ManageController
         }        
         return $this->redirect(Url::previous());        
     }  
-
 }
