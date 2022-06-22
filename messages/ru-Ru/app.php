@@ -44,6 +44,7 @@ return [
    'Add form' => 'Добавить форму',
    'Add field' => 'Добавить поле',
    'Category' => 'Категория',
+   'Categories' => 'Категории',
    'Add category' => 'Добавить категорию',
    'Created at' => 'Дата создания',
    'Control panel' => 'Панель управления',

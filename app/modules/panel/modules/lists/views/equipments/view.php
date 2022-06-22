@@ -14,6 +14,7 @@ $this->title = $model->name;
 ?>
 <div class="category-view">
     <p>
+        <?= Html::a(Yii::t('app','New'), ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',

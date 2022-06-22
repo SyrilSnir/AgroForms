@@ -3,11 +3,11 @@
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\Forms\Manage\Forms\FieldForm;
 use kartik\grid\GridView;
+use kartik\select2\Select2;
 use kartik\switchinput\SwitchInput;
 use mihaildev\ckeditor\CKEditor;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 use function GuzzleHttp\json_encode;
@@ -115,54 +115,54 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12">
-    <div id="required-block"<?php if (!in_array($model->elementTypeId, ElementType::HAS_REQUIRED)):?> class="hide"<?php endif; ?>>
-        <?= $form->field($model->parameters, 'required')->widget(SwitchInput::class,[
-                'pluginOptions' => [
-                        'onText' => Yii::t('app', 'Yes'),
-                        'offText' => Yii::t('app', 'No'),
-                    ]
-            ]) 
-        ?>
-    </div>
-    <div id="number-params"<?php if (!in_array($model->elementTypeId, ElementType::NUMBER_PARAMS)):?> class="hide"<?php endif; ?>>
-        <?= $form->field($model->parameters, 'unit')->dropDownList($model->unitsList()) ?>                            
-    </div>
-    <div id="computed"<?php if (!in_array($model->elementTypeId, ElementType::COMPUTED_FIELDS)):?> class="hide"<?php endif; ?>>
-        <?= $form->field($model->parameters, 'isComputed')->widget(SwitchInput::class,[
-                'pluginOptions' => [
-                        'onText' => Yii::t('app', 'Yes'),
-                        'offText' => Yii::t('app', 'No'),
-                    ],
-                'pluginEvents' => [
-                    "switchChange.bootstrapSwitch" => 
-                        "function(e) { e.target.checked ? $('#computed-params__container').removeClass('hide') :
-                            $('#computed-params__container').addClass('hide'); }",
-                ]             
-            ]) 
-        ?>
-                
-        <div id="computed-params__container"<?php if(!$model->parameters->isComputed): ?> class="hide"<?php endif ?>>
-            <div id="unit-price__container"<?php if ($model->hasEnums ):?> style="display: none;"<?php endif; ?>>
-                <?= $form->field($model->parameters, 'unitPrice')->textInput() ?>
-            </div>
-            <?php if (!$isNew): ?>
-            <div class="special-price-params__container">
-                <h5><?php echo t('Special price rules')?> </h5>
-            <section class="content">
-                <div class="card">
-                    <div class="card-body">
-                            <?= $form->field($model->parameters, 'specialPriceType')->dropDownList($model->parameters->getSpecialPriceTypes()) ?> 
-                            <?= GridView::widget($fullGridConfig); ?>
-                    </div>
-                </div>
-            </section>                
-            </div>
-            <?php endif ;?>
+    <div class="col-12">
+        <div id="required-block"<?php if (!in_array($model->elementTypeId, ElementType::HAS_REQUIRED)):?> class="hide"<?php endif; ?>>
+            <?= $form->field($model->parameters, 'required')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => Yii::t('app', 'Yes'),
+                            'offText' => Yii::t('app', 'No'),
+                        ]
+                ]) 
+            ?>
         </div>
-    </div>                
+        <div id="number-params"<?php if (!in_array($model->elementTypeId, ElementType::NUMBER_PARAMS)):?> class="hide"<?php endif; ?>>
+            <?= $form->field($model->parameters, 'unit')->dropDownList($model->unitsList()) ?>                            
+        </div>
+        <div id="computed"<?php if (!in_array($model->elementTypeId, ElementType::COMPUTED_FIELDS)):?> class="hide"<?php endif; ?>>
+            <?= $form->field($model->parameters, 'isComputed')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => Yii::t('app', 'Yes'),
+                            'offText' => Yii::t('app', 'No'),
+                        ],
+                    'pluginEvents' => [
+                        "switchChange.bootstrapSwitch" => 
+                            "function(e) { e.target.checked ? $('#computed-params__container').removeClass('hide') :
+                                $('#computed-params__container').addClass('hide'); }",
+                    ]             
+                ]) 
+            ?>
+
+            <div id="computed-params__container"<?php if(!$model->parameters->isComputed): ?> class="hide"<?php endif ?>>
+                <div id="unit-price__container"<?php if ($model->hasEnums ):?> style="display: none;"<?php endif; ?>>
+                    <?= $form->field($model->parameters, 'unitPrice')->textInput() ?>
+                </div>
+                <?php if (!$isNew): ?>
+                <div class="special-price-params__container">
+                    <h5><?php echo t('Special price rules')?> </h5>
+                <section class="content">
+                    <div class="card">
+                        <div class="card-body">
+                                <?= $form->field($model->parameters, 'specialPriceType')->dropDownList($model->parameters->getSpecialPriceTypes()) ?> 
+                                <?= GridView::widget($fullGridConfig); ?>
+                        </div>
+                    </div>
+                </section>                
+                </div>
+                <?php endif ;?>
+            </div>
+        </div>                
                             
-     <div id="html-params"<?php if (!in_array($model->elementTypeId, ElementType::HTML_BLOCKS)):?> class="hide"<?php endif; ?>>
+        <div id="html-params"<?php if (!in_array($model->elementTypeId, ElementType::HTML_BLOCKS)):?> class="hide"<?php endif; ?>>
             <?= $form->field($model->parameters, 'html')->widget(CKEditor::class,[
                 'editorOptions' => [
                     'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
@@ -182,6 +182,32 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
             <?php echo $form->field($model->parameters, 'text')->textarea(); ?>
             <?php echo $form->field($model->parameters, 'textEng')->textarea(); ?>
         </div>
+        <div id="additional-equipment"<?php if ($model->elementTypeId != ElementType::ELEMET_ADDITIONAL_EQUIPMENT):?> class="hide"<?php endif; ?>>
+            <?= $form->field($model->parameters, 'allCategories')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => Yii::t('app', 'Yes'),
+                            'offText' => Yii::t('app', 'No'),
+                        ],
+                    'pluginEvents' => [
+                        "switchChange.bootstrapSwitch" => 
+                            "function(e) { !e.target.checked ? $('#equipment-params__container').removeClass('hide') :
+                                $('#equipment-params__container').addClass('hide'); }",
+                    ]             
+                ])                 
+            ?>
+            <div id="equipment-params__container"<?php if($model->parameters->allCategories): ?>class="hide"<?php endif; ?>>
+                <?php 
+                    echo $form->field($model->parameters, 'categories')->widget(
+                            Select2::class,
+                            [
+                                'data' =>  $model->parameters->categoriesList(),
+                                 'options' => [ 'multiple' => true ],
+                            ]
+                        );                
+                ?>
+            </div>
+        </div> 
+                            
     </div>
                             
                     </div>
