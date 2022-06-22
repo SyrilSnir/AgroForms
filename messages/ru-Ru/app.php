@@ -164,6 +164,9 @@ return [
     'Document' => 'Документ',
     'New document' => 'Новый документ',
     'Date added' => 'Дата добавления',
-    'Attached file' => 'Прикрепленный файл'
+    'Attached file' => 'Прикрепленный файл',
+    'Calculation for special price rules' => 'Расчет для специальных ценовых правил',
+    'Percentage of base cost' => 'Процент от базовой стоимости',
+    'Fixed price' => 'Фиксированная цена',    
 ];
 

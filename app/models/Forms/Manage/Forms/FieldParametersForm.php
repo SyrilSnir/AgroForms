@@ -4,6 +4,7 @@ namespace app\models\Forms\Manage\Forms;
 
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Nomenclature\Unit;
+use app\models\Data\SpecialPriceTypes;
 use Yii;
 use yii\base\Model;
 use function GuzzleHttp\json_decode;
@@ -23,7 +24,7 @@ class FieldParametersForm extends Model
 
     public $required;
     public $isComputed;
-
+    public $specialPriceType;
 
     public $html;
     public $htmlEng;
@@ -49,6 +50,7 @@ class FieldParametersForm extends Model
         $this->unit = $paramsArray['unit'] ?? 0;
         $this->unitPrice = $paramsArray['unitPrice'] ?? null;
         $this->isComputed = $paramsArray['isComputed'] ?? false;
+        $this->specialPriceType = $paramsArray['specialPriceType'] ?? 0;
         parent::__construct($config);
     }
     
@@ -57,7 +59,7 @@ class FieldParametersForm extends Model
         return [
                 [['required','isComputed'], 'boolean'],
                 [['text','textEng','htmlEng','html'], 'safe'],
-                [['unit','unitPrice'], 'integer']
+                [['unit','unitPrice','specialPriceType'], 'integer']
             ];
     }
     
@@ -71,7 +73,8 @@ class FieldParametersForm extends Model
                  'htmlEng',
                     'unit',
                     'unitPrice',
-                'isComputed'
+                'isComputed',
+                'specialPriceType',
             ],
             self::SCENARIO_TEXT_BLOCK => [
                 'text',
@@ -95,11 +98,20 @@ class FieldParametersForm extends Model
             'unit' => Yii::t('app','Unit'),
             'unitPrice' => Yii::t('app','Price per one'),
             'isComputed' => Yii::t('app','Calculated field'),
+            'specialPriceType' => Yii::t('app', 'Calculation for special price rules'),
         ];
     }
     
     public function getUnitModel() :?Unit
     {
         return Unit::findOne(['id' => $this->unit]);
+    }
+    
+    public function getSpecialPriceTypes(): array
+    {
+        return [
+            SpecialPriceTypes::TYPE_VALUTE => t('Fixed price'),
+            SpecialPriceTypes::TYPE_PERCENT => t('Percentage of base cost'),
+        ];
     }
 }

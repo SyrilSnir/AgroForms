@@ -152,6 +152,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
             <section class="content">
                 <div class="card">
                     <div class="card-body">
+                            <?= $form->field($model->parameters, 'specialPriceType')->dropDownList($model->parameters->getSpecialPriceTypes()) ?> 
                             <?= GridView::widget($fullGridConfig); ?>
                     </div>
                 </div>
