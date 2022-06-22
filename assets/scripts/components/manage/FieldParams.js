@@ -17,6 +17,7 @@ export default class FieldParams {
         this.$requiredBlock = $('#required-block');
         this.$computedBlock = $('#computed');
         this.$textParamsBlock = $('#text-params');
+        this.$equipmentBlock = $('#additional-equipment');
     }
     elementTypeSelectorChangeHandler(e) {
         const value = parseInt(e.target.value);
@@ -43,7 +44,10 @@ export default class FieldParams {
             this.numberParamsShow(false);  
         (this.computedType.indexOf(value) !== -1) ?
             this.computedParamsShow(true) :
-            this.computedParamsShow(false);                        
+            this.computedParamsShow(false);
+        (this.equipment == value) ? 
+            this.equipmentParamShow(true) :
+            this.equipmentParamShow(false);
     }
     computedParamsShow( isShow ) {
         isShow ? 
@@ -69,5 +73,10 @@ export default class FieldParams {
         isShow ? 
             this.$htmlParamsBlock.removeClass('hide') :
             this.$htmlParamsBlock.addClass('hide');
-    }    
+    }
+    equipmentParamShow( isShow ) {
+        isShow ? 
+            this.$equipmentBlock.removeClass('hide') :
+            this.$equipmentBlock.addClass('hide');
+    }
 }
