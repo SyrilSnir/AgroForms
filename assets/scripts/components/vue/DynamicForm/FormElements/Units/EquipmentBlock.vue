@@ -1,7 +1,8 @@
 <template>
     <div class="equipments-list__container">
         <ul class="additional-equipment__list">
-            <li v-for="category in categories">
+            <template v-for="(category,index) in categories">
+            <li v-if="isShowed(category.id)" :key="index">
                 <span @click="expand(category.id)">{{ getName(category.name, category.name_eng) }}</span>
                 <equipment-list 
                     :val="values"
@@ -12,10 +13,12 @@
                     @changeValue="setValue"                  
                 ></equipment-list>            
             </li>
+            </template>
+
         </ul>
         <table class="table">
             <tbody>
-                <tr v-for="(val,key) in values">                    
+                <tr v-for="(val,key) in values" :key="key">                    
                     <td>{{ val.code }}</td>
                     <td>{{ getName(val.name,val.name_eng) }}</td>
                     <td>{{ val.count | separate }} {{ getName(val.unit.short_name, val.unit.short_name_eng) }}</td>
@@ -47,9 +50,12 @@ export default {
         if (this.params.value) {
             val = this.params.value;
         }
+
         return {
             id: 'id' + this.params.id,
             categories: [],
+            availableCategories: this.params.parameters.categories,
+            allCategories: (this.params.parameters.allCategories == true),
             bus: new Vue(),// Шина событий
             values: val,
         }
@@ -81,8 +87,11 @@ export default {
         EquipmentList
     },
     methods: {
+        isShowed(id) {
+            console.log('Id = ', id);
+            return ( this.allCategories || this.availableCategories.indexOf(id) !== -1);
+        },
         expand(id) {
-            console.log('Expand= ' + id);
             this.bus.$emit('expand',id);
         },
         setValue(equipment,count) {
