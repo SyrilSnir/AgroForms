@@ -2,10 +2,17 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\Modificators\CoefficientModificator;
+use app\core\helpers\View\Form\Modificators\PercentModificator;
+use app\core\helpers\View\Form\Modificators\PriceModificator;
+use app\core\helpers\View\Form\Modificators\StaticModificator;
+use app\core\helpers\View\Form\PriceModifyInterface;
 use app\core\providers\Data\FieldEnumProvider;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\Data\Languages;
+use app\models\Data\SpecialPriceTypes;
+use function GuzzleHttp\json_decode;
 /**
  * Description of FormElement
  *
@@ -32,6 +39,19 @@ abstract class FormElement implements FormElementInterface
      */
     protected $fieldEnumProvider; 
     
+    /**
+     * 
+     * @var PriceModifyInterface[]
+     */
+    protected $priceModificators = [];
+    
+    
+
+
+
+
+
+
     public function __construct(Field $field, FieldEnumProvider $enumProvider = null, string $langCode = Languages::RUSSIAN)
     {
         $this->field = $field;
@@ -106,13 +126,15 @@ abstract class FormElement implements FormElementInterface
 
     protected function transformData(array $fieldList, array $valuesList):array
     {
-        $fieldList['parameters'] = json_decode($fieldList['parameters']);
+        $fieldList['parameters'] = $this->buildParameters($fieldList);
         return $fieldList;
     }
 
     public static function getElement(Field $field, string $langCode = Languages::RUSSIAN) : ?FormElementInterface
     {
-        $formElement = null;
+        /** @var FormElement|null $formElement */
+        /** @var PriceModificator $priceModificator */
+        $priceModificator = null;
         switch ($field->element_type_id) {
             case ElementType::ELEMENT_HEADER:
                 $formElement = new ElementHeader($field, null, $langCode);
@@ -151,7 +173,46 @@ abstract class FormElement implements FormElementInterface
                 $formElement = new ElementUnknown($field, null, $langCode);
                 break;
         }
+        if (in_array($field->element_type_id, ElementType::COMPUTED_FIELDS)) {
+            if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_VALUTE) {
+                $priceModificator = new StaticModificator();
+            }
+            if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_PERCENT) {
+                $priceModificator = new PercentModificator();
+            }
+            if ($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_COEFFICIENT) {
+                $priceModificator = new CoefficientModificator();
+            }
+            if ($priceModificator) {
+                $formElement->addPriceModificator($priceModificator);
+            }
+        }        
         
         return $formElement;
+    }
+    
+    public function addPriceModificator(PriceModificator $priceModificator) :void
+    {
+        $priceModificator->setFormElement($this);
+        array_push($this->priceModificators,$priceModificator);
+    }
+    
+    /**
+     * Применить модификаторы стоимости, если они имеются
+     * @param int $price
+     */
+    protected function modifyPrice(int $price) 
+    {
+        foreach ($this->priceModificators as $priceModificator) {
+           $price = $priceModificator->modify($price);
+        }
+        return $price;
+    }
+    
+    protected function buildParameters(array $fieldList): array
+    {
+        $result = json_decode($fieldList['parameters'],true);
+        $result['unitPrice'] = $result['unitPrice'] ? $this->modifyPrice($result['unitPrice']) : 0;
+        return $result;
     }
 }

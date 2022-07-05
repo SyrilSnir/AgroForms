@@ -39,7 +39,7 @@ class ElementCheckNumberInput extends FormElement implements CountableElementInt
     
     protected function transformData(array $fieldList, array $valuesList = []): array
     {
-        $fieldList['parameters'] = json_decode($fieldList['parameters']);
+        $fieldList['parameters'] = $this->buildParameters($fieldList);
         if (!empty($valuesList)) {
             $fieldList['value'] = $valuesList['value'];
             $fieldList['checked'] = key_exists('checked', $valuesList) ?  $valuesList['checked'] : false;

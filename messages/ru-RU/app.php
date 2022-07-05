@@ -168,6 +168,7 @@ return [
     'Attached file' => 'Прикрепленный файл',
     'Calculation for special price rules' => 'Расчет для специальных ценовых правил',
     'Percentage of base cost' => 'Процент от базовой стоимости',
+    'Markup factor' => 'Коэффициент наценки',
     'Fixed price' => 'Фиксированная цена',    
 ];
 

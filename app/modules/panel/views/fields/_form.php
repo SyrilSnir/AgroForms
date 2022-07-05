@@ -45,7 +45,7 @@ $columnsConfig = [
                             'value' => 'end_date',
                             'label' => Yii::t('app', 'End date'),                            
                         ],                         
-                        'price:text:' . Yii::t('app', 'Price'),
+                        'price:text:' . Yii::t('app', 'Value'),
                         [
                             'class' => ActionColumn::class,
                             'controller' => 'special-price'

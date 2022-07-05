@@ -18,4 +18,9 @@ class SpecialPriceTypes
      * Расчет в процентах %
      */
     const TYPE_PERCENT = 1;
+    
+    /**
+     * Расчет по коэффициенту
+     */
+    const TYPE_COEFFICIENT = 2;
 }

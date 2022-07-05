@@ -26,6 +26,10 @@ class FieldParametersForm extends Model
 
     public $required;
     public $isComputed;
+    /**
+     * 
+     * @var int
+     */
     public $specialPriceType;
     public $allCategories;
     public $html;
@@ -127,6 +131,7 @@ class FieldParametersForm extends Model
         return [
             SpecialPriceTypes::TYPE_VALUTE => t('Fixed price'),
             SpecialPriceTypes::TYPE_PERCENT => t('Percentage of base cost'),
+            SpecialPriceTypes::TYPE_COEFFICIENT => t('Markup factor'),
         ];
     }
 }

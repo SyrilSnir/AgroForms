@@ -40,7 +40,7 @@ class ElementNumberInput extends FormElement implements CountableElementInterfac
     
     protected function transformData(array $fieldList, array $valuesList = []): array
     {
-        $fieldList['parameters'] = json_decode($fieldList['parameters']);
+        $fieldList['parameters'] = $this->buildParameters($fieldList);
         if (!empty($valuesList)) {
             $fieldList['value'] = $valuesList['value'];
         }

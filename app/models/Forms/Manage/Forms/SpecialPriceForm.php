@@ -45,7 +45,8 @@ class SpecialPriceForm extends Model
     public function rules():array 
     {
         return [
-            [['price','fieldId'],'integer'],
+            [['fieldId'],'integer'],
+            [['price',],'number'],
             [['price','fieldId','startDate','endDate'],'required'],
             [['startDate','endDate'],'safe'],
             [['startDate'],'validateDate'],
@@ -55,7 +56,7 @@ class SpecialPriceForm extends Model
     public function attributeLabels(): array    
     {
         return [
-            'price' => t('Price'),
+            'price' => t('Value'),
             'startDate' => t('Start date'),
             'endDate' => t('End date')
         ];
