@@ -174,17 +174,19 @@ abstract class FormElement implements FormElementInterface
                 break;
         }
         if (in_array($field->element_type_id, ElementType::COMPUTED_FIELDS)) {
-            if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_VALUTE) {
-                $priceModificator = new StaticModificator();
-            }
-            if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_PERCENT) {
-                $priceModificator = new PercentModificator();
-            }
-            if ($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_COEFFICIENT) {
-                $priceModificator = new CoefficientModificator();
-            }
-            if ($priceModificator) {
-                $formElement->addPriceModificator($priceModificator);
+            if (key_exists('specialPriceType',$formElement->fieldParameters)) {
+                if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_VALUTE) {
+                    $priceModificator = new StaticModificator();
+                }
+                if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_PERCENT) {
+                    $priceModificator = new PercentModificator();
+                }
+                if ($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_COEFFICIENT) {
+                    $priceModificator = new CoefficientModificator();
+                }
+                if ($priceModificator) {
+                    $formElement->addPriceModificator($priceModificator);
+                }
             }
         }        
         
@@ -212,7 +214,24 @@ abstract class FormElement implements FormElementInterface
     protected function buildParameters(array $fieldList): array
     {
         $result = json_decode($fieldList['parameters'],true);
+        $result['basePrice'] = $result['unitPrice'];
         $result['unitPrice'] = $result['unitPrice'] ? $this->modifyPrice($result['unitPrice']) : 0;
+        $result['modifiers'] = $this->getModifiersInformation();
+        return $result;
+    }
+    
+    protected function getModifiersInformation(): array
+    {
+        $result = [];
+        foreach ($this->priceModificators as $modificator) {
+            $specialPrice = $modificator->getSpecialPriceElement();
+            if ($specialPrice) {
+                array_push($result,[
+                    'value' => $specialPrice->price,
+                    'alias' => $modificator->getAlias()
+                ]);
+            }
+        }
         return $result;
     }
 }
