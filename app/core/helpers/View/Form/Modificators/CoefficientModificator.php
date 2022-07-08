@@ -9,6 +9,7 @@ namespace app\core\helpers\View\Form\Modificators;
  */
 class CoefficientModificator extends PriceModificator
 {
+    protected $alias = 'ratio';
     //put your code here
     public function modify(int $price): int
     {

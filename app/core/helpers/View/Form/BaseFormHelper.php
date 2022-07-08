@@ -83,7 +83,11 @@ abstract class BaseFormHelper
     public abstract function getData(bool $isReadOnly = false) :array ;  
     
     public abstract function getFormPrice() :int ;
-    
+        
+    public function getRequest(): ?Request
+    {
+        return $this->request;
+    }
     
     public function isRequest():bool 
     {

@@ -130,7 +130,7 @@ abstract class FormElement implements FormElementInterface
         return $fieldList;
     }
 
-    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN) : ?FormElementInterface
+    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN, int $date = null) : ?FormElementInterface
     {
         /** @var FormElement|null $formElement */
         /** @var PriceModificator $priceModificator */
@@ -176,13 +176,13 @@ abstract class FormElement implements FormElementInterface
         if (in_array($field->element_type_id, ElementType::COMPUTED_FIELDS)) {
             if (key_exists('specialPriceType',$formElement->fieldParameters)) {
                 if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_VALUTE) {
-                    $priceModificator = new StaticModificator();
+                    $priceModificator = new StaticModificator($date);
                 }
                 if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_PERCENT) {
-                    $priceModificator = new PercentModificator();
+                    $priceModificator = new PercentModificator($date);
                 }
                 if ($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_COEFFICIENT) {
-                    $priceModificator = new CoefficientModificator();
+                    $priceModificator = new CoefficientModificator($date);
                 }
                 if ($priceModificator) {
                     $formElement->addPriceModificator($priceModificator);

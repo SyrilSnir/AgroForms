@@ -9,7 +9,9 @@ namespace app\core\helpers\View\Form\Modificators;
  */
 class StaticModificator extends PriceModificator
 {
-    
+    protected $alias = 'static';
+
+
     public function modify(int $price): int
     {
         $specialPrice = $this->getSpecialPriceElement();

@@ -2,9 +2,8 @@
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
+use yii\db\ActiveRecord;
 
 /**
  * Добавляет поведение позволяющее автоматически добавлять временную метку 

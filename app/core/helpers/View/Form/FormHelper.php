@@ -52,10 +52,16 @@ class FormHelper extends BaseFormHelper
     
     protected function appendFormElements()
     {
+        $request = $this->getRequest();
+        if (!$request) {
+            $date = microtime(true);
+        } else {
+            $date = $request->updated_at ? $request->updated_at : $request->created_at;
+        }
         $this->formElements = [];
         if ($this->form) {
             foreach ($this->form->formFields as $field) {
-                $formElement = FormElement::getElement($field, $this->langCode);
+                $formElement = FormElement::getElement($field, $this->langCode, $date);
                 if ($formElement) {
                     array_push($this->formElements,$formElement);
                 }

@@ -16,18 +16,40 @@ abstract class PriceModificator implements PriceModifyInterface
 {
     /**
      * 
+     * @var string
+     */
+    protected $alias = '';
+    
+    /**
+     * 
      * @var FormElement
      */
     private $formElement;
     
+    /**
+     * Текущаяч дата или дата сохраненной заявки
+     * @var int
+     */
+    protected $date;
+    
+    public function __construct(int $mt = null)
+    {
+        if ($mt) {
+            $this->date = $mt;
+        } else {
+            $this->date = microtime();
+        }
+    }
+
+
     public function setFormElement(FormElement $formElement): void
     {
         $this->formElement = $formElement;
     }
     
-    protected function getSpecialPriceElement(): ?SpecialPrice
+    public function getSpecialPriceElement(): ?SpecialPrice
     {
-        $currentDate = date('Y-m-d');
+        $currentDate = date('Y-m-d', $this->date);
         if (!$this->formElement) {
             return null;
         }
@@ -38,5 +60,8 @@ abstract class PriceModificator implements PriceModifyInterface
                 ->one();
     }
 
-
+    public function getAlias(): string
+    {
+        return $this->alias;
+    }    
 }

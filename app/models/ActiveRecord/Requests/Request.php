@@ -13,8 +13,8 @@ use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Query\RequestQuery;
 use app\models\ActiveRecord\Users\User;
-use app\models\CreatedTimestampTrait;
 use app\models\Forms\Requests\EditRequestForm;
+use app\models\TimestampTrait;
 use yii\db\ActiveQuery;
 
 /**
@@ -24,6 +24,7 @@ use yii\db\ActiveQuery;
  * @property int $user_id Заказчик
  * @property int $status
  * @property int $created_at
+ * @property int $updated_at
  * @property int $exhibition_id
  * @property int $type_id Тип заявки
  * @property int $form_id Id формы
@@ -44,7 +45,7 @@ use yii\db\ActiveQuery;
  */
 class Request extends FormManipulation
 {   
-    use CreatedTimestampTrait;
+    use TimestampTrait;
     
     /**
      * {@inheritdoc}
