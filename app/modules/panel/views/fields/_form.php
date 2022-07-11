@@ -6,6 +6,7 @@ use kartik\grid\GridView;
 use kartik\select2\Select2;
 use kartik\switchinput\SwitchInput;
 use mihaildev\ckeditor\CKEditor;
+use mihaildev\elfinder\ElFinder;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\web\View;
@@ -164,17 +165,23 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                             
         <div id="html-params"<?php if (!in_array($model->elementTypeId, ElementType::HTML_BLOCKS)):?> class="hide"<?php endif; ?>>
             <?= $form->field($model->parameters, 'html')->widget(CKEditor::class,[
-                'editorOptions' => [
+                'editorOptions' => 
+                ElFinder::ckeditorOptions('elfinder', [
                     'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-                    'inline' => false, //по умолчанию false
-                ],
+                    'inline' => false,                    
+                ])
                 ]) 
             ?>
             <?= $form->field($model->parameters, 'htmlEng')->widget(CKEditor::class,[
-                'editorOptions' => [
+                'editorOptions' => 
+                ElFinder::ckeditorOptions('elfinder', [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                    'inline' => false,                    
+                ])
+                /*[
                     'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
                     'inline' => false, //по умолчанию false
-                ],
+                ],*/
                 ]) 
             ?>         
         </div>                            
