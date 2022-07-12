@@ -53,7 +53,13 @@ class FieldSearch extends Model
         $query = Field::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => false
+            'sort' => [
+                'attributes' => [ 'order' ],
+                'defaultOrder' => 
+                    [
+                        'order' => SORT_ASC
+                    ]
+            ]
         ]);
 
         $this->load($params);
@@ -69,7 +75,7 @@ class FieldSearch extends Model
         $query->andFilterWhere(['field_group_id' => $this->fieldGroupId]);
         $query->andFilterWhere(['element_type_id' => $this->elementTypeId]);
         $query->andFilterWhere(['form_id' => $this->formId]);
-        $query->orderBy('order');
+     //   $query->orderBy('order');
         return $dataProvider;
     }
 }
