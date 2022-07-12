@@ -10,6 +10,7 @@ use app\core\helpers\View\Form\PriceModifyInterface;
 use app\core\providers\Data\FieldEnumProvider;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Nomenclature\Unit;
 use app\models\Data\Languages;
 use app\models\Data\SpecialPriceTypes;
 use function GuzzleHttp\json_decode;
@@ -217,6 +218,11 @@ abstract class FormElement implements FormElementInterface
         $result['basePrice'] = $result['unitPrice'];
         $result['unitPrice'] = $result['unitPrice'] ? $this->modifyPrice($result['unitPrice']) : 0;
         $result['modifiers'] = $this->getModifiersInformation();
+        if (key_exists('unit', $result) && is_numeric($result['unit'])) {
+            $unitId = (int) $result['unit'];
+            $unitElement = Unit::findOne($unitId);
+            $result['unitName'] = $unitElement ? $unitElement->short_name : '';
+        }
         return $result;
     }
     
