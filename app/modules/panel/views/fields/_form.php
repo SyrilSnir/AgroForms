@@ -68,6 +68,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         data-computed="<?php echo json_encode(ElementType::COMPUTED_FIELDS)?>"
         data-enums="<?php echo json_encode(ElementType::HAS_ENUM_ATTRIBUTES)?>"
         data-equipment="<?php echo json_encode(ElementType::ELEMET_ADDITIONAL_EQUIPMENT)?>"
+        data-frieze="<?php echo json_encode(ElementType::ELEMENT_FRIEZE) ?>"
         >
         <div class="container-fluid">
             <div class="card card-default">
@@ -214,6 +215,10 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                 ?>
             </div>
         </div> 
+        <div id="frieze-params"<?php if ($model->elementTypeId != ElementType::ELEMENT_FRIEZE):?> class="hide"<?php endif; ?>>
+            <?= $form->field($model->parameters, 'freeDigitCount')->textInput() ?>      
+            <?= $form->field($model->parameters, 'digitPrice')->textInput() ?>  
+        </div>
                             
     </div>
                             

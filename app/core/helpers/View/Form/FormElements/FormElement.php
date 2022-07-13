@@ -170,6 +170,9 @@ abstract class FormElement implements FormElementInterface
             case ElementType::ELEMENT_SELECT_MULTIPLE:
                 $formElement = new ElementSelectMultiple($field, new FieldEnumProvider(), $langCode);
                 break;
+            case ElementType::ELEMENT_FRIEZE:
+                $formElement = new ElementFrieze($field, null, $langCode);
+                break;
             default: 
                 $formElement = new ElementUnknown($field, null, $langCode);
                 break;

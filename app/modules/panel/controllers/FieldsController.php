@@ -127,8 +127,8 @@ class FieldsController extends BaseAdminController
         $model->disableMultilang();
         $previousPage = '/panel/forms/update?id=' .$model->form_id;  
         $form = new FieldForm($model);
-        $loadFormData = $form->load(Yii::$app->request->post());
         $this->setFieldParamsScenario($form); 
+        $loadFormData = $form->load(Yii::$app->request->post());
         $enumsPresent = $model->hasEnums();
         if (!$loadFormData) {
             $enumsList = $model->enums;
@@ -159,6 +159,9 @@ class FieldsController extends BaseAdminController
         switch ($form->elementTypeId) {
             case ElementType::ELEMENT_HEADER:
                 $form->parameters->setScenario(FieldParametersForm::SCENARIO_TEXT_BLOCK);
+                break;
+            case ElementType::ELEMENT_FRIEZE:
+                $form->parameters->setScenario(FieldParametersForm::SCENARIO_FRIEZE);
                 break;
             case ElementType::ELEMENT_INFORMATION:
             case ElementType::ELEMENT_INFORMATION_IMPORTANT:

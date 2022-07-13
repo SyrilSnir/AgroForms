@@ -11,13 +11,15 @@ export default class FieldParams {
         this.computedType = fieldsConfig.data('computed');
         this.requiredType = fieldsConfig.data('required');
         this.enumValues = fieldsConfig.data('enums'); 
-        this.equipment = fieldsConfig.data('equipment');     
+        this.equipment = fieldsConfig.data('equipment');
+        this.frieze = fieldsConfig.data('frieze');
         this.$htmlParamsBlock = $('#html-params');
         this.$numberParamsBlock = $('#number-params');
         this.$requiredBlock = $('#required-block');
         this.$computedBlock = $('#computed');
         this.$textParamsBlock = $('#text-params');
         this.$equipmentBlock = $('#additional-equipment');
+        this.$friezeBlock = $('#frieze-params');
     }
     elementTypeSelectorChangeHandler(e) {
         const value = parseInt(e.target.value);
@@ -48,6 +50,9 @@ export default class FieldParams {
         (this.equipment == value) ? 
             this.equipmentParamShow(true) :
             this.equipmentParamShow(false);
+        (this.frieze == value) ?
+            this.friezeParamShow(true):
+            this.friezeParamShow(false);
     }
     computedParamsShow( isShow ) {
         isShow ? 
@@ -79,4 +84,9 @@ export default class FieldParams {
             this.$equipmentBlock.removeClass('hide') :
             this.$equipmentBlock.addClass('hide');
     }
+    friezeParamShow( isShow ) {
+        isShow ? 
+            this.$friezeBlock.removeClass('hide') :
+            this.$friezeBlock.addClass('hide');
+    }    
 }

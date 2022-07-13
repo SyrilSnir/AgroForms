@@ -21,6 +21,7 @@ class FieldParametersForm extends Model
     const SCENARIO_TEXT_BLOCK = 'text';
     const SCENARIO_HTML_BLOCK = 'html';
     const SCENARIO_NUMBER_INPUT = 'number';
+    const SCENARIO_FRIEZE = 'frieze';
 
     use GetCategoriesListTrait;    
 
@@ -38,6 +39,10 @@ class FieldParametersForm extends Model
     public $textEng;
     public $unit;
     public $categories;
+    
+    //
+    public $digitPrice;
+    public $freeDigitCount;
 
 
 
@@ -65,6 +70,8 @@ class FieldParametersForm extends Model
         $this->allCategories = $paramsArray['allCategories'] ?? true;
         $this->categories = $paramsArray['categories'] ?? [];
         $this->specialPriceType = $paramsArray['specialPriceType'] ?? 0;
+        $this->freeDigitCount = $paramsArray['freeDigitCount'] ?? 0;
+        $this->digitPrice = $paramsArray['digitPrice'] ?? 0;
         parent::__construct($config);
     }
     
@@ -73,7 +80,7 @@ class FieldParametersForm extends Model
         return [
                 [['required','isComputed','allCategories'], 'boolean'],
                 [['text','textEng','htmlEng','html'], 'safe'],
-                [['unit','unitPrice','specialPriceType'], 'integer'],
+                [['unit','unitPrice','specialPriceType','digitPrice', 'freeDigitCount'], 'integer'],
                 ['categories','each', 'rule' => ['integer']], 
             ];
     }
@@ -101,6 +108,11 @@ class FieldParametersForm extends Model
                 'html',
                 'htmlEng'
             ],
+            self::SCENARIO_FRIEZE => [
+                'digitPrice',
+                'freeDigitCount'
+            ]
+            
             
         ];
     }    
@@ -118,6 +130,8 @@ class FieldParametersForm extends Model
             'specialPriceType' => Yii::t('app', 'Calculation for special price rules'),
             'allCategories' => Yii::t('app/equipment', 'All categories'),    
             'categories' => Yii::t('app', 'Categories'),
+            'freeDigitCount' => Yii::t('app','The number of free characters in the frieze inscription'),
+            'digitPrice' => Yii::t('app','The cost of the frieze lettering symbol')
         ];
     }
     

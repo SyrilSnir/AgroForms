@@ -109,7 +109,7 @@ class FormHelper extends BaseFormHelper
     {
         $result = '';
         foreach ($this->formElements as $element) {
-            if (!$element->isShowInRequest()) {
+            if (!$element->isShowInPdf()) {
                 continue;
             }
             $fieldId = $element->getFieldId();
@@ -185,6 +185,7 @@ class FormHelper extends BaseFormHelper
             'readOnly' => $isReadOnly,
             'language' => $this->langCode,
             'dict' => [
+                'symbol'  => t('symb.','requests'),
                 'fileAttach' => [
                     'browse' => t('Browse'),
                     'selectFile' => t('Select file'),

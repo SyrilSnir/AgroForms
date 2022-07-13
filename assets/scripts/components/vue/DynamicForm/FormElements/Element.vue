@@ -11,6 +11,7 @@ import TextInputBlock from './Units/TextInputBlock';
 import NumberInputBlock from './Units/NumberInputBlock';
 import CheckNumberInput from './Units/CheckNumberInput';
 import SelectBlock from './Units/SelectBlock';
+import FriezeBlock from './Units/FriezeBlock';
 import MultiSelectBlock from './Units/MultiSelectBlock';
 import UndefinedBlock from './Units/UndefinedBlock';
 import RadioBlock from './Units/RadioBlock';
@@ -32,6 +33,7 @@ export default {
         'multi-select-input': MultiSelectBlock,
         'radio': RadioBlock,
         'equipment': EquipmentBlock,
+        'frieze': FriezeBlock,
         'undefined': UndefinedBlock
     },    
     data() {
@@ -47,7 +49,8 @@ export default {
                 blockImportantInformation: 12,
                 blockImportant: 13,
                 blockHeader: 14,
-                blockEquipment: 15
+                blockEquipment: 15,
+                blockFrieze: 17
             }
         }
     },
@@ -80,7 +83,9 @@ export default {
                 case this.typesList.blockImportantInformation:
                     return 'important-information';
                 case this.typesList.blockEquipment:
-                    return 'equipment';                               
+                    return 'equipment';  
+                case this.typesList.blockFrieze:
+                    return 'frieze';
                 default:
                     return 'undefined';
             }

@@ -3,12 +3,11 @@
 namespace app\models\Forms\Manage\Forms;
 
 use app\core\traits\Lists\GetExhibitionsTrait;
+use app\core\traits\Lists\GetFormTypesListTrait;
 use app\core\traits\Lists\GetValutesListTrait;
 use app\models\ActiveRecord\Forms\Form;
-use app\models\ActiveRecord\Forms\FormType;
 use Yii;
 use yii\base\Model;
-use yii\helpers\ArrayHelper;
 
 /**
  * Description of FormsForm
@@ -35,7 +34,7 @@ class FormsForm extends Model
     public $descriptionEng;
     
    
-    use GetExhibitionsTrait, GetValutesListTrait;
+    use GetExhibitionsTrait, GetValutesListTrait, GetFormTypesListTrait;
 
 
 
@@ -93,10 +92,5 @@ class FormsForm extends Model
             'exhibitionId' => Yii::t('app','Available for exhibitions'),
             'valute' => Yii::t('app','Valute'),
         ];
-    }
-    
-    public function formTypesList():array
-    {
-        return ArrayHelper::map(FormType::find()->orderBy('id')->asArray()->all(),'id','name');
-    }
+    }   
 }

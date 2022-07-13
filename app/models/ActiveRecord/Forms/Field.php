@@ -167,7 +167,7 @@ class Field extends ActiveRecord
     {
         $params = json_decode($this->parameters, true);
         $form = new FieldParametersForm();
-        $form->setAttributes($params);
+        $form->setAttributes($params, false);
         return $form;
     }
     /**

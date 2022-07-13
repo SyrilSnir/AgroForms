@@ -94,6 +94,19 @@ if ($fieldParameters->html) {
         
     ];    
 }
+if ($fieldParameters->freeDigitCount) {
+    $attributes['freeDigitCount'] = [
+        'attribute' => 'freeDigitCount',
+        'value' => $fieldParameters->freeDigitCount
+    ];   
+}
+
+if ($fieldParameters->digitPrice) {
+    $attributes['digitPrice'] = [
+        'attribute' => 'digitPrice',
+        'value' => $fieldParameters->digitPrice
+    ];   
+}
 echo DetailView::widget([
     'model' => $fieldParameters,
     'attributes' => $attributes,

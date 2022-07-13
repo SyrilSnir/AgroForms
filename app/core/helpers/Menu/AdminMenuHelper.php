@@ -68,8 +68,7 @@ class AdminMenuHelper implements MenuHelperInterface
                                 ['label' => Yii::t('app/menu', 'Units measurement'), 'icon' => 'icon-units', 'url' => ['/panel/lists/units'],],
                                 ['label' => Yii::t('app/menu', 'Valutes'), 'icon' => 'icon-valutes', 'url' => ['/panel/lists/valutes'],],                                  
                             ]
-                        ], 
-             
+                        ],              
                 [
                     'label' => Yii::t('app/menu', 'Settings'), 
                     'icon' => 'icon-settings', 
@@ -78,9 +77,7 @@ class AdminMenuHelper implements MenuHelperInterface
                             'label' => Yii::t('app/menu', 'Forms constructor'),
                             'url' => ['/panel/forms'],
                             'icon' => 'icon-forms',
-                        ],   
-                        ['label' => Yii::t('app/menu', 'Stand management'), 'icon' => 'icon-stands', 'url' => ['/panel/stands'],],
-                        ['label' => Yii::t('app/menu', 'Stand settings'), 'icon' => 'icon-stand-settings', 'url' => ['/panel/stands/settings'],],                        
+                        ],                        
                         [ 'label' => Yii::t('app/menu', 'Mail server'), 'icon' => 'icon-mail', 'url' => ['/panel/config/mail-settings'],],
                     ]
                 ],

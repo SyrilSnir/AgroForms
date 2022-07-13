@@ -30,6 +30,7 @@ class ElementType extends ActiveRecord
     const ELEMENT_HEADER = 14;
     const ELEMET_ADDITIONAL_EQUIPMENT = 15;
     const ELEMENT_GROUP = 16;
+    const ELEMENT_FRIEZE = 17; // Фризовая надпись
     
     const DEFAULT_ELEMENT_TYPE = self::ELEMENT_CHECKBOX;
     

@@ -19,6 +19,6 @@ trait GetFormTypesListTrait
 {
     public function formTypesList()
     {
-        return ArrayHelper::map(FormType::find()->orderBy('id')->asArray()->all(),'id','name');
+        return ArrayHelper::map(FormType::find()->andWhere(['!=','id', FormType::SPECIAL_STAND_FORM ])->orderBy('id')->asArray()->all(),'id','name');
     } 
 }
