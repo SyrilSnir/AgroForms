@@ -1,7 +1,7 @@
 <p>-- Это письмо сформированно автоматически, пожалуйста, не отвечайте на него! -—</p>
 <p>
 Уважаемый участник выставки!
-Мы рады приветствовать Вас как участника выставки АГРОСАЛОН 2020.</p>
+Мы рады приветствовать Вас как участника выставки АГРОСАЛОН 2022.</p>
 <p>
 Это электронное письмо содержит ссылку для доступа к сервисному порталу АГРОСАЛОН-а.
 Использыя его Вы сможете заказать необходимые услуги для участия в выставке.</p>
@@ -25,7 +25,6 @@
 <p>
 С уважением,<br>
 Команда АГРОСАЛОН<br>
-06-09 октября 2020 года<br>
 Москва, МВЦ «Крокус Экспо»<br>
 Т.: + 7 (495) 781-37-56<br>
 Ф.: + 7 (495) 781-37-08<br>
@@ -35,7 +34,7 @@ www.agrosalon.ru<br>
 <p>-- This is an automatically sent e-mail, please do not reply directly to this e-mail --</p>
 
 <p>Dear exhibition participant!</p>
-<p>We are delighted to welcome you as an exhibitor at AGROSALON 2020.</p>
+<p>We are delighted to welcome you as an exhibitor at AGROSALON 2022.</p>
 
 <p>This e-mail contains the link to access the AGROSALON Service-Portal.
    With the AGROSALON Service-Portal you can order the necessary services for your participation in the exhibition.</p>
@@ -57,7 +56,6 @@ Your e-mail address: <?php echo $email ?></p>
 <p>
 Yours sincerely,<br>
 AGROSALON team<br>
-October, 6-9th, 2020<br>
 Moscow, Crocus-Expo<br>
 Тel.: + 7 (495) 781-37-56<br>
 Fax: + 7 (495) 781-37-08<br>

@@ -1,7 +1,7 @@
 -- Это письмо сформированно автоматически, пожалуйста, не отвечайте на него! -—
 
 Уважаемый участник выставки!
-Мы рады приветствовать Вас как участника выставки АГРОСАЛОН 2020.
+Мы рады приветствовать Вас как участника выставки АГРОСАЛОН 2022.
 
 Это электронное письмо содержит ссылку для доступа к сервисному порталу АГРОСАЛОН-а.
 Использыя его Вы сможете заказать необходимые услуги для участия в выставке.
@@ -32,7 +32,7 @@ www.agrosalon.ru
 -- This is an automatically sent e-mail, please do not reply directly to this e-mail --
 
 Dear exhibition participant!
-We are delighted to welcome you as an exhibitor at AGROSALON 2020.
+We are delighted to welcome you as an exhibitor at AGROSALON 2022.
 
 This e-mail contains the link to access the AGROSALON Service-Portal.
 With the AGROSALON Service-Portal you can order the necessary services for your participation in the exhibition.
