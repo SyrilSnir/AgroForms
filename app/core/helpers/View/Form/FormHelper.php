@@ -186,6 +186,7 @@ class FormHelper extends BaseFormHelper
             'language' => $this->langCode,
             'dict' => [
                 'symbol'  => t('symb.','requests'),
+                'addSymbols' => t('Additional symbols', 'requests'),
                 'fileAttach' => [
                     'browse' => t('Browse'),
                     'selectFile' => t('Select file'),

@@ -26,6 +26,7 @@
            return {
             id: 'id' + this.params.id,
             val: this.params.value,
+            currentVal: this.params.value,
             showErrors : false,
             valid: true,
             errors : {

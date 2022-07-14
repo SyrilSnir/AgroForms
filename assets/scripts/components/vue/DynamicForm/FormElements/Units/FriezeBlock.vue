@@ -1,29 +1,37 @@
 <template>
 <div class="form-group">
     <label :for="id">{{ titleLabel }}</label>
-        <div class="col-sm-10">    
-            <div class="input-group mb-3">
+        <div class="col-12">    
+            <div class="input-group">
                 <input 
                     :id="id"
                     type="text" 
                     class="form-control"
                     v-model="val"
-                    :value="val"
                     @change="onChange($event)"
                     placeholder="Enter ...">  
+                        
+            </div>
+            <div  class="col-12" v-if="isPaid">
+                <div class="input-group additiomal">                
+                <span>{{dic.addSymbols}}: </span>
                     <div class="input-group-append">
                         <span class="input-group-text">{{paiedFrizeSigns}} {{ dic.symbol }}</span>
                     </div>
+                
                     <div class="input-group-append">
                         <span class="input-group-text">x {{frizeDigitPrice}} {{ dic.valute }}</span>
-                    </div>                         
+                    </div>                 
+                    <div class="input-group-append">
+                        <span class="input-group-text">= {{frizePrice}} {{ dic.valute }}</span>
+                    </div>                      
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script> 
     import { labelMixin } from './Mixins/labelMixin'  
-    import { eventBus } from '../../eventBus'
     export default {        
         props: [
             'lang',
@@ -35,6 +43,7 @@
            return {
             id: 'id' + this.params.id,
             val: this.params.value,
+            currentVal: this.params.value,            
             valid: true,
            }
        },      
@@ -43,18 +52,21 @@
            labelMixin
        ],
        computed: {
+        symsLength() {
+            return this.val.trim().length;
+        },
         frizeDigitPrice() {
             return parseInt(this.params.parameters.digitPrice);
         },
         frizeFreeDigits() {
             return parseInt(this.params.parameters.freeDigitCount);
         },
+        isPaid() {
+            if (!this.val) return false;
+            return (this.symsLength > this.frizeFreeDigits);
+        },
         paiedFrizeSigns: function() {
-            if (this.val) {
-                let symsLength = this.val.replace(/[\s]/g,"").length;
-                return (symsLength > this.frizeFreeDigits) ? symsLength - this.frizeFreeDigits : 0;
-            }
-            return 0;
+            return (this.isPaid) ? this.symsLength - this.frizeFreeDigits : 0;
         },
         frizePrice: function() {
             return this.frizeDigitPrice * this.paiedFrizeSigns;
@@ -84,4 +96,14 @@
        } 
     }
 </script>
-<style></style>
+<style>
+.additiomal {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-top: 5px;
+}
+.additiomal span {
+    padding-right: 1rem;
+}
+</style>
