@@ -38,5 +38,12 @@ class ContractService
         $contract->edit($form);
         $this->contracts->save($contract);                
     }
+    
+    public function remove ($id) 
+    {        
+        /* @var Contracts $contract */
+         $contract = $this->contracts->get($id);
+         $this->contracts->remove($contract);
+    }    
 
 }
