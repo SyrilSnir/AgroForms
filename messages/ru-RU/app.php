@@ -169,6 +169,9 @@ return [
     'Calculation for special price rules' => 'Расчет для специальных ценовых правил',
     'Percentage of base cost' => 'Процент от базовой стоимости',
     'Markup factor' => 'Коэффициент наценки',
-    'Fixed price' => 'Фиксированная цена',    
+    'Fixed price' => 'Фиксированная цена',  
+    'Signature' => 'Подпись',
+    'By signing this application, the Exhibitor confirms his agreement with the Rules of the exhibition and guarantees payment for the ordered services' =>
+        'Подписывая настоящую заявку Экспонент подтверждает согласие с Правилами выставки и гарантирует оплату заказанных услуг'
 ];
 
