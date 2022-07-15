@@ -7,6 +7,7 @@ use app\core\traits\Lists\GetLanguagesListTrait;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
+use DateTime;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
@@ -77,7 +78,7 @@ class UserManageForm extends ActiveRecord
             [['phone','fio'], 'string', 'max' => 255],
             [['birthday'], 'safe'],  
             [
-                ['login'],
+                ['login','email'],
                 'unique',
                 'targetClass'=> User::class,
                 'filter' => ['deleted' => false],
@@ -85,10 +86,13 @@ class UserManageForm extends ActiveRecord
                 'on' => self::SCENARIO_DEFAULT
            ],
             [
-                ['login'],
+                ['login','email'],
                 'unique',
                 'targetClass'=> User::class,
-                'filter' => ['deleted' => false, 'login' => $this->login],
+                'filter' => function(\yii\db\Query $query) {
+                    return $query->andWhere(['deleted' => false])
+                            ->andWhere(['!=', 'login', $this->login]);
+                },//['deleted' => false, ['!=', 'login', $this->login]],
                 'message' => t('The user with the specified data is already registered'),
                 'on' => self::SCENARIO_UPDATE
            ],            
