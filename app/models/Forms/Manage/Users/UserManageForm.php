@@ -48,7 +48,9 @@ class UserManageForm extends ActiveRecord
             $this->userType = $user->user_type_id;
             $this->gender = $user->gender;
             $this->userId = $user->id;
-            $this->birthday = $user->birthday;
+            if ($user->birthday) {
+                $this->birthday = DateTime::createFromFormat('Y-m-d',$user->birthday)->format('d.m.Y');
+            }
         } else {
             $this->userType = UserType::MEMBER_USER_ID;
         }
@@ -78,10 +80,18 @@ class UserManageForm extends ActiveRecord
                 ['login'],
                 'unique',
                 'targetClass'=> User::class,
-                'filter' => ['deleted' => false, 'login' => $this->login],
+                'filter' => ['deleted' => false],
                 'message' => t('The user with the specified data is already registered'),
                 'on' => self::SCENARIO_DEFAULT
            ],
+            [
+                ['login'],
+                'unique',
+                'targetClass'=> User::class,
+                'filter' => ['deleted' => false, 'login' => $this->login],
+                'message' => t('The user with the specified data is already registered'),
+                'on' => self::SCENARIO_UPDATE
+           ],            
         ];
     }
     

@@ -28,7 +28,7 @@ class DocumentForm extends BaseDocumentForm
 
     public function __construct(Documents $model = null, $config = []) 
     {
-        parent::__construct($config);
+        parent::__construct($model, $config);
         if ($model) {
             $this->companyId = $model->company_id;
             $this->exhibitionId = $model->exhibition_id;
