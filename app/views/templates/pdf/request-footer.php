@@ -12,7 +12,7 @@ use app\models\ActiveRecord\Requests\Request;
                 <p>Подпись: __________________</p>
             </div> -->
 <div class="row">
-    <p style="font-family: Verdana;font-size: 7pt;text-align:left"><?php echo ('By signing this application, the Exhibitor confirms his agreement with the Rules of the exhibition and guarantees payment for the ordered services')?>.</p>
+    <p style="font-family: Verdana;font-size: 7pt;text-align:left"><?php echo t('By signing this application, the Exhibitor confirms his agreement with the Rules of the exhibition and guarantees payment for the ordered services')?>.</p>
     <div style="text-align: left">
         <p style="font-family:Verdana;text-decoration: underline;font-weight: bold"><?php echo t('Exhibitor', 'exhibitions')?>:</p>  
         <div style="position:relative;">                                    
