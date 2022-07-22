@@ -7,6 +7,7 @@ return [
    'Note' => 'Внимание',
    'Add' => 'Добавить',
    'File' => 'Файл',
+   'Print to PDF' => 'Печать в PDF',
    'Comment' => 'Комментарий',
    'Message' => 'Сообщение',
    'Information' =>'Информация',
