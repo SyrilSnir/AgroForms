@@ -2,17 +2,12 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
-use app\core\helpers\View\Form\Modificators\CoefficientModificator;
-use app\core\helpers\View\Form\Modificators\PercentModificator;
 use app\core\helpers\View\Form\Modificators\PriceModificator;
-use app\core\helpers\View\Form\Modificators\StaticModificator;
 use app\core\helpers\View\Form\PriceModifyInterface;
 use app\core\providers\Data\FieldEnumProvider;
-use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Nomenclature\Unit;
 use app\models\Data\Languages;
-use app\models\Data\SpecialPriceTypes;
 use function GuzzleHttp\json_decode;
 /**
  * Description of FormElement

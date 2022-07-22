@@ -53,7 +53,7 @@ abstract class BaseFormHelper
             'format' => Pdf::FORMAT_A4,
             'defaultFont' => 'Verdana',
             'defaultFontSize' => '10',
-            // portrait orientation
+            // portrait orientation            
             'orientation' => Pdf::ORIENT_PORTRAIT, 
             // stream to browser inline
             'destination' => Pdf::DEST_BROWSER, 
@@ -66,6 +66,7 @@ abstract class BaseFormHelper
             ]
         );
         $this->pdfHelper->getApi()->defaultfooterline = 0;
+        $this->pdfHelper->getApi()->setAutoBottomMargin = 'stretch';
     } 
     
     public abstract static function createViaForm(User $user, string $langCode, Form $form): self;
