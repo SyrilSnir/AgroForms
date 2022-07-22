@@ -17,7 +17,12 @@ class AccountantMenuHelper implements MenuHelperInterface
             'items' => [
                 [
                     'label' => Yii::t('app/menu', 'Request management'), 'icon' => 'icon-requests', 'url' => ['/panel/requests'],            
-                ]
+                ],
+                [
+                    'label' => Yii::t('app/menu', 'Documents'),
+                    'icon' => 'file',
+                    'url' => ['/panel/documents']
+                ],                
             ]
         ];
     }
