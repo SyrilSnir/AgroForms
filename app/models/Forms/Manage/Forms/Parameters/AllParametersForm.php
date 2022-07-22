@@ -44,6 +44,8 @@ class AllParametersForm extends BaseParametersForm
     {
         parent::__construct($field, $config);
         $this->isComputed = $this->paramsArray['isComputed'] ?? false;        
+        $this->allCategories = $this->paramsArray['allCategories'] ?? true;
+        $this->categories = $this->paramsArray['categories'] ?? [];
         $this->specialPriceType = $this->paramsArray['specialPriceType'] ?? 0;
         $this->required = $this->paramsArray['required'] ?? false; 
         $this->freeDigitCount = $this->paramsArray['freeDigitCount'] ?? 0;
@@ -62,8 +64,7 @@ class AllParametersForm extends BaseParametersForm
                 [['required','isComputed','allCategories'], 'boolean'],
                 [['text','textEng','htmlEng','html'], 'safe'],
                 [['unit','unitPrice','specialPriceType','digitPrice', 'freeDigitCount','groupType'], 'integer'],
-                ['categories','each', 'rule' => ['integer']], 
-                ['groupType','integer'],
+                ['categories','each', 'rule' => ['integer']],            
             ];
     }         
     
