@@ -8,7 +8,7 @@ $fullPrice = 0;
 <table class="table table-bordered">
     <thead>
         <tr>            
-            <th style="text-align: center" colspan="5"><?php echo t('Add. equipment','menu')?></th>
+            <th style="text-align: center" colspan="5"><?php echo $fieldName ?></th>
         </tr>
       <tr> 
           <th style="width: 15px"><?php echo t('Code','equipment') ?></th>

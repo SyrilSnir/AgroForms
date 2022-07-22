@@ -22,6 +22,7 @@ class ElementAdditionEquipmentBlock extends FormElement implements CountableElem
         $eqValues = $this->processEquipmentValues($valuesList['value']);
         return \Yii::$app->view->renderFile('@blocks/equipment.list.php' ,[
             'values' => $eqValues,
+            'fieldName' => $this->field->name,
             'valute' => $this->field->form->valute->symbol,
             'isComputed' => $this->isComputed()
         ]);
@@ -58,6 +59,7 @@ class ElementAdditionEquipmentBlock extends FormElement implements CountableElem
         $eqValues = $this->processEquipmentValues($valuesList['value']);
         return \Yii::$app->view->renderFile('@blocks/equipment.list__pdf.php' ,[
             'values' => $eqValues,
+            'fieldName' => $this->field->name,            
             'valute' => $this->field->form->valute->symbol,
             'isComputed' => $this->isComputed()
         ]);
