@@ -4,7 +4,6 @@ use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\FieldEnum;
 use app\models\ActiveRecord\Forms\SpecialPrice;
-use app\models\Data\Languages;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -51,64 +50,11 @@ $this->title = $model->name;
     <div class="card-body">
         <?php
         
-$fieldParameters = $model->fieldParams;     
-$attributes = [
-    'required' => [
-        'attribute' => 'required',
-        'value' => $fieldParameters->required ? t('Yes'): t('No')        
-    ],
-    'isComputed' => [
-        'attribute' => 'isComputed',
-        'value' => $fieldParameters->isComputed ? t('Yes'): t('No')          
-    ],
-];
-if ($fieldParameters->isComputed) { 
-    if (in_array($model->element_type_id, ElementType::NUMBER_PARAMS)) {
-        $attributes['unit'] = [
-            'attribute' => 'unit',
-            'value' => $fieldParameters->unitModel->name
-        ];
-    }
-    $attributes['unitPrice'] = [
-        'attribute' => 'unitPrice',
-        'value' => $fieldParameters->unitPrice
-    ];
-}
-if ($fieldParameters->text) {
-    $value = (Yii::$app->language == Languages::RUSSIAN) ?
-            $fieldParameters->text :
-            $fieldParameters->textEng;
-    $attributes['text'] = [
-        'attribute' => 'text',
-        'value' => $value
-    ];    
-}
-if ($fieldParameters->html) {
-    $value = (Yii::$app->language == Languages::RUSSIAN) ? 
-            $fieldParameters->html :
-            $fieldParameters->htmlEng;
-    $attributes['html'] = [
-        'attribute' => 'html',
-        'value' => $value,
-        'format' => 'raw'
-        
-    ];    
-}
-if ($fieldParameters->freeDigitCount) {
-    $attributes['freeDigitCount'] = [
-        'attribute' => 'freeDigitCount',
-        'value' => $fieldParameters->freeDigitCount
-    ];   
-}
+$attributes = $model->fieldParams->getViewParameters();
 
-if ($fieldParameters->digitPrice) {
-    $attributes['digitPrice'] = [
-        'attribute' => 'digitPrice',
-        'value' => $fieldParameters->digitPrice
-    ];   
-}
+
 echo DetailView::widget([
-    'model' => $fieldParameters,
+    'model' => $model->fieldParams,
     'attributes' => $attributes,
 ]);        
         ?>

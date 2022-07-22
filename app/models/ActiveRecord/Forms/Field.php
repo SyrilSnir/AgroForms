@@ -3,10 +3,12 @@
 namespace app\models\ActiveRecord\Forms;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
+use app\core\traits\FieldParametersTrait;
 use app\models\ActiveRecord\Forms\Query\FieldQuery;
-use app\models\Forms\Manage\Forms\FieldParametersForm;
+use app\models\Forms\Manage\Forms\Parameters\BaseParametersForm;
 use DateTime;
 use yii\db\ActiveRecord;
+use function GuzzleHttp\json_decode;
 
 /**
  * This is the model class for table "{{%fields}}".
@@ -30,7 +32,7 @@ use yii\db\ActiveRecord;
  * @property FieldGroup $fieldGroup Позиция на экране
  * @property Form $form Форма
  * @property FieldEnum[] $enums Перечисляемые аттрибуты
- * @property FieldParametersForm $fieldParams Параметры
+ * @property BaseParametersForm $fieldParams Параметры
  * 
  * @property int|null $price Цена
  * @property SpecialPrice|null $actualSpecialPrice Действующая специальная цена
@@ -38,7 +40,7 @@ use yii\db\ActiveRecord;
 class Field extends ActiveRecord
 {
 
-    use MultilangTrait;
+    use MultilangTrait, FieldParametersTrait;
   
 /**
  * 
@@ -163,10 +165,10 @@ class Field extends ActiveRecord
         return in_array($this->element_type_id, ElementType::HAS_ENUM_ATTRIBUTES);
     }
 
-    public function getFieldParams(): FieldParametersForm
+    public function getFieldParams(): BaseParametersForm
     {
         $params = json_decode($this->parameters, true);
-        $form = new FieldParametersForm();
+        $form = $this->getParametersForm($this->element_type_id,$this);
         $form->setAttributes($params, false);
         return $form;
     }
@@ -192,9 +194,21 @@ class Field extends ActiveRecord
                 ->andWhere(['>','end_date',$currentDate])
                 ->one();        
     }
-    
+    /**
+     * 
+     * @return Field[]
+     */
+    public function getFieldsInGroup()
+    {
+        return Field::find()
+                ->andWhere(['field_group_id' => $this->id])
+                ->orderBy('order')
+                ->all();
+    }
+
+
     public static function find(): FieldQuery
     {
         return new FieldQuery(static::class);
-    }
+    }    
 }

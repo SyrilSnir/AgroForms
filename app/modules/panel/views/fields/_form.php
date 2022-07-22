@@ -68,6 +68,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         data-computed="<?php echo json_encode(ElementType::COMPUTED_FIELDS)?>"
         data-enums="<?php echo json_encode(ElementType::HAS_ENUM_ATTRIBUTES)?>"
         data-equipment="<?php echo json_encode(ElementType::ELEMET_ADDITIONAL_EQUIPMENT)?>"
+        data-group="<?php echo json_encode(ElementType::ELEMENT_GROUP)?>"
         data-frieze="<?php echo json_encode(ElementType::ELEMENT_FRIEZE) ?>"
         >
         <div class="container-fluid">
@@ -107,10 +108,14 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                         'offText' => Yii::t('app', 'No'),
                     ]
             ]) 
-        ?>                             
-    <?php //$form->field($model, 'fieldGroupId')->dropDownList($model->fieldGroupList()) ?>
-    <?= $form->field($model, 'fieldGroupId')->hiddenInput(['value' => 0])->label(false) ?>
+        ?>
     <?php // $form->field($model, 'order')->textInput() ?>
+                           
+    <?php echo $form->field($model, 'fieldGroupId')->dropDownList($model->fieldGroupsList()) ?>
+
+    <?php // echo $form->field($model, 'fieldGroupId')->hiddenInput(['value' => 0])->label(false) ?>
+    <?php // $form->field($model, 'order')->textInput() ?>
+<?php if (true/*$isNew*/): ?>
             <div id="field-options" class="card card-default">
                 <div class="card-header">
                   <h3 class="card-title"><?= Yii::t('app', 'Extra options') ?></h3>
@@ -219,13 +224,32 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
             <?= $form->field($model->parameters, 'freeDigitCount')->textInput() ?>      
             <?= $form->field($model->parameters, 'digitPrice')->textInput() ?>  
         </div>
+        <div id="group-params"<?php if($model->elementTypeId != ElementType::ELEMENT_GROUP): ?> class="hide"<?php endif; ?>>
+            <?= $form->field($model->parameters, 'groupType')->dropDownList($model->parameters->groupTypesList() ) ?>
+        </div>
                             
     </div>
                             
                     </div>
                         
                 </div>
-            </div>                            
+            </div>  
+ 
+            <?php elseif ($model->parameters->isComputed): ?>
+                <div class="special-price-params__container">
+                    <h5><?php echo t('Special price rules')?> </h5>
+                <section class="content">
+                    <div class="card">
+                        <div class="card-body">
+                                <?= $form->field($model->parameters, 'specialPriceType')->dropDownList($model->parameters->getSpecialPriceTypes()) ?> 
+                                <?= GridView::widget($fullGridConfig); ?>
+                        </div>
+                    </div>
+                </section>                
+                </div>
+                <?php endif ;?>                            
+                            
+                            
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Cancel'), [$previousPage], ['class' => 'btn btn-secondary']) ?>

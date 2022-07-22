@@ -15,18 +15,14 @@ use Yii;
  */
 abstract class BaseFormHelper
 {
+    
+    use FormElementsManagementTrait;
     /**
      * 
      * @var Form
      */
     protected $form;
-    
-    /**
-     * 
-     * @var Request|null
-     */
-    protected $request;
-    
+      
     /**
      * 
      * @var User
@@ -82,17 +78,7 @@ abstract class BaseFormHelper
 
     public abstract function getData(bool $isReadOnly = false) :array ;  
     
-    public abstract function getFormPrice() :int ;
-        
-    public function getRequest(): ?Request
-    {
-        return $this->request;
-    }
-    
-    public function isRequest():bool 
-    {
-        return !is_null($this->request);
-    } 
+    public abstract function getFormPrice() :int ;         
 
     protected function getPdfHeader(): string
     {

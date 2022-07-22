@@ -44,14 +44,7 @@ abstract class FormElement implements FormElementInterface
      * 
      * @var PriceModifyInterface[]
      */
-    protected $priceModificators = [];
-    
-    
-
-
-
-
-
+    protected $priceModificators = [];        
 
     public function __construct(Field $field, FieldEnumProvider $enumProvider = null, string $langCode = Languages::RUSSIAN)
     {
@@ -130,72 +123,6 @@ abstract class FormElement implements FormElementInterface
         $fieldList['parameters'] = $this->buildParameters($fieldList);
         return $fieldList;
     }
-
-    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN, int $date = null) : ?FormElementInterface
-    {
-        /** @var FormElement|null $formElement */
-        /** @var PriceModificator $priceModificator */
-        $priceModificator = null;
-        switch ($field->element_type_id) {
-            case ElementType::ELEMENT_HEADER:
-                $formElement = new ElementHeader($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_INFORMATION:
-                $formElement = new ElementInformationBlock($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_INFORMATION_IMPORTANT:
-                $formElement = new ElementImportantInformationBlock($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_TEXT_INPUT:
-                $formElement = new ElementTextField($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_NUMBER_INPUT:
-                $formElement = new ElementNumberInput($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_SELECT:
-                $formElement = new ElementSelect($field, new FieldEnumProvider(), $langCode);
-                break;
-            case ElementType::ELEMENT_RADIO_BUTTON:
-                $formElement = new ElementRadio($field, new FieldEnumProvider(), $langCode);
-                break;
-            case ElementType::ELEMENT_CHECKBOX:
-                $formElement = new ElementCheckbox($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_CHECK_NUMBER_INPUT:
-                $formElement = new ElementCheckNumberInput($field, null, $langCode);
-                break;
-            case ElementType::ELEMET_ADDITIONAL_EQUIPMENT:
-                $formElement = new ElementAdditionEquipmentBlock($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_SELECT_MULTIPLE:
-                $formElement = new ElementSelectMultiple($field, new FieldEnumProvider(), $langCode);
-                break;
-            case ElementType::ELEMENT_FRIEZE:
-                $formElement = new ElementFrieze($field, null, $langCode);
-                break;
-            default: 
-                $formElement = new ElementUnknown($field, null, $langCode);
-                break;
-        }
-        if (in_array($field->element_type_id, ElementType::COMPUTED_FIELDS)) {
-            if (key_exists('specialPriceType',$formElement->fieldParameters)) {
-                if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_VALUTE) {
-                    $priceModificator = new StaticModificator($date);
-                }
-                if($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_PERCENT) {
-                    $priceModificator = new PercentModificator($date);
-                }
-                if ($formElement->fieldParameters['specialPriceType'] == SpecialPriceTypes::TYPE_COEFFICIENT) {
-                    $priceModificator = new CoefficientModificator($date);
-                }
-                if ($priceModificator) {
-                    $formElement->addPriceModificator($priceModificator);
-                }
-            }
-        }        
-        
-        return $formElement;
-    }
     
     public function addPriceModificator(PriceModificator $priceModificator) :void
     {
@@ -203,6 +130,9 @@ abstract class FormElement implements FormElementInterface
         array_push($this->priceModificators,$priceModificator);
     }
     
+
+
+
     /**
      * Применить модификаторы стоимости, если они имеются
      * @param int $price
@@ -218,14 +148,16 @@ abstract class FormElement implements FormElementInterface
     protected function buildParameters(array $fieldList): array
     {
         $result = json_decode($fieldList['parameters'],true);
-        $result['basePrice'] = $result['unitPrice'];
-        $result['unitPrice'] = $result['unitPrice'] ? $this->modifyPrice($result['unitPrice']) : 0;
-        $result['modifiers'] = $this->getModifiersInformation();
+        if (key_exists('unitPrice', $fieldList)) {
+            $result['basePrice'] = $result['unitPrice'];
+            $result['unitPrice'] = $result['unitPrice'] ? $this->modifyPrice($result['unitPrice']) : 0;
+            $result['modifiers'] = $this->getModifiersInformation();
+        }
         if (key_exists('unit', $result) && is_numeric($result['unit'])) {
             $unitId = (int) $result['unit'];
             $unitElement = Unit::findOne($unitId);
             $result['unitName'] = $unitElement ? $unitElement->short_name : '';
-        }
+        }        
         return $result;
     }
     

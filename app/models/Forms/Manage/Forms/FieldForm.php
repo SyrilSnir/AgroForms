@@ -2,19 +2,23 @@
 
 namespace app\models\Forms\Manage\Forms;
 
+use app\core\traits\FieldParametersTrait;
 use app\core\traits\Lists\GetFieldGroupTrait;
 use app\core\traits\Lists\GetFormsListTrait;
 use app\core\traits\Lists\GetUnitsTrait;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\Forms\Manage\Forms\Parameters\AllParametersForm;
+use app\models\Forms\Manage\Forms\Parameters\BaseParametersForm;
 use app\models\Forms\MultiForm;
+use app\models\Validators\FieldGroupValidator;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
  * Description of FieldForm
  *
-  * @property FieldParametersForm $parameters
+  * @property BaseParametersForm $parameters
  * @author kotov
  */
 class FieldForm extends MultiForm
@@ -33,6 +37,12 @@ class FieldForm extends MultiForm
     public $showInPdf;
     public $defaultValue;
     
+    /**
+     * 
+     * @var bool
+     */
+    protected $isUpdated = false;
+    
     
     
     
@@ -45,6 +55,7 @@ class FieldForm extends MultiForm
     use GetFieldGroupTrait;
     use GetFormsListTrait;
     use GetUnitsTrait;
+    use FieldParametersTrait;
     
     public function __construct(
             Field $model = null,
@@ -66,11 +77,14 @@ class FieldForm extends MultiForm
             $this->defaultValue = $model->default_value;
             $this->showInRequest = $model->showed_in_request;
             $this->showInPdf = $model->showed_in_pdf;
-            $this->parameters = new FieldParametersForm($model);
+           //$this->parameters = $this->getParametersForm($this->elementTypeId, $model);
             $this->hasEnums = $model->hasEnums();
+            $this->isUpdated = true;
+            $this->parameters = new AllParametersForm($model);
         } else {
-            $this->parameters = new FieldParametersForm();
+            $this->parameters = new AllParametersForm();
         }
+
     }
     /**
      * {@inheritdoc}
@@ -84,6 +98,7 @@ class FieldForm extends MultiForm
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'string', 'max' => 255],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'default','value' => ''],
             [['order','fieldGroupId'], 'default','value' => 0],
+            ['fieldGroupId', FieldGroupValidator::class],
         ];
     }
 
@@ -113,14 +128,25 @@ class FieldForm extends MultiForm
         $notAvailable =[
             ElementType::ELEMENT_DATE,
             ElementType::ELEMENT_DATE_MULTIPLE,
-            ElementType::ELEMENT_GROUP
+       //     ElementType::ELEMENT_GROUP
         ];
         return ArrayHelper::map(ElementType::find()->where(['NOT IN', 'id',$notAvailable])->orderBy('id')->asArray()->all(),'id','name');       
+    }
+    
+    public function fieldGroupsList(): array
+    {
+        if (!$this->formId) {
+            return [];
+        }
+        return ArrayHelper::merge([0 => t('Not chosen')],
+                ArrayHelper::map(Field::find()->orderBy('order')
+                        ->andWhere(['form_id' => $this->formId])
+                        ->andWhere(['element_type_id' =>ElementType::ELEMENT_GROUP])
+                        ->asArray()->all(), 'id', 'name'));
     }
 
     protected function internalForms(): array
     {
-        return ['parameters'];        
+        return ['parameters'];
     }
-
 }

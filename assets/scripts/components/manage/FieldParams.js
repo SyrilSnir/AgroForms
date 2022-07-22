@@ -13,6 +13,7 @@ export default class FieldParams {
         this.enumValues = fieldsConfig.data('enums'); 
         this.equipment = fieldsConfig.data('equipment');
         this.frieze = fieldsConfig.data('frieze');
+        this.group = fieldsConfig.data('group');
         this.$htmlParamsBlock = $('#html-params');
         this.$numberParamsBlock = $('#number-params');
         this.$requiredBlock = $('#required-block');
@@ -20,6 +21,7 @@ export default class FieldParams {
         this.$textParamsBlock = $('#text-params');
         this.$equipmentBlock = $('#additional-equipment');
         this.$friezeBlock = $('#frieze-params');
+        this.$groupBlock = $('#group-params');
     }
     elementTypeSelectorChangeHandler(e) {
         const value = parseInt(e.target.value);
@@ -53,6 +55,9 @@ export default class FieldParams {
         (this.frieze == value) ?
             this.friezeParamShow(true):
             this.friezeParamShow(false);
+        (this.group == value) ?
+            this.groupParamShow(true):
+            this.groupParamShow(false);
     }
     computedParamsShow( isShow ) {
         isShow ? 
@@ -88,5 +93,10 @@ export default class FieldParams {
         isShow ? 
             this.$friezeBlock.removeClass('hide') :
             this.$friezeBlock.addClass('hide');
+    }    
+    groupParamShow( isShow ) {
+        isShow ? 
+            this.$groupBlock.removeClass('hide') :
+            this.$groupBlock.addClass('hide');
     }    
 }

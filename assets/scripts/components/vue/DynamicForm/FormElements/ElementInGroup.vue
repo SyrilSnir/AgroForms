@@ -1,6 +1,6 @@
 <template>
     <div class="comp">
-        <component :is="currentElement" :params="unitData" @changeField="fieldChanged" :lang="lang" :dic="dic"></component>
+        <component :is="currentElement" :params="unitData" @changeField="fieldChanged" :lang="lang" :dic="dic"></component>        
     </div>
 </template>
 <script>
@@ -17,7 +17,7 @@ import UndefinedBlock from './Units/UndefinedBlock';
 import RadioBlock from './Units/RadioBlock';
 import EquipmentBlock from './Units/EquipmentBlock';
 import GroupBlock from './Units/GroupBlock';
-import ImportantInformationBlock from './Units/ImportantInformation';
+import ImportantInformationBlock from './Units/ImportantInformation';        
 export default {
     props: [
         'unitData','lang','dic'
@@ -35,9 +35,10 @@ export default {
         'radio': RadioBlock,
         'equipment': EquipmentBlock,
         'frieze': FriezeBlock,
-        'group': GroupBlock,
-        'undefined': UndefinedBlock
-    },    
+      //  'group': GroupBlock,
+        'undefined': UndefinedBlock        
+        
+    },
     data() {
         return {
             typesList: {
@@ -95,7 +96,8 @@ export default {
                     return 'undefined';
             }
         }
-    }
+    }         
 }
+
 </script>
 <style></style>

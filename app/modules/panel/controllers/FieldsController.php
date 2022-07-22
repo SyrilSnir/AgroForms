@@ -78,19 +78,22 @@ class FieldsController extends BaseAdminController
     public function actionCreate($formId = null)
     {        
         $previousPage = '/panel/forms/update?id=' .$formId;
+        $isFormValid = false;
         Url::remember();
         $form = new FieldForm();
         $loadFormData = $form->load(Yii::$app->request->post());
-        if ($loadFormData) {
-            $this->setFieldParamsScenario($form);
-        } else {
+        if (!$loadFormData) {            
             Yii::$app->session->remove(FieldEnum::SESSION_IDENTIFIER);
             $form->elementTypeId = ElementType::DEFAULT_ELEMENT_TYPE;
-            $form->formId = $formId;
+            $form->formId = $formId;            
+        } else {            
+            $isFormValid = $form->validate();
         }
         $enumsList = Yii::$app->session->get(FieldEnum::SESSION_IDENTIFIER, []);        
-        if ($loadFormData && $form->validate()) {
+        if ($loadFormData && $isFormValid) {
             try {
+                $form->parameters = $form->getParametersForm($form->elementTypeId);
+                $form->parameters->load(Yii::$app->request->post(),'AllParametersForm');                
                 $field = $this->service->create($form);
                 if ($field->hasEnums()) {
                     $this->service->addEnums($field, $enumsList);
@@ -127,7 +130,6 @@ class FieldsController extends BaseAdminController
         $model->disableMultilang();
         $previousPage = '/panel/forms/update?id=' .$model->form_id;  
         $form = new FieldForm($model);
-        $this->setFieldParamsScenario($form); 
         $loadFormData = $form->load(Yii::$app->request->post());
         $enumsPresent = $model->hasEnums();
         if (!$loadFormData) {
@@ -138,10 +140,12 @@ class FieldsController extends BaseAdminController
                 $this->fieldEnumService->create($enumsForm);
                 $this->response->refresh();
             }                            
-        }        
+        }   
         if ($loadFormData && $form->validate()) {
+            $form->parameters = $form->getParametersForm($form->elementTypeId);
+            $form->parameters->load(Yii::$app->request->post(),'AllParametersForm');            
             $this->service->edit($id, $form);
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);            
         }
         $dataProvider = $this->specialPriceSearch->search($id);        
         return $this->render('update', [
@@ -152,22 +156,6 @@ class FieldsController extends BaseAdminController
             'dataProvider' => $dataProvider,
             'enumsForm' => $enumsForm
         ]);                        
-    }
-    
-    protected function setFieldParamsScenario(FieldForm $form) 
-    {
-        switch ($form->elementTypeId) {
-            case ElementType::ELEMENT_HEADER:
-                $form->parameters->setScenario(FieldParametersForm::SCENARIO_TEXT_BLOCK);
-                break;
-            case ElementType::ELEMENT_FRIEZE:
-                $form->parameters->setScenario(FieldParametersForm::SCENARIO_FRIEZE);
-                break;
-            case ElementType::ELEMENT_INFORMATION:
-            case ElementType::ELEMENT_INFORMATION_IMPORTANT:
-                $form->parameters->setScenario(FieldParametersForm::SCENARIO_HTML_BLOCK);
-                break;
-        }
     } 
 
     /**

@@ -172,6 +172,12 @@ return [
     'Fixed price' => 'Фиксированная цена',  
     'Signature' => 'Подпись',
     'By signing this application, the Exhibitor confirms his agreement with the Rules of the exhibition and guarantees payment for the ordered services' =>
-        'Подписывая настоящую заявку Экспонент подтверждает согласие с Правилами выставки и гарантирует оплату заказанных услуг'
+        'Подписывая настоящую заявку Экспонент подтверждает согласие с Правилами выставки и гарантирует оплату заказанных услуг',
+    'Group type' => 'Тип группы',
+    'Standard group type' => 'Стандартый тип группы',
+    'Group with conditional display' => 'Группа с условным отображением',
+    'Group for hidden elements' => 'Группа для скрытых элементов',
+    'Not chosen' => 'Не выбрано',
+
 ];
 

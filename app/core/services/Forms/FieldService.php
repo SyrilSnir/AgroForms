@@ -116,7 +116,7 @@ class FieldService
              }
              $formField = $this->fieldRepository->get($id);
             if (!$formField->fieldParams->unitPrice) {
-               $unitPrice = 1;
+               $unitPrice = 0;
             } else {
                 $unitPrice = (int) $formField->price;
             }
