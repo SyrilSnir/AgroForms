@@ -26,9 +26,9 @@ trait FieldParametersTrait
     {
         switch ($elementTypeId) {
             case ElementType::ELEMENT_HEADER:
+            case ElementType::ELEMENT_INFORMATION_IMPORTANT:
                 return new TextBlockForm($field);
             case ElementType::ELEMENT_INFORMATION:
-            case ElementType::ELEMENT_INFORMATION_IMPORTANT:
                 return new HtmlBlockForm($field);
             case ElementType::ELEMENT_FRIEZE:
                 return new FrizeForm($field);
