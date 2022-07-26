@@ -180,7 +180,10 @@ class Field extends ActiveRecord
     {
         if (!$this->fieldParams->isComputed) {
             return null;
-        }        
+        }   
+        if (empty($this->fieldParams->unitPrice)) {
+            return 0;
+        }
         //return  $this->actualSpecialPrice ? (int) $this->actualSpecialPrice->price : (int) $this->fieldParams->unitPrice;
         return $this->fieldParams->unitPrice;
     }

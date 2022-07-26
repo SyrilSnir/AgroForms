@@ -255,13 +255,17 @@ class FormHelper extends BaseFormHelper
                 continue;                
             }
             /** @var CountableElementInterface $element */
-            $fieldId = $element->getFieldId();
-            if (key_exists($fieldId, self::$valuesList)) {
-                $val = self::$valuesList[$fieldId];
-                if (!empty($val)) {
-                    $price += $element->getPrice($val);
-                }
-            }            
+            if (is_a($element, ElementGroup::class)) {
+                $price += $element->getPrice(self::$valuesList);
+            } else {
+                $fieldId = $element->getFieldId();
+                if (key_exists($fieldId, self::$valuesList)) {
+                    $val = self::$valuesList[$fieldId];
+                    if (!empty($val)) {
+                        $price += $element->getPrice($val);
+                    }
+                }       
+            }
             
         }        
         return $price;
@@ -272,6 +276,7 @@ class FormHelper extends BaseFormHelper
             'form' => $this->form,  
             'elements' => $this->renderHtmlElements(),
             'request' => $this->request,
+            'amount' => $this->getFormPrice(),
         ];
         return Yii::$app->view->renderFile(Yii::getAlias('@elements'). DIRECTORY_SEPARATOR . 'request-html.php', $requestData);
     }

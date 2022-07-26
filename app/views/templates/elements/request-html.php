@@ -23,7 +23,7 @@ $application = $request->getRequestForm();
                 </div>
 
                 <div class="field__value form-control">
-                    <?php echo $application->amount . ' ' . $form->valute->symbol ?>
+                    <?php echo $amount . ' ' . $form->valute->symbol ?>
                 </div>
             </div>
         </div>

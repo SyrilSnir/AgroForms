@@ -33,6 +33,9 @@ class ElementCheckbox extends FormElement implements CountableElementInterface
 
     public function getPrice(array $valuesList = []): int 
     {
+        if (!key_exists('checked', $valuesList) || !$valuesList['checked']) {
+            return 0;
+        }
         if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
             return $this->modifyPrice($valuesList['value']);
         }
