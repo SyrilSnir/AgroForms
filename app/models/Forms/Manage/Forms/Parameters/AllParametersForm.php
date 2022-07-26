@@ -55,6 +55,8 @@ class AllParametersForm extends BaseParametersForm
         $this->htmlEng = $this->paramsArray['htmlEng'] ?? '';    
         $this->text = $this->paramsArray['text'] ?? ''; 
         $this->textEng = $this->paramsArray['textEng'] ?? '';         
+        $this->unit = $this->paramsArray['unit'] ?? '';         
+        $this->unitPrice = $this->paramsArray['unitPrice'] ?? '';         
         
     }
     
