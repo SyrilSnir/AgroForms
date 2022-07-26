@@ -78,7 +78,11 @@ abstract class FormElement implements FormElementInterface
     
     public function isComputed(): bool
     {
-        return !!$this->field->getFieldParams()->isComputed;
+        $fieldParams = $this->field->getFieldParams();
+        if (!property_exists($fieldParams,'isComputed')) {
+            return false;
+        }
+        return !!$fieldParams->isComputed;
     }
 
 

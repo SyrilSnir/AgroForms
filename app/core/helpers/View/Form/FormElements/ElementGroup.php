@@ -104,7 +104,12 @@ class ElementGroup extends FormElement implements CountableElementInterface
         $price = 0;
         foreach($this->formElements as $element) {  
             if ($element->isComputed()) {
-                $price += $element->getPrice($this->valuesList);
+                $fieldId = $element->getFieldId();
+                $val = [];
+                if (key_exists($fieldId, $this->valuesList)) {
+                    $val = $this->valuesList[$fieldId];
+                }                 
+                $price += $element->getPrice($val);
             }
         }
         return $price;
