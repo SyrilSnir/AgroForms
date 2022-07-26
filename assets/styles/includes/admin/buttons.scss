@@ -3,22 +3,24 @@
 
 
 .agro-template {
-    a {
-        color: $base-agrosalon-color;
-        &:hover {
-            color: lighten($base-agrosalon-color, 10);            
+    .language-picker {
+        a {
+            color: $base-agrosalon-color;
+            &:hover {
+                color: lighten($base-agrosalon-color, 10);            
+            }
         }
-    }
-    .btn {
-        &.btn-primary, &.btn-danger, &.btn-secondary {
-            @include def-button();
-        }
-        &.btn-primary:not(:disabled) {      
-            background-color: $base-agrosalon-color;
-            color: #fff;
-            &:hover, &:active {
-                background-color: lighten($base-agrosalon-color, 10);
-            }    
+        .btn {
+            &.btn-primary, &.btn-danger, &.btn-secondary {
+                @include def-button();
+            }
+            &.btn-primary:not(:disabled) {      
+                background-color: $base-agrosalon-color;
+                color: #fff;
+                &:hover, &:active {
+                    background-color: lighten($base-agrosalon-color, 10);
+                }            
+            }
         }
     }
 }
