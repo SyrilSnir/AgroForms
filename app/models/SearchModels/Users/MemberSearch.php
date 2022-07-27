@@ -24,5 +24,6 @@ class MemberSearch extends BaseUserSearch
         parent::addFilters($query);
         $query->andFilterWhere(['user_type_id' => UserType::MEMBER_USER_ID ]); 
         $query->andFilterWhere(['active' => User::STATUS_ACTIVE ]);
+        $query->orFilterWhere(['active' => User::STATUS_NEW ]);
     }    
 }

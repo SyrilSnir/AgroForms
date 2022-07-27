@@ -60,6 +60,25 @@ class UserService
         return $user;
     }
     
+    public function createMember(MemberForm $form)
+    {
+        $user = User::create(
+                $form->login,
+                UserType::MEMBER_USER_ID, 
+                $form->company, 
+                $form->fio, 
+                $form->email, 
+                $form->phone, 
+                $form->birthday, 
+                $form->position,
+                $form->gender, 
+                $form->language
+                );
+        $this->users->save($user);  
+        $this->roleManager->setRole(UserType::ROLES[$user->user_type_id], $user->id);
+        return $user;
+    }    
+    
     public function edit($id, UserManageForm $form)
     {
         /** @var User $user */
