@@ -3,9 +3,9 @@
 use app\core\helpers\View\User\UserStatusHelper;
 use app\models\ActiveRecord\Users\User;
 use app\models\SearchModels\Users\UserSearch;
+use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
-use kartik\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\Pjax;
@@ -55,7 +55,21 @@ $action = Yii::$app->getRequest()->getPathInfo();
                             'filterWidgetOptions' => [
                                 'options' => ['placeholder' => ''],
                             ]
-                        ],                        
+                        ], 
+                        [
+                            'attribute' => 'active',
+                            'label' => Yii::t('app/user','Status'),
+                            'width' => '100px',
+                            'format' => 'raw',                           
+                            'filterType' => GridView::FILTER_SELECT2,                            
+                            'filter' => UserStatusHelper::statusList(),
+                            'filterWidgetOptions' => [
+                                'options' => ['placeholder' => ''],
+                            ],                            
+                            'value' => function (User $model) {
+                                return UserStatusHelper::getStatusLabel($model->active);
+                            }
+                        ],                         
                         [ 
                             'class' => ActionColumn::class,
                             'width' => '100px',                            

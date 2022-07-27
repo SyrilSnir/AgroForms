@@ -27,7 +27,7 @@ class BaseUserSearch extends Model
     
     public $email;
     
-    public $company_id;    
+    public $company_id;  
 
     use GetCompanyNamesTrait;
     

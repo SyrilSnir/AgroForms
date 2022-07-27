@@ -24,6 +24,11 @@ class ManagerMenuHelper implements MenuHelperInterface
                         ]
                     ],
                     [
+                        'label' => Yii::t('app/menu', 'Contracts'),
+                        'icon' => 'icon-requests',
+                        'url' => ['/panel/contracts']
+                    ],                    
+                    [
                         'label' => Yii::t('app/menu', 'Viewing requests'), 'icon' => 'icon-requests', 'url' => ['/panel/requests'],
                     ]
                 ]
