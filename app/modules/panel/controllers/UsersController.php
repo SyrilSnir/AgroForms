@@ -132,7 +132,9 @@ class UsersController extends BaseAdminController
         //dump($user);
         if ($activateForm->load(Yii::$app->request->post()) && $activateForm->validate() && $user) {
             $this->activateService->sendInvite($user->id, $activateForm->email);
-            return 'send';
+            return $this->render('invite', [
+                'eMail' => $activateForm->email,
+            ]);
         }        
         return 'cancel';
     }
