@@ -228,7 +228,7 @@ class AdminController extends Controller
     {
         /** @var Request $request */
         $requests = Request::find()->all();
-        $admin = User::findOne(UserType::ROOT_USER_ID);
+        $admin = User::findOne(['login' => 'admin']);
         foreach ($requests as $request) {
             if ($request->form->form_type_id !== FormType::DYNAMIC_ORDER_FORM) {
                 continue;
