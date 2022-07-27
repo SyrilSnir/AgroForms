@@ -2,6 +2,7 @@
 
 namespace app\commands\controllers;
 
+use app\core\helpers\View\Form\FormHelper;
 use app\core\repositories\readModels\Forms\FieldGroupReadRepository;
 use app\core\traits\Db\QueryTrait;
 use app\models\ActiveRecord\Common\Valute;
@@ -16,8 +17,12 @@ use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Geography\City;
 use app\models\ActiveRecord\Geography\Country;
 use app\models\ActiveRecord\Geography\Region;
+use app\models\ActiveRecord\Requests\Application;
+use app\models\ActiveRecord\Requests\Request;
+use app\models\ActiveRecord\Requests\RequestStand;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
+use app\models\Data\Languages;
 use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
@@ -201,21 +206,45 @@ class AdminController extends Controller
     
     public function actionFillFormIds()
     {
-        $requests = \app\models\ActiveRecord\Requests\Request::find()->all();
+        $requests = Request::find()->all();
         foreach ($requests as $request)
         {
-            /** @var \app\models\ActiveRecord\Requests\Request $request */
-            /** @var \app\models\ActiveRecord\Requests\RequestStand $stand */
+            /** @var Request $request */
+            /** @var RequestStand $stand */
             if (!$request->form_id) {
                 if ($request->formType->id === FormType::SPECIAL_STAND_FORM) {
-                    $stand = \app\models\ActiveRecord\Requests\RequestStand::findOne(['request_id' => $request->id]);
+                    $stand = RequestStand::findOne(['request_id' => $request->id]);
                     $request->form_id = $stand->form_id;
                 } else {
-                    $app = \app\models\ActiveRecord\Requests\Application::findOne(['request_id' => $request->id]);
+                    $app = Application::findOne(['request_id' => $request->id]);
                     $request->form_id = $app->form_id;                    
                 }
                 $request->save();
             }
         }
+    }
+    
+    public function actionFixPrice()
+    {
+        /** @var Request $request */
+        $requests = Request::find()->all();
+        $admin = User::findOne(UserType::ROOT_USER_ID);
+        foreach ($requests as $request) {
+            if ($request->form->form_type_id !== FormType::DYNAMIC_ORDER_FORM) {
+                continue;
+            }
+            $formHelper = FormHelper::createViaRequest($admin, Languages::RUSSIAN, $request);
+            $realPrice = $formHelper->getFormPrice();
+            /** @var Application $application */
+            $application = $request->requestForm;
+            $currentPrice = $application->amount;
+            if ($currentPrice != $realPrice) {
+                $application->amount = $realPrice;
+                $application->save();
+                Console::output("Некорректное значение стоимости в заявке №{$request->id} $currentPrice заменено на $realPrice!");
+
+            }                        
+        }
+        return ExitCode::OK;         
     }
 }
