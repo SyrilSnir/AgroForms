@@ -1,3 +1,9 @@
+<?php
+
+use yii\helpers\Html;
+
+
+?>
 <div class="full-view">
     <p>
         <?php //Html::a(t('Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
