@@ -52,7 +52,7 @@ $this->title = '';
             <?php if ($model->form->formType !== app\models\ActiveRecord\Forms\FormType::DYNAMIC_INFORMATION_FORM):?>      
                 <tr style="border: 1px solid black">
                     <td style="font-family: Verdana;font-size: 10pt;text-align: left;font-weight:bold"><?php echo t('Total amount payable','requests') .':' ?></td>
-                    <td style="font-family: Verdana;font-size: 10pt;text-align: right;font-weight:bold"><?php echo $model->application->amount . ' ' . $model->form->valute->symbol ?></td>
+                    <td style="font-family: Verdana;font-size: 10pt;text-align: right;font-weight:bold"><?php echo $amount . ' ' . $model->form->valute->symbol ?></td>
                         
                 </tr>
             <?php endif;?>

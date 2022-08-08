@@ -300,6 +300,7 @@ class FormHelper extends BaseFormHelper
                     'browse' => t('Browse'),
                     'selectFile' => t('Select file'),
                     'attachFile' => t('Attach file'),
+                    'amount' => $this->getFormPrice(),                    
 
                 ],
                 'valute' => t($this->form->valute->char_code, 'requests'),
@@ -333,7 +334,8 @@ class FormHelper extends BaseFormHelper
         $content = Yii::$app->view->renderFile('@pdf/dynamic-form.php',[
             'model' => $this->request,
             'fields' => $this->formElements,
-            'values' => self::$valuesList
+            'values' => self::$valuesList,
+            'amount' => $this->getFormPrice(),
         ]);
         $header = $this->getPdfHeader();
         $footer = $this->getPdfFooter();
