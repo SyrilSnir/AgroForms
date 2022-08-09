@@ -131,6 +131,9 @@ class ElementGroup extends FormElement implements CountableElementInterface
         }
         $result = '';
         foreach($this->formElements as $element) {  
+            if (!$element->isShowInRequest()) {
+                continue;
+            }            
             $val = [];
             $fieldId = $element->getFieldId();
             if (key_exists($fieldId, $this->valuesList)) {
@@ -152,6 +155,9 @@ class ElementGroup extends FormElement implements CountableElementInterface
             return '';
         }        
         foreach($this->formElements as $element) {  
+            if (!$element->isShowInPdf()) {
+                continue;
+            }            
             $val = [];
             $fieldId = $element->getFieldId();
             if (key_exists($fieldId, $this->valuesList)) {
