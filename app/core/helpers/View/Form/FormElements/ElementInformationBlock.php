@@ -14,8 +14,6 @@ class ElementInformationBlock extends FormElement
     {
         $field = $this->getField();
         return "<div class=\"header__block\">
-                <h4>{$field->name}</h4>
-                <p class=\"description\">{$field->description}</p>
         <p class=\"info\">{$this->getTranslatableParameter('html')}</p>";        
     }
 
@@ -23,9 +21,7 @@ class ElementInformationBlock extends FormElement
     {
         $field = $this->getField();
         return "<tr style=\"border:none;\"><td colspan=\"2\">
-                    <p style=\"font-family:Verdana;font-size:10pt;\">{$field->name}</p>
-                    <p style=\"font-family:Verdana;font-size:7pt;\">{$field->description}</p>
-                    <p style=\"font-family:Verdana;font-size:6pt;\">{$this->getTranslatableParameter('html')}</p>
+                    <p style=\"font-family:Verdana;font-size:8pt;\">{$this->getTranslatableParameter('html')}</p>
                 </td></tr>";       
     }
 

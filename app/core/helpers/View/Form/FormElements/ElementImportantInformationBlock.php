@@ -13,12 +13,12 @@ class ElementImportantInformationBlock extends FormElement
     public function renderHtml(array $valuesList = []): string
     {
         $field = $this->getField();
-        return "<div class=\"important\">{$this->getTranslatableParameter('text')}</div>";        
+        return "<div class=\"section__important\">{$this->getTranslatableParameter('text')}</div>";        
     }
 
     public function renderPDF(array $valuesList = []): string
     {   
-        return '<tr><td colspan="2" style="color:black;font-family:Verdana;font-size:10pt;text-align:left">' .$this->getTranslatableParameter('text') . '</td></tr>';
+        return '<tr><td colspan="2" style="color:black;font-family:Verdana;font-size:10pt;text-align:center;border:1px solid black; padding:10px">' .$this->getTranslatableParameter('text') . '</td></tr>';
     }
 
 }
