@@ -23,8 +23,10 @@ abstract class BaseParametersForm extends Model
      * 
      * @var Field|null
      */
-    protected $field;    
-    
+    protected $field;  
+
+
+
     use GetCategoriesListTrait;    
     /**
      * 
@@ -49,6 +51,13 @@ abstract class BaseParametersForm extends Model
             self::HIDDEN_GROUP_TYPE => t('Group for hidden elements'),
         ];
     }  
+    
+    public function getUnitPrice() {
+        if (property_exists($this, 'unitPrice')) {
+            return $this->unitPrice;
+        }
+        return 0;
+    }
     
     abstract function getViewParameters(): array;
 }
