@@ -2,6 +2,9 @@
 
 namespace app\models\Forms\Manage\Forms\Parameters;
 
+use app\models\ActiveRecord\Forms\Field;
+use Yii;
+
 /**
  * Description of FrizeForm
  *
