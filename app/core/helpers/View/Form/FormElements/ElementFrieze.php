@@ -42,7 +42,10 @@ class ElementFrieze extends FormElement implements CountableElementInterface
     public function getPrice(array $valuesList = []): int
     {
         $params = $this->getParameters();
-        $val = trim($valuesList['value']);
+        $val = '';
+        if (key_exists('value', $valuesList)) {
+            $val = trim($valuesList['value']);
+        }
         $freeDigits = (int) $params['freeDigitCount'];
         $digitPrice = (int) $params['digitPrice'];
         $digitCount = mb_strlen($val);
