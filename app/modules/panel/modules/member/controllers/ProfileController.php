@@ -80,7 +80,7 @@ class ProfileController extends BaseMemberController
             $this->companyService->edit($companyForm);
             return $this->redirect(['company']);
         }        
-        
+        $errors = $companyForm->getErrors();
         return $this->render('company-profile-update', [
             'model' => $companyForm,
         ]);          
