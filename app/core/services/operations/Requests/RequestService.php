@@ -3,11 +3,13 @@
 namespace app\core\services\operations\Requests;
 
 use app\core\repositories\manage\Requests\RequestRepository;
+use app\core\services\Mail\MailService;
 use app\core\services\operations\Logs\ApplicationRejectLogService;
 use app\models\ActiveRecord\Logs\ApplicationRejectLog;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationRejectForm;
 use app\models\Forms\Requests\EditRequestForm;
+use app\models\ActiveRecord\Companies\Company;
 
 
 /**
@@ -25,6 +27,12 @@ class RequestService
     
     /**
      * 
+     * @var MailService
+     */
+    protected $mailService;
+    
+    /**
+     * 
      * @var ApplicationRejectLogService
      */
     protected $applicationRejectLogService;
@@ -32,11 +40,13 @@ class RequestService
 
     public function __construct(
             RequestRepository $requests,
-            ApplicationRejectLogService $applicationRejectLogService
+            ApplicationRejectLogService $applicationRejectLogService,
+            MailService $mailService
             )
     {
         $this->requests = $requests;
         $this->applicationRejectLogService = $applicationRejectLogService;
+        $this->mailService = $mailService;
     }
     
     public function edit(EditRequestForm $form)
@@ -97,9 +107,10 @@ class RequestService
     public function invoice(int $id)
     {
         /** @var Request $request */
-        $request = $this->requests->get($id);
-        $request->invoice();
+        $request = $this->requests->get($id); 
+        $request->invoice();        
         $request->save();
+        $this->sendInvoiceNotification($request);
     }      
 
     /**
@@ -134,4 +145,21 @@ class RequestService
         $this->requests->save($request);
         return $request;
     }
+    
+    private function sendInvoiceNotification(Request $request)
+    {
+        $member = $request->company->member;
+        if (!$member) {
+            return;
+        }
+        $this->mailService->compose([
+            'html' => 'invoice-html',
+            'text' => 'invoice-text',
+        ], [
+            'request' => $request,            
+        ])->setTo($member->email)->setSubject($request->exhibition->title . ' - в вашем личном кабинете новый счет на оплату услуг')
+                ->send();
+    }
+    
+    
 }

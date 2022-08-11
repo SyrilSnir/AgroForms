@@ -140,7 +140,7 @@ class ElementGroup extends FormElement implements CountableElementInterface
                 $val = $this->valuesList[$fieldId];
             }             
             $result.= $element->renderHtml($val);
-        }        
+        }
         return $result;
     }
 
@@ -167,5 +167,4 @@ class ElementGroup extends FormElement implements CountableElementInterface
         }        
         return $result;
     }
-
 }
