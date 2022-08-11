@@ -19,6 +19,9 @@ trait GetCompanyNamesTrait
 {
     public function companiesList()
     {
-        return ArrayHelper::map(Company::find()->orderBy('id')->asArray()->all(),'id','name');
+        return ArrayHelper::map(Company::find()
+                ->andFilterWhere(['blocked' => false])
+                ->andFilterWhere(['deleted' => false])
+                ->orderBy('id')->asArray()->all(),'id','name');
     }
 }

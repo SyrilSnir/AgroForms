@@ -44,6 +44,7 @@ class CompanySearch extends Model implements SearchInterface
         $query->andFilterWhere(['like','name', $this->name]);
         $query->andFilterWhere(['like','full_name', $this->full_name]);
         $query->andFilterWhere(['blocked' => $this->blocked]);
+        $query->andFilterWhere(['deleted' => false]);
         return $dataProvider;
     }
 }

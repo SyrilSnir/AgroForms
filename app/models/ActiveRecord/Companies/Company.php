@@ -234,4 +234,9 @@ class Company extends ActiveRecord
                 orderBy(['end_date' => SORT_DESC])->
                 all();
     }
+    
+    public function deleteCompany()
+    {
+        $this->deleted = true;
+    }
 }

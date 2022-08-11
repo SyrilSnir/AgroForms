@@ -198,5 +198,11 @@ class CompanyService
         $company->save();
     }    
 
-            
+    public function remove($id)
+    {
+        /** @var Company $company */
+        $company = $this->companies->get($id);
+        $company->deleteCompany();
+        $this->companies->save($company); 
+    }            
 }
