@@ -32,6 +32,7 @@ use yii\db\ActiveRecord;
  *
  * @property User $member
  * 
+ * @property User[] $users Все пользователи связанные с компанией
  * @property BankDetail $bankDetails
  * @property Contact $contacts
  * @property LegalAddress $legalAddress
@@ -225,6 +226,11 @@ class Company extends ActiveRecord
         ]); 
     }
     
+    public function getUsers()
+    {
+        return $this->hasMany(User::class,  ['company_id' => 'id']);   
+    }
+
     public function getAvailableExhibitions()
     {
         return Exhibition::find()->

@@ -50,21 +50,25 @@ class BaseUserSearch extends Model
         ]);
 
         $this->load($params);
-        if (!$this->validate()) {
+        
+        if (!$this->validate()) {           
             $query->where('0=1');
-            return $dataProvider;
+        } else {
+            $this->addFilters($query);
         }
-        $this->addFilters($query);
-
+        $this->addStaticFilters($query);            
         return $dataProvider;
     }   
     
     protected function addFilters(UserQuery $query) 
     {
-        $query->andFilterWhere(['deleted' => false]);
         $query->andFilterWhere(['company_id' => $this->company_id]);    
         $query->andFilterWhere(['like','login', $this->login]);
         $query->andFilterWhere(['like','fio', $this->fio]);
         $query->andFilterWhere(['like','email', $this->email]);        
+    }
+    
+    protected function addStaticFilters(UserQuery $query)
+    {
     }
 }

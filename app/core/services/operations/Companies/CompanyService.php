@@ -202,6 +202,11 @@ class CompanyService
     {
         /** @var Company $company */
         $company = $this->companies->get($id);
+        $usersOfCompany = $company->users;
+        foreach ($usersOfCompany as $userOfComnpany) {
+            $userOfComnpany->deleteUser();
+            $userOfComnpany->save();
+        }
         $company->deleteCompany();
         $this->companies->save($company); 
     }            

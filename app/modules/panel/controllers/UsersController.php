@@ -12,10 +12,12 @@ use app\models\Forms\Manage\Users\AdminForm;
 use app\models\Forms\Manage\Users\MemberForm;
 use app\models\Forms\Manage\Users\UserManageForm;
 use app\models\Forms\User\Manage\ActivateForm;
+use app\models\SearchModels\Users\TrashUserSearch;
 use app\models\SearchModels\Users\UserSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
 use Yii;
+use yii\helpers\Url;
 
 /**
  * Description of UsersController
@@ -34,7 +36,13 @@ class UsersController extends BaseAdminController
      *
      * @var UserActivateService
      */
-    protected $activateService;    
+    protected $activateService;  
+    
+    /**
+     * 
+     * @var TrashUserSearch
+     */
+    protected $trashSearch;
     
     public function __construct(
             $id, 
@@ -43,6 +51,7 @@ class UsersController extends BaseAdminController
             UserService $userService,
             UserActivateService $activateService,
             UserSearch $searchModel,
+            TrashUserSearch $trashSearchModel,
             $config = array()
             )
     {
@@ -51,8 +60,21 @@ class UsersController extends BaseAdminController
         $this->service = $userService;
         $this->activateService = $activateService;
         $this->searchModel = $searchModel;
-  
+        $this->trashSearch = $trashSearchModel;
     }      
+    
+    public function actionTrash()
+    {
+        Url::remember();
+        $dataProvider =  $this->trashSearch->search(Yii::$app->request->queryParams);;
+        $pageDataProvider = $this->configurePagination($dataProvider);
+        return $this->render('trash',[            
+            'searchModel' => $this->trashSearch,
+            'dataProvider' => $pageDataProvider->getDataProvider(),
+            'rowsCountForm' => $pageDataProvider->getRowsCountForm(),
+            'pagination' => $this->showPagination
+        ]);             
+    }
     
     public function actionCreateAdmin()
     {
@@ -137,6 +159,14 @@ class UsersController extends BaseAdminController
             ]);
         }        
         return 'cancel';
+    }
+    
+    public function actionRestore($id)
+    {
+        /** @var User $user */        
+        $this->service->restore($id);
+        return $this->redirect(Url::previous());
+        
     }
     
     

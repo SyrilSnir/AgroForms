@@ -37,5 +37,11 @@ class MemberSearch extends BaseUserSearch
         $query->andFilterWhere(['or', 
             ['active' => User::STATUS_ACTIVE],
             ['active' => User::STATUS_NEW ] ]);
+    }
+    
+    protected function addStaticFilters(UserQuery $query)
+    {
+        $query->andFilterWhere(['deleted' => false]);        
     }    
+    
 }

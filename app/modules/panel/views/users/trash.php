@@ -1,12 +1,11 @@
 <?php
 
-use app\core\helpers\View\User\UserStatusHelper;
-use app\models\ActiveRecord\Users\User;
 use app\models\SearchModels\Users\UserSearch;
+use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
-use kartik\grid\ActionColumn;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\Pjax;
 
@@ -14,7 +13,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel UserSearch */
 /* @var $dataProvider ActiveDataProvider */
 
-$this->title = Yii::t('app/user', 'Users management');
+$this->title = Yii::t('app/user', 'Deleted users');
 $this->params['breadcrumbs'][] = $this->title;
 $adminList = Yii::$app->params['rootUsers'] ?? [];
 $action = Yii::$app->getRequest()->getPathInfo();
@@ -28,20 +27,16 @@ $action = Yii::$app->getRequest()->getPathInfo();
     $columnsConfig = [                    
                     'toolbar' => [
                         [
-                            'content'=> $rowsCountTemplate .                            
+                            'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-eye"></i>', ['/panel/users'], [
+                                    'class' => 'btn btn-outline-secondary',
+                                    'title'=>t('All users'),
+                                ]).   
                                 Html::a('<i class="fas fa-redo"></i>', [''], [
                                     'class' => 'btn btn-outline-secondary',
                                     'title'=>t('Default sort'),
                                     'data-pjax'=> '', 
-                                ]) .
-                                Html::a('<i class="fas fa-trash"></i>', ['trash'], [
-                                    'class' => 'btn btn-outline-secondary',
-                                    'title'=>t('Trash'),                                     
-                                ]) .                             
-                                Html::a('<i class="fas fa-plus"></i>',['create-user'], [
-                                    'class' => 'btn btn-success',
-                                    'title' => Yii::t('app/user', 'Add user'),
-                                ]),
+                                ])
                         ],
                     ],                   
                     'dataProvider' => $dataProvider,
@@ -70,32 +65,24 @@ $action = Yii::$app->getRequest()->getPathInfo();
                             'label' => Yii::t('app/user','User type'),
                             'filter' => $searchModel->userTypeList(),
                             'value' => 'userType.name'
-                        ],
-                        [
-                            'attribute' => 'active',
-                            'label' => Yii::t('app/user','Status'),
-                            'width' => '100px',
-                            'format' => 'raw',                           
-                            'filterType' => GridView::FILTER_SELECT2,                            
-                            'filter' => UserStatusHelper::statusList(),
-                            'filterWidgetOptions' => [
-                                'options' => ['placeholder' => ''],
-                            ],                            
-                            'value' => function (User $model) {
-                                return UserStatusHelper::getStatusLabel($model->active);
-                            }
-                        ],                        
+                        ],                       
                         [ 
                             'class' => ActionColumn::class,
-                            'width' => '100px',                            
-                             'visibleButtons' => [
-                                'update' => function ($model)  use ($adminList) {
-                                    return !in_array($model->login, $adminList );
-                                },
-                                'delete' => function ($model)  use ($adminList) {
-                                    return !in_array($model->login, $adminList );
+                            'template' => '{view} {update} {restore}',
+                            'width' => '100px',   
+                            'buttons' => [
+                                'restore' => function ($url, $model, $key) {
+                                    $title = t('Restore user','requests');
+                                    $iconName = "ok-circle";
+                                    $url = Url::current(['restore', 'id' => $key]);
+                                    $options = [
+                                        'title' => $title,
+                                        'aria-label' => $title,
+                                    ];                                  
+                                    $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                    return Html::a($icon, $url,$options);        
                                 }
-                            ]                    
+                            ]
                         ],
                     ],
                 ];
