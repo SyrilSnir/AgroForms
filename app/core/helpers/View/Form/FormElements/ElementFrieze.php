@@ -16,7 +16,14 @@ class ElementFrieze extends FormElement implements CountableElementInterface
         if (key_exists('value', $valuesList)) {
             $text.= $valuesList['value'];
         }
-        return $text  . '</div></div>';
+        $price = $this->getPrice($valuesList);
+        if ($price > 0 ) {
+            $digitPrice = $this->getDigitPrice();
+            $addDigit = $this->getAdditionDigits($valuesList);
+            $text .= "<div style=\"margin-top:5px\">Дополнительно: $addDigit знаков x $digitPrice{$this->field->form->valute->symbol} = $price {$this->field->form->valute->symbol}</div>";
+        }
+        $text.= '</div>';
+        return $text  . '</div>';
     }
 
     public function renderPDF(array $valuesList = []): string
@@ -41,20 +48,36 @@ class ElementFrieze extends FormElement implements CountableElementInterface
     
     public function getPrice(array $valuesList = []): int
     {
-        $params = $this->getParameters();
+        $digitPrice = $this->getDigitPrice();
+        return $digitPrice * ($this->getAdditionDigits($valuesList)); 
+    }
+    
+    private function getAdditionDigits(array $valuesList = []): int
+    {
         $val = '';
+        $freeDigits = $this->getFreeDigits();
         if (key_exists('value', $valuesList)) {
             $val = trim($valuesList['value']);
         }
-        $freeDigits = (int) $params['freeDigitCount'];
-        $digitPrice = (int) $params['digitPrice'];
         $digitCount = mb_strlen($val);
         if ($digitCount <= $freeDigits) {
             return 0;
-        }
-        return $digitPrice * $digitCount; 
+        }        
+        return $digitCount - $freeDigits;
+    }  
+    
+    private function getFreeDigits(): int
+    {
+        $params = $this->getParameters();        
+        return (int) $params['freeDigitCount'];
     }
     
+    private function getDigitPrice(): int
+    {
+        $params = $this->getParameters();        
+        return (int) $params['digitPrice'];
+    }
+
     public function isComputed(): bool
     {
         return true;
