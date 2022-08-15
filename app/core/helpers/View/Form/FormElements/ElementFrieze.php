@@ -33,7 +33,13 @@ class ElementFrieze extends FormElement implements CountableElementInterface
         if (key_exists('value', $valuesList)) {
             $text.= $valuesList['value'];
         }
-        return $text  . '</td></tr>';         
+        $price = $this->getPrice($valuesList);
+        if ($price > 0 ) {
+            $digitPrice = $this->getDigitPrice();
+            $addDigit = $this->getAdditionDigits($valuesList);
+            $text .= "<div style=\"font-family:Verdana;font-size:8pt;font-weight:lighten;text-align:right;\">Дополнительно: $addDigit знаков x $digitPrice{$this->field->form->valute->symbol} = $price {$this->field->form->valute->symbol}</div>";
+        }
+        return $text.= "</td></tr>";;
     }
 
     
