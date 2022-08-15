@@ -7,11 +7,12 @@ use app\core\repositories\manage\Forms\FormRepository;
 use app\core\repositories\manage\Requests\ApplicationRepository;
 use app\core\repositories\manage\Requests\RequestRepository;
 use app\core\services\Forms\FieldService;
+use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Application;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationForm;
-use app\models\ActiveRecord\Forms\Form;
+use Yii;
 use function GuzzleHttp\json_encode;
 
 /**
@@ -64,7 +65,7 @@ class ApplicationService
         $appForm = $this->form->get($form->formId);
         $exhibitionId = $appForm->exhibition_id;
         $serializedFields = json_encode($fields);
-        $total = $this->fieldService->calculateTotal($fields,$form->basePrice); 
+       // $total = $this->fieldService->calculateTotal($fields,$form->basePrice); 
         /** @var Request $request */   
         $request = Request::create(
                 $form->userId, 
@@ -80,12 +81,19 @@ class ApplicationService
                 $request->id, 
                 $form->formId,
                 $serializedFields,
-                $total
+                0
                 );
         if ($form->loadedFile) {
            $dynamicForm->setFile($form->loadedFile);
         }
         $this->application->save($dynamicForm);
+        
+        $formHelper = FormHelper::createViaRequest(Yii::$app->user->getIdentity()->getUser(), Yii::$app->language, $request);
+        $total = $formHelper->getFormPrice();
+        if ($total > 0) {
+            $dynamicForm->amount = $total;
+            $this->application->save($dynamicForm);            
+        }        
         return $dynamicForm;        
     }
     
