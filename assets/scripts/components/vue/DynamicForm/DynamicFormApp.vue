@@ -74,6 +74,7 @@ export default {
             userId : null,
             companyId: null,            
             basePrice: 0,
+            isFileUpload: false,
             totalPrice: 0,
             addedFile: false,
             language: languages.russian,               
@@ -95,6 +96,7 @@ export default {
             this.basePrice = response.data.basePrice;
             this.totalPrice = this.basePrice;
             this.formId = response.data.formId;
+            this.isFileUpload = response.data.isFileUpload;
             this.language = response.data.language;
             this.dict = response.data.dict;
         })

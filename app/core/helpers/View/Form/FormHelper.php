@@ -301,6 +301,7 @@ class FormHelper extends BaseFormHelper
             'title' => $this->form->headerName,
             'formType' => $this->form->form_type_id,
             'formId' => $this->form->id,
+            'isFileUpload' => $this->form->has_file,
             'attachedFile' => $this->getUploadedFileUrl(),
           //  'companyId' =>// $this->
             'hasFile' => (bool) $this->form->has_file,
