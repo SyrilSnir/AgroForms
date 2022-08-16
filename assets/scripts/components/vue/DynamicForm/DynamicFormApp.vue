@@ -16,7 +16,7 @@
                 >
                 </group>
             </template>
-            <div v-show="hasFile" class="form-group clr">
+            <div v-show="isFileUpload" class="form-group clr">
                 <p class="d-flex flex-column">
                     <span>{{ dict.fileAttach.attachFile }}</span>
                 </p>             
