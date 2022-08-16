@@ -17,6 +17,8 @@ use yii\web\UploadedFile;
  * @property User $user
  * @property Request $request
  * @property Form $form
+ * 
+ * @method string|null getUploadedFileUrl(string $attribute) Получить URL вложения 
  * @author kotov
  */
 abstract class BaseRequest extends ActiveRecord

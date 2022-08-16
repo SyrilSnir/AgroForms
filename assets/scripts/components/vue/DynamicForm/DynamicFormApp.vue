@@ -26,9 +26,9 @@
                         <label class="custom-file-label" :data-browse="dict.fileAttach.browse" for="userFile">Select file</label>
                     </div>
                 </div>
-                <div v-if="addedFile" class="file__added">
+                <div v-if="hasFile" class="file__added">
                     <i class="fa fa-file" aria-hidden="true"></i>
-                    {{ addedFile }}</div>
+                    <a :href="attachedFile">{{ attachedFile }}</a></div>
             </div>
 
             <computed 
@@ -64,6 +64,7 @@ export default {
     data() {
         return {
             title: '',
+            attachedFile: '',
             elements: [],
             draft: false,
             fields: {},
@@ -74,7 +75,6 @@ export default {
             companyId: null,            
             basePrice: 0,
             totalPrice: 0,
-            hasFile: false,
             addedFile: false,
             language: languages.russian,               
             dict: {
@@ -89,19 +89,20 @@ export default {
             this.title = response.data.title; 
             this.elements = response.data.elements;  
             this.isComputed = response.data.computed ; 
-            this.userId = response.data.userId;       
+            this.userId = response.data.userId; 
+            this.attachedFile = response.data.attachedFile;      
             this.companyId = response.data.companyId;
             this.basePrice = response.data.basePrice;
             this.totalPrice = this.basePrice;
             this.formId = response.data.formId;
-            this.hasFile = response.data.hasFile;
             this.language = response.data.language;
             this.dict = response.data.dict;
-            if (this.hasFile) {
-                this.addedFile = response.data.fileName;
-            }
-
         })
+  },
+  computed: {
+    hasFile() {
+        return !(this.attachedFile == '');
+    }
   },
   methods: {
         getFieldName(name,nameEng) {

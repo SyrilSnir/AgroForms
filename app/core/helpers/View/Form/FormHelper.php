@@ -245,6 +245,17 @@ class FormHelper extends BaseFormHelper
         }
         return $result;
     }
+    
+    protected function getUploadedFileUrl():string
+    {
+        $request = $this->getRequest();
+        if (!$request) {
+            return '';
+        }
+        
+        $file = $request->getRequestForm()->getUploadedFileUrl('file');
+        return $file ?? '';
+    }
 
     public function getFormPrice() :int 
     {
@@ -277,6 +288,7 @@ class FormHelper extends BaseFormHelper
             'elements' => $this->renderHtmlElements(),
             'request' => $this->request,
             'amount' => $this->getFormPrice(),
+            'attachedFile' => $this->getUploadedFileUrl(),
         ];
         return Yii::$app->view->renderFile(Yii::getAlias('@elements'). DIRECTORY_SEPARATOR . 'request-html.php', $requestData);
     }
@@ -289,6 +301,7 @@ class FormHelper extends BaseFormHelper
             'title' => $this->form->headerName,
             'formType' => $this->form->form_type_id,
             'formId' => $this->form->id,
+            'attachedFile' => $this->getUploadedFileUrl(),
           //  'companyId' =>// $this->
             'hasFile' => (bool) $this->form->has_file,
             'readOnly' => $isReadOnly,

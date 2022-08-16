@@ -12,7 +12,7 @@ use app\core\services\operations\View\Requests\ApplicationViewService;
 use app\core\traits\InfoMessageTrait;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\Forms\Requests\ApplicationForm;
+use app\models\Forms\Requests\DynamicForm;
 use DomainException;
 use Yii;
 
@@ -98,10 +98,10 @@ class ApplicationController extends FormController
     public function actionSendForm()
     {
         /** @var Form $appForm */
-        $form = new ApplicationForm();
+        $form = new DynamicForm();
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE');
         try {
-            if ($form->load(Yii::$app->request->post(),'DynamicForm') && $form->validate()) {
+            if ($form->load(Yii::$app->request->post()) && $form->validate()) {
                 if ($formChangeType === Request::FORM_UPDATE) {
                     $requestId = Yii::$app->session->get('REQUEST_ID');
              /** @var Request $request */
@@ -121,12 +121,12 @@ class ApplicationController extends FormController
         }        
     }
 
-    private function createRequest(ApplicationForm $form)
+    private function createRequest(DynamicForm $form)
     {
         $this->applicationService->create($form); 
     }
     
-    private function updateRequest(int $requestId, ApplicationForm $form)
+    private function updateRequest(int $requestId, DynamicForm $form)
     {
         /** @var Request $request */
         $request = $this->requestRepository->get($requestId);

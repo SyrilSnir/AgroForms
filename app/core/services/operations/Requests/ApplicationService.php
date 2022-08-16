@@ -11,7 +11,7 @@ use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Application;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\Forms\Requests\ApplicationForm;
+use app\models\Forms\Requests\DynamicForm;
 use Yii;
 use function GuzzleHttp\json_encode;
 
@@ -58,7 +58,7 @@ class ApplicationService
         $this->form = $formRepository;
     }
     
-    public function create(ApplicationForm $form)
+    public function create(DynamicForm $form)
     {    
         /** @var Form $appForm */
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
@@ -77,27 +77,27 @@ class ApplicationService
                 $form->draft
                 );
         $this->requests->save($request);
-        $dynamicForm = Application::create(
+        $application = Application::create(
                 $request->id, 
                 $form->formId,
                 $serializedFields,
                 0
                 );
         if ($form->loadedFile) {
-           $dynamicForm->setFile($form->loadedFile);
+           $application->setFile($form->loadedFile);
         }
-        $this->application->save($dynamicForm);
+        $this->application->save($application);
         
         $formHelper = FormHelper::createViaRequest(Yii::$app->user->getIdentity()->getUser(), Yii::$app->language, $request);
         $total = $formHelper->getFormPrice();
         if ($total > 0) {
-            $dynamicForm->amount = $total;
-            $this->application->save($dynamicForm);            
+            $application->amount = $total;
+            $this->application->save($application);            
         }        
-        return $dynamicForm;        
+        return $application;
     }
     
-    public function edit(Request $request, ApplicationForm $form, string $langCode)
+    public function edit(Request $request, DynamicForm $form, string $langCode)
     {
         /** @var Application $dynamicForm */
         $formHelper = FormHelper::createViaRequest($request->user, $langCode, $request);
