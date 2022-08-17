@@ -109,6 +109,13 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                     ]
             ]) 
         ?>
+        <?= $form->field($model, 'toExport')->widget(SwitchInput::class,[
+                'pluginOptions' => [
+                        'onText' => Yii::t('app', 'Yes'),
+                        'offText' => Yii::t('app', 'No'),
+                    ]
+            ]) 
+        ?>                            
     <?php // $form->field($model, 'order')->textInput() ?>
                            
     <?php echo $form->field($model, 'fieldGroupId')->dropDownList($model->fieldGroupsList()) ?>

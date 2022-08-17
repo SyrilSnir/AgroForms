@@ -24,6 +24,7 @@ use function GuzzleHttp\json_decode;
  * @property int $order Позиция на экране
  * @property boolean $showed_in_request Отображать в заявке
  * @property boolean $showed_in_pdf Отображать в печатной форме
+ * @property boolean $to_export Добавлять в выгрузку
  * @property string|null $default_value Значение по умолчанию
  * @property string|null $parameters Параметры
  * @property bool $deleted Флаг удаления
@@ -52,6 +53,7 @@ class Field extends ActiveRecord
  * @param int $elementTypeId
  * @param bool $showInRequest
  * @param bool $showInPdf
+ * @param bool $toExport
  * @param int $fieldGroupId
  * @param string $defaultValue
  * @param string $parameters
@@ -69,6 +71,7 @@ class Field extends ActiveRecord
             int $order,
             bool $showInRequest,
             bool $showInPdf,
+            bool $toExport,
             string $defaultValue = '',
             string $parameters = ''     
             ):self
@@ -86,6 +89,7 @@ class Field extends ActiveRecord
         $model->default_value = $defaultValue;
         $model->showed_in_request = $showInRequest;
         $model->showed_in_pdf = $showInPdf;
+        $model->to_export = $toExport;
         return $model;
     }
 
@@ -108,6 +112,7 @@ class Field extends ActiveRecord
  * @param int $order
  * @param bool $showInRequest
  * @param bool $showInPdf
+ * @param bool $toExport 
  * @param string $defaultValue
  * @param string $parameters
  */    
@@ -121,7 +126,8 @@ class Field extends ActiveRecord
             int $fieldGroupId,            
             int $order,
             bool $showInRequest,            
-            bool $showInPdf,            
+            bool $showInPdf,
+            bool $toExport,
             string $defaultValue = '',
             string $parameters = ''              
             )
@@ -136,6 +142,7 @@ class Field extends ActiveRecord
         $this->order = $order;
         $this->showed_in_request = $showInRequest;
         $this->showed_in_pdf = $showInPdf;
+        $this->to_export = $toExport;
         $this->parameters = $parameters;
         $this->default_value = $defaultValue;        
     }

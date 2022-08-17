@@ -180,6 +180,6 @@ return [
     'Group with conditional display' => 'Группа с условным отображением',
     'Group for hidden elements' => 'Группа для скрытых элементов',
     'Not chosen' => 'Не выбрано',
-
+    'Add to export' => 'Добавлять в выгрузку',
 ];
 
