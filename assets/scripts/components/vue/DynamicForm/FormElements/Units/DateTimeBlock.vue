@@ -1,5 +1,5 @@
 <template>
-<div class="form-group" :class="{'required' : required }">
+<div class="form-group datetime__wrapper" :class="{'required' : required }">
     <label  :for="id">{{ titleLabel }}</label>
     <date-picker 
         v-model="val" 
@@ -91,8 +91,11 @@
        } 
     }
 </script>
-<style scoped>
-    label {
+<style>
+    .datetime__wrapper label {
         display: block;
+    }
+    .datetime__wrapper input {
+        padding-right: 2rem;
     }
 </style>
