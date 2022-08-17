@@ -17,6 +17,7 @@ import UndefinedBlock from './Units/UndefinedBlock';
 import RadioBlock from './Units/RadioBlock';
 import EquipmentBlock from './Units/EquipmentBlock';
 import GroupBlock from './Units/GroupBlock';
+import DateTimeBlock from './Units/DateTimeBlock';
 import ImportantInformationBlock from './Units/ImportantInformation';
 export default {
     props: [
@@ -36,6 +37,7 @@ export default {
         'equipment': EquipmentBlock,
         'frieze': FriezeBlock,
         'group': GroupBlock,
+        'date-time': DateTimeBlock,
         'undefined': UndefinedBlock
     },    
     data() {
@@ -53,7 +55,8 @@ export default {
                 blockHeader: 14,
                 blockEquipment: 15,
                 blockGroup: 16,
-                blockFrieze: 17
+                blockFrieze: 17,
+                blockDateTime: 18,
             }
         }
     },
@@ -89,6 +92,8 @@ export default {
                     return 'equipment';  
                 case this.typesList.blockFrieze:
                     return 'frieze';
+                case this.typesList.blockDateTime:
+                    return 'date-time';
                 case this.typesList.blockGroup:
                     return 'group';
                 default:

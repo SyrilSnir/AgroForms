@@ -70,6 +70,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         data-equipment="<?php echo json_encode(ElementType::ELEMET_ADDITIONAL_EQUIPMENT)?>"
         data-group="<?php echo json_encode(ElementType::ELEMENT_GROUP)?>"
         data-frieze="<?php echo json_encode(ElementType::ELEMENT_FRIEZE) ?>"
+        data-datetime="<?php echo json_encode(ElementType::ELEMENT_DATE_TIME) ?>"
         >
         <div class="container-fluid">
             <div class="card card-default">
