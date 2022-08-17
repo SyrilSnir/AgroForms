@@ -11,7 +11,7 @@ export const unitMixin = {
     },
     computed: {
         required() {
-            return !!this.params.parameters.required;
+            return !!parseInt(this.params.parameters.required);
         }
     }      
 }
