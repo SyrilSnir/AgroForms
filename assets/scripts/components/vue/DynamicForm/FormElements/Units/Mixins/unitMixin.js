@@ -4,10 +4,14 @@ export const unitMixin = {
     ],
     data() {
         return {
-            parameters: this.params.parameters,                         
-            required: this.params.parameters.required,
-            unit: this.params.parameters.unitName, 
+            parameters: this.params.parameters, 
+            unit: this.params.parameters.unitName 
         //    val: this.params.value
         }
-    }       
+    },
+    computed: {
+        required() {
+            return !!this.params.parameters.required;
+        }
+    }      
 }

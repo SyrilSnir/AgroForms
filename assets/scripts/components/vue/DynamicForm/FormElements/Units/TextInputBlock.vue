@@ -8,9 +8,8 @@
         :class="{'is-invalid' : hasErrorsForShow() }" 
         v-model="val"
         @change="onChange($event)"
-        placeholder="Enter ...">
-    <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>         
-    <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>        
+        placeholder="">
+    <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>       
 </div>
 </template>
 <script> 
@@ -25,7 +24,7 @@
        data() {           
            return {
             id: 'id' + this.params.id,
-            val: this.params.value,
+            val: this.params.value ? this.params.value : '',
             currentVal: this.params.value,
             showErrors : false,
             valid: true,
