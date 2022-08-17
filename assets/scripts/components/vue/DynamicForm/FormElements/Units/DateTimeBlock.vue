@@ -92,8 +92,10 @@
     }
 </script>
 <style>
-    .datetime__wrapper label {
-        display: block;
+    .datetime__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
     .datetime__wrapper input {
         padding-right: 2rem;
