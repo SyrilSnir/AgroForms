@@ -194,6 +194,15 @@
     > .card-body {
         padding: 0 20px;
     }
+    .align-right {
+        .desc-block, .help-block {
+            text-align: right;
+        }
+    }
+    .desc-block {
+        font-size: 10px;
+
+    }
     .help-block {
         color: red;
         font-size: 10px;

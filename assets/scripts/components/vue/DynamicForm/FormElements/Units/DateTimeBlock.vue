@@ -1,5 +1,6 @@
 <template>
-<div class="form-group datetime__wrapper" :class="{'required' : required }">
+<div class="form-group align-right">
+<div class="datetime__wrapper" :class="{'required' : required }">
     <label  :for="id">{{ titleLabel }}</label>
     <date-picker 
         v-model="val" 
@@ -7,7 +8,10 @@
         :inputClass="'form-control'"
         type="datetime" 
         value-type="format"
-        format="DD.MM.YYYY hh:mm"></date-picker>  
+        format="DD.MM.YYYY hh:mm"></date-picker>           
+</div>
+    <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>  
+    <div v-if="!hasErrorsForShow()" class="desc-block">{{ descriptionLabel }}</div>  
 </div>
 </template>
 <script> 
