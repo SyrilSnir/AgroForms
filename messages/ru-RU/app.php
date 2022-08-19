@@ -49,6 +49,7 @@ return [
    'Categories' => 'Категории',
    'Add category' => 'Добавить категорию',
    'Created at' => 'Дата создания',
+   'Updated at' => 'Дата изменения',
    'Control panel' => 'Панель управления',
    'Enter authorization data' => 'Введите данные для автроризации',
    'Attach file' => 'Добавить вложение',
