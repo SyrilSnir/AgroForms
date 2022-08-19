@@ -30,6 +30,7 @@ use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Application;
+use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\ActiveRecord\Users\User;
 use app\models\Data\Languages;
@@ -156,9 +157,8 @@ class FormHelper extends BaseFormHelper
     protected function appendFormElements()
     {
         $request = $this->getRequest();
-        if (!$request) {
-            $date = microtime(true);
-        } else {
+        $date = microtime(true);
+        if ($request && (!in_array($request->status, [BaseRequest::STATUS_REJECTED, BaseRequest::STATUS_DRAFT]))) {
             $date = $request->updated_at ? $request->updated_at : $request->created_at;
         }
         $this->formElements = [];
