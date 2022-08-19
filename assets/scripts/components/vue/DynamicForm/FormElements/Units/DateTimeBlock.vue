@@ -1,6 +1,6 @@
 <template>
 <div class="form-group align-right">
-<div class="datetime__wrapper" :class="{'required' : required }">
+<div class="flex__wrapper" :class="{'required' : required }">
     <label  :for="id">{{ titleLabel }}</label>
     <date-picker 
         v-model="val" 
@@ -96,12 +96,4 @@
     }
 </script>
 <style>
-    .datetime__wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-    .datetime__wrapper input {
-        padding-right: 2rem;
-    }
 </style>

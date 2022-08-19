@@ -120,6 +120,9 @@ abstract class FormElement implements FormElementInterface
     protected function transformData(array $fieldList, array $valuesList):array
     {
         $fieldList['parameters'] = $this->buildParameters($fieldList);
+        if (key_exists('unitPrice',$fieldList['parameters'])) {
+            $fieldList['parameters']['unitPrice'] = $this->modifyPrice((int)$fieldList['parameters']['unitPrice']); 
+        }
         return $fieldList;
     }
     

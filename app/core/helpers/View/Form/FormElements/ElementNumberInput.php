@@ -41,7 +41,7 @@ class ElementNumberInput extends FormElement implements CountableElementInterfac
     
     protected function transformData(array $fieldList, array $valuesList = []): array
     {
-        $fieldList['parameters'] = $this->buildParameters($fieldList);
+        $fieldList = parent::transformData($fieldList, $valuesList);
         if (!empty($valuesList)) {
             $fieldList['value'] = $valuesList['value'];
         }
