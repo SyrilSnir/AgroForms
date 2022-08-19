@@ -76,6 +76,9 @@ class ApplicationService
                 FormType::DYNAMIC_ORDER_FORM,
                 $form->draft
                 );
+        if (!$form->draft) {
+            $request->activate();
+        }
         $this->requests->save($request);
         $application = Application::create(
                 $request->id, 

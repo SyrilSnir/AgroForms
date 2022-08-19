@@ -159,7 +159,7 @@ class FormHelper extends BaseFormHelper
         $request = $this->getRequest();
         $date = microtime(true);
         if ($request && (!in_array($request->status, [BaseRequest::STATUS_REJECTED, BaseRequest::STATUS_DRAFT]))) {
-            $date = $request->updated_at ? $request->updated_at : $request->created_at;
+            $date = $request->activate_at ? $request->activate_at : $request->created_at;
         }
         $this->formElements = [];
         if ($this->form) {

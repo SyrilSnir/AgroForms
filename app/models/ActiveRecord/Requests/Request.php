@@ -25,6 +25,7 @@ use yii\db\ActiveQuery;
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
+ * @property int $activate_at
  * @property int $exhibition_id
  * @property int $type_id Тип заявки
  * @property int $form_id Id формы
@@ -244,13 +245,23 @@ class Request extends FormManipulation
         $this->status = BaseRequest::STATUS_ACCEPTED;
     }
     
+    public function activate()
+    {
+        $this->activate_at = microtime(true);
+    }
     
+    public function deactivate()
+    {
+        $this->activate_at = null;
+    }
+
     /**
      * Заявку отклонена
      */
     public function reject()
     {
         $this->status = BaseRequest::STATUS_REJECTED;
+        $this->deactivate();
         $this->was_rejected = true;
     }  
     
