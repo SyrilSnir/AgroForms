@@ -32,6 +32,7 @@ export default {
         'eventBus',
         'val',
         'dic',
+        'fieldId',
         'lang'
     ],
     data() {
@@ -67,7 +68,7 @@ export default {
             return 'equipment-' + id;
         }, 
         getEquipments() {
-            axios.get('/api/equipment/get-equipments?categoryId=' + this.id)
+            axios.get('/api/equipment/get-equipments?categoryId=' + this.id + '&fieldId=' + this.fieldId)
                 .then((response) => {
                     this.equipments = response.data;
                     const eqKeys = Object.keys(this.equipments);

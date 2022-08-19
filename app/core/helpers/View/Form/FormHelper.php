@@ -133,7 +133,7 @@ class FormHelper extends BaseFormHelper
         return $formElement;
     }
     
-    protected static function appendPriceModificators(Field $field, FormElement $formElement,int $date = null)
+    public static function appendPriceModificators(Field $field, FormElement $formElement,int $date = null)
     {
         $parameters = $formElement->getParameters();
         if (in_array($field->element_type_id, ElementType::COMPUTED_FIELDS)) {

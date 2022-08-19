@@ -139,7 +139,7 @@ abstract class FormElement implements FormElementInterface
      * Применить модификаторы стоимости, если они имеются
      * @param int $price
      */
-    protected function modifyPrice(int $price) 
+    public function modifyPrice(int $price) 
     {
         foreach ($this->priceModificators as $priceModificator) {
            $price = $priceModificator->modify($price);

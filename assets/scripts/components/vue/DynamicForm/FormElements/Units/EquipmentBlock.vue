@@ -7,6 +7,7 @@
                 <equipment-list 
                     :val="values"
                     :id="category.id"
+                    :fieldId="params.id"
                     :eventBus="bus"
                     :dic="dic"
                     :lang="lang"
