@@ -113,6 +113,9 @@ class ApplicationService
                     $request->was_rejected ? 
                         $request->setStatusChanged() : 
                         $request->setStatusNew() );
+        if (!$form->draft) {
+            $request->activate();
+        }
         $this->requests->save($request);        
         $dynamicForm = $this->application->findByRequest($request->id);
         $dynamicForm->edit($serializedFields, $total);
