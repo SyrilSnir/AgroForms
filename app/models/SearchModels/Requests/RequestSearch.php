@@ -69,7 +69,8 @@ class RequestSearch extends Model
                     'company',
                     'form_id',
                     'status',
-                    'created_at'
+                    'created_at',                    
+                    'activate_at'
                 ],                
                 'defaultOrder' => ['id' => SORT_ASC]
             ]
