@@ -80,7 +80,7 @@ $columnsConfig = [
                       }
                       ],
                     'created_at:datetime:' . Yii::t('app','Created at'),
-                    'updated_at:datetime:' . Yii::t('app','Updated at'),
+                    'activate_at:datetime:' . Yii::t('app','Sended at'),
 
                     [
                         'class' => ActionColumn::class,

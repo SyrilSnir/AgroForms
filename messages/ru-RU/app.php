@@ -50,6 +50,7 @@ return [
    'Add category' => 'Добавить категорию',
    'Created at' => 'Дата создания',
    'Updated at' => 'Дата изменения',
+   'Sended at' => 'Дата отправки',
    'Control panel' => 'Панель управления',
    'Enter authorization data' => 'Введите данные для автроризации',
    'Attach file' => 'Добавить вложение',
