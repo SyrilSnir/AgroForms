@@ -58,5 +58,5 @@ $this->title = '';
             <?php endif;?>
     </tbody>
 </table>
-<p style="margin:0;font-family: Verdana;font-size: 6pt;text-align: right;font-weight:bold">Все цены включают НДС 20%.</p>
-<p style="padding:0;font-family: Verdana;font-size: 6pt;text-align: right;">Оплата производится в российских рублях по курсу ЦБ РФ на дату платежа.</p>
+<p style="margin:0;font-family: Verdana;font-size: 6pt;text-align: right;font-weight:bold"><?php echo t('All prices include VAT');?> 20%.</p>
+<p style="padding:0;font-family: Verdana;font-size: 6pt;text-align: right;"><?php echo t('Payment is made in Russian rubles at the exchange rate of the Central Bank of the Russian Federation on the date of payment','requests'); ?>.</p>
