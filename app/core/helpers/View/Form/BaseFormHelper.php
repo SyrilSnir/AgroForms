@@ -83,7 +83,7 @@ abstract class BaseFormHelper
     
     public abstract function getPrintedElementsCount(): int;    
 
-    public abstract function getExcelHeader(): array;
+    public abstract function getExcelHeader(): array;        
     
     protected function getPdfHeader(): string   
     {
@@ -93,9 +93,7 @@ abstract class BaseFormHelper
             'dateOfContract' => $this->getContractDate(),
         ]);
     }
-
-    
-    
+        
     protected function getContractNumber() :string
     {
         return $this->request->contract ? $this->request->contract->number : '';
@@ -113,5 +111,8 @@ abstract class BaseFormHelper
         ]);
     }
     
-    
+    public function removeRequest(): void
+    {
+        $this->request = null;        
+    }
 }

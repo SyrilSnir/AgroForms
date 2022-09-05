@@ -24,5 +24,4 @@ class ElementInformationBlock extends FormElement
                     <p style=\"font-family:Verdana;font-size:8pt;\">{$this->getTranslatableParameter('html')}</p>
                 </td></tr>";       
     }
-
 }

@@ -42,8 +42,16 @@ class ElementFrieze extends FormElement implements CountableElementInterface
         return $text.= "</td></tr>";;
     }
 
-    
-    protected function transformData(array $fieldList, array $valuesList = []): array
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        if (key_exists('value', $valuesList)) {
+            return $valuesList['value'] ??= '';
+        }
+        return '';
+        
+    }
+
+        protected function transformData(array $fieldList, array $valuesList = []): array
     {
         $fieldList['parameters'] = $this->buildParameters($fieldList);
         if (!empty($valuesList)) {

@@ -3,6 +3,7 @@
 namespace app\core\helpers\View\Form\FormElements;
 
 use app\core\helpers\View\Form\ExcelHeaderView;
+use app\models\ActiveRecord\Forms\Field;
 
 /**
  *
@@ -18,12 +19,17 @@ interface FormElementInterface
     
     public function getParameters():array;
     
+    public function getField(): Field;    
+    
     public function getFieldId(): int;
     
     public function getOrder(): int;
     
     public function isShowInRequest():bool ;
+    
     public function isShowInPdf():bool ;
+    
+    public function isExcelExport(): bool ;
 
     public function isComputed(): bool; 
     
@@ -33,5 +39,5 @@ interface FormElementInterface
     
     public function getExcelHeader(): ExcelHeaderView;
     
-    public function getExcelValue(array $valuesList = []): array;
+    public function getExcelValue(array $valuesList = []): array|string;
 }

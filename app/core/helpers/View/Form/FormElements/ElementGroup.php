@@ -2,6 +2,7 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\ExcelHeaderView;
 use app\core\helpers\View\Form\FormElementsManagementTrait;
 use app\core\helpers\View\Form\FormHelper;
 use app\core\providers\Data\FieldEnumProvider;
@@ -82,6 +83,33 @@ class ElementGroup extends FormElement implements CountableElementInterface
             $elementsCount+= $element->getLenght();
         }
         return $elementsCount;
+    }
+    
+    public function getExcelHeader(): ExcelHeaderView
+    {
+        $result = new ExcelHeaderView($this->getField()->name, $this->getLenght(),true);
+        foreach ($this->formElements as $element) {
+            if ($element->isExcelExport()) {
+                $result->addChild(new ExcelHeaderView($element->getField()->name, $element->getLenght()));
+            }
+        }
+        return $result;
+    }
+    
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        $result = [];
+        foreach ($this->formElements as $element) {
+            if ($element->isExcelExport()) {            
+                $fieldId = $element->getFieldId();
+                $val = [];
+                if (key_exists($fieldId, $this->valuesList)) {
+                    $val = $this->valuesList[$fieldId];
+                }            
+                array_push($result, $element->getExcelValue($val));
+            }
+        }
+        return $result;
     }
 
     protected function buildParameters(array $fieldList): array

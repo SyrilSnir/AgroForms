@@ -45,6 +45,20 @@ class ExcelHeaderView
     {
         return $this->_length;
     }
-
+    
+    public function addChild(ExcelHeaderView $child): void
+    {
+        array_push($this->_childrenElements, $child);
+    }
+    
+    public function hasChildren(): bool
+    {
+        return !empty($this->_childrenElements);
+    }
+    
+    public function getChildren(): array
+    {
+        return $this->_childrenElements;
+    }
 
 }

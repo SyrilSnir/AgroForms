@@ -74,7 +74,7 @@ class FormHelper extends BaseFormHelper
         $instance->appendRequestValues();
         $instance->appendFormElements();
         return $instance;
-    }
+    }        
     
     public static function getElement(Field $field, string $langCode = Languages::RUSSIAN, int $date = null) : ?FormElementInterface
     {
@@ -170,9 +170,7 @@ class FormHelper extends BaseFormHelper
                 }
             }
         }
-    }
-        
-
+    }        
 
     protected function appendRequestValues() 
     {
@@ -209,6 +207,23 @@ class FormHelper extends BaseFormHelper
                     array_push($result, $element->getData($val));
                 }
             }
+        }
+        return $result;
+    }
+    
+    public function getElementsForExcel():array
+    {
+        $result = [];
+        foreach ($this->formElements as $element) {
+            if (!$element->isExcelExport()) {
+                continue;            
+            }
+            $fieldId = $element->getFieldId();
+            $val = [];
+            if (key_exists($fieldId, self::$valuesList)) {
+                $val = self::$valuesList[$fieldId];
+            } 
+            array_push($result, $element->getExcelValue($val));            
         }
         return $result;
     }
@@ -387,7 +402,7 @@ class FormHelper extends BaseFormHelper
             if ($elementLenght > 0) {
                 array_push($result, [
                         'startedIndex' => $currentIndex,
-                        'element' => $element->getExcelHeader()
+                        'element' => $element->getExcelHeader(),
                     ]);
                     $currentIndex+= $elementLenght;
             }
@@ -395,4 +410,10 @@ class FormHelper extends BaseFormHelper
         return $result;
     }
 
+    public function removeRequest(): void
+    {
+        parent::removeRequest();
+        self::$valuesList = [];
+        $this->formElements = [];
+    }
 }

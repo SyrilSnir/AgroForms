@@ -22,6 +22,8 @@ use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\EditRequestForm;
 use app\models\Forms\Requests\ExcelLoadForm;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Yii;
@@ -131,31 +133,92 @@ trait RequestViewTrait
         $xls->setActiveSheetIndex(0);
         $sheet = $xls->getActiveSheet();
         $sheet->setTitle('Данные по заявкам');
-        $this->prepareExcelHeader($sheet, $formHelper);
-        $vIndex = 3;
-        foreach ($requests as $request) {
-            /** @var Request $request */
-            $sheet->setCellValue([1,$vIndex], $request->company->name);
-            $sheet->setCellValue([2,$vIndex], RequestStatusHelper::getStatusName($request->status));
-            $vIndex++;
-        }
+        $cellsCount = $this->prepareExcelHeader($sheet, $formHelper);
+        $rowsCount = count($requests);
+        $this->prepareExcelBody($sheet, $requests);
+        $this->postprocessExcel($sheet,$cellsCount,$rowsCount);
+        
         $objWriter = new Xlsx($xls);
         
         $objWriter->save('php://output'); 
         die();
     }
     
-    protected function prepareExcelHeader(Worksheet $sheet,BaseFormHelper $formHelper)
+    protected function prepareExcelHeader(Worksheet $sheet,BaseFormHelper $formHelper): int
     {
-        $sheet->setCellValue([1,1],$formHelper->getPrintedElementsCount());
-        $sheet->setCellValue([1,2], t('Company', 'company'));
-        $sheet->setCellValue([2,2], t('Application status'));
+        $headerVIndex = 3;
+        $headerGroupVIndex = $headerVIndex - 1;
+        $sheet->setCellValue([1,$headerVIndex], t('Company', 'company'));
+        $sheet->setCellValue([2,$headerVIndex], t('Application status'));
         $headerElements = $formHelper->getExcelHeader(3);
+        $cellsCount = 0;
         foreach ($headerElements as $headerElement) {
-            /** @var ExcelHeaderView $element */
+            /** @var ExcelHeaderView $element */            
             $element = $headerElement['element'];
             $startedIndex = $headerElement['startedIndex'];
-            $sheet->setCellValue([$startedIndex,2], $element->getTitle());
+            $lenght = $element->getLength();
+            if($element->hasChildren()) {
+                $endIndex = $startedIndex + $lenght - 1;
+                $sheet->mergeCells([$startedIndex,$headerGroupVIndex, $endIndex, $headerGroupVIndex]);                
+                $sheet->setCellValue([$startedIndex,$headerGroupVIndex], $element->getTitle());
+                $children = $element->getChildren();
+                foreach ($children as $childElement) {
+                    $sheet->setCellValue([$startedIndex++,$headerVIndex], $childElement->getTitle());
+                }
+            } else {
+                $sheet->setCellValue([$startedIndex,$headerVIndex], $element->getTitle());
+            }
+            $cellsCount += $lenght;
         }
+        return $cellsCount;
+    }
+    
+    protected function prepareExcelBody(Worksheet $sheet, $requests) 
+    {
+        $defaultHIndex = 3;
+        $defaultVIndex = 4;
+        
+        $vIndex = $defaultVIndex;
+        $langCode = Yii::$app->language;
+        $userIdentity = Yii::$app->user->getIdentity();        
+        foreach ($requests as $request) {
+            $hIndex = $defaultHIndex;
+            /** @var Request $request */
+            $sheet->setCellValue([1,$vIndex], $request->company->name);
+            $sheet->setCellValue([2,$vIndex], RequestStatusHelper::getStatusName($request->status));
+            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $request);
+            $fieldsList = $formHelper->getElementsForExcel();
+            foreach ($fieldsList as $field) {
+                if (is_array($field)) {
+                    foreach($field as $groupField) {
+                        $sheet->setCellValue([$hIndex,$vIndex], $groupField);
+                        $hIndex++;
+                    }
+                } else {
+                    $sheet->setCellValue([$hIndex,$vIndex], $field);
+                    $hIndex++;
+                }
+            }
+            $vIndex++;
+        }        
+    }
+    
+    protected function postprocessExcel(Worksheet $sheet, int $cellsCount,int $rowsCount) 
+    {
+        $borderStyle = [
+                        'borders' => [
+                            'allBorders' => [
+                                'borderStyle' => Border::BORDER_THIN,
+                                
+                            ],
+                        ],
+                    ];
+        $headerBGColor = 'dbdbdb';
+        $sheet->getStyle([1,2,$cellsCount+2, $rowsCount+3])->applyFromArray($borderStyle);
+        $sheet->getStyle([1,2,$cellsCount+2,3])->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB($headerBGColor);
+        $sheet->getStyle([1,2,$cellsCount+2,3])->getFont()->setBold(true);
+        foreach ($sheet->getColumnIterator() as $column) {
+            $sheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
+        }        
     }
 }

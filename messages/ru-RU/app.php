@@ -184,6 +184,7 @@ return [
     'Group for hidden elements' => 'Группа для скрытых элементов',
     'Not chosen' => 'Не выбрано',
     'Add to export' => 'Добавлять в выгрузку',
-    'All prices include VAT' => 'Все цены включают НДС',    
+    'All prices include VAT' => 'Все цены включают НДС',  
+    'Save to Excel' => 'Выгркзить в Excel'
 ];
 
