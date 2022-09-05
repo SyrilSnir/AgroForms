@@ -80,6 +80,7 @@ return [
     'List of fields' => 'Список полей',
     'Form types' => 'Типы форм',
     'Form' => 'Форма',
+    'Form name' => 'Наименование формы',
     'Element type' => 'Тип элемента',
     'New element type' => 'Новый тип элемента',
     'New element type of form' => 'Новый тип элемента формы',
@@ -183,5 +184,6 @@ return [
     'Group for hidden elements' => 'Группа для скрытых элементов',
     'Not chosen' => 'Не выбрано',
     'Add to export' => 'Добавлять в выгрузку',
+    'All prices include VAT' => 'Все цены включают НДС',    
 ];
 

@@ -49,6 +49,8 @@ return [
    'Base price' => 'Базовая стоимость',
    'symb.' => 'зн.',
    'm' => 'м',
-   'Additional symbols' => 'Дополнительные символы'  
+   'Additional symbols' => 'Дополнительные символы',
+   'Payment is made in Russian rubles at the exchange rate of the Central Bank of the Russian Federation on the date of payment' => 
+   'Оплата производится в российских рублях по курсу ЦБ РФ на дату платежа',   
 ];
 
