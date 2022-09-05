@@ -14,7 +14,7 @@ class ExhibitionHelper
     public static function getForms(int $exhibitionId = null)
     {
         $result = Form::find()
-                ->andFilterWhere(['exhibitionId' => $exhibitionId])
+                ->andFilterWhere(['exhibition_id' => $exhibitionId])
                 ->orderBy('title','title_eng')
                 ->asArray()
                 ->all();
