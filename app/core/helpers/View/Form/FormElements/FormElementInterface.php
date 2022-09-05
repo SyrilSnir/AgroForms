@@ -2,6 +2,8 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\ExcelHeaderView;
+
 /**
  *
  * @author kotov
@@ -26,4 +28,10 @@ interface FormElementInterface
     public function isComputed(): bool; 
     
     public function isDeleted(): bool;
+    
+    public function getLenght(): int;
+    
+    public function getExcelHeader(): ExcelHeaderView;
+    
+    public function getExcelValue(array $valuesList = []): array;
 }

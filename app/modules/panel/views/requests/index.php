@@ -3,11 +3,9 @@
 use app\core\helpers\Data\FormsHelper;
 use app\core\helpers\View\Request\RequestStatusHelper;
 use app\core\manage\Auth\Rbac;
-use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\SearchModels\Requests\RequestSearch;
-use app\models\SearchModels\Requests\RequestStandSearch;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\bootstrap4\Modal;
@@ -37,7 +35,12 @@ $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.g
 $columnsConfig = [
                 'toolbar' => [
                     [
-                        'content'=> $rowsCountTemplate                           
+                        'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-file-excel"></i>', ['excel'], [
+                                    'class' => 'btn btn-outline-secondary',
+                                    'title'=>t('Export to Excel'),
+                                    'data-pjax'=> '', 
+                                ])
                     ],
                 ],      
                 'dataProvider' => $dataProvider,

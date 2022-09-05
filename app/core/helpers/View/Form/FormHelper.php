@@ -285,6 +285,16 @@ class FormHelper extends BaseFormHelper
         }        
         return $price;
     }
+    
+    public function getPrintedElementsCount(): int 
+    {
+        $elementsCount = 0;
+        foreach ($this->formElements as $element) {
+            $elementsCount+= $element->getLenght();
+        }
+        return $elementsCount;
+    }
+    
     public function renderHtmlRequest() :string 
     {
         $requestData = [
@@ -366,6 +376,23 @@ class FormHelper extends BaseFormHelper
         ];
         $this->pdfHelper->content = $content;
         return $this->pdfHelper->render();
+    }
+
+    public function getExcelHeader($startedIndex = 1): array 
+    {
+        $currentIndex = $startedIndex;
+        $result = [];
+        foreach ($this->formElements as $element) {
+            $elementLenght = $element->getLenght();
+            if ($elementLenght > 0) {
+                array_push($result, [
+                        'startedIndex' => $currentIndex,
+                        'element' => $element->getExcelHeader()
+                    ]);
+                    $currentIndex+= $elementLenght;
+            }
+        }
+        return $result;
     }
 
 }

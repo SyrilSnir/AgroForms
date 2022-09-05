@@ -17,9 +17,14 @@ use yii\helpers\ArrayHelper;
  */
 trait GetExhibitionsTrait
 {
-    public function getExhibitionsList()
+    public function getExhibitionsList($hasAllField = false)
     {
-        return ArrayHelper::map(Exhibition::find()->orderBy('id')->asArray()->all(), 'id', 'title');
+        $result = ArrayHelper::map(Exhibition::find()
+                ->orderBy('id')->asArray()->all(), 'id', 'title');
+        if ($hasAllField) {
+            $result = ArrayHelper::merge(['' => 'Все выставки'], $result);
+        }
+        return $result;
     }
     
 }

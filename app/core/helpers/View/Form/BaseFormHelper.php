@@ -79,16 +79,22 @@ abstract class BaseFormHelper
 
     public abstract function getData(bool $isReadOnly = false) :array ;  
     
-    public abstract function getFormPrice() :int ;         
+    public abstract function getFormPrice() :int ; 
+    
+    public abstract function getPrintedElementsCount(): int;    
 
-    protected function getPdfHeader(): string
+    public abstract function getExcelHeader(): array;
+    
+    protected function getPdfHeader(): string   
     {
         return  Yii::$app->view->renderFile('@pdf/request-header.php',[
             'exhibitionName' => $this->form->exhibition->title,
             'contractNumber' => $this->getContractNumber(),
             'dateOfContract' => $this->getContractDate(),
         ]);
-    }    
+    }
+
+    
     
     protected function getContractNumber() :string
     {

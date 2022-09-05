@@ -74,6 +74,15 @@ class ElementGroup extends FormElement implements CountableElementInterface
         }        
         return parent::getData($valuesList);
     }
+    
+    public function getLenght(): int 
+    {
+        $elementsCount = 0;
+        foreach ($this->formElements as $element) {
+            $elementsCount+= $element->getLenght();
+        }
+        return $elementsCount;
+    }
 
     protected function buildParameters(array $fieldList): array
     {

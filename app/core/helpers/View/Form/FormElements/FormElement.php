@@ -2,6 +2,7 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\ExcelHeaderView;
 use app\core\helpers\View\Form\Modificators\PriceModificator;
 use app\core\helpers\View\Form\PriceModifyInterface;
 use app\core\providers\Data\FieldEnumProvider;
@@ -111,6 +112,12 @@ abstract class FormElement implements FormElementInterface
         return (bool) $this->field->showed_in_pdf;
     }
     
+    public function isExcelExport(): bool 
+    {
+        return (bool) $this->field->to_export;
+    }
+
+
     public function isDeleted(): bool
     {
         return  (bool) $this->field->deleted;
@@ -132,8 +139,23 @@ abstract class FormElement implements FormElementInterface
         array_push($this->priceModificators,$priceModificator);
     }
     
-
-
+    public function getLenght(): int 
+    {
+        if ($this->isExcelExport()) {
+            return 1;
+        }
+        return 0;
+    }
+    
+    public function getExcelHeader(): ExcelHeaderView 
+    {
+        return new ExcelHeaderView($this->getField()->name, $this->getLenght());
+    }
+    
+    public function getExcelValue(array $valuesList = []): array 
+    {
+        return 'Это значение';
+    }
 
     /**
      * Применить модификаторы стоимости, если они имеются
