@@ -26,13 +26,14 @@ class DocumentService
     
     public function create(BaseDocumentForm $form): Documents
     {
+        $companyId = is_numeric($form->companyId) ? $form->companyId : null;
         $document = Documents::create(
                 $form->title, 
                 $form->titleEng, 
                 $form->description, 
                 $form->descriptionEng, 
-                $form->companyId, 
-                $form->exhibitionId
+                $form->exhibitionId,
+                $companyId
                 );
         if ($form->file) {
             $document->setFile($form->file);
@@ -44,14 +45,15 @@ class DocumentService
     public function edit(int $id, BaseDocumentForm $form) 
     {
         /** @var Documents $document */
+        $companyId = is_numeric($form->companyId) ? $form->companyId : null;
         $document = $this->documents->get($id);
         $document->edit(
             $form->title, 
             $form->titleEng, 
             $form->description, 
             $form->descriptionEng, 
-            $form->companyId, 
-            $form->exhibitionId                
+            $form->exhibitionId,               
+            $companyId
         );
         if ($form->file) {
             $document->setFile($form->file);

@@ -17,11 +17,15 @@ use yii\helpers\ArrayHelper;
  */
 trait GetCompanyNamesTrait
 {
-    public function companiesList()
+    public function companiesList($hasAllField = false): array
     {
-        return ArrayHelper::map(Company::find()
-                ->andFilterWhere(['blocked' => false])
-                ->andFilterWhere(['deleted' => false])
-                ->orderBy('id')->asArray()->all(),'id','name');
+        $result = ArrayHelper::map(Company::find()
+                    ->andFilterWhere(['blocked' => false])
+                    ->andFilterWhere(['deleted' => false])
+                    ->orderBy('id')->asArray()->all(),'id','name');
+        if ($hasAllField) {
+            $result = ArrayHelper::merge(['' => t('For all companies', 'company')], $result);
+        }
+        return $result;        
     }
 }

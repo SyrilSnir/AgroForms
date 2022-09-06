@@ -49,8 +49,9 @@ class Documents extends ActiveRecord
             string $titleEng,
             string $description,
             string $descriptionEng,
-            int $companyId,
-            int $exhibitionId ) :self
+            int $exhibitionId,
+            int $companyId = null
+            ) :self
     {
         $document = new self();
         $document->title = $title;
@@ -79,8 +80,9 @@ class Documents extends ActiveRecord
             string $titleEng,
             string $description,
             string $descriptionEng,
-            int $companyId,
-            int $exhibitionId ) :void
+            int $exhibitionId,
+            int $companyId = null
+            ) :void
     { 
         $this->title = $title;
         $this->title_eng = $titleEng;

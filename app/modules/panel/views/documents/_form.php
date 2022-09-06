@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'description')->textarea() ?>
     <?= $form->field($model, 'descriptionEng')->textarea() ?>
     <?= $form->field($model, 'companyId')->widget(Select2::class,[
-        'data' => $model->companiesList()
+        'data' => $model->companiesList(true)
             ]) ?>   
     <?= $form->field($model, 'exhibitionId')->dropDownList($model->getExhibitionsList()) ?> 
 

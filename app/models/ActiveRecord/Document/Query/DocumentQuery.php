@@ -18,6 +18,7 @@ class DocumentQuery extends ActiveQuery
     
     public function forCompany(int $companyId, $alias = null): self
     {
-        return $this->andWhere([($alias ? $alias . '.' : '') . 'company_id' => $companyId]);        
+        return $this->andWhere([($alias ? $alias . '.' : '') . 'company_id' => $companyId])
+                ->orWhere([($alias ? $alias . '.' : '') . 'company_id' => null])->orderBy(['company_id' => SORT_ASC]);
     }    
 }

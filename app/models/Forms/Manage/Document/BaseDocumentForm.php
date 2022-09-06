@@ -51,7 +51,8 @@ class BaseDocumentForm extends Model
     {
         return [
             [['description','title','titleEng','descriptionEng'], 'string'],
-            [['companyId','exhibitionId'], 'required'],
+            [['exhibitionId'], 'required'],
+            [['companyId','exhibitionId'], 'integer'],
             [['file'],'file'],
             [['fileUrl'],'safe']
         ];
