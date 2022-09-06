@@ -185,6 +185,6 @@ return [
     'Not chosen' => 'Не выбрано',
     'Add to export' => 'Добавлять в выгрузку',
     'All prices include VAT' => 'Все цены включают НДС',  
-    'Save to Excel' => 'Выгркзить в Excel'
+    'Save to Excel' => 'Выгрузить в Excel'
 ];
 

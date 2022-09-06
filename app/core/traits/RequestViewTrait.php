@@ -116,6 +116,9 @@ trait RequestViewTrait
         $langCode = Yii::$app->language;
         $userIdentity = Yii::$app->user->getIdentity(); 
         $formHelper = FormHelper::createViaForm($userIdentity->getUser(), $langCode, $form);
+        $formName = $form->name;
+        
+        $fileName = preg_replace('/[^\w\d\s\+\-\_]/u','',$formName);
         $requests = Request::find()
                 ->andWhere(['form_id' => $formId])
                 ->andWhere(['NOT IN', 'status', 
@@ -127,12 +130,13 @@ trait RequestViewTrait
                         ])
                 ->all();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=ANSI');                                
-        header('Content-Disposition: attachment;filename="requests'.date('d.m.Y').'.xlsx"');
+        header('Content-Disposition: attachment;filename="'. $fileName .date('d.m.Y').'.xlsx"');
         header('Cache-Control: max-age=0'); 
         $xls = new Spreadsheet();
         $xls->setActiveSheetIndex(0);
         $sheet = $xls->getActiveSheet();
         $sheet->setTitle('Данные по заявкам');
+        $sheet->setCellValue([1,1],$form->getHeaderName());
         $cellsCount = $this->prepareExcelHeader($sheet, $formHelper);
         $rowsCount = count($requests);
         $this->prepareExcelBody($sheet, $requests);
@@ -148,9 +152,11 @@ trait RequestViewTrait
     {
         $headerVIndex = 3;
         $headerGroupVIndex = $headerVIndex - 1;
-        $sheet->setCellValue([1,$headerVIndex], t('Company', 'company'));
-        $sheet->setCellValue([2,$headerVIndex], t('Application status'));
-        $headerElements = $formHelper->getExcelHeader(3);
+        $sheet->setCellValue([1,$headerVIndex], t('Number of contract'));
+        $sheet->setCellValue([2,$headerVIndex], t('Company', 'company'));
+        $sheet->setCellValue([3,$headerVIndex], t('Member email','user'));
+        $sheet->setCellValue([4,$headerVIndex], t('Application status'));
+        $headerElements = $formHelper->getExcelHeader(5);
         $cellsCount = 0;
         foreach ($headerElements as $headerElement) {
             /** @var ExcelHeaderView $element */            
@@ -175,7 +181,7 @@ trait RequestViewTrait
     
     protected function prepareExcelBody(Worksheet $sheet, $requests) 
     {
-        $defaultHIndex = 3;
+        $defaultHIndex = 5;
         $defaultVIndex = 4;
         
         $vIndex = $defaultVIndex;
@@ -184,8 +190,10 @@ trait RequestViewTrait
         foreach ($requests as $request) {
             $hIndex = $defaultHIndex;
             /** @var Request $request */
-            $sheet->setCellValue([1,$vIndex], $request->company->name);
-            $sheet->setCellValue([2,$vIndex], RequestStatusHelper::getStatusName($request->status));
+            $sheet->setCellValue([1,$vIndex], $request->contract->number);
+            $sheet->setCellValue([2,$vIndex], $request->company->name);
+            $sheet->setCellValue([3,$vIndex], $request->user->email);
+            $sheet->setCellValue([4,$vIndex], RequestStatusHelper::getStatusName($request->status));
             $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $request);
             $fieldsList = $formHelper->getElementsForExcel();
             foreach ($fieldsList as $field) {
@@ -214,9 +222,12 @@ trait RequestViewTrait
                         ],
                     ];
         $headerBGColor = 'dbdbdb';
-        $sheet->getStyle([1,2,$cellsCount+2, $rowsCount+3])->applyFromArray($borderStyle);
-        $sheet->getStyle([1,2,$cellsCount+2,3])->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB($headerBGColor);
-        $sheet->getStyle([1,2,$cellsCount+2,3])->getFont()->setBold(true);
+        $sheet->mergeCells([1,1,$cellsCount+4, 1]);
+        $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1')->getFont()->setBold(true);
+        $sheet->getStyle([1,2,$cellsCount+4, $rowsCount+3])->applyFromArray($borderStyle);
+        $sheet->getStyle([1,2,$cellsCount+4,3])->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB($headerBGColor);
+        $sheet->getStyle([1,2,$cellsCount+4,3])->getFont()->setBold(true);
         foreach ($sheet->getColumnIterator() as $column) {
             $sheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
         }        
