@@ -29,6 +29,7 @@
                 <div v-if="hasFile" class="file__added">
                     <i class="fa fa-file" aria-hidden="true"></i>
                     <a :href="attachedFile">{{ attachedFile }}</a></div>
+                    <div v-if="showLimitSizeOfFileMsg" class="error-message">{{ dict.fileAttach.limitSizeMessage }}</div>
             </div>
 
             <computed 
@@ -52,6 +53,9 @@ import Group from './FormElements/Group'
 import Computed from './FormElements/ComputedEl'
 import { eventBus } from './eventBus'
 import { languages } from '../lang'
+
+const MAX_FILE_SIZE = 20971520;
+
 export default {    
     components: {
         el: Element,
@@ -77,6 +81,7 @@ export default {
             isFileUpload: false,
             totalPrice: 0,
             addedFile: false,
+            showLimitSizeOfFileMsg: false,
             language: languages.russian,               
             dict: {
                 fileAttach: {},
@@ -113,10 +118,17 @@ export default {
             }
             return nameEng;
         },
-        fileLoad: function() {
-            console.log('Файл загружен');
-            this.formData.append('DynamicForm[loadedFile]', this.$refs.userFile.files[0]);
-            this.addedFile = '';
+        fileLoad: function(event) {
+            this.showLimitSizeOfFileMsg = false;
+            const element = event.target;
+            let fsize = element.files[0].size;
+            if (fsize > MAX_FILE_SIZE) {
+                this.showLimitSizeOfFileMsg = true;
+            } else {
+                this.formData.append('DynamicForm[loadedFile]', this.$refs.userFile.files[0]);
+                this.addedFile = '';
+                this.showLimitSizeOfFileMsg = false;
+            }
         },      
         saveDraft: function() {
             this.draft = true;
@@ -219,4 +231,7 @@ export default {
 }
 </script>
 <style scoped>
+    .error-message {
+        color: red;
+    }
 </style>

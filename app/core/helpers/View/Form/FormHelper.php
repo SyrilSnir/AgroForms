@@ -343,8 +343,7 @@ class FormHelper extends BaseFormHelper
                     'browse' => t('Browse'),
                     'selectFile' => t('Select file'),
                     'attachFile' => t('Attach file'),
-                    'amount' => $this->getFormPrice(),                    
-
+                    'limitSizeMessage' => t('The maximum size of the uploaded file should not exceed 20MB'),                    
                 ],
                 'valute' => t($this->form->valute->char_code, 'requests'),
                 'total' => [

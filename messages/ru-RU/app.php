@@ -185,6 +185,7 @@ return [
     'Not chosen' => 'Не выбрано',
     'Add to export' => 'Добавлять в выгрузку',
     'All prices include VAT' => 'Все цены включают НДС',  
-    'Save to Excel' => 'Выгрузить в Excel'
+    'Save to Excel' => 'Выгрузить в Excel',
+    'The maximum size of the uploaded file should not exceed 20MB' => 'Максимальный размер загружаемого файла не должен превышать 20Мб'
 ];
 
