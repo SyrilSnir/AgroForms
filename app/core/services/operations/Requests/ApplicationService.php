@@ -89,20 +89,13 @@ class ApplicationService
         if ($form->loadedFile) {
            $application->setFile($form->loadedFile);
         }
-        $this->application->save($application);
-        
-        $formHelper = FormHelper::createViaRequest(Yii::$app->user->getIdentity()->getUser(), Yii::$app->language, $request);
-        $total = $formHelper->getFormPrice();
-        if ($total > 0) {
-            $application->amount = $total;
-            $this->application->save($application);            
-        }        
-        return $application;
+        $this->application->save($application);  
+        return $this->setApplicationTotal($request, $application);
     }
     
     public function edit(Request $request, DynamicForm $form, string $langCode)
     {
-        /** @var Application $dynamicForm */
+        /** @var Application $application */
         $formHelper = FormHelper::createViaRequest($request->user, $langCode, $request);
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
         $serializedFields = json_encode($fields);    
@@ -117,12 +110,23 @@ class ApplicationService
             $request->activate();
         }
         $this->requests->save($request);        
-        $dynamicForm = $this->application->findByRequest($request->id);
-        $dynamicForm->edit($serializedFields, $total);
+        $application = $this->application->findByRequest($request->id);
+        $application->edit($serializedFields, $total);
         if ($form->loadedFile) {
-           $dynamicForm->setFile($form->loadedFile);
+           $application->setFile($form->loadedFile);
         }        
-        $this->application->save($dynamicForm);    
-        
+        $this->application->save($application); 
+        $this->setApplicationTotal($request, $application);
+    }
+    
+    protected function setApplicationTotal(Request $request, Application $application): Application
+    {
+        $formHelper = FormHelper::createViaRequest(Yii::$app->user->getIdentity()->getUser(), Yii::$app->language, $request);
+        $total = $formHelper->getFormPrice();
+        if ($total > 0) {
+            $application->amount = $total;
+            $this->application->save($application);            
+        }        
+        return $application;        
     }
 }
