@@ -49,13 +49,29 @@ class ElementCheckNumberInput extends FormElement implements CountableElementInt
 
     public function getPrice(array $valuesList = []): int 
     {   
-        $result = 0;
+        $result = 0;        
         if (key_exists('checked', $valuesList) && $valuesList['checked'] == true && key_exists('value', $valuesList)) {
             if (($price = $this->modifyPrice($this->field->getPrice())) > 0) {
                 $result = (int) $valuesList['value'] * $price;                
             }            
         }
         return $result;
+    }
+    
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {        
+            $unitTitle = '';
+            $fieldParams = $this->field->getFieldParams();
+            if ($fieldParams->unitModel) {
+                $unitTitle = ' ' . $fieldParams->unitModel->short_name;
+            }
+
+            if (key_exists('value', $valuesList)) {
+                 return empty($valuesList['value']) ? 0 : $valuesList['value'] . $unitTitle;
+            }
+        }
+        return '';
     }
 
     public function renderPDF(array $valuesList = []): string 
