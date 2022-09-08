@@ -127,6 +127,7 @@ class UsersController extends BaseAdminController
             case UserType::ROOT_USER_ID:
             case UserType::ACCOUNTANT_USER_ID:
             case UserType::MANAGER_USER_ID:
+            case UserType::ORGANIZER_USER_ID:
                 $form = new AdminForm($model);
                 $form->setScenario(AdminForm::SCENARIO_UPDATE);                
                 $view = 'create-admin';                

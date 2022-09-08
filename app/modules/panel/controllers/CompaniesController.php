@@ -90,11 +90,12 @@ class CompaniesController extends ManageController
     {
         /** @var Company $model */
         $model = $this->findModel($id);
+        $redirectUrl = Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU) ? '/panel/users/view' : '/panel/manager/users/view';
         $form = new MemberForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $user = $this->userService->createUser($form);
-                return $this->redirect(['/panel/users/view', 'id' => $user->id]);
+                return $this->redirect([$redirectUrl, 'id' => $user->id]);
             } catch (DomainException $e) {
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
