@@ -44,6 +44,25 @@ class ElementSelectMultiple extends ElementSelect
             }
         }
         return $result;
+    }  
+    
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        $fieldText = '';
+        if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
+        /** @var FieldEnum $fieldEnum */
+            foreach ($valuesList['value'] as $element) {            
+                $fieldEnum = FieldEnum::findOne($element);
+                if ($this->isComputed()) {
+                    $val = $this->modifyPrice($fieldEnum->value);
+                    $fieldText.= "{$fieldEnum->name} - {$val} {$this->field->form->valute->symbol}";
+                } else {
+                     $fieldText.= $fieldEnum->name;
+                }
+                $fieldText.=',';
+            }
+        }
+        return trim($fieldText,',');
     }    
     
     public function renderPDF(array $valuesList = []): string 

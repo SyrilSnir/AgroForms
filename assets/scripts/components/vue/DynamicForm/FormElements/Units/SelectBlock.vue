@@ -42,7 +42,10 @@ export default {
                }
                return total;
            }
-       },       
+       },  
+       created() {
+           this.$emit('changeField',this.getData());
+       },            
         methods: {
            change() {
                this.params.value = this.selected;

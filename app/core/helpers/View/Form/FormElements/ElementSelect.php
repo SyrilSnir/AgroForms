@@ -45,6 +45,22 @@ class ElementSelect extends FormElement implements CountableElementInterface
         }
         return $text  . '</div></div>';
     }
+    
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        $fieldText = '';
+        if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
+        /** @var FieldEnum $fieldEnum */
+            $fieldEnum = FieldEnum::findOne($valuesList['value']);
+            if ($this->isComputed()) {
+                $val = $this->modifyPrice($fieldEnum->value);
+                $fieldText = "{$fieldEnum->name} - {$val} {$this->field->form->valute->symbol}";
+            } else {
+                 $fieldText = $fieldEnum->name;
+            }
+        }
+        return $fieldText;        
+    }
 
     public function getPrice(array $valuesList = []): int 
     {
