@@ -19,7 +19,7 @@ class ExhibitionController extends JsonController
         $exhibitionId = (int) Yii::$app->request->post('depdrop_parents')[0];
         if ($exhibitionId)
         {
-            $forms = ExhibitionHelper::getForms($exhibitionId);
+            $forms = ExhibitionHelper::getForms($exhibitionId,true);
             $resArray = [
                 'output' => $forms,
             ];
@@ -29,7 +29,7 @@ class ExhibitionController extends JsonController
             return $resArray;
         }
         return [
-                    'output' => ExhibitionHelper::getForms()
+                    'output' => ExhibitionHelper::getForms(null,true)
             ];
     }
 }

@@ -11,13 +11,22 @@ use app\models\ActiveRecord\Forms\Form;
  */
 class ExhibitionHelper 
 {
-    public static function getForms(int $exhibitionId = null)
+    public static function getForms(int $exhibitionId = null,bool $markDeleted = false)
     {
         $result = Form::find()
                 ->andFilterWhere(['exhibition_id' => $exhibitionId])
                 ->orderBy('title','title_eng')
                 ->asArray()
                 ->all();
+        if ($markDeleted) {
+            $result = array_map(function($el) {
+                if ($el['deleted'] > 0) {
+                    $el['name'] .= ' (удалена)';
+                }
+                return $el;
+            }, $result);
+            
+        }
         return $result;
     }
 }
