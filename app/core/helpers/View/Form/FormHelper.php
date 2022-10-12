@@ -6,6 +6,8 @@ use app\core\helpers\View\Form\FormElements\CountableElementInterface;
 use app\core\helpers\View\Form\FormElements\ElementAdditionEquipmentBlock;
 use app\core\helpers\View\Form\FormElements\ElementCheckbox;
 use app\core\helpers\View\Form\FormElements\ElementCheckNumberInput;
+use app\core\helpers\View\Form\FormElements\ElementDate;
+use app\core\helpers\View\Form\FormElements\ElementDateMultiple;
 use app\core\helpers\View\Form\FormElements\ElementDateTime;
 use app\core\helpers\View\Form\FormElements\ElementFrieze;
 use app\core\helpers\View\Form\FormElements\ElementGroup;
@@ -124,6 +126,12 @@ class FormHelper extends BaseFormHelper
             case ElementType::ELEMENT_DATE_TIME:
                 $formElement = new ElementDateTime($field, null, $langCode);
                 break;
+            case ElementType::ELEMENT_DATE:
+                $formElement = new ElementDate($field, null, $langCode);
+                break;            
+            case ElementType::ELEMENT_DATE_MULTIPLE:
+                $formElement = new ElementDateMultiple($field, null, $langCode);
+                break;             
             default: 
                 $formElement = new ElementUnknown($field, null, $langCode);
                 break;

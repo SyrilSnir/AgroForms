@@ -18,6 +18,8 @@ import RadioBlock from './Units/RadioBlock';
 import EquipmentBlock from './Units/EquipmentBlock';
 import GroupBlock from './Units/GroupBlock';
 import DateTimeBlock from './Units/DateTimeBlock';
+import DateBlock from './Units/DateBlock';
+import DateMultipleBlock from './Units/DateMultipleBlock';
 import ImportantInformationBlock from './Units/ImportantInformation';
 export default {
     props: [
@@ -37,7 +39,9 @@ export default {
         'equipment': EquipmentBlock,
         'frieze': FriezeBlock,
         'group': GroupBlock,
+        'date-multiple': DateMultipleBlock,
         'date-time': DateTimeBlock,
+        'date': DateBlock,
         'undefined': UndefinedBlock
     },    
     data() {
@@ -46,6 +50,8 @@ export default {
                 blockCheckbox: 1,
                 blockSelect: 2,
                 blockMultiSelect: 3,
+                blockDate: 4,
+                blockDateMultiple: 5,
                 blockRadio: 6,
                 blockNumberInput: 7,
                 blockCheckNumber: 8,
@@ -94,6 +100,10 @@ export default {
                     return 'frieze';
                 case this.typesList.blockDateTime:
                     return 'date-time';
+                case this.typesList.blockDate:
+                    return 'date';
+                case this.typesList.blockDateMultiple:
+                    return 'date-multiple';
                 case this.typesList.blockGroup:
                     return 'group';
                 default:

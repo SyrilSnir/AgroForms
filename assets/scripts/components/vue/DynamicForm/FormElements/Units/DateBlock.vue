@@ -6,9 +6,9 @@
         v-model="val" 
         :inputAttr="dateAttributes"
         :inputClass="'form-control'"
-        type="datetime" 
+        type="date" 
         value-type="format"
-        format="DD.MM.YYYY hh:mm"></date-picker>           
+        format="DD.MM.YYYY"></date-picker>           
 </div>
     <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>  
     <div v-if="!hasErrorsForShow()" class="desc-block">{{ descriptionLabel }}</div>  
@@ -31,6 +31,7 @@
            return {
             id: 'id' + this.params.id,
             val: this.params.value ? this.params.value : '',
+            currentVal: this.params.value,
             showErrors : false,
             valid: true,  
             errors : {

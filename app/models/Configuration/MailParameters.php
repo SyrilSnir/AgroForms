@@ -55,8 +55,5 @@ class MailParameters extends \yii\base\Model
         $params->senderName = $senderName;
         $params->tls = $tls;
         return $params;
-    }
-    
-    
-    
+    }            
 }

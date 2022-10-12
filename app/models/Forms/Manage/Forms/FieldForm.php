@@ -128,12 +128,7 @@ class FieldForm extends MultiForm
  
     public function elementTypesList():array
     {
-        $notAvailable =[
-            ElementType::ELEMENT_DATE,
-            ElementType::ELEMENT_DATE_MULTIPLE,
-       //     ElementType::ELEMENT_GROUP
-        ];
-        return ArrayHelper::map(ElementType::find()->where(['NOT IN', 'id',$notAvailable])->orderBy('id')->asArray()->all(),'id','name');       
+        return ArrayHelper::map(ElementType::find()->orderBy('id')->asArray()->all(),'id','name');       
     }
     
     public function fieldGroupsList(): array

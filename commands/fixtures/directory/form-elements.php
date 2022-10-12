@@ -19,4 +19,5 @@ return [
     ['id' => ElementType::ELEMENT_GROUP, 'name' => 'Группа полей'],
     ['id' => ElementType::ELEMENT_FRIEZE, 'name' => 'Фризовая надпись'],
     ['id' => ElementType::ELEMENT_DATE_TIME, 'name' => 'Выбор даты и времени'],
+    ['id' => ElementType::ELEMENT_PERIOD, 'name' => 'Выбор периода'],
 ];
