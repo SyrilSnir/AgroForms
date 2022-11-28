@@ -2,6 +2,7 @@
 
 use app\models\Forms\Manage\Companies\CompanyForm;
 use kartik\depdrop\DepDrop;
+use kartik\file\FileInput;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\web\View;
@@ -12,6 +13,33 @@ use yii\widgets\ActiveForm;
 /** @var View $this */
 /** @var ActiveForm $form */
 /** @var CompanyForm $model */
+/** @var bool $isUpdate */
+
+$pluginLogoOptions = [];
+if ($model->logoPreview) {
+    $pluginLogoOptions = [
+        'showRemove' => false,
+        'showRotate' => false,
+        'showCancel' => false,
+        'fileActionSettings' => [
+            'showRotate' => false,
+            'showDrag' => false
+        ],      
+        'initialPreview'=> [
+            $model->logoPreview,
+        ],
+        'initialPreviewAsData'=> true,
+        'initialPreviewThumbTags' => [
+        // initial preview thumbnail tags configuration that will be replaced dynamically while rendering
+        ], 
+        'initialPreviewShowDelete' => false,
+        'previewZoomButtonClasses' => [
+            'rotate' => 'hide'
+        ]
+    ];
+}
+   
+
 ?>
 
 <section class="content">
@@ -34,6 +62,9 @@ use yii\widgets\ActiveForm;
                           <li class="nav-item">
                             <a class="nav-link" href="#bank" tabindex="4" data-toggle="tab"><?= Yii::t('app/company', 'Bank details')?></a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#image-logo" tabindex="4" data-toggle="tab"><?= Yii::t('app/company', 'Company`s logo')?></a>
+                          </li>                          
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab">                            
@@ -160,7 +191,24 @@ use yii\widgets\ActiveForm;
                                         <?= $form->field($model->bankDetails, 'ksSchet')->textInput() ?>
                                         <?= $form->field($model->bankDetails, 'bik')->textInput() ?>
                                         <?= $form->field($model->bankDetails, 'bankInfo')->textInput() ?>
-                            </div>                         
+                            </div> 
+                            <div class="tab-pane fade" id="image-logo" role="tabpanel" aria-labelledby="home-tab">
+            <div class="box box-default">
+                <div class="box box-default">
+                    <div class="box-body">
+                    <?= $form->field($model, 'logoImageFile')->widget(FileInput::class, 
+                        [
+                            'options' => [
+                                'accept' => 'image/*',
+                                'multiple' => false
+                            ],
+                            'pluginOptions' => $pluginLogoOptions
+                        ])
+                    ?>
+                    </div>
+                </div>
+            </div>                                
+                            </div>
                         </div>
                         <div class="form-group">
                             <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>

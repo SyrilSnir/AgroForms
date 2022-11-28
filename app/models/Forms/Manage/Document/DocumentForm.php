@@ -6,6 +6,7 @@ namespace app\models\Forms\Manage\Document;
 use app\core\traits\Lists\GetCompanyNamesTrait;
 use app\core\traits\Lists\GetExhibitionsTrait;
 use app\models\ActiveRecord\Document\Documents;
+use yii\helpers\ArrayHelper;
 
 /**
  * Description of DocumentForm
@@ -14,16 +15,9 @@ use app\models\ActiveRecord\Document\Documents;
  */
 class DocumentForm extends BaseDocumentForm
 {
-    public $title;
-    public $titleEng;
-    public $description;
-    public $descriptionEng;
     public $companyId;
-    public $exhibitionId;
-    public $file;
-    public $fileUrl;
-
-
+    public $exhibitionId;    
+    
     use GetCompanyNamesTrait, GetExhibitionsTrait;
 
     public function __construct(Documents $model = null, $config = []) 
@@ -33,5 +27,21 @@ class DocumentForm extends BaseDocumentForm
             $this->companyId = $model->company_id;
             $this->exhibitionId = $model->exhibition_id;
         }
-    }  
+    } 
+    
+    public function rules() :array 
+    {
+        return ArrayHelper::merge([
+            [['exhibitionId'], 'required'],
+            [['companyId','exhibitionId'], 'integer'],
+        ], parent::rules());
+    }
+    
+    public function attributeLabels() :array
+    {
+        return ArrayHelper::merge([
+            'companyId' => t('Company','company'),
+            'exhibitionId' => t('Exhibition'), 
+        ], parent::attributeLabels());
+    }
 }

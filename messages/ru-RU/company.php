@@ -46,4 +46,5 @@ return [
         'Scope of the company' => 'Сфера деятельности компании',
         'BIC' => 'БИК',
         'For all companies' => 'Для всех компаний',
+        'Company`s logo' => 'Логотип'
 ];

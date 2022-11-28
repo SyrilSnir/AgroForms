@@ -4,6 +4,8 @@ namespace app\models\Forms\Manage\Companies;
 
 use app\models\ActiveRecord\Companies\Company;
 use app\models\Forms\MultiForm;
+use yii\web\UploadedFile;
+use function t;
 
 /**
  * Description of CompanyForm
@@ -34,15 +36,12 @@ class CompanyForm extends MultiForm
     /** @var string */    
     public $fax;
     /** @var string */    
-    public $site;       
-    
-    public function transactions()
-    {
-        return [
-            self::SCENARIO_DEFAULT => self::OP_ALL,
-        ];
-    }    
-    
+    public $site;      
+    /** @var string */
+    public $logoPreview;
+     /** @var string */
+    public $logoImageFile;
+     
     public function setScenario($value) 
     {
         if ($value == self::SCENARIO_PROFILE_UPDATE) {
@@ -73,10 +72,14 @@ class CompanyForm extends MultiForm
             $this->phone = $model->phone;
             $this->fax = $model->fax;
             $this->site = $model->site;
+            if ($model->logo) {
+                $this->logoPreview = $model->getThumbFileUrl('logo');
+            }
             $this->legalAddressForm = new LegalAddressForm($model->legalAddress);
             $this->postalAddressForm = new PostalAddressForm($model->postalAddress);
             $this->bankDetails = new BankDetailForm($model->bankDetails);
             $this->contacts = new ContactForm($model->contacts);
+            
         } else {
             $this->legalAddressForm = new LegalAddressForm();
             $this->postalAddressForm = new PostalAddressForm();
@@ -95,10 +98,7 @@ class CompanyForm extends MultiForm
         return [
             [['name', 'fullName', 'inn', 'phone'], 'required'],
             [['name', 'fullName', 'inn', 'kpp', 'phone','fax' ,'site'], 'string', 'max' => 255],
-          //  [['bank_details_id'], 'exist', 'skipOnError' => true, 'targetClass' => BankDetail::className(), 'targetAttribute' => ['bank_details_id' => 'id']],
-        //    [['contacts_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contact::className(), 'targetAttribute' => ['contacts_id' => 'id']],
-       //     [['legal_address_id'], 'exist', 'skipOnError' => true, 'targetClass' => LegalAddress::className(), 'targetAttribute' => ['legal_address_id' => 'id']],
-       //     [['postal_address_id'], 'exist', 'skipOnError' => true, 'targetClass' => PostalAddress::className(), 'targetAttribute' => ['postal_address_id' => 'id']],
+            [['logoImageFile'], 'image'],
         ];
     }
 
@@ -116,12 +116,22 @@ class CompanyForm extends MultiForm
             'phone' => t('Phone','company'),
             'site' => t('Site','company'),
             'fax' => t('Fax','company'),
+            'logoImageFile' => t('Company`s logo','company')
         ];
     }
+    
+    public function beforeValidate(): bool
+    {
+        if (parent::beforeValidate()) {
+            $this->logoImageFile = UploadedFile::getInstance($this, 'logoImageFile');
+            return true;
+        }
+        return false;
+    }    
 
     protected function internalForms(): array
     {
-    return ['legalAddressForm','postalAddressForm','bankDetails','contacts'];
+        return ['legalAddressForm','postalAddressForm','bankDetails','contacts'];
     }
 
 }

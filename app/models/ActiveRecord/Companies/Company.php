@@ -7,8 +7,11 @@ use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\UploadedFile;
+use yiidreamteam\upload\ImageUploadBehavior;
 
 /**
  * This is the model class for table "{{%companies}}".
@@ -25,8 +28,9 @@ use yii\db\ActiveRecord;
  * @property int $bank_details_id Банковские реквизиты
  * @property int $postal_address_id Почтовый адрес
  * @property int $legal_address_id Юридический адрес
- * @property string|null $image_path Путь к файлу с изображением
- * @property string|null $image_url Url файла с изображением
+ * @property string|null $logo Файл логотипа
+ * @property string|null $image_path Путь к файлу с логотипом
+ * @property string|null $image_url Url файла с логотипом
  * @property bool $deleted
  * @property bool $blocked
  *
@@ -37,6 +41,10 @@ use yii\db\ActiveRecord;
  * @property Contact $contacts
  * @property LegalAddress $legalAddress
  * @property PostalAddress $postalAddress
+ * 
+ * @method string getThumbFilePath(string $attribute, string $profile = 'thimb') Вернуть путь к превьюшке
+ * @method string getThumbFileUrl(string $attribute,string $profile = 'thumb',string $emptyUrl = null) - URL превьюшки
+ * 
  */
 class Company extends ActiveRecord
 {
@@ -53,11 +61,23 @@ class Company extends ActiveRecord
     
     public function behaviors(): array
     {
+        $logoPath = Yii::getAlias('@logoUploadPath');        
         return [
-                   [
-                    'class' => SaveRelationsBehavior::className(),
-                    'relations' => ['bankDetails', 'contacts', 'postalAddress', 'legalAddress'],
-                    ]
+                   'relation' => [
+                        'class' => SaveRelationsBehavior::class,
+                        'relations' => ['bankDetails', 'contacts', 'postalAddress', 'legalAddress'],
+                    ],
+                    'logoUpload' => [
+                         'class' => ImageUploadBehavior::class,
+                         'attribute' => 'logo',
+                         'thumbs' => [
+                             'thumb' => ['width' => 400, 'height' => 300],
+                         ],
+                         'filePath' => $logoPath .'/[[pk]].[[extension]]',
+                         'fileUrl' => '@logoUploadUrl/[[pk]].[[extension]]',
+                         'thumbPath' =>  $logoPath . '/[[profile]]_[[pk]].[[extension]]',
+                         'thumbUrl' => '@logoUploadUrl/[[profile]]_[[pk]].[[extension]]',
+                    ],            
         ];
     }
 /**
@@ -245,4 +265,9 @@ class Company extends ActiveRecord
     {
         $this->deleted = true;
     }
+    
+    public function setLogo(UploadedFile $logo): void
+    {
+        $this->logo = $logo;
+    }    
 }

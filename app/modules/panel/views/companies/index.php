@@ -38,6 +38,14 @@ $columnsConfig = [
                         'name:text:'. Yii::t('app/company', 'Name'),
                         'full_name:text:'. Yii::t('app/company', 'Full name'),
                         [
+                            'label' => Yii::t('app/company', 'Company`s logo'),
+                            'value' => function (Company $model) {
+                                return Html::img($model->getThumbFileUrl('logo'),['style' => 'width: 80px']);
+                            },
+                            'format' => 'raw',
+                            'contentOptions' => ['style' => 'width: 100px'],
+                        ],                        
+                        [
                             'attribute' => 'blocked',
                             'label' => Yii::t('app','Status'),
                             'format' => 'raw',

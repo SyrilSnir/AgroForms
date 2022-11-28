@@ -3,8 +3,8 @@
 namespace app\models\Forms\Manage\Document;
 
 use app\models\ActiveRecord\Document\Documents;
+use app\models\Forms\Manage\ManageForm;
 use Yii;
-use yii\base\Model;
 use yii\web\UploadedFile;
 
 /**
@@ -12,14 +12,12 @@ use yii\web\UploadedFile;
  *
  * @author kotov
  */
-class BaseDocumentForm extends Model
+class BaseDocumentForm extends ManageForm
 {
     public $title;
     public $titleEng;
     public $description;
     public $descriptionEng;
-    public $exhibitionId;
-    public $companyId;
     public $file;
     public $fileUrl;
     
@@ -51,8 +49,7 @@ class BaseDocumentForm extends Model
     {
         return [
             [['description','title','titleEng','descriptionEng'], 'string'],
-            [['exhibitionId'], 'required'],
-            [['companyId','exhibitionId'], 'integer'],
+
             [['file'],'file'],
             [['fileUrl'],'safe']
         ];
@@ -64,9 +61,7 @@ class BaseDocumentForm extends Model
             'title' => Yii::t('app', 'Title'), 
             'titleEng' => Yii::t('app', 'Title') . ' (ENG)', 
             'description' => Yii::t('app', 'Description'),  
-            'descriptionEng' => Yii::t('app', 'Description') . ' (ENG)',            
-            'companyId' => t('Company','company'),
-            'exhibitionId' => t('Exhibition'),  
+            'descriptionEng' => Yii::t('app', 'Description') . ' (ENG)',             
             'file' => t('Attached file')
         ];
     }    

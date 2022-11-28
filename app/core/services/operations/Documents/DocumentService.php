@@ -3,15 +3,17 @@
 namespace app\core\services\operations\Documents;
 
 use app\core\repositories\manage\Document\DocumentRepository;
+use app\core\services\operations\DataManqageInterface;
 use app\models\ActiveRecord\Document\Documents;
 use app\models\Forms\Manage\Document\BaseDocumentForm;
+use app\models\Forms\Manage\ManageForm;
 
 /**
  * Description of DocumentService
  *
  * @author kotov
  */
-class DocumentService 
+class DocumentService implements DataManqageInterface
 {
     /**
      *
@@ -24,7 +26,7 @@ class DocumentService
         $this->documents = $documents;
     }
     
-    public function create(BaseDocumentForm $form): Documents
+    public function create(ManageForm $form): Documents
     {
         $companyId = is_numeric($form->companyId) ? $form->companyId : null;
         $document = Documents::create(
@@ -42,7 +44,7 @@ class DocumentService
         return $document;
     }
     
-    public function edit(int $id, BaseDocumentForm $form) 
+    public function edit(int $id, ManageForm $form) : void
     {
         /** @var Documents $document */
         $companyId = is_numeric($form->companyId) ? $form->companyId : null;
@@ -61,7 +63,7 @@ class DocumentService
         $this->documents->save($document);  
     }
     
-    public function remove ($id) 
+    public function remove (int $id) :void
     {        
         /* @var Documents $document */
          $document = $this->documents->get($id);
