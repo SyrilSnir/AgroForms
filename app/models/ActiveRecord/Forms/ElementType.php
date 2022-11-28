@@ -30,6 +30,9 @@ class ElementType extends ActiveRecord
     const ELEMENT_HEADER = 14;
     const ELEMET_ADDITIONAL_EQUIPMENT = 15;
     const ELEMENT_GROUP = 16;
+    const ELEMENT_FRIEZE = 17; // Фризовая надпись
+    const ELEMENT_DATE_TIME = 18; // Выбор даты или времени
+    const ELEMENT_PERIOD = 19; // Выбор периода
     
     const DEFAULT_ELEMENT_TYPE = self::ELEMENT_CHECKBOX;
     
@@ -57,7 +60,10 @@ class ElementType extends ActiveRecord
     
     const HAS_REQUIRED = [
         self::ELEMENT_NUMBER_INPUT,
-        self::ELEMENT_TEXT_INPUT
+        self::ELEMENT_TEXT_INPUT,
+        self::ELEMENT_DATE_TIME,
+        self::ELEMENT_DATE,
+        self::ELEMENT_PERIOD
     ];
     
     const NUMBER_PARAMS = [

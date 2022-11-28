@@ -61,6 +61,7 @@ class FieldService
                 $form->order,
                 $form->showInRequest,
                 $form->showInPdf,
+                $form->toExport,
                 $form->defaultValue,
                 $parameters
                 );
@@ -86,6 +87,7 @@ class FieldService
                 $form->order,
                 $form->showInRequest,
                 $form->showInPdf,
+                $form->toExport,
                 $form->defaultValue,
                 $parameters
                 );

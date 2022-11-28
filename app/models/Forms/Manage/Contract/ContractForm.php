@@ -6,14 +6,14 @@ use app\core\helpers\Utils\DateHelper;
 use app\core\traits\Lists\GetCompanyNamesTrait;
 use app\core\traits\Lists\GetExhibitionsTrait;
 use app\models\ActiveRecord\Contract\Contracts;
-use yii\base\Model;
+use app\models\Forms\Manage\ManageForm;
 
 /**
  * Description of ContractForm
  *
  * @author kotov
  */
-class ContractForm extends Model
+class ContractForm extends ManageForm
 {
     public $number;
     public $date;

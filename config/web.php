@@ -40,6 +40,16 @@ return [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'controllerMap' => [
+        'elfinder' => [
+            'class' => \mihaildev\elfinder\PathController::class,
+            'access' => ['@'],
+            'root' => [
+                'path' => 'upload/images',
+                'name' => 'Upload'
+            ],
+        ]
+    ],    
     'modules' => [
         'panel' => [
             'class' => ManageModule::class,
@@ -49,7 +59,7 @@ return [
         'gridview' =>  [
            'class' => Module::class
         ]
-    ],
+    ],    
     'components' => [
         'i18n' => [
             'translations' => [
@@ -189,6 +199,11 @@ return [
                 DropdownAsset::class => [
                     'depends' => [
                         AdminLteAsset::class
+                    ]
+                ],
+                yii\jui\JuiAsset::class => [
+                    'depends' => [
+                        YiiAsset::class
                     ]
                 ]
             ],

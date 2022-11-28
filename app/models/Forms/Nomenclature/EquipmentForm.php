@@ -2,8 +2,8 @@
 
 namespace app\models\Forms\Nomenclature;
 
+use app\core\traits\Lists\GetCategoriesListTrait;
 use app\models\ActiveRecord\Nomenclature\Equipment;
-use app\models\ActiveRecord\Nomenclature\EquipmentGroup;
 use app\models\ActiveRecord\Nomenclature\Unit;
 use Yii;
 use yii\base\Model;
@@ -16,6 +16,8 @@ use yii\helpers\ArrayHelper;
  */
 class EquipmentForm extends Model
 {
+    use GetCategoriesListTrait;
+    
     public $name;
     public $code;
     public $description;
@@ -75,10 +77,6 @@ class EquipmentForm extends Model
         ];
     }
     
-    public function categoriesList()
-    {
-        return ArrayHelper::map(EquipmentGroup::find()->orderBy('id')->asArray()->all(), 'id', 'name');
-    }    
     public function unitsList()
     {
         return ArrayHelper::map(Unit::find()->orderBy('id')->asArray()->all(), 'id', 'name');

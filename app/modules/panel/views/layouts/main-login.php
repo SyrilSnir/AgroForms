@@ -18,7 +18,7 @@ AdminLteAsset::register($this);
     <?php $this->head() ?>
     <script src="https://kit.fontawesome.com/0846706cff.js" crossorigin="anonymous"></script>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page agro-template">
 <?php $this->beginBody() ?>
     <?= $content ?>
 <?php $this->endBody() ?>

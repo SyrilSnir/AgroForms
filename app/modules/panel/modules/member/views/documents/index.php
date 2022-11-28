@@ -48,8 +48,12 @@ $columnsConfig = [
                         [
                            'class' => ActionColumn::class,                            
                             'visibleButtons' => [
-                           //     'update' => false,
-                           //     'view' => false,
+                                'update' => function (Documents $model) {
+                                    return !empty($model->company_id);
+                                },
+                                'delete' => function (Documents $model) {
+                                    return !empty($model->company_id);
+                                }
                             ]
                         ]        
                     ], 

@@ -11,10 +11,15 @@ import TextInputBlock from './Units/TextInputBlock';
 import NumberInputBlock from './Units/NumberInputBlock';
 import CheckNumberInput from './Units/CheckNumberInput';
 import SelectBlock from './Units/SelectBlock';
+import FriezeBlock from './Units/FriezeBlock';
 import MultiSelectBlock from './Units/MultiSelectBlock';
 import UndefinedBlock from './Units/UndefinedBlock';
 import RadioBlock from './Units/RadioBlock';
 import EquipmentBlock from './Units/EquipmentBlock';
+import GroupBlock from './Units/GroupBlock';
+import DateTimeBlock from './Units/DateTimeBlock';
+import DateBlock from './Units/DateBlock';
+import DateMultipleBlock from './Units/DateMultipleBlock';
 import ImportantInformationBlock from './Units/ImportantInformation';
 export default {
     props: [
@@ -32,6 +37,11 @@ export default {
         'multi-select-input': MultiSelectBlock,
         'radio': RadioBlock,
         'equipment': EquipmentBlock,
+        'frieze': FriezeBlock,
+        'group': GroupBlock,
+        'date-multiple': DateMultipleBlock,
+        'date-time': DateTimeBlock,
+        'date': DateBlock,
         'undefined': UndefinedBlock
     },    
     data() {
@@ -40,6 +50,8 @@ export default {
                 blockCheckbox: 1,
                 blockSelect: 2,
                 blockMultiSelect: 3,
+                blockDate: 4,
+                blockDateMultiple: 5,
                 blockRadio: 6,
                 blockNumberInput: 7,
                 blockCheckNumber: 8,
@@ -47,7 +59,10 @@ export default {
                 blockImportantInformation: 12,
                 blockImportant: 13,
                 blockHeader: 14,
-                blockEquipment: 15
+                blockEquipment: 15,
+                blockGroup: 16,
+                blockFrieze: 17,
+                blockDateTime: 18,
             }
         }
     },
@@ -80,7 +95,17 @@ export default {
                 case this.typesList.blockImportantInformation:
                     return 'important-information';
                 case this.typesList.blockEquipment:
-                    return 'equipment';                               
+                    return 'equipment';  
+                case this.typesList.blockFrieze:
+                    return 'frieze';
+                case this.typesList.blockDateTime:
+                    return 'date-time';
+                case this.typesList.blockDate:
+                    return 'date';
+                case this.typesList.blockDateMultiple:
+                    return 'date-multiple';
+                case this.typesList.blockGroup:
+                    return 'group';
                 default:
                     return 'undefined';
             }

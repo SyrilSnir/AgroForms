@@ -31,6 +31,7 @@ if ($formId) {
         data-computed="<?php echo json_encode(ElementType::COMPUTED_FIELDS)?>"
         data-enums="<?php echo json_encode(ElementType::HAS_ENUM_ATTRIBUTES)?>"
         data-equipment="<?php echo json_encode(ElementType::ELEMET_ADDITIONAL_EQUIPMENT)?>"
+        data-group="<?php echo json_encode(ElementType::ELEMENT_GROUP)?>"
         >
         <div class="container-fluid">
             <div class="card card-default">

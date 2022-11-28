@@ -17,13 +17,20 @@ $application = $request->getRequestForm();
         </div>
         <div class="card-body">
             <?php echo $elements ?>
+            <?php if($attachedFile):?>
+            <div>
+                <h5 style="margin-top:20px">Прикрепленный файл:</h5>
+                <i class="fa fa-file" aria-hidden="true"></i>
+                <a href="<?php echo $attachedFile ?>"><?php echo $attachedFile ?></a>
+            </div>
+            <?php endif;?>
             <div class="input__field total">
                 <div class="field__name">
                     <?php echo t('Total amount payable','requests')?>:
                 </div>
 
                 <div class="field__value form-control">
-                    <?php echo $application->amount . ' ' . $form->valute->symbol ?>
+                    <?php echo $amount . ' ' . $form->valute->symbol ?>
                 </div>
             </div>
         </div>

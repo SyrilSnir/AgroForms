@@ -7,15 +7,13 @@ use app\core\services\operations\Contracts\ContractService;
 use app\core\traits\GridViewTrait;
 use app\models\Forms\Manage\Contract\ContractForm;
 use app\models\SearchModels\Contracts\ContractSearch;
-use DomainException;
-use Yii;
 
 /**
  * Description of ContractsController
  *
  * @author kotov
  */
-class ContractsController extends BaseAdminController
+class ContractsController extends CrudController
 {
     use GridViewTrait;
     
@@ -31,41 +29,11 @@ class ContractsController extends BaseAdminController
             ContractReadRepository $repository,
             ContractService $service,
             ContractSearch $searchModel,
+            ContractForm $form,
             $config = array()
             )
     {
-        parent::__construct($id, $module, $config);
-        $this->readRepository = $repository;
-        $this->service = $service;
+       parent::__construct($id, $module,$service,$repository,$form, $config);
         $this->searchModel = $searchModel;
-    } 
-
-    public function actionCreate()
-    {
-        $form = new ContractForm();
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            try {
-                $post = $this->service->create($form);
-                return $this->redirect(['view', 'id' => $post->id]);
-            } catch (DomainException $e) {
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
-        }
-        return $this->render('create', [
-            'model' => $form,
-        ]);
-    }  
-    
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-        $form = new ContractForm($model);
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            $this->service->edit($id, $form);
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-        return $this->render('update', [
-            'model' => $form,
-        ]);                        
     }     
 }

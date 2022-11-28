@@ -5,6 +5,7 @@
         <option v-for="element in enums" :value="element.id">{{ getName(element.name, element.name_eng) }}</option>
     </select>
     <div class="field__desc">{{ descriptionLabel }}</div>
+    <div v-if="isComputed" class="field__price"><span class="price">{{ total }}</span> {{ dic.valute }}</div>
 </div>
 
 </template>
@@ -16,7 +17,7 @@ import { labelMixin } from './Mixins/labelMixin'
 import { textTranslateMixin } from './Mixins/textTranslateMixin';
 export default {
         props: [
-            'lang'
+            'lang','dic'
         ],     
        data() {
            return {
@@ -41,10 +42,10 @@ export default {
                }
                return total;
            }
-       },       
+       },  
        created() {
            this.$emit('changeField',this.getData());
-       },
+       },            
         methods: {
            change() {
                this.params.value = this.selected;
@@ -75,5 +76,7 @@ export default {
 }
 </script>
 <style scoped>
-
+    .field__price {
+        text-align: right;
+    }
 </style>

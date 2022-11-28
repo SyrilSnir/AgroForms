@@ -4,7 +4,6 @@ namespace app\models\Forms\Manage\Users;
 
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
-use yii\helpers\ArrayHelper;
 
 
 /**
@@ -21,20 +20,5 @@ class AdminForm extends UserManageForm
         if (!$user) {
             $this->userType = UserType::ROOT_USER_ID;
         }        
-    }
-
-    public function rules()
-    {
-        $rules = [
-            [['login','email'],'required'],
-            [
-                ['login'],
-                'unique',
-                'targetClass'=> User::class,
-                'filter' => [['<>', 'login', $this->login], 'deleted' => false],
-                'message' => 'Пользователь с указанными данными уже зарегистрирован'
-            ],
-        ];     
-        return ArrayHelper::merge(parent::rules(), $rules);
-    }     
+    }  
 }

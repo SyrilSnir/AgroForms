@@ -52,11 +52,11 @@ $this->title = '';
             <?php if ($model->form->formType !== app\models\ActiveRecord\Forms\FormType::DYNAMIC_INFORMATION_FORM):?>      
                 <tr style="border: 1px solid black">
                     <td style="font-family: Verdana;font-size: 10pt;text-align: left;font-weight:bold"><?php echo t('Total amount payable','requests') .':' ?></td>
-                    <td style="font-family: Verdana;font-size: 10pt;text-align: right;font-weight:bold"><?php echo $model->application->amount . ' ' . $model->form->valute->symbol ?></td>
+                    <td style="font-family: Verdana;font-size: 10pt;text-align: right;font-weight:bold"><?php echo $amount . ' ' . $model->form->valute->symbol ?></td>
                         
                 </tr>
             <?php endif;?>
     </tbody>
 </table>
-<p style="margin:0;font-family: Verdana;font-size: 6pt;text-align: right;font-weight:bold">Все цены включают НДС 20%.</p>
-<p style="padding:0;font-family: Verdana;font-size: 6pt;text-align: right;">Оплата производится в российских рублях по курсу ЦБ РФ на дату платежа.</p>
+<p style="margin:0;font-family: Verdana;font-size: 6pt;text-align: right;font-weight:bold"><?php echo t('All prices include VAT');?> 20%.</p>
+<p style="padding:0;font-family: Verdana;font-size: 6pt;text-align: right;"><?php echo t('Payment is made in Russian rubles at the exchange rate of the Central Bank of the Russian Federation on the date of payment','requests'); ?>.</p>

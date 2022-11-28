@@ -58,4 +58,5 @@ return [
     'List of documents' => 'Список документов',
     'New document' => 'Новый документ',
     'Edit document' => 'Редактирование документа',
+    'Data load' => 'Выгрузка данных',
 ];

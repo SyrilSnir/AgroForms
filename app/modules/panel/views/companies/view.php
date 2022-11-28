@@ -46,6 +46,11 @@ $this->title = Yii::t('app/title','Company info') . ': ' . $model->name;
                     'fax:text:' . Yii::t('app/company','Fax'),
                     'site:text:' . Yii::t('app/company','Site'),
                     [
+                      'value' => Html::img($model->getThumbFileUrl('logo')),
+                        'format' => 'raw',
+                      'label' => t('Company`s logo', 'company')
+                    ],
+                    [
                         'group'=> true,
                         'label'=> Yii::t('app/company','Address'),
                         'rowOptions'=>['class'=>'table-agro-head']

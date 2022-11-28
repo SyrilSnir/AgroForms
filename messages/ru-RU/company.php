@@ -44,5 +44,7 @@ return [
         'Checking account' => 'Расчетный счет',
         'Bank information' => 'Информация о банке',
         'Scope of the company' => 'Сфера деятельности компании',
-        'BIC' => 'БИК'
+        'BIC' => 'БИК',
+        'For all companies' => 'Для всех компаний',
+        'Company`s logo' => 'Логотип'
 ];

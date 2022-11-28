@@ -10,7 +10,7 @@ use yii\web\UploadedFile;
  *
  * @author kotov
  */
-class ApplicationForm extends Model
+class DynamicForm extends Model
 {
     public $fields;
     
@@ -46,7 +46,7 @@ class ApplicationForm extends Model
     public function beforeValidate(): bool
     {
         if (parent::beforeValidate()) {
-            $this->loadedFile = UploadedFile::getInstance($this, 'loadedFile');
+            $this->loadedFile = UploadedFile::getInstance($this,'loadedFile');
             return true;
         }
         return false;

@@ -23,7 +23,7 @@ class ElementCheckNumberInput extends FormElement implements CountableElementInt
                 $valuesList['value'] = empty($valuesList['value']) ? 0 : $valuesList['value'];
                 $text .= '<div class="field__value form-control">' . $valuesList['value'] . $unitTitle;
                 if ($this->isComputed()) {
-                    if (($price = $this->field->getPrice()) > 0) {
+                    if (($price = $this->modifyPrice($this->field->getPrice())) > 0) {
                         $summ = (int) $valuesList['value'] * $price;
                         $text.= ' x ' . $price . ' '. $this->field->form->valute->symbol . '=' . $summ . ' '. $this->field->form->valute->symbol;
                     } else {
@@ -39,7 +39,7 @@ class ElementCheckNumberInput extends FormElement implements CountableElementInt
     
     protected function transformData(array $fieldList, array $valuesList = []): array
     {
-        $fieldList['parameters'] = json_decode($fieldList['parameters']);
+        $fieldList = parent::transformData($fieldList, $valuesList);
         if (!empty($valuesList)) {
             $fieldList['value'] = $valuesList['value'];
             $fieldList['checked'] = key_exists('checked', $valuesList) ?  $valuesList['checked'] : false;
@@ -49,13 +49,29 @@ class ElementCheckNumberInput extends FormElement implements CountableElementInt
 
     public function getPrice(array $valuesList = []): int 
     {   
-        $result = 0;
+        $result = 0;        
         if (key_exists('checked', $valuesList) && $valuesList['checked'] == true && key_exists('value', $valuesList)) {
-            if (($price = $this->field->getPrice()) > 0) {
+            if (($price = $this->modifyPrice($this->field->getPrice())) > 0) {
                 $result = (int) $valuesList['value'] * $price;                
             }            
         }
         return $result;
+    }
+    
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {        
+            $unitTitle = '';
+            $fieldParams = $this->field->getFieldParams();
+            if ($fieldParams->unitModel) {
+                $unitTitle = ' ' . $fieldParams->unitModel->short_name;
+            }
+
+            if (key_exists('value', $valuesList)) {
+                 return empty($valuesList['value']) ? 0 : $valuesList['value'] . $unitTitle;
+            }
+        }
+        return '';
     }
 
     public function renderPDF(array $valuesList = []): string 
@@ -73,8 +89,9 @@ class ElementCheckNumberInput extends FormElement implements CountableElementInt
                 $text .= '<td style="color:black;font-family:Verdana;font-size:10pt;text-align:right"><b>' . $valuesList['value'] . $unitTitle . '</b>';
                 if ($this->isComputed()) {
                     if (($price = $this->field->getPrice()) > 0) {
-                        $summ = (int) $valuesList['value'] * $price;
-                        $text.= ' x ' . $price . ' '. $this->field->form->valute->symbol . '=' . $summ . ' '. $this->field->form->valute->symbol;
+                        $currentPrice = $this->modifyPrice($price);
+                        $summ = (int) $valuesList['value'] * $currentPrice;
+                        $text.= ' x ' . $currentPrice . ' '. $this->field->form->valute->symbol . '=' . $summ . ' '. $this->field->form->valute->symbol;
                     } else {
                         $text.= $price . $this->field->form->valute->char_code;
                     }

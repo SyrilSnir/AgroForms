@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 /** @var bool $update */
 
 $this->title = ($update) ? 'Изменить пользователя: ' . $model->login : 'Создать пользователя';
-$action = ($update) ? Url::to(['/manage/users/update', 'id' => $model->userId ]) : '/manage/users/create-admin';
+$action = ($update) ? Url::to(['/panel/users/update', 'id' => $model->userId ]) : '/manage/users/create-admin';
 ?>
 
 <div class="create-form">

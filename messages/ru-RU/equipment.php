@@ -6,5 +6,6 @@ return [
     'Count' => 'Количество',
     'Unit price' => 'Цена за ед.',
     'Price' => 'Стоимость',
+    'All categories' => 'Все категории',
 ];
 

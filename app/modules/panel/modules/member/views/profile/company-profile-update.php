@@ -44,10 +44,10 @@ if (!empty($model->getFirstErrors())):?>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab">                            
-                                <?= $form->field($model, 'name')->textInput(['disabled' => '']) ?>
-                                <?= $form->field($model, 'fullName')->textInput(['disabled' => '']) ?>
-                                <?= $form->field($model, 'inn')->textInput(['disabled' => '']) ?>
-                                <?= $form->field($model, 'kpp')->textInput(['disabled' => '']) ?>
+                                <?= $form->field($model, 'name')->textInput(['readonly' => '']) ?>
+                                <?= $form->field($model, 'fullName')->textInput(['readonly' => '']) ?>
+                                <?= $form->field($model, 'inn')->textInput(['readonly' => '']) ?>
+                                <?= $form->field($model, 'kpp')->textInput(['readonly' => '']) ?>
                                 <?= $form->field($model, 'phone')->textInput() ?>
                                 <?= $form->field($model, 'fax')->textInput() ?>
                                 <?= $form->field($model, 'site')->textInput() ?>
@@ -56,8 +56,8 @@ if (!empty($model->getFirstErrors())):?>
                                     <div class="card card-info">
                                         <div class="card-header"><?php echo t('Legal address','company') ?></div>
                                         <div class="card-body">
-                                        <?= $form->field($model->legalAddressForm, 'index')->textInput(['disabled' => '']) ?>
-                                        <?= $form->field($model->legalAddressForm, 'address')->textInput(['disabled' => '']) ?>
+                                        <?= $form->field($model->legalAddressForm, 'index')->textInput(['readonly' => '']) ?>
+                                        <?= $form->field($model->legalAddressForm, 'address')->textInput(['readonly' => '']) ?>
                                         <?= $form->field($model->legalAddressForm, 'countryId')->widget(Select2::class,
                                         [
                                             'data' => $model->legalAddressForm->countriesList(),
@@ -93,8 +93,8 @@ if (!empty($model->getFirstErrors())):?>
                                     <div class="card card-info">
                                         <div class="card-header"><?php echo t('Mailing address','company')?></div>
                                         <div class="card-body">
-                                            <?= $form->field($model->postalAddressForm, 'index')->textInput(['disabled' => '']) ?>
-                                            <?= $form->field($model->postalAddressForm, 'address')->textInput(['disabled' => '']) ?>  
+                                            <?= $form->field($model->postalAddressForm, 'index')->textInput(['readonly' => '']) ?>
+                                            <?= $form->field($model->postalAddressForm, 'address')->textInput(['readonly' => '']) ?>  
                                             <?= $form->field($model->postalAddressForm, 'countryId')->widget(Select2::class,
                                                     [
                                                         'data' => $model->postalAddressForm->countriesList(),
@@ -157,16 +157,16 @@ if (!empty($model->getFirstErrors())):?>
                                         <div class="card-body">
                                             <?= $form->field($model->contacts, 'proposalSignaturePost')->textInput() ?>
                                             <?= $form->field($model->contacts, 'proposalSignatureName')->textInput() ?>
-                                        </div>
+                                        div>
 
                                     </div>                                 
                                 </div>
 
                                 <div class="tab-pane fade" id="bank" role="tabpanel" aria-labelledby="home-tab">
-                                            <?= $form->field($model->bankDetails, 'rsSchet')->textInput(['disabled' => '']) ?>
-                                            <?= $form->field($model->bankDetails, 'ksSchet')->textInput(['disabled' => '']) ?>
-                                            <?= $form->field($model->bankDetails, 'bik')->textInput(['disabled' => '']) ?>
-                                            <?= $form->field($model->bankDetails, 'bankInfo')->textInput(['disabled' => '']) ?>
+                                            <?= $form->field($model->bankDetails, 'rsSchet')->textInput(['readonly' => '']) ?>
+                                            <?= $form->field($model->bankDetails, 'ksSchet')->textInput(['readonly' => '']) ?>
+                                            <?= $form->field($model->bankDetails, 'bik')->textInput(['readonly' => '']) ?>
+                                            <?= $form->field($model->bankDetails, 'bankInfo')->textInput(['readonly' => '']) ?>
                                 </div>                         
                             </div>
                             <div class="form-group">

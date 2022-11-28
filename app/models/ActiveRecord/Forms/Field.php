@@ -3,10 +3,12 @@
 namespace app\models\ActiveRecord\Forms;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
+use app\core\traits\FieldParametersTrait;
 use app\models\ActiveRecord\Forms\Query\FieldQuery;
-use app\models\Forms\Manage\Forms\FieldParametersForm;
+use app\models\Forms\Manage\Forms\Parameters\BaseParametersForm;
 use DateTime;
 use yii\db\ActiveRecord;
+use function GuzzleHttp\json_decode;
 
 /**
  * This is the model class for table "{{%fields}}".
@@ -22,6 +24,7 @@ use yii\db\ActiveRecord;
  * @property int $order Позиция на экране
  * @property boolean $showed_in_request Отображать в заявке
  * @property boolean $showed_in_pdf Отображать в печатной форме
+ * @property boolean $to_export Добавлять в выгрузку
  * @property string|null $default_value Значение по умолчанию
  * @property string|null $parameters Параметры
  * @property bool $deleted Флаг удаления
@@ -30,7 +33,7 @@ use yii\db\ActiveRecord;
  * @property FieldGroup $fieldGroup Позиция на экране
  * @property Form $form Форма
  * @property FieldEnum[] $enums Перечисляемые аттрибуты
- * @property FieldParametersForm $fieldParams Параметры
+ * @property BaseParametersForm $fieldParams Параметры
  * 
  * @property int|null $price Цена
  * @property SpecialPrice|null $actualSpecialPrice Действующая специальная цена
@@ -38,7 +41,7 @@ use yii\db\ActiveRecord;
 class Field extends ActiveRecord
 {
 
-    use MultilangTrait;
+    use MultilangTrait, FieldParametersTrait;
   
 /**
  * 
@@ -50,6 +53,7 @@ class Field extends ActiveRecord
  * @param int $elementTypeId
  * @param bool $showInRequest
  * @param bool $showInPdf
+ * @param bool $toExport
  * @param int $fieldGroupId
  * @param string $defaultValue
  * @param string $parameters
@@ -67,6 +71,7 @@ class Field extends ActiveRecord
             int $order,
             bool $showInRequest,
             bool $showInPdf,
+            bool $toExport,
             string $defaultValue = '',
             string $parameters = ''     
             ):self
@@ -84,6 +89,7 @@ class Field extends ActiveRecord
         $model->default_value = $defaultValue;
         $model->showed_in_request = $showInRequest;
         $model->showed_in_pdf = $showInPdf;
+        $model->to_export = $toExport;
         return $model;
     }
 
@@ -106,6 +112,7 @@ class Field extends ActiveRecord
  * @param int $order
  * @param bool $showInRequest
  * @param bool $showInPdf
+ * @param bool $toExport 
  * @param string $defaultValue
  * @param string $parameters
  */    
@@ -119,7 +126,8 @@ class Field extends ActiveRecord
             int $fieldGroupId,            
             int $order,
             bool $showInRequest,            
-            bool $showInPdf,            
+            bool $showInPdf,
+            bool $toExport,
             string $defaultValue = '',
             string $parameters = ''              
             )
@@ -134,6 +142,7 @@ class Field extends ActiveRecord
         $this->order = $order;
         $this->showed_in_request = $showInRequest;
         $this->showed_in_pdf = $showInPdf;
+        $this->to_export = $toExport;
         $this->parameters = $parameters;
         $this->default_value = $defaultValue;        
     }
@@ -163,11 +172,11 @@ class Field extends ActiveRecord
         return in_array($this->element_type_id, ElementType::HAS_ENUM_ATTRIBUTES);
     }
 
-    public function getFieldParams(): FieldParametersForm
+    public function getFieldParams(): BaseParametersForm
     {
         $params = json_decode($this->parameters, true);
-        $form = new FieldParametersForm();
-        $form->setAttributes($params);
+        $form = $this->getParametersForm($this->element_type_id,$this);
+        $form->setAttributes($params, false);
         return $form;
     }
     /**
@@ -178,8 +187,12 @@ class Field extends ActiveRecord
     {
         if (!$this->fieldParams->isComputed) {
             return null;
-        }        
-        return  $this->actualSpecialPrice ? (int) $this->actualSpecialPrice->price : (int) $this->fieldParams->unitPrice;
+        }   
+        if (empty($this->fieldParams->unitPrice)) {
+            return 0;
+        }
+        //return  $this->actualSpecialPrice ? (int) $this->actualSpecialPrice->price : (int) $this->fieldParams->unitPrice;
+        return $this->fieldParams->unitPrice;
     }
     
     public function getActualSpecialPrice(): ?SpecialPrice
@@ -191,9 +204,21 @@ class Field extends ActiveRecord
                 ->andWhere(['>','end_date',$currentDate])
                 ->one();        
     }
-    
+    /**
+     * 
+     * @return Field[]
+     */
+    public function getFieldsInGroup()
+    {
+        return Field::find()
+                ->andWhere(['field_group_id' => $this->id])
+                ->orderBy('order')
+                ->all();
+    }
+
+
     public static function find(): FieldQuery
     {
         return new FieldQuery(static::class);
-    }
+    }    
 }

@@ -20,6 +20,15 @@ class ElementTextField extends FormElement
         return $text  . '</div></div>';
     }
     
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        if (key_exists('value', $valuesList)) {
+            return $valuesList['value'] ??= '';
+        }
+        return '';
+    }
+
+
     protected function transformData(array $fieldList, array $valuesList = []): array
     {    
         $fieldList = parent::transformData($fieldList, $valuesList);
@@ -31,12 +40,11 @@ class ElementTextField extends FormElement
 
     public function renderPDF(array $valuesList = []): string 
     {
-        $text = '<div style="position:relative;"><span style="font-weight:bold">' . $this->field->name . ': </span>';
-        $text .= '<span>';
+        $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td style="color:black;font-family:Verdana;font-size: 10pt;font-weight:bold;text-align:left;">' . $this->field->name .  ': </td>'; 
         if (key_exists('value', $valuesList)) {
-            $text.= $valuesList['value'];
+            $text.= '<td style="color:black;font-family:Verdana;font-size:10pt;text-align:right">'.$valuesList['value'].'</td>';
         }
-        return $text  . '</span></div>';        
+        return $text . '</tr>';       
     }
 
 }

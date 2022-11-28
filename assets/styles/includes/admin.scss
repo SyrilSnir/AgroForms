@@ -194,6 +194,15 @@
     > .card-body {
         padding: 0 20px;
     }
+    .align-right {
+        .desc-block, .help-block {
+            text-align: right;
+        }
+    }
+    .desc-block {
+        font-size: 10px;
+
+    }
     .help-block {
         color: red;
         font-size: 10px;
@@ -228,10 +237,25 @@
         display: block; 
         clear: both;
     }
+
+    .flex__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        input {
+            padding-right: 2rem;
+        }    
+    }
 }
 table {
     tr.active-exhibition {
         background-color: #cdf2e6;
         font-weight: 600;        
     }
+}
+
+.section__important {
+    border: 1px solid red;
+    padding: 20px;
+    text-align: center;    
 }

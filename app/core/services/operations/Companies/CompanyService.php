@@ -106,7 +106,13 @@ class CompanyService
                 $contact,
                 $legalAddress,
                 $postalAddress );
+
         $this->companies->save($company); 
+        if ($form->logoImageFile) {
+            $company->detachBehavior('relation');
+            $company->setLogo($form->logoImageFile);
+            $this->companies->save($company); 
+        }        
         return $company;
         
         
@@ -167,7 +173,12 @@ class CompanyService
                 $legalAddress,
                 $postalAddress                
                 );
-        $this->companies->save($company);
+        $this->companies->save($company); 
+        if ($form->logoImageFile) {
+            $company->detachBehavior('relation');
+            $company->setLogo($form->logoImageFile);
+            $this->companies->save($company); 
+        }
     }
     
     public function block($id)
@@ -198,5 +209,16 @@ class CompanyService
         $company->save();
     }    
 
-            
+    public function remove($id)
+    {
+        /** @var Company $company */
+        $company = $this->companies->get($id);
+        $usersOfCompany = $company->users;
+        foreach ($usersOfCompany as $userOfComnpany) {
+            $userOfComnpany->deleteUser();
+            $userOfComnpany->save();
+        }
+        $company->deleteCompany();
+        $this->companies->save($company); 
+    }            
 }

@@ -20,7 +20,8 @@ class ElementSelectMultiple extends ElementSelect
                 $fieldEnum = FieldEnum::findOne($element);
                 $fieldText = $fieldEnum->name;
                 if ($this->isComputed()) {
-                    $fieldText .=  ' - '. "{$fieldEnum->value} {$this->field->form->valute->symbol}";
+                    $val = $this->modifyPrice($fieldEnum->value);
+                    $fieldText .=  ' - '. "{$val} {$this->field->form->valute->symbol}";
                 }                
                 //if ($fieldEnum && floatval($fieldEnum->value)) {                                                      }
                 $text.= '<div class="form-control">' . $fieldText . '</div>';
@@ -37,11 +38,31 @@ class ElementSelectMultiple extends ElementSelect
             /** @var FieldEnum $fieldEnum */
                 $fieldEnum = FieldEnum::findOne($element);
                 if (intval($fieldEnum->value)) {
-                    $result += $fieldEnum->value;
+                    $val = $this->modifyPrice($fieldEnum->value);
+                    $result += $val;
                 }
             }
         }
         return $result;
+    }  
+    
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        $fieldText = '';
+        if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
+        /** @var FieldEnum $fieldEnum */
+            foreach ($valuesList['value'] as $element) {            
+                $fieldEnum = FieldEnum::findOne($element);
+                if ($this->isComputed()) {
+                    $val = $this->modifyPrice($fieldEnum->value);
+                    $fieldText.= "{$fieldEnum->name} - {$val} {$this->field->form->valute->symbol}";
+                } else {
+                     $fieldText.= $fieldEnum->name;
+                }
+                $fieldText.=',';
+            }
+        }
+        return trim($fieldText,',');
     }    
     
     public function renderPDF(array $valuesList = []): string 
@@ -52,8 +73,9 @@ class ElementSelectMultiple extends ElementSelect
             /** @var FieldEnum $fieldEnum */
                 $fieldEnum = FieldEnum::findOne($element);
                 if ($this->isComputed()) {
+                    $val = $this->modifyPrice($fieldEnum->value);
                     $fieldText = '<tr><td style="color:black;font-family:Verdana;font-size:10pt;padding-left:24pt">' . $fieldEnum->name;
-                    $fieldText .=  '</td><td style="color:black;font-family:Verdana;font-size:10pt;text-align:right">'. "{$fieldEnum->value} {$this->field->form->valute->symbol}";
+                    $fieldText .=  '</td><td style="color:black;font-family:Verdana;font-size:10pt;text-align:right">'. "{$val} {$this->field->form->valute->symbol}";
                 } else {
                     $fieldText = '<tr><td colspan="2" style="color:black;font-family:Verdana;font-size:10pt;padding-left:24pt">' . $fieldEnum->name;
                     

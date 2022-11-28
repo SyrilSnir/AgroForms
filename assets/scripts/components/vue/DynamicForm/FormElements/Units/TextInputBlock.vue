@@ -1,16 +1,18 @@
 <template>
-<div class="form-group" :class="{'required' : required }">
-    <label :for="id">{{ titleLabel }}</label>
-    <input 
-        :id="id"
-        type="text" 
-        class="form-control"
-        :class="{'is-invalid' : hasErrorsForShow() }" 
-        v-model="val"
-        @change="onChange($event)"
-        placeholder="Enter ...">
-    <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>         
-    <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>        
+<div class="form-group align-right" :class="{'required' : required }">
+    <div class="flex__wrapper">
+        <label :for="id">{{ titleLabel }}</label>
+        <input 
+            :id="id"
+            type="text" 
+            class="form-control"
+            :class="{'is-invalid' : hasErrorsForShow() }" 
+            v-model="val"
+            @change="onChange($event)"
+            placeholder="">
+    </div>
+    <div v-if="hasErrorsForShow()" class="help-block">{{ errors.required.message }}</div>  
+    <div v-if="!hasErrorsForShow()" class="desc-block">{{ descriptionLabel }}</div>           
 </div>
 </template>
 <script> 
@@ -25,7 +27,8 @@
        data() {           
            return {
             id: 'id' + this.params.id,
-            val: this.params.value,
+            val: this.params.value ? this.params.value : '',
+            currentVal: this.params.value,
             showErrors : false,
             valid: true,
             errors : {

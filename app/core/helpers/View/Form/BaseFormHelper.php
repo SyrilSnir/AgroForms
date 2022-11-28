@@ -15,18 +15,14 @@ use Yii;
  */
 abstract class BaseFormHelper
 {
+    
+    use FormElementsManagementTrait;
     /**
      * 
      * @var Form
      */
     protected $form;
-    
-    /**
-     * 
-     * @var Request|null
-     */
-    protected $request;
-    
+      
     /**
      * 
      * @var User
@@ -57,7 +53,7 @@ abstract class BaseFormHelper
             'format' => Pdf::FORMAT_A4,
             'defaultFont' => 'Verdana',
             'defaultFontSize' => '10',
-            // portrait orientation
+            // portrait orientation            
             'orientation' => Pdf::ORIENT_PORTRAIT, 
             // stream to browser inline
             'destination' => Pdf::DEST_BROWSER, 
@@ -70,6 +66,7 @@ abstract class BaseFormHelper
             ]
         );
         $this->pdfHelper->getApi()->defaultfooterline = 0;
+        $this->pdfHelper->getApi()->setAutoBottomMargin = 'stretch';
     } 
     
     public abstract static function createViaForm(User $user, string $langCode, Form $form): self;
@@ -82,23 +79,21 @@ abstract class BaseFormHelper
 
     public abstract function getData(bool $isReadOnly = false) :array ;  
     
-    public abstract function getFormPrice() :int ;
+    public abstract function getFormPrice() :int ; 
     
-    
-    public function isRequest():bool 
-    {
-        return !is_null($this->request);
-    } 
+    public abstract function getPrintedElementsCount(): int;    
 
-    protected function getPdfHeader(): string
+    public abstract function getExcelHeader(): array;        
+    
+    protected function getPdfHeader(): string   
     {
         return  Yii::$app->view->renderFile('@pdf/request-header.php',[
             'exhibitionName' => $this->form->exhibition->title,
             'contractNumber' => $this->getContractNumber(),
             'dateOfContract' => $this->getContractDate(),
         ]);
-    }    
-    
+    }
+        
     protected function getContractNumber() :string
     {
         return $this->request->contract ? $this->request->contract->number : '';
@@ -116,5 +111,8 @@ abstract class BaseFormHelper
         ]);
     }
     
-    
+    public function removeRequest(): void
+    {
+        $this->request = null;        
+    }
 }

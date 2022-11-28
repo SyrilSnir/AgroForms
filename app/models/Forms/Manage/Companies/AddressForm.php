@@ -64,9 +64,9 @@ abstract class AddressForm extends Model
     public function rules()
     {
         return [
-            [['index', 'cityId','id'], 'integer'],
+            [['cityId','id'], 'integer'],
             [['cityId', 'address'], 'required'],
-            [['address'], 'string', 'max' => 255],
+            [['index','address'], 'string', 'max' => 255],
         ];
     }
     /**

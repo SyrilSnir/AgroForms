@@ -2,6 +2,9 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\ExcelHeaderView;
+use app\models\ActiveRecord\Forms\Field;
+
 /**
  *
  * @author kotov
@@ -16,14 +19,25 @@ interface FormElementInterface
     
     public function getParameters():array;
     
+    public function getField(): Field;    
+    
     public function getFieldId(): int;
     
     public function getOrder(): int;
     
     public function isShowInRequest():bool ;
+    
     public function isShowInPdf():bool ;
+    
+    public function isExcelExport(): bool ;
 
     public function isComputed(): bool; 
     
     public function isDeleted(): bool;
+    
+    public function getLenght(): int;
+    
+    public function getExcelHeader(): ExcelHeaderView;
+    
+    public function getExcelValue(array $valuesList = []): array|string;
 }

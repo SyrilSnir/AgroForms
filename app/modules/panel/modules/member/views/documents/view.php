@@ -15,6 +15,7 @@ $this->title = t('Document') . ' № ' .$model->id;
 ?>
 <div class="category-view">
     <p>
+        <?php if (!empty($model->company_id)): ?>
         <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -23,6 +24,7 @@ $this->title = t('Document') . ' № ' .$model->id;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php endif; ?>
         <?= Html::a(Yii::t('app','Back'), ['index','exhibitionId' => $model->exhibition_id], ['class' => 'btn btn-secondary']) ?>
     </p>
 

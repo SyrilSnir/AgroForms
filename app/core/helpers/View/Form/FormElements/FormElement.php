@@ -2,10 +2,14 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\ExcelHeaderView;
+use app\core\helpers\View\Form\Modificators\PriceModificator;
+use app\core\helpers\View\Form\PriceModifyInterface;
 use app\core\providers\Data\FieldEnumProvider;
-use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Nomenclature\Unit;
 use app\models\Data\Languages;
+use function GuzzleHttp\json_decode;
 /**
  * Description of FormElement
  *
@@ -13,6 +17,7 @@ use app\models\Data\Languages;
  */
 abstract class FormElement implements FormElementInterface
 {
+    
     protected string $langCode;
     /**
      * 
@@ -32,6 +37,12 @@ abstract class FormElement implements FormElementInterface
      */
     protected $fieldEnumProvider; 
     
+    /**
+     * 
+     * @var PriceModifyInterface[]
+     */
+    protected $priceModificators = [];        
+
     public function __construct(Field $field, FieldEnumProvider $enumProvider = null, string $langCode = Languages::RUSSIAN)
     {
         $this->field = $field;
@@ -69,7 +80,11 @@ abstract class FormElement implements FormElementInterface
     
     public function isComputed(): bool
     {
-        return !!$this->field->getFieldParams()->isComputed;
+        $fieldParams = $this->field->getFieldParams();
+        if (!property_exists($fieldParams,'isComputed')) {
+            return false;
+        }
+        return !!$fieldParams->isComputed;
     }
 
 
@@ -98,6 +113,12 @@ abstract class FormElement implements FormElementInterface
         return (bool) $this->field->showed_in_pdf;
     }
     
+    public function isExcelExport(): bool 
+    {
+        return (bool) $this->field->to_export;
+    }
+
+
     public function isDeleted(): bool
     {
         return  (bool) $this->field->deleted;
@@ -106,52 +127,77 @@ abstract class FormElement implements FormElementInterface
 
     protected function transformData(array $fieldList, array $valuesList):array
     {
-        $fieldList['parameters'] = json_decode($fieldList['parameters']);
+        $fieldList['parameters'] = $this->buildParameters($fieldList);
+        if (key_exists('unitPrice',$fieldList['parameters'])) {
+            $fieldList['parameters']['unitPrice'] = $this->modifyPrice((int)$fieldList['parameters']['unitPrice']); 
+        }
         return $fieldList;
     }
-
-    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN) : ?FormElementInterface
+    
+    public function addPriceModificator(PriceModificator $priceModificator) :void
     {
-        $formElement = null;
-        switch ($field->element_type_id) {
-            case ElementType::ELEMENT_HEADER:
-                $formElement = new ElementHeader($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_INFORMATION:
-                $formElement = new ElementInformationBlock($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_INFORMATION_IMPORTANT:
-                $formElement = new ElementImportantInformationBlock($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_TEXT_INPUT:
-                $formElement = new ElementTextField($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_NUMBER_INPUT:
-                $formElement = new ElementNumberInput($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_SELECT:
-                $formElement = new ElementSelect($field, new FieldEnumProvider(), $langCode);
-                break;
-            case ElementType::ELEMENT_RADIO_BUTTON:
-                $formElement = new ElementRadio($field, new FieldEnumProvider(), $langCode);
-                break;
-            case ElementType::ELEMENT_CHECKBOX:
-                $formElement = new ElementCheckbox($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_CHECK_NUMBER_INPUT:
-                $formElement = new ElementCheckNumberInput($field, null, $langCode);
-                break;
-            case ElementType::ELEMET_ADDITIONAL_EQUIPMENT:
-                $formElement = new ElementAdditionEquipmentBlock($field, null, $langCode);
-                break;
-            case ElementType::ELEMENT_SELECT_MULTIPLE:
-                $formElement = new ElementSelectMultiple($field, new FieldEnumProvider(), $langCode);
-                break;
-            default: 
-                $formElement = new ElementUnknown($field, null, $langCode);
-                break;
+        $priceModificator->setFormElement($this);
+        array_push($this->priceModificators,$priceModificator);
+    }
+    
+    public function getLenght(): int 
+    {
+        if ($this->isExcelExport()) {
+            return 1;
         }
-        
-        return $formElement;
+        return 0;
+    }
+    
+    public function getExcelHeader(): ExcelHeaderView 
+    {
+        return new ExcelHeaderView($this->getField()->name, $this->getLenght());
+    }
+    
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        return '';
+    }
+
+    /**
+     * Применить модификаторы стоимости, если они имеются
+     * @param int $price
+     */
+    public function modifyPrice(int $price) 
+    {
+        foreach ($this->priceModificators as $priceModificator) {
+           $price = $priceModificator->modify($price);
+        }
+        return $price;
+    }
+    
+    protected function buildParameters(array $fieldList): array
+    {
+        $result = json_decode($fieldList['parameters'],true);
+        if (key_exists('unitPrice', $fieldList)) {
+            $result['basePrice'] = $result['unitPrice'];
+            $result['unitPrice'] = $result['unitPrice'] ? $this->modifyPrice($result['unitPrice']) : 0;
+            $result['modifiers'] = $this->getModifiersInformation();
+        }
+        if (key_exists('unit', $result) && is_numeric($result['unit'])) {
+            $unitId = (int) $result['unit'];
+            $unitElement = Unit::findOne($unitId);
+            $result['unitName'] = $unitElement ? $unitElement->short_name : '';
+        }        
+        return $result;
+    }
+    
+    protected function getModifiersInformation(): array
+    {
+        $result = [];
+        foreach ($this->priceModificators as $modificator) {
+            $specialPrice = $modificator->getSpecialPriceElement();
+            if ($specialPrice) {
+                array_push($result,[
+                    'value' => $specialPrice->price,
+                    'alias' => $modificator->getAlias()
+                ]);
+            }
+        }
+        return $result;
     }
 }

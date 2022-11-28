@@ -39,7 +39,8 @@ use yii\db\ActiveRecord;
  * @property string $headerName Заголовок
  * 
  * @property FormType $formType Тип формы
- * @property Field[] $formFields Тип формы
+ * @property Field[] $formFields Все поля формы
+ * @property Field[] $rootFormFields Поля формы без группы
  * @property Valute $valute Валюта
  * @property Exhibition $exhibition Выставка, связанная с формой
  * 
@@ -146,6 +147,13 @@ class Form extends ActiveRecord
     {
         return $this->hasMany(Field::class, ['form_id' => 'id'])->orderBy(['order' => SORT_ASC]);
     }
+    
+    public function getRootFormFields()
+    {
+        return $this->hasMany(Field::class, ['form_id' => 'id'])
+                ->andWhere(['field_group_id' => 0])
+                ->orderBy(['order' => SORT_ASC]);
+    }    
 
 
     public function getValute() : ActiveQuery

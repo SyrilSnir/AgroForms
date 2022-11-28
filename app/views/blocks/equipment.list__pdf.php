@@ -12,7 +12,7 @@ $fullPrice = 0;
 <table class="table">
     <thead>
         <tr>            
-            <th style="color:black;font-size: 10pt;text-align: center" colspan="5"><?php echo t('Add. equipment','menu')?></th>
+            <th style="color:black;font-size: 10pt;text-align: center" colspan="5"><?php echo $fieldName ?></th>
         </tr>
       <tr> 
           <th style="color:black;font-size: 8pt;width: 15px"><?php echo t('Code','equipment') ?></th>

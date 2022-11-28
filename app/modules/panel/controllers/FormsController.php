@@ -122,6 +122,7 @@ class FormsController extends BaseAdminController
         $formFieldsSearchModel->deleted = $showDeletedForm->showDeleted;
         
         $formFieldsDataProvider = $formFieldsSearchModel->searchForForm($id , Yii::$app->request->queryParams); 
+        $formFieldsDataProvider->pagination = false;
         $model = $this->findModel($id);
         $form = new FormsForm($model);        
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {

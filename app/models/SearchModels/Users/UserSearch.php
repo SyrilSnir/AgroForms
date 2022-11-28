@@ -32,4 +32,9 @@ class UserSearch extends BaseUserSearch
         ];
         return ArrayHelper::merge($rules, parent::rules());
     }
+    
+    protected function addStaticFilters(UserQuery $query)
+    {
+        $query->andFilterWhere(['deleted' => false]);        
+    }    
 }

@@ -69,6 +69,7 @@ $attributes = [
     <?php endif; ?> 
     
     <p>
+        <?= Html::a(t('Print to PDF'), Url::current(['print', 'id' => $model->id]), ['class' => 'btn btn-outline-danger']) ?>
         <?= Html::a(t('Back'), Url::previous(), ['class' => 'btn btn-secondary']) ?>
     </p>      
     <?php if (!Yii::$app->user->can(Rbac::PERMISSION_MEMBER_MENU)):?>

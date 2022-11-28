@@ -1,16 +1,28 @@
 @import '../../_variables';
 @import '../../mixins';
 
+
 .btn {
     &.btn-primary, &.btn-danger, &.btn-secondary {
         @include def-button();
     }
-    &.btn-primary {      
+    &.btn-primary:not(:disabled):not(.disabled) {      
         background-color: $base-agrosalon-color;
         color: #fff;
-        &:hover {
+        &:hover, &:active {
             background-color: lighten($base-agrosalon-color, 10);
-        }    
+        }            
+    }
+}
+
+.agro-template {
+    .language-picker {
+        a {
+            color: $base-agrosalon-color;
+            &:hover {
+                color: lighten($base-agrosalon-color, 10);            
+            }
+        }
     }
 }
 .agro {

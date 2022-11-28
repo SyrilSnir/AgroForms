@@ -32,7 +32,9 @@
         "guzzlehttp/guzzle": "^6.3.0",
         "kotchuprik/yii2-sortable-widgets": "^2.1",
         "kartik-v/yii2-editable": "^1.7",
-        "bower-asset/jquery": "^3.6"
+        "bower-asset/jquery": "^3.6",
+        "mihaildev/yii2-elfinder": "*",
+        "phpoffice/phpspreadsheet": "^1.24"
     },
     "autoload": {
         "psr-4": {
@@ -51,6 +53,10 @@
       {
         "type": "composer",
         "url": "https://asset-packagist.org"
+      },
+      { 
+        "type": "vcs", 
+        "url": "https://github.com/monter08/PHPThumb" 
       }
     ],
     "config": {

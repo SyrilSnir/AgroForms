@@ -2,7 +2,9 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
-use app\core\traits\Data\EquipmentValuesPrepareTrait;
+use app\core\repositories\manage\Nomenclature\EquipmentRepository;
+use app\models\ActiveRecord\Nomenclature\Equipment;
+use Yii;
 
 /**
  * Description of ElementAdditionEquipmentBlock
@@ -11,7 +13,26 @@ use app\core\traits\Data\EquipmentValuesPrepareTrait;
  */
 class ElementAdditionEquipmentBlock extends FormElement implements CountableElementInterface
 {
-    use EquipmentValuesPrepareTrait;
+     private function processEquipmentValues($values)
+     {
+         /** @var Equipment $equipment */
+         $eqRepository = new EquipmentRepository();;
+         $resArray = [];
+         foreach ($values as $value) {             
+             $equipment = $eqRepository->get($value['id']);
+             $resArray[$equipment->id] = [
+                 'id' => $equipment->id,
+                 'name' => $equipment->name,
+                 'code' => $equipment->code,
+                 'group' => $equipment->equipmentGroup->name,
+                 'group_id' => $equipment->equipmentGroup->id,
+                 'unit' => $equipment->unit->short_name,
+                 'count' => $value['count'],
+                 'price' => $this->modifyPrice($equipment->price),
+             ];
+         }
+         return $resArray;
+     }
     //put your code here
     
     public function renderHtml(array $valuesList = []): string
@@ -20,8 +41,9 @@ class ElementAdditionEquipmentBlock extends FormElement implements CountableElem
             return '';
         }
         $eqValues = $this->processEquipmentValues($valuesList['value']);
-        return \Yii::$app->view->renderFile('@blocks/equipment.list.php' ,[
+        return Yii::$app->view->renderFile('@blocks/equipment.list.php' ,[
             'values' => $eqValues,
+            'fieldName' => $this->field->name,
             'valute' => $this->field->form->valute->symbol,
             'isComputed' => $this->isComputed()
         ]);
@@ -56,8 +78,9 @@ class ElementAdditionEquipmentBlock extends FormElement implements CountableElem
             return '';
         }
         $eqValues = $this->processEquipmentValues($valuesList['value']);
-        return \Yii::$app->view->renderFile('@blocks/equipment.list__pdf.php' ,[
+        return Yii::$app->view->renderFile('@blocks/equipment.list__pdf.php' ,[
             'values' => $eqValues,
+            'fieldName' => $this->field->name,            
             'valute' => $this->field->form->valute->symbol,
             'isComputed' => $this->isComputed()
         ]);

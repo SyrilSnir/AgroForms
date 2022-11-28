@@ -9,9 +9,12 @@
 namespace app\modules\panel\modules\manager\controllers;
 
 use app\core\repositories\readModels\User\UserReadRepository;
+use app\core\services\Auth\UserActivateService;
 use app\core\services\operations\Users\UserService;
 use app\core\traits\GridViewTrait;
+use app\models\ActiveRecord\Users\User;
 use app\models\Forms\Manage\Users\MemberForm;
+use app\models\Forms\User\Manage\ActivateForm;
 use app\models\SearchModels\Users\MemberSearch;
 use app\modules\panel\controllers\AccessRule\BaseManagerController;
 use DomainException;
@@ -30,6 +33,12 @@ class UsersController extends BaseManagerController
      */
     protected $service;
     
+    /**
+     *
+     * @var UserActivateService
+     */
+    protected $activateService;      
+    
     use GridViewTrait;
     
     public function __construct(
@@ -37,6 +46,7 @@ class UsersController extends BaseManagerController
             $module, 
             UserReadRepository $repository,
             UserService $userService,
+            UserActivateService $activateService,            
             MemberSearch $searchModel,
             $config = array()
             )
@@ -45,6 +55,7 @@ class UsersController extends BaseManagerController
         $this->readRepository = $repository;
         $this->service = $userService;
         $this->searchModel = $searchModel;  
+        $this->activateService = $activateService;        
     }
     
     public function actionCreateMember()
@@ -65,5 +76,20 @@ class UsersController extends BaseManagerController
             'model' => $form,
             'update' => false
         ]);
-    }     
+    } 
+
+    public function actionInvite($id)
+    {
+        /** @var User $user */
+        $activateForm = new ActivateForm();
+        $user = $this->readRepository->findById($id);
+        //dump($user);
+        if ($activateForm->load(Yii::$app->request->post()) && $activateForm->validate() && $user) {
+            $this->activateService->sendInvite($user->id, $activateForm->email);
+            return $this->render('invite', [
+                'eMail' => $activateForm->email,
+            ]);
+        }        
+        return 'cancel';
+    }    
 }

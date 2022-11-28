@@ -199,6 +199,11 @@ class User extends ActiveRecord
         $this->deleted = true;
     }
     
+    public function restoreUser()
+    {
+        $this->deleted = false;
+    }
+
     public function block() 
     {
         $this->active = static::STATUS_BLOCKED;

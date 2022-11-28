@@ -26,7 +26,7 @@ $this->title = t('Special price','title');
             'attributes' => [
                 'start_date:date:' . Yii::t('app','Start date'),
                 'end_date:date:' . Yii::t('app','End date'),
-                'price:text:' . Yii::t('app','Price'),
+                'price:text:' . Yii::t('app','Value'),
             ],
         ]); ?>
     </div>

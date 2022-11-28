@@ -34,10 +34,10 @@ $attributes = [
 switch ($model->user_type_id) {
     case UserType::MEMBER_USER_ID:
         $dopAttributes = [
-            'profile.position:text:' . t('Position','user'),
-            'profile.activities:text:' . t('Scope of the company','company'),
-            'profile.proposal_signature_name:text:' . t('Signer\'s full name','company'),
-            'profile.proposal_signature_post:text:' . t('Signer\'s position','company'),
+            'position:text:' . t('Position','user'),
+          //  'profile.activities:text:' . t('Scope of the company','company'),
+          //  'profile.proposal_signature_name:text:' . t('Signer\'s full name','company'),
+          //  'profile.proposal_signature_post:text:' . t('Signer\'s position','company'),
         ];
         $attributes = ArrayHelper::merge($attributes, $dopAttributes);
         break;
@@ -45,14 +45,7 @@ switch ($model->user_type_id) {
 ?>
 <div class="full-view">
     <p>
-        <?= Html::a(t('Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(t('Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => t('Are you sure you want to delete the user?'),
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?php //Html::a(t('Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(t('Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
     <div class="row">
@@ -72,7 +65,7 @@ switch ($model->user_type_id) {
         <?php 
             $activateFornModel = new ActivateForm($model->email);
             $activateForm = ActiveForm::begin([
-                'action' => Url::to(['/manage/users/invite', 'id' => $model->id ])
+                'action' => Url::to(['/panel/manager/users/invite', 'id' => $model->id ])
             ]);
         ?>            
             <div class="card card-secondary">

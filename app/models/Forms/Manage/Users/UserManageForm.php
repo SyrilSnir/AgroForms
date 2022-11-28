@@ -7,6 +7,7 @@ use app\core\traits\Lists\GetLanguagesListTrait;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
+use DateTime;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
@@ -48,7 +49,9 @@ class UserManageForm extends ActiveRecord
             $this->userType = $user->user_type_id;
             $this->gender = $user->gender;
             $this->userId = $user->id;
-            $this->birthday = $user->birthday;
+            if ($user->birthday) {
+                $this->birthday = DateTime::createFromFormat('Y-m-d',$user->birthday)->format('d.m.Y');
+            }
         } else {
             $this->userType = UserType::MEMBER_USER_ID;
         }
@@ -75,13 +78,24 @@ class UserManageForm extends ActiveRecord
             [['phone','fio'], 'string', 'max' => 255],
             [['birthday'], 'safe'],  
             [
-                ['login'],
+                ['login','email'],
                 'unique',
                 'targetClass'=> User::class,
-                'filter' => ['deleted' => false, 'login' => $this->login],
+                'filter' => ['deleted' => false],
                 'message' => t('The user with the specified data is already registered'),
                 'on' => self::SCENARIO_DEFAULT
            ],
+            [
+                ['login','email'],
+                'unique',
+                'targetClass'=> User::class,
+                'filter' => function(\yii\db\Query $query) {
+                    return $query->andWhere(['deleted' => false])
+                            ->andWhere(['!=', 'login', $this->login]);
+                },//['deleted' => false, ['!=', 'login', $this->login]],
+                'message' => t('The user with the specified data is already registered'),
+                'on' => self::SCENARIO_UPDATE
+           ],            
         ];
     }
     

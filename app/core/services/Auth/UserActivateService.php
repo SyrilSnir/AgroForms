@@ -46,8 +46,8 @@ class UserActivateService
             $this->users->save($user);
         }
         $authKey = $user->auth_key;
-        $toren = StringHelper::base64UrlEncode( $user->auth_key );
-        return Url::toRoute(['/activate', 'token' => $toren], true);
+        $token = StringHelper::base64UrlEncode( $user->auth_key );
+        return Url::toRoute(['/activate', 'token' => $token], true);
     }
     
     /**
@@ -87,9 +87,10 @@ class UserActivateService
             'html' => 'invite-html',
             'text' => 'invite-text',
         ],[
-            'fio' => $user->fio,
-            'link' => $link
-        ])->setTo($email)->setSubject('Доступ к системе управдения заявками для выставки Агросалон')->send();        
+            'siteUrl' => Url::toRoute(['/'],true),            
+            'link' => $link,
+            'email' => $user->email,
+        ])->setTo($email)->setSubject('АГРОСАЛОН - вход на сервисный портал / AGROSALON - access to the Service-Portal')->send();        
         return true;
     }
     

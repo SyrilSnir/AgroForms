@@ -15,6 +15,7 @@ $this->title = Yii::t('app/company', 'New company');
     
 <?php echo $this->render('_form', [
         'model' => $model,
+        'isUpdate' => false
 ]) ?>
 
 </div>

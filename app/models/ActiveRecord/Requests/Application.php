@@ -17,7 +17,8 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property string|null $fields Данные формы
  *
  * @property Request $request
- * @property Form $form
+ * @property Form $form 
+ * 
  */
 class Application extends BaseRequest
 {
@@ -87,6 +88,7 @@ class Application extends BaseRequest
             [['request_id','form_id'], 'required'],
             [['request_id','form_id', 'amount'], 'integer'],
             [['fields'], 'string'],
+            [['file'], 'file','skipOnEmpty' => true],
             [['request_id'], 'exist', 'skipOnError' => true, 'targetClass' => Request::className(), 'targetAttribute' => ['request_id' => 'id']],
             [['form_id'], 'exist', 'skipOnError' => true, 'targetClass' => Form::className(), 'targetAttribute' => ['form_id' => 'id']],
         ];

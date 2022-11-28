@@ -11,12 +11,17 @@ export default class FieldParams {
         this.computedType = fieldsConfig.data('computed');
         this.requiredType = fieldsConfig.data('required');
         this.enumValues = fieldsConfig.data('enums'); 
-        this.equipment = fieldsConfig.data('equipment');     
+        this.equipment = fieldsConfig.data('equipment');
+        this.frieze = fieldsConfig.data('frieze');
+        this.group = fieldsConfig.data('group');
         this.$htmlParamsBlock = $('#html-params');
         this.$numberParamsBlock = $('#number-params');
         this.$requiredBlock = $('#required-block');
         this.$computedBlock = $('#computed');
         this.$textParamsBlock = $('#text-params');
+        this.$equipmentBlock = $('#additional-equipment');
+        this.$friezeBlock = $('#frieze-params');
+        this.$groupBlock = $('#group-params');
     }
     elementTypeSelectorChangeHandler(e) {
         const value = parseInt(e.target.value);
@@ -43,7 +48,16 @@ export default class FieldParams {
             this.numberParamsShow(false);  
         (this.computedType.indexOf(value) !== -1) ?
             this.computedParamsShow(true) :
-            this.computedParamsShow(false);                        
+            this.computedParamsShow(false);
+        (this.equipment == value) ? 
+            this.equipmentParamShow(true) :
+            this.equipmentParamShow(false);
+        (this.frieze == value) ?
+            this.friezeParamShow(true):
+            this.friezeParamShow(false);
+        (this.group == value) ?
+            this.groupParamShow(true):
+            this.groupParamShow(false);
     }
     computedParamsShow( isShow ) {
         isShow ? 
@@ -69,5 +83,20 @@ export default class FieldParams {
         isShow ? 
             this.$htmlParamsBlock.removeClass('hide') :
             this.$htmlParamsBlock.addClass('hide');
+    }
+    equipmentParamShow( isShow ) {
+        isShow ? 
+            this.$equipmentBlock.removeClass('hide') :
+            this.$equipmentBlock.addClass('hide');
+    }
+    friezeParamShow( isShow ) {
+        isShow ? 
+            this.$friezeBlock.removeClass('hide') :
+            this.$friezeBlock.addClass('hide');
+    }    
+    groupParamShow( isShow ) {
+        isShow ? 
+            this.$groupBlock.removeClass('hide') :
+            this.$groupBlock.addClass('hide');
     }    
 }

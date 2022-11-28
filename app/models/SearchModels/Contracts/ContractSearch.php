@@ -41,7 +41,8 @@ class ContractSearch extends Model
             return $dataProvider;
         }
         $query->andFilterWhere(['company_id' => $this->company_id]);  
-        $query->andFilterWhere(['number' => $this->number]);  
+        $query->andFilterWhere(['exhibition_id' => $this->exhibition_id]);
+        $query->andFilterWhere(['like','number', $this->number]);  
         $query->andFilterWhere(['status' => $this->status]);  
         return $dataProvider;        
     }

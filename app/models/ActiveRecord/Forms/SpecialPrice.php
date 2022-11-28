@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
  * @property string|null $end_date
  * @property int $startDateTimestamp
  * @property int $endDateTimestamp
- * @property int|null $price
+ * @property float|null $price
  *
  * @property Field $field
  */
@@ -29,7 +29,7 @@ class SpecialPrice extends ActiveRecord
         return '{{%special_price}}';
     }
     
-    public static function create(int $fieldId,string $startDate, string $endDate, int $price):self
+    public static function create(int $fieldId,string $startDate, string $endDate, float $price):self
     {
         $model = new self();
         $model->field_id = $fieldId;
@@ -39,7 +39,7 @@ class SpecialPrice extends ActiveRecord
         return $model;
     }
 
-    public function edit(string $startDate, string $endDate, int $price) 
+    public function edit(string $startDate, string $endDate, float $price) 
     {
         $this->start_date =  DateTime::createFromFormat('d.m.Y', $startDate)->format('Y-m-d');
         $this->end_date =  DateTime::createFromFormat('d.m.Y', $endDate)->format('Y-m-d');
@@ -51,7 +51,8 @@ class SpecialPrice extends ActiveRecord
     public function rules()
     {
         return [
-            [['field_id', 'price'], 'integer'],
+            [['field_id'], 'integer'],
+            [['price'], 'number'],
             [['start_date', 'end_date'], 'safe'],
             [['field_id'], 'exist', 'skipOnError' => true, 'targetClass' => Field::class, 'targetAttribute' => ['field_id' => 'id']],
         ];

@@ -28,12 +28,16 @@ $action = Yii::$app->getRequest()->getPathInfo();
     $columnsConfig = [                    
                     'toolbar' => [
                         [
-                            'content'=> $rowsCountTemplate .
+                            'content'=> $rowsCountTemplate .                            
                                 Html::a('<i class="fas fa-redo"></i>', [''], [
                                     'class' => 'btn btn-outline-secondary',
                                     'title'=>t('Default sort'),
                                     'data-pjax'=> '', 
-                                ]) .                           
+                                ]) .
+                                Html::a('<i class="fas fa-trash"></i>', ['trash'], [
+                                    'class' => 'btn btn-outline-secondary',
+                                    'title'=>t('Trash'),                                     
+                                ]) .                             
                                 Html::a('<i class="fas fa-plus"></i>',['create-user'], [
                                     'class' => 'btn btn-success',
                                     'title' => Yii::t('app/user', 'Add user'),

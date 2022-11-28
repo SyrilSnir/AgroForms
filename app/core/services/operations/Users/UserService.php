@@ -3,13 +3,10 @@
 namespace app\core\services\operations\Users;
 
 use app\core\manage\Auth\RoleManager;
-use app\core\repositories\manage\Users\Profile\MemberProfileRepository;
 use app\core\repositories\manage\Users\UserRepository;
-use app\core\repositories\readModels\User\Profile\MemberProfileReadRepository;
 use app\models\ActiveRecord\Users\Profile\MemberProfile;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
-use app\models\Forms\Manage\Users\AdminForm;
 use app\models\Forms\Manage\Users\MemberForm;
 use app\models\Forms\Manage\Users\UserManageForm;
 
@@ -60,6 +57,25 @@ class UserService
         return $user;
     }
     
+    public function createMember(MemberForm $form)
+    {
+        $user = User::create(
+                $form->login,
+                UserType::MEMBER_USER_ID, 
+                $form->company, 
+                $form->fio, 
+                $form->email, 
+                $form->phone, 
+                $form->birthday, 
+                $form->position,
+                $form->gender, 
+                $form->language
+                );
+        $this->users->save($user);  
+        $this->roleManager->setRole(UserType::ROLES[$user->user_type_id], $user->id);
+        return $user;
+    }    
+    
     public function edit($id, UserManageForm $form)
     {
         /** @var User $user */
@@ -89,6 +105,14 @@ class UserService
         $user = $this->users->get($id);
         $user->deleteUser();
         $this->users->save($user); 
+    }
+    
+    public function restore($id)
+    {
+        /** @var User $user */        
+        $user = $this->users->get($id);
+        $user->restoreUser();
+        $this->users->save($user);      
     }
     
     

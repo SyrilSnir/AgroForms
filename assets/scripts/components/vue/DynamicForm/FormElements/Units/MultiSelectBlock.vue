@@ -3,6 +3,8 @@
     <select  @change="change" :name="id" :id="id" class="form-control" multiple v-model="selected">
         <option v-for="element in enums" :value="element.id">{{ element.name }}</option>
     </select>
+    <div class="field__desc">{{ descriptionLabel }}</div>
+    <div v-if="isComputed" class="field__price"><span class="price">{{ total }}</span> {{ dic.valute }}</div>
 </div>
 
 </template>
@@ -10,8 +12,12 @@
 import { unitMixin } from './Mixins/unitMixin';
 import { selectMixin } from './Mixins/selectMixin';
 import { computedMixin } from './Mixins/computedMixin';
+import { labelMixin } from './Mixins/labelMixin';
+import { textTranslateMixin } from './Mixins/textTranslateMixin';
 export default {
-    
+        props: [
+            'lang','dic'
+        ],     
        data() {
            let val = Array.isArray(this.params.value) ? this.params.value : []
            return {
@@ -40,7 +46,9 @@ export default {
        mixins: [
            unitMixin,
            selectMixin,
-           computedMixin
+           computedMixin,
+           labelMixin,
+           textTranslateMixin
        ],
        methods: {
            change() {
@@ -65,5 +73,7 @@ export default {
 }
 </script>
 <style scoped>
-
+    .field__price {
+        text-align: right;
+    }
 </style>
