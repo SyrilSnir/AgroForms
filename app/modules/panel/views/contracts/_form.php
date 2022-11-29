@@ -5,10 +5,41 @@ use app\models\Forms\Manage\Contract\ContractForm;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
 
+$selectExpression = new JsExpression('
+                    function(e) { 
+                        var $selector = $(e.currentTarget);
+                        var $selectedElement = $selector.find("option:selected");
+                        if ($selectedElement.data("select2-tag") == true) {
+                            $.post("/api/hall/save",{
+                                "val" : $selectedElement.val()
+                            }, function(data) {
+                                $selectedElement.val(data.id);
+                                console.log($selectedElement);
+                            });
+                            
+                        }
+                        
+                    }');
+$selectExpression2 = new JsExpression('
+                    function(e) { 
+                        var $selector = $(e.currentTarget);
+                        var $selectedElement = $selector.find("option:selected");
+                        if ($selectedElement.data("select2-tag") == true) {
+                            $.post("/api/stand-number/save",{
+                                "val" : $selectedElement.val()
+                            }, function(data) {
+                                $selectedElement.val(data.id);
+                                console.log($selectedElement);
+                            });
+                            
+                        }
+                        
+                    }');
 
 /** @var View $this */
 /** @var ActiveForm $form */
@@ -28,8 +59,28 @@ use yii\widgets\ActiveForm;
         'data' => $model->companiesList()
             ]) ?>   
     <?= $form->field($model, 'exhibitionId')->dropDownList($model->getExhibitionsList()) ?> 
-    <?= $form->field($model, 'hall')->dropDownList($model->hallsList()) ?>                             
-    <?= $form->field($model, 'standNumber')->dropDownList($model->standNumbersList()) ?>                                
+    <?= $form->field($model, 'hall')->widget(Select2::class,[
+        'data' => $model->hallsList(),
+        'pluginOptions' => [
+            'tags' => true,
+            'tokenSeparators' => [',', ' '],
+            'maximumInputLength' => 10,        
+        ], 
+        'pluginEvents' => [
+            'select2:select' => $selectExpression,
+        ]
+    ]) ?>                             
+    <?= $form->field($model, 'standNumber')->widget(Select2::class,[
+        'data' => $model->standNumbersList(),
+        'pluginOptions' => [
+            'tags' => true,
+            'tokenSeparators' => [',', ' '],
+            'maximumInputLength' => 10,        
+        ], 
+        'pluginEvents' => [
+            'select2:select' => $selectExpression2,
+        ]
+    ]) ?>                               
     <?= $form->field($model, 'square')->textInput() ?>
     <?= $form->field($model, 'status')->dropDownList(ContractStatusHelper::statusList()) ?>                                                        
 

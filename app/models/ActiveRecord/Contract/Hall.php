@@ -34,6 +34,13 @@ class Hall extends ActiveRecord
         $model->name_eng = $form->nameEng;
         return $model;
     }
+    
+    public static function createByName(string $name): self
+    {
+        $model = new self();
+        $model->name = $name;
+        return $model;
+    }
 
     public function edit(HallForm $form): void
     {

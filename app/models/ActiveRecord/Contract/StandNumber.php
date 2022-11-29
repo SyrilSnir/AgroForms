@@ -30,6 +30,13 @@ class StandNumber extends ActiveRecord
         $model->number = $form->number;
         return $model;
     }
+    
+    public static function createByNumber(string $number): self
+    {
+        $model = new self();
+        $model->number = $number;
+        return $model;
+    }    
 
     public function edit(StandNumberForm $form): void
     {
