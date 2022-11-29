@@ -14,7 +14,6 @@ trait GetFieldGroupTrait
 {
     public function fieldGroupList():array
     {
-        return ArrayHelper::map(FieldGroup::find()->orderBy('id')->asArray()->all(),'id','name'); 
-        
+        return ArrayHelper::map(FieldGroup::find()->orderBy('id')->asArray()->all(),'id','name');         
     }
 }

@@ -7,6 +7,7 @@ return [
    'Note' => 'Внимание',
    'Add' => 'Добавить',
    'File' => 'Файл',
+   'Number' => 'Номер',
    'Print to PDF' => 'Печать в PDF',
    'Comment' => 'Комментарий',
    'Message' => 'Сообщение',
@@ -186,6 +187,9 @@ return [
     'Add to export' => 'Добавлять в выгрузку',
     'All prices include VAT' => 'Все цены включают НДС',  
     'Save to Excel' => 'Выгрузить в Excel',
-    'The maximum size of the uploaded file should not exceed 20MB' => 'Максимальный размер загружаемого файла не должен превышать 20Мб'
+    'The maximum size of the uploaded file should not exceed 20MB' => 'Максимальный размер загружаемого файла не должен превышать 20Мб',
+    'Hall' => 'Зал',
+    'Stand`s number' => 'Номер стенда',
+    'Stand`s square, m2' => 'Площадь стенда, м2',
 ];
 

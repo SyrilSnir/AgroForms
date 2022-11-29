@@ -59,4 +59,10 @@ return [
     'New document' => 'Новый документ',
     'Edit document' => 'Редактирование документа',
     'Data load' => 'Выгрузка данных',
+    'Halls' => 'Залы',
+    'New hall' => 'Новый зал',
+    'Edit hall' => 'Редактировать зал',
+    'Stand`s numbers' => 'Номера стендов',
+    'New number' => 'Новый номер',
+    'Edit number' => 'Изменить номер',
 ];

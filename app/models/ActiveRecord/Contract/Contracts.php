@@ -19,10 +19,15 @@ use yii\db\ActiveRecord;
  * @property int $company_id Компания
  * @property int $exhibition_id Выставка
  * @property int $date Дата заключения договора
+ * @property int $stand_number_id Номер стенда
+ * @property int $hall_id Зал
+ * @property int $stand_square Площадь стенда
  * @property int $status Статус договора
  *
  * @property Company $company
  * @property Exhibition $exhibition
+ * @property StandNumber $standNumber
+ * @property Hall $hall
  */
 class Contracts extends ActiveRecord
 {
@@ -45,6 +50,9 @@ class Contracts extends ActiveRecord
         $contract->number = $form->number;
         $contract->company_id = $form->companyId;
         $contract->exhibition_id = $form->exhibitionId;
+        $contract->stand_number_id = $form->standNumber;
+        $contract->hall_id = $form->hall;
+        $contract->stand_square = $form->square;
         $contract->status = $form->status;
         $contract->date =  DateTime::createFromFormat('d.m.Y', $form->date)->getTimestamp();
         return $contract;
@@ -64,6 +72,9 @@ class Contracts extends ActiveRecord
         $this->number = $form->number;
         $this->company_id = $form->companyId;
         $this->exhibition_id = $form->exhibitionId;
+        $this->stand_number_id = $form->standNumber;
+        $this->hall_id = $form->hall;
+        $this->stand_square = $form->square;        
         $this->status = $form->status;
         $this->date =  DateTime::createFromFormat('d.m.Y', $form->date)->getTimestamp();
     }
@@ -88,5 +99,15 @@ class Contracts extends ActiveRecord
     public function getExhibition()
     {
         return $this->hasOne(Exhibition::class, ['id' => 'exhibition_id']);
-    }    
+    }
+        
+    public function getStandNumber()
+    {
+        return $this->hasOne(StandNumber::class, ['id' => 'stand_number_id']);        
+    }
+    
+    public function getHall()
+    {
+        return $this->hasOne(Hall::class, ['id' => 'hall_id']);  
+    }
 }
