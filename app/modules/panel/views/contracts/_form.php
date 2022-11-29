@@ -28,6 +28,9 @@ use yii\widgets\ActiveForm;
         'data' => $model->companiesList()
             ]) ?>   
     <?= $form->field($model, 'exhibitionId')->dropDownList($model->getExhibitionsList()) ?> 
+    <?= $form->field($model, 'hall')->dropDownList($model->hallsList()) ?>                             
+    <?= $form->field($model, 'standNumber')->dropDownList($model->standNumbersList()) ?>                                
+    <?= $form->field($model, 'square')->textInput() ?>
     <?= $form->field($model, 'status')->dropDownList(ContractStatusHelper::statusList()) ?>                                                        
 
     <?= $form->field($model, 'date')->widget(DatePicker::class, [
