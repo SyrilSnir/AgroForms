@@ -21,6 +21,7 @@ import DateTimeBlock from './Units/DateTimeBlock';
 import DateBlock from './Units/DateBlock';
 import DateMultipleBlock from './Units/DateMultipleBlock';
 import ImportantInformationBlock from './Units/ImportantInformation';
+import FileBlock from './Units/FileBlock';
 export default {
     props: [
         'unitData','lang','dic'
@@ -42,6 +43,7 @@ export default {
         'date-multiple': DateMultipleBlock,
         'date-time': DateTimeBlock,
         'date': DateBlock,
+        'file': FileBlock,
         'undefined': UndefinedBlock
     },    
     data() {
@@ -56,6 +58,7 @@ export default {
                 blockNumberInput: 7,
                 blockCheckNumber: 8,
                 blockTextInput: 9,
+                blockFile: 10,
                 blockImportantInformation: 12,
                 blockImportant: 13,
                 blockHeader: 14,
@@ -106,6 +109,8 @@ export default {
                     return 'date-multiple';
                 case this.typesList.blockGroup:
                     return 'group';
+                case this.typesList.blockFile:
+                    return 'file';
                 default:
                     return 'undefined';
             }

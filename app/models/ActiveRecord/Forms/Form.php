@@ -29,6 +29,7 @@ use yii\db\ActiveRecord;
  * @property int|null $updated_at Дата модификации
  * @property int $order Порядок
  * @property int $status Статус
+ * @property bool $published Доступна для публикации на сайте
  * @property bool $deleted Флаг удаления
  * @property string|null $deleted_at Дата удаления
  * @property boolean $has_file Может содержать вложенный файл
@@ -93,6 +94,7 @@ class Form extends ActiveRecord
         $model->name_eng = $form->nameEng;
         $model->title_eng = $form->titleEng;
         $model->has_file = $form->hasFile;
+        $model->published = $form->published;
         $model->description_eng = $form->descriptionEng;        
         $model->valute_id = $form->valute;  
         $model->exhibition_id = $form->exhibitionId;
@@ -127,6 +129,7 @@ class Form extends ActiveRecord
         $this->name_eng = $form->nameEng;
         $this->title_eng = $form->titleEng;
         $this->has_file = $form->hasFile;
+        $this->published = $form->published;
         $this->description_eng = $form->descriptionEng;        
         $this->valute_id = $form->valute; 
         $this->exhibition_id = $form->exhibitionId;

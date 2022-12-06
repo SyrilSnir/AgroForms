@@ -191,5 +191,6 @@ return [
     'Hall' => 'Зал',
     'Stand`s number' => 'Номер стенда',
     'Stand`s square, m2' => 'Площадь стенда, м2',
+    'Available for publication on the site' => 'Доступна для публикации на сайте'
 ];
 

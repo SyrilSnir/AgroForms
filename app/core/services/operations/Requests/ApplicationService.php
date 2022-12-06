@@ -11,6 +11,7 @@ use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Application;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\Forms\Requests\AttachedFilesForm;
 use app\models\Forms\Requests\DynamicForm;
 use Yii;
 use function GuzzleHttp\json_encode;
@@ -89,8 +90,9 @@ class ApplicationService
         if ($form->loadedFile) {
            $application->setFile($form->loadedFile);
         }
-        $this->application->save($application);  
-        return $this->setApplicationTotal($request, $application);
+        $this->application->save($application);        
+        $this->setApplicationTotal($request, $application);
+        return $request;
     }
     
     public function edit(Request $request, DynamicForm $form, string $langCode)
@@ -116,7 +118,8 @@ class ApplicationService
            $application->setFile($form->loadedFile);
         }        
         $this->application->save($application); 
-        $this->setApplicationTotal($request, $application);
+        $this->setApplicationTotal($request, $application);  
+        return $request;
     }
     
     protected function setApplicationTotal(Request $request, Application $application): Application

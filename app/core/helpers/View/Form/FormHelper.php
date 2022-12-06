@@ -78,7 +78,7 @@ class FormHelper extends BaseFormHelper
         return $instance;
     }        
     
-    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN, int $date = null) : ?FormElementInterface
+    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN, int $date = null,int $requestId = null) : ?FormElementInterface
     {
         /** @var FormElement|null $formElement */
         /** @var PriceModificator $priceModificator */
@@ -131,12 +131,17 @@ class FormHelper extends BaseFormHelper
                 break;            
             case ElementType::ELEMENT_DATE_MULTIPLE:
                 $formElement = new ElementDateMultiple($field, null, $langCode);
-                break;             
+                break;  
+            case ElementType::ELEMENT_FILE:
+                $formElement = new FormElements\ElementFileInput($field,null,$langCode);
+                break;
             default: 
                 $formElement = new ElementUnknown($field, null, $langCode);
                 break;
         }
-      
+        if ($requestId) {
+            $formElement->setRequestId($requestId);
+        }
         self::appendPriceModificators($field, $formElement, $date);
         return $formElement;
     }
@@ -164,15 +169,20 @@ class FormHelper extends BaseFormHelper
     
     protected function appendFormElements()
     {
-        $request = $this->getRequest();
+        $request = $this->getRequest();        
         $date = microtime(true);
         if ($request && (!in_array($request->status, [BaseRequest::STATUS_REJECTED, BaseRequest::STATUS_DRAFT]))) {
             $date = $request->activate_at ? $request->activate_at : $request->created_at;
         }
+        if ($request) {
+            $requestId = $request->id;
+        } else {
+            $requestId = null;
+        }
         $this->formElements = [];
         if ($this->form) {
             foreach ($this->form->rootFormFields as $field) {
-                $formElement = self::getElement($field, $this->langCode, $date);
+                $formElement = self::getElement($field, $this->langCode, $date, $requestId);
                 if ($formElement) {
                     array_push($this->formElements,$formElement);
                 }
@@ -206,9 +216,13 @@ class FormHelper extends BaseFormHelper
         foreach ($this->formElements as $element) {
             $fieldId = $element->getFieldId();
             $val = [];
+
             if (key_exists($fieldId, self::$valuesList)) {
                 $val = self::$valuesList[$fieldId];
-            } 
+            }
+            if (key_exists('requestId', self::$valuesList)) {
+                $val['requestId'] = self::$valuesList['requestId'];
+            }            
             if (!$element->isDeleted() || !empty($val)) { 
                 $data = $element->getData($val);
                 if (!empty($data)) {

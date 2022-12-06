@@ -69,6 +69,13 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
                     ]
     ]);
     ?>
+<?= $form->field($model, 'published')->widget(SwitchInput::class,[
+                'pluginOptions' => [
+                        'onText' => Yii::t('app','Yes'),
+                        'offText' => Yii::t('app','No'),
+                    ]
+    ]);
+    ?>                        
 <?= $form->field($model, 'exhibitionId')->dropDownList($model->getExhibitionsList()) ?>  
 <?= $form->field($model, 'valute')->dropDownList($model->getValutesList()) ?>                        
                        

@@ -53,8 +53,7 @@ import Group from './FormElements/Group'
 import Computed from './FormElements/ComputedEl'
 import { eventBus } from './eventBus'
 import { languages } from '../lang'
-
-const MAX_FILE_SIZE = 20971520;
+import * as constants from './utils/constants'
 
 export default {    
     components: {
@@ -70,6 +69,8 @@ export default {
             title: '',
             attachedFile: '',
             elements: [],
+            fileFields: [],
+            files: {},
             draft: false,
             fields: {},
             formData : new FormData(), 
@@ -103,7 +104,7 @@ export default {
             this.formId = response.data.formId;
             this.isFileUpload = response.data.isFileUpload;
             this.language = response.data.language;
-            this.dict = response.data.dict;
+            this.dict = response.data.dict;        
         })
   },
   computed: {
@@ -122,10 +123,10 @@ export default {
             this.showLimitSizeOfFileMsg = false;
             const element = event.target;
             let fsize = element.files[0].size;
-            if (fsize > MAX_FILE_SIZE) {
+            if (fsize > constants.MAX_FILE_SIZE) {
                 this.showLimitSizeOfFileMsg = true;
             } else {
-                this.formData.append('DynamicForm[loadedFile]', this.$refs.userFile.files[0]);
+                this.formData.append('DynamicForm[attached][formFile]', this.$refs.userFile.files[0]);
                 this.addedFile = '';
                 this.showLimitSizeOfFileMsg = false;
             }
@@ -144,6 +145,10 @@ export default {
             return valid;
         },      
       fieldsModificate(field) {
+        if (field.hasOwnProperty(constants.ATTACHMENT_ATTRIBUTE)) {
+            this.files[field.id] = field.value;
+            return;
+        }
         let computed = false;
         let total = 0;
         if(field.hasOwnProperty('computed')) {
@@ -170,8 +175,6 @@ export default {
                   price += el.total
               }
           }
-          console.log(fields);
-          console.log('price= ' + price);
           this.totalPrice = price;
       },
       formSubmit() {
@@ -205,7 +208,18 @@ export default {
             );
             this.formData.append(
                 'DynamicForm[companyId]', this.companyId
-            );                                        
+            );             
+            console.log(this.files);
+            for (const elementId in this.files) {
+                this.formData.append(
+                    `AttachedFilesForm[files][${elementId}]`, this.files[elementId]
+                );
+                this.fileFields.push(elementId);
+                console.log(this.files[elementId]); 
+            }
+            this.formData.append(
+                'AttachedFilesForm[fileFields]', this.fileFields
+            );                                               
             axios.post( '/api/application/send-form',
                 this.formData,
                 {
@@ -217,7 +231,7 @@ export default {
                    location.href = '/panel/member/'+ response.data.exhibitionId +'/requests/' + response.data.contractId;
                 })
                 .catch(function(){
-                    location.href = '/panel/member/requests';
+              //      location.href = '/panel/member/requests';
                     console.log('FAILURE!!');
                 });                    
       },

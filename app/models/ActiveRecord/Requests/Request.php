@@ -41,6 +41,7 @@ use yii\db\ActiveQuery;
  * @property User $user
  * @property Exhibition $exhibition
  * @property BaseRequest $requestForm
+ * @property Attachment[] $attachments
  * @property ApplicationRejectLog|null $actualRejectLog
  * 
  */
@@ -313,5 +314,10 @@ class Request extends FormManipulation
     public function getActualRejectLog()
     {
         return $this->hasOne(ApplicationRejectLog::class, ['request_id' => 'id'])->andWhere(['actual' => true]);
-    }        
+    } 
+    
+    public function getAttachments() 
+    {
+        return $this->hasMany(AttachedFiles::class, ['request_id' => 'id']);
+    }    
 }

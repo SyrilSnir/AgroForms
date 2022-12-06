@@ -34,6 +34,12 @@ Yii::setAlias('@formsUploadPath', dirname(__DIR__)
         . DIRECTORY_SEPARATOR . 'upload'
         . DIRECTORY_SEPARATOR . 'forms'
         );
+Yii::setAlias('@attachedPath', dirname(__DIR__)
+        . DIRECTORY_SEPARATOR . 'web' 
+        . DIRECTORY_SEPARATOR . 'upload'
+        . DIRECTORY_SEPARATOR . 'forms'
+        . DIRECTORY_SEPARATOR . 'attached'
+        );
 Yii::setAlias('@documentsUploadPath', dirname(__DIR__)
         . DIRECTORY_SEPARATOR . 'web' 
         . DIRECTORY_SEPARATOR . 'upload'
@@ -47,5 +53,6 @@ Yii::setAlias('@logoUploadPath', dirname(__DIR__)
 Yii::setAlias('@uploadUrl','/upload');
 Yii::setAlias('@standUploadUrl','/upload/stand');
 Yii::setAlias('@formsUploadUrl','/upload/forms');
+Yii::setAlias('@attachedUrl','/upload/forms/attached');
 Yii::setAlias('@documentsUploadUrl','/upload/documents');
 Yii::setAlias('@logoUploadUrl','/upload/logo');

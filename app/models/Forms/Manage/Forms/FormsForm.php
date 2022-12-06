@@ -28,7 +28,9 @@ class FormsForm extends Model
     public $hasFile;
     public $valute;
     public $exhibitionId; 
-    
+    public $published;
+
+
     public $nameEng;
     public $titleEng;
     public $descriptionEng;
@@ -52,6 +54,7 @@ class FormsForm extends Model
            $this->titleEng = $model->title_eng;
            $this->descriptionEng = $model->description_eng;
            $this->hasFile = $model->has_file;
+           $this->published = $model->published;
            $this->exhibitionId = $model->exhibition_id;
            $this->valute = $model->valute_id;
            $this->id = $model->id;
@@ -67,7 +70,7 @@ class FormsForm extends Model
         return [
             [['title', 'name', 'slug', 'formType'], 'required'],
             [['order', 'formType','basePrice','valute','exhibitionId'],'integer'],
-            [['hasFile'],'boolean'],
+            [['hasFile','published'],'boolean'],
             [['order','basePrice'],'default','value' => 0],
             [['title', 'name', 'slug', 'description','titleEng', 'nameEng', 'descriptionEng'], 'string', 'max' => 255],
         ];
@@ -89,6 +92,7 @@ class FormsForm extends Model
             'order' => Yii::t('app','Serial number'),
             'basePrice' => Yii::t('app/requests','Base price'),
             'hasFile' => Yii::t('app','File attachment available'),
+            'published' => Yii::t('app','Available for publication on the site'),
             'exhibitionId' => Yii::t('app','Available for exhibitions'),
             'valute' => Yii::t('app','Valute'),
         ];

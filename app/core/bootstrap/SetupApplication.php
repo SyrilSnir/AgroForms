@@ -12,6 +12,7 @@ use app\core\services\operations\Profile\CompanyService;
 use app\core\services\operations\Profile\UserService;
 use app\models\ActiveRecord\Configuration;
 use app\models\ActiveRecord\Document\Documents;
+use app\models\ActiveRecord\Requests\AttachedFiles;
 use app\models\ActiveRecord\Users\User;
 use app\models\Configuration\MailParameters;
 use app\models\Data\Languages;
@@ -27,6 +28,7 @@ use yii\helpers\FileHelper;
 use yii\rest\Serializer;
 use yii\swiftmailer\Mailer;
 use yii\web\Application;
+use yiidreamteam\upload\FileUploadBehavior;
 
 
 /**
@@ -119,7 +121,7 @@ class SetupApplication implements BootstrapInterface
             /** @var Documents $document */
             $document = $event->sender;
             FileHelper::unlink($document->getUploadedFilePath('file'));
-        });
-    }
+        });        
+    }    
 
 }

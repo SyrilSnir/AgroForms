@@ -6,10 +6,10 @@ use app\core\repositories\manage\Requests\RequestRepository;
 use app\core\services\Mail\MailService;
 use app\core\services\operations\Logs\ApplicationRejectLogService;
 use app\models\ActiveRecord\Logs\ApplicationRejectLog;
+use app\models\ActiveRecord\Requests\AttachedFiles;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\ApplicationRejectForm;
 use app\models\Forms\Requests\EditRequestForm;
-use app\models\ActiveRecord\Companies\Company;
 
 
 /**
@@ -65,6 +65,10 @@ class RequestService
         $form = $request->requestForm;
         if ($form) {
             $form->delete();
+        }
+        foreach ($request->attachments as $attachment) {
+            /** @var AttachedFiles $attachment */
+            $attachment->delete();
         }
         $this->requests->remove($request);
     }

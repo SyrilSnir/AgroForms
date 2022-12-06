@@ -133,7 +133,7 @@ class ElementGroup extends FormElement implements CountableElementInterface
     {       
         $groupFields = $this->field->getFieldsInGroup();
         foreach ($groupFields as $groupField) {
-            $element = FormHelper::getElement($groupField, $this->langCode, $this->date);                        
+            $element = FormHelper::getElement($groupField, $this->langCode, $this->date, $this->getRequestId());                        
             if ($element) {
                 array_push($this->formElements,$element);
             }

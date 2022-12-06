@@ -7,7 +7,8 @@ use yii\web\UploadedFile;
 
 /**
  * Description of DynamicForm
- *
+ * 
+ *  @property array $fileFields Description
  * @author kotov
  */
 class DynamicForm extends Model
@@ -31,13 +32,13 @@ class DynamicForm extends Model
     public $contractId;
     
     public $companyId;
-
+    
     public function rules()
     {
         return [
             [['userId','formId','contractId','companyId'],'required'],            
             [['fields'],'required'],
-            [['loadedFile'],'file'],            
+            [['loadedFile'],'file'],                                 
             [['hasFile'],'boolean'],            
             [['total','basePrice','userId','formId','contractId','companyId'],'integer'],
             [['draft'],'boolean'],
@@ -46,9 +47,9 @@ class DynamicForm extends Model
     public function beforeValidate(): bool
     {
         if (parent::beforeValidate()) {
-            $this->loadedFile = UploadedFile::getInstance($this,'loadedFile');
+            $this->loadedFile = UploadedFile::getInstance($this,'attached[formFile]');          
             return true;
         }
         return false;
-    }    
+    }      
 }

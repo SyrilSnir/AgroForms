@@ -41,7 +41,13 @@ abstract class FormElement implements FormElementInterface
      * 
      * @var PriceModifyInterface[]
      */
-    protected $priceModificators = [];        
+    protected $priceModificators = [];  
+    
+    /**
+     * 
+     * @var ?int
+     */
+    protected $requestId;
 
     public function __construct(Field $field, FieldEnumProvider $enumProvider = null, string $langCode = Languages::RUSSIAN)
     {
@@ -87,6 +93,15 @@ abstract class FormElement implements FormElementInterface
         return !!$fieldParams->isComputed;
     }
 
+    public function setRequestId(int $id): void
+    {
+        $this->requestId = $id;
+    }
+
+    public function getRequestId(): ?int
+    {
+        return $this->requestId;
+    }
 
     public function getTranslatableParameter(string $parameterName): string 
     {
@@ -124,6 +139,7 @@ abstract class FormElement implements FormElementInterface
         return  (bool) $this->field->deleted;
     }
 
+    
 
     protected function transformData(array $fieldList, array $valuesList):array
     {

@@ -121,7 +121,7 @@
            },
            onChange(event) {
                this.showErrors = false;
-                this.$emit('changeField',this.getData());
+               this.$emit('changeField',this.getData());
            },
            getData() {
                let data = {

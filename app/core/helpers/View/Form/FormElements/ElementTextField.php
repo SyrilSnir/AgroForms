@@ -32,7 +32,7 @@ class ElementTextField extends FormElement
     protected function transformData(array $fieldList, array $valuesList = []): array
     {    
         $fieldList = parent::transformData($fieldList, $valuesList);
-        if (!empty($valuesList)) {
+        if (key_exists('value', $valuesList)) {
             $fieldList['value'] = $valuesList['value'];
         }
         return $fieldList;
