@@ -11,7 +11,7 @@
     </div>    
 </div>
 <div v-else class="custom-file">
-    <input @change="onChange" :id="id" :ref="id" type="file" class="custom-file-input">
+    <input @change="onChange" :id="id" :ref="id" type="file" :accept="mimeFilter" class="custom-file-input">
     <label class="custom-file-label input-group-text" :data-browse="dic.fileAttach.browse" :for="id">Select file</label>
 </div>
 </div>
@@ -58,6 +58,9 @@ export default {
         },
         requestId() {
             return this.params.request_id;
+        },
+        mimeFilter() {
+            return this.params.file_types;
         }
     },
     props: [

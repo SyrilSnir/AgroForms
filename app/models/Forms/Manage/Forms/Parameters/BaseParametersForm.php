@@ -4,6 +4,7 @@ namespace app\models\Forms\Manage\Forms\Parameters;
 
 use app\core\traits\Lists\GetCategoriesListTrait;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Requests\AttachedFiles;
 use yii\base\Model;
 use function GuzzleHttp\json_decode;
 
@@ -50,8 +51,18 @@ abstract class BaseParametersForm extends Model
             self::CONDITIONALLY_HIDDEN_GROP_TYPE => t('Group with conditional display'),
             self::HIDDEN_GROUP_TYPE => t('Group for hidden elements'),
         ];
-    }  
+    }
     
+    public function attachmentTypesList(): array 
+    {
+        return [
+            AttachedFiles::STANDART_TYPE =>  t('Any file types'),
+            AttachedFiles::SITE_LOGO_TYPE => t('Logo for the website'),
+            AttachedFiles::CATALOG_LOGO_TYPE => t('Logo to catalog') 
+        ];
+    }
+
+
     public function getUnitPrice() {
         if (property_exists($this, 'unitPrice')) {
             return $this->unitPrice;

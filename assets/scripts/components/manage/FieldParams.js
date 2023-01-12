@@ -3,6 +3,7 @@ export default class FieldParams {
     constructor() {
         const fieldsConfig = $('#fields-config');
         this.$elementTypeSelector = $('#element-type-selector'); 
+        this.attachmentType = fieldsConfig.data('attachment');
         this.$enumWrapper = $('#attribute-enums-wrapper');        
         this.$elementTypeSelector.on('change',this.elementTypeSelectorChangeHandler.bind(this));       
         this.textType = fieldsConfig.data('text');
@@ -18,6 +19,7 @@ export default class FieldParams {
         this.$numberParamsBlock = $('#number-params');
         this.$requiredBlock = $('#required-block');
         this.$computedBlock = $('#computed');
+        this.$attachmentBlock = $('#attachment');
         this.$textParamsBlock = $('#text-params');
         this.$equipmentBlock = $('#additional-equipment');
         this.$friezeBlock = $('#frieze-params');
@@ -39,7 +41,10 @@ export default class FieldParams {
             this.textParamsShow(false);
         (this.htmlType.indexOf(value) !== -1) ?
             this.htmlParamsShow(true) :
-            this.htmlParamsShow(false);            
+            this.htmlParamsShow(false);  
+        (this.attachmentType.indexOf(value) !== -1) ?
+            this.attachmentParamsShow(true):
+            this.attachmentParamsShow(false);
         (this.requiredType.indexOf(value) !== -1) ?
             this.requiredShow(true) :
             this.requiredShow(false);
@@ -73,6 +78,11 @@ export default class FieldParams {
         isShow ? 
             this.$textParamsBlock.removeClass('hide') :
             this.$textParamsBlock.addClass('hide');
+    }
+    attachmentParamsShow( isShow ) {
+        isShow ?
+            this.$attachmentBlock.removeClass('hide'):
+            this.$attachmentBlock.addClass('hide');
     }
     requiredShow( isShow ) {
         isShow ? 

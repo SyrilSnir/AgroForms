@@ -46,6 +46,7 @@ return [
     'Accepted applications' => 'Принятые заявки',
     'Rejected applications' => 'Отклоненные заявки',
     'Halls' => 'Залы',
-    'Stand`s numbers' => 'Номера стендов'
+    'Stand`s numbers' => 'Номера стендов',
+    'Rubricator' => 'Рубрикатор',
 ];
 

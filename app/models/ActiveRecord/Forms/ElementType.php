@@ -23,8 +23,8 @@ class ElementType extends ActiveRecord
     const ELEMENT_NUMBER_INPUT = 7;
     const ELEMENT_CHECK_NUMBER_INPUT = 8;
     const ELEMENT_TEXT_INPUT = 9;    
-    const ELEMENT_FILE = 10;                // Don't used in current project
-    const ELEMENT_FILE_MULTIPLE = 11;       // Don't used in current project
+    const ELEMENT_FILE = 10;
+    const ELEMENT_FILE_MULTIPLE = 11;
     const ELEMENT_INFORMATION_IMPORTANT = 12;  
     const ELEMENT_INFORMATION = 13;  
     const ELEMENT_HEADER = 14;
@@ -33,6 +33,10 @@ class ElementType extends ActiveRecord
     const ELEMENT_FRIEZE = 17; // Фризовая надпись
     const ELEMENT_DATE_TIME = 18; // Выбор даты или времени
     const ELEMENT_PERIOD = 19; // Выбор периода
+    const ELEMENT_IFORMATION_FORM = 20; // Сайт email телефон
+    const ELEMENT_RUBRICATOR = 21; // Рубрикатор
+    const ELEMENT_BADGE = 22; // Бейдж
+    const ELEMENT_ADDRESS_BLOCK = 22; // Адресный блок
     
     const DEFAULT_ELEMENT_TYPE = self::ELEMENT_CHECKBOX;
     
@@ -47,6 +51,11 @@ class ElementType extends ActiveRecord
         self::ELEMENT_SELECT_MULTIPLE,
         self::ELEMENT_RADIO_BUTTON,
         self::ELEMET_ADDITIONAL_EQUIPMENT
+    ];
+    
+    const HAS_ATTACHMENT = [
+        self::ELEMENT_FILE,
+        self::ELEMENT_FILE_MULTIPLE
     ];
     
     const HTML_BLOCKS = [

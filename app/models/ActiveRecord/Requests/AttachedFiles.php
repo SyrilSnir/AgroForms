@@ -15,6 +15,7 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property int $request_id Заявка
  * @property int $field_id Поле формы
  * @property string $file_name Имя файла
+ * @property int $type Тип вложения
  *
  * --------- Методы из поведения FileUploadBehavior ------------
  * 
@@ -28,6 +29,15 @@ use yiidreamteam\upload\FileUploadBehavior;
 class AttachedFiles extends ActiveRecord
 {
     /**
+     * Любые файлы
+     */
+    const STANDART_TYPE = 0; 
+    
+    const SITE_LOGO_TYPE = 1;
+    
+    const CATALOG_LOGO_TYPE = 2;
+    
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -35,13 +45,14 @@ class AttachedFiles extends ActiveRecord
         return 'attached_files';
     }
     
-    public static function create(int $requestId, int $fieldId, \yii\web\UploadedFile $file): self
+    public static function create(int $requestId, int $fieldId,int $type, \yii\web\UploadedFile $file): self
     {
         $model = new self();
        
         $model->request_id = $requestId;
         $model->field_id = $fieldId;
         $model->file_name = $file;
+        $model->type = $type;
         $model->configureFileUploadParameters();
         return $model;
     }

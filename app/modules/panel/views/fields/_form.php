@@ -67,6 +67,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         data-number="<?php echo json_encode(ElementType::NUMBER_PARAMS)?>"
         data-computed="<?php echo json_encode(ElementType::COMPUTED_FIELDS)?>"
         data-enums="<?php echo json_encode(ElementType::HAS_ENUM_ATTRIBUTES)?>"
+        data-attachment="<?php echo json_encode(ElementType::HAS_ATTACHMENT)?>"
         data-equipment="<?php echo json_encode(ElementType::ELEMET_ADDITIONAL_EQUIPMENT)?>"
         data-group="<?php echo json_encode(ElementType::ELEMENT_GROUP)?>"
         data-frieze="<?php echo json_encode(ElementType::ELEMENT_FRIEZE) ?>"
@@ -203,6 +204,12 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
             <?php echo $form->field($model->parameters, 'text')->textarea(); ?>
             <?php echo $form->field($model->parameters, 'textEng')->textarea(); ?>
         </div>
+        
+        
+        <div id="attachment"<?php if (!in_array($model->elementTypeId, ElementType::HAS_ATTACHMENT)):?> class="hide"<?php endif; ?>>
+            <?= $form->field($model->parameters, 'attachment')->dropDownList($model->parameters->attachmentTypesList()) ?> 
+        </div>        
+        
         <div id="additional-equipment"<?php if ($model->elementTypeId != ElementType::ELEMET_ADDITIONAL_EQUIPMENT):?> class="hide"<?php endif; ?>>
             <?= $form->field($model->parameters, 'allCategories')->widget(SwitchInput::class,[
                     'pluginOptions' => [

@@ -10,6 +10,7 @@ use app\models\Forms\Manage\Forms\Parameters\FrizeForm;
 use app\models\Forms\Manage\Forms\Parameters\GroupFieldParametersForm;
 use app\models\Forms\Manage\Forms\Parameters\HtmlBlockForm;
 use app\models\Forms\Manage\Forms\Parameters\TextBlockForm;
+use app\models\Forms\Requests\AttachedFilesForm;
 
 /**
  *
@@ -34,6 +35,9 @@ trait FieldParametersTrait
                 return new FrizeForm($field);
             case ElementType::ELEMENT_GROUP:
                 return new GroupFieldParametersForm($field);
+            case ElementType::ELEMENT_FILE:
+            case ElementType::ELEMENT_FILE_MULTIPLE:
+                return new AttachedFilesForm($field);
             default:
                 return new FieldParametersForm($field);
         }

@@ -28,6 +28,7 @@ class AllParametersForm extends BaseParametersForm
     public $textEng;
     public $unit;
     public $categories;
+    public $attachment;
     
     //
     public $digitPrice;
@@ -56,7 +57,8 @@ class AllParametersForm extends BaseParametersForm
         $this->text = $this->paramsArray['text'] ?? ''; 
         $this->textEng = $this->paramsArray['textEng'] ?? '';         
         $this->unit = $this->paramsArray['unit'] ?? '';         
-        $this->unitPrice = $this->paramsArray['unitPrice'] ?? '';         
+        $this->unitPrice = $this->paramsArray['unitPrice'] ?? ''; 
+        $this->attachment = $this->paramsArray['attachment'] ?? 0;
         
     }
     
@@ -65,7 +67,7 @@ class AllParametersForm extends BaseParametersForm
         return [
                 [['required','isComputed','allCategories'], 'boolean'],
                 [['text','textEng','htmlEng','html'], 'safe'],
-                [['unit','unitPrice','specialPriceType','digitPrice', 'freeDigitCount','groupType'], 'integer'],
+                [['unit','unitPrice','specialPriceType','digitPrice', 'freeDigitCount','groupType','attachment'], 'integer'],
                 ['categories','each', 'rule' => ['integer']],            
             ];
     }         
@@ -87,6 +89,7 @@ class AllParametersForm extends BaseParametersForm
             'freeDigitCount' => Yii::t('app','The number of free characters in the frieze inscription'),
             'digitPrice' => Yii::t('app','The cost of the frieze lettering symbol'),
             'groupType' => t('Group type'),
+            'attachment' => t('Valid file types')
         ];
     }
 

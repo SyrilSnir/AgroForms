@@ -65,4 +65,5 @@ return [
     'Stand`s numbers' => 'Номера стендов',
     'New number' => 'Новый номер',
     'Edit number' => 'Изменить номер',
+    'Rubricator' => 'Рубрикатор'
 ];

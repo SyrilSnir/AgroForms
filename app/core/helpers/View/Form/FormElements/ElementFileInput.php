@@ -34,7 +34,19 @@ class ElementFileInput extends FormElement
         } else {
             $result['file_exist'] = false;        
         }
-       //if ()
+        $fileTypeParameter = $this->getParameters('attached') ?? 0;
+        $result['file_types'] = '';
+        switch ($fileTypeParameter) {
+            case AttachedFiles::SITE_LOGO_TYPE:
+                $result['file_types'].='image/*';
+            case AttachedFiles::CATALOG_LOGO_TYPE:                
+                $result['file_types'].='image/jpeg,application/postscript,application/pdf';
+                break;
+            default:
+                //$result['file_types'].='image/*';
+                $result['file_types'].='image/jpeg,application/postscript,application/pdf';
+                break;
+        }
         
         return $result;
     }
