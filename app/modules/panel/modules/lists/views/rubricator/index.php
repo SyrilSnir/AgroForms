@@ -30,7 +30,19 @@ $columnsConfig = [
                     'filterModel' => $searchModel,
                     'columns' => [                    
                         'name:text:' . Yii::t('app','Name'),
-                        'parent.name:text:' . Yii::t('app','Parent section'),
+                        [
+                            'attribute' => 'parentId',
+                            'label' => Yii::t('app','Parent section'),
+                            'filter' => $searchModel->rubricatorList(),
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filterWidgetOptions' => [
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'value' => 'parent.name'
+                            
+                        ],
+                       // 'parent.name:text:' . Yii::t('app','Parent section'),
                         [
                             'class' => ActionColumn::class,
                             'visibleButtons' => [

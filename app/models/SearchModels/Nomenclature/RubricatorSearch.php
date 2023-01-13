@@ -2,6 +2,7 @@
 
 namespace app\models\SearchModels\Nomenclature;
 
+use app\core\traits\Lists\GetRubricatorTrait;
 use app\models\ActiveRecord\Nomenclature\Rubricator;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -13,17 +14,25 @@ use yii\data\ActiveDataProvider;
  */
 class RubricatorSearch extends Model
 {
+    use GetRubricatorTrait;
+    
     public $name; 
+    public $parentId; 
 
     public function rules(): array
     {
         return [
-            [['name'], 'safe'],
+            [['name','parentId'], 'safe'],
         ];
     }
     public function search(array $params): ActiveDataProvider
     {
-        $query = Rubricator::find();
+        $this->load($params);
+        if (empty($this->parentId)) {
+            $query = Rubricator::find();
+        } else {
+            $query = Rubricator::findOne($this->parentId)->children();
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
@@ -31,7 +40,6 @@ class RubricatorSearch extends Model
             ]
         ]);
 
-        $this->load($params);
         if (!$this->validate()) {
             $query->where('0=1');
             return $dataProvider;
