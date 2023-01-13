@@ -96,12 +96,13 @@ class ApplicationController extends FormController
         
     }
     
-    public function actionGetForm($readonly = false)
+    public function actionGetForm($contractId)
     {
         /** @var Form $form */
         /** @var Request $request */
         /** @var UserIdentity $userIdentity */
         $formId = Yii::$app->session->get('OPENED_FORM_ID');
+        $contract = \app\models\ActiveRecord\Contract\Contracts::findOne($contractId);
         $langCode = Yii::$app->language;
         if (!$formId) {
             throw new DomainException(t('The requested form was not found on the server', 'exception'));
@@ -113,11 +114,11 @@ class ApplicationController extends FormController
         if ($formChangeType === Request::FORM_UPDATE) {
             $requestId = Yii::$app->session->get('REQUEST_ID');            
             $request = $this->requestRepository->getForUser($requestId,$userIdentity->getId());            
-            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $request);
+            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $contract, $langCode, $request);
         } else {     
-            $formHelper = FormHelper::createViaForm($userIdentity->getUser(), $langCode, $form);
+            $formHelper = FormHelper::createViaForm($userIdentity->getUser(), $contract, $langCode, $form);
         }
-        return $formHelper->getData($readonly);
+        return $formHelper->getData();
     }
 
     public function actionSendForm()

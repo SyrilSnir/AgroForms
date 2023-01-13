@@ -4,6 +4,13 @@
             {{title}}
         </div>
         <div class="card-body">
+            <div class="app-info__wrapper">
+                <div class="app-info">
+                    <p>{{ dict.contractInfo.standNumber }}:<span>{{ this.standNumber }}</span></p>
+                    <p>{{ dict.contractInfo.hall }}:<span>{{ this.hall }}</span></p>
+                    <p>{{ dict.contractInfo.standSquare }}:<span>{{ this.standSquare }}</span></p>
+                </div>
+            </div>
             <template v-for="elem in elements">
                 <el :unitData="elem" v-if="!elem.isGroup" @modification="fieldsModificate" :lang="language" :dic="dict"></el>
                 <group 
@@ -71,6 +78,9 @@ export default {
             elements: [],
             fileFields: [],
             files: {},
+            standNumber: null,
+            standSquare: null,
+            hall: null,
             draft: false,
             fields: {},
             formData : new FormData(), 
@@ -86,17 +96,21 @@ export default {
             language: languages.russian,               
             dict: {
                 fileAttach: {},
-                buttons: {}
+                buttons: {},
+                contractInfo: {}
             }
         }
     },
-   beforeCreate: function() {
-    axios.get('/api/application/get-form')
+  created: function() {
+    axios.get('/api/application/get-form?contractId=' + this.contractId)
         .then((response) => {
             this.title = response.data.title; 
             this.elements = response.data.elements;  
             this.isComputed = response.data.computed ; 
             this.userId = response.data.userId; 
+            this.standNumber = response.data.standNumber;
+            this.standSquare = response.data.standSquare;
+            this.hall = response.data.hall;
             this.attachedFile = response.data.attachedFile;      
             this.companyId = response.data.companyId;
             this.basePrice = response.data.basePrice;
@@ -104,7 +118,7 @@ export default {
             this.formId = response.data.formId;
             this.isFileUpload = response.data.isFileUpload;
             this.language = response.data.language;
-            this.dict = response.data.dict;        
+            this.dict = response.data.dict;                    
         })
   },
   computed: {

@@ -9,6 +9,7 @@ use app\core\helpers\View\Form\FormElements\ElementCheckNumberInput;
 use app\core\helpers\View\Form\FormElements\ElementDate;
 use app\core\helpers\View\Form\FormElements\ElementDateMultiple;
 use app\core\helpers\View\Form\FormElements\ElementDateTime;
+use app\core\helpers\View\Form\FormElements\ElementFileInput;
 use app\core\helpers\View\Form\FormElements\ElementFrieze;
 use app\core\helpers\View\Form\FormElements\ElementGroup;
 use app\core\helpers\View\Form\FormElements\ElementHeader;
@@ -27,6 +28,7 @@ use app\core\helpers\View\Form\Modificators\PercentModificator;
 use app\core\helpers\View\Form\Modificators\PriceModificator;
 use app\core\helpers\View\Form\Modificators\StaticModificator;
 use app\core\providers\Data\FieldEnumProvider;
+use app\models\ActiveRecord\Contract\Contracts;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\Form;
@@ -52,27 +54,36 @@ class FormHelper extends BaseFormHelper
      * 
      * @var FormElementInterface[]
      */
-    protected $formElements;    
+    protected $formElements;  
     
+    /**
+     * 
+     * @var Contracts
+     */
+    protected $contract;
+
+
     /**
      * 
      * @var array
      */
     public static $valuesList = [];
   
-    public static function createViaForm(User $user, string $langCode, Form $form): self
+    public static function createViaForm(User $user,Contracts $contract, string $langCode, Form $form): self
     {
         $instance = new self($user, $langCode);
         $instance->form = $form;
+        $instance->contract = $contract;
         $instance->appendFormElements();
         return $instance;
     }
     
-    public static function createViaRequest(User $user, string $langCode, Request $request): self
+    public static function createViaRequest(User $user,Contracts $contract, string $langCode, Request $request): self
     {
         $instance = new self($user, $langCode);
         $instance->form = $request->form;
         $instance->request = $request;
+        $instance->contract = $contract;
         $instance->appendRequestValues();
         $instance->appendFormElements();
         return $instance;
@@ -133,7 +144,7 @@ class FormHelper extends BaseFormHelper
                 $formElement = new ElementDateMultiple($field, null, $langCode);
                 break;  
             case ElementType::ELEMENT_FILE:
-                $formElement = new FormElements\ElementFileInput($field,null,$langCode);
+                $formElement = new ElementFileInput($field,null,$langCode);
                 break;
             default: 
                 $formElement = new ElementUnknown($field, null, $langCode);
@@ -344,7 +355,7 @@ class FormHelper extends BaseFormHelper
         return Yii::$app->view->renderFile(Yii::getAlias('@elements'). DIRECTORY_SEPARATOR . 'request-html.php', $requestData);
     }
     
-    public function getData(bool $isReadOnly = false) :array
+    public function getData() :array
     {
         $formData = [
             'userId' => $this->user->id,
@@ -352,14 +363,21 @@ class FormHelper extends BaseFormHelper
             'title' => $this->form->headerName,
             'formType' => $this->form->form_type_id,
             'formId' => $this->form->id,
+            'standNumber' => $this->contract->standNumber->number,
+            'standSquare' => $this->contract->stand_square,
+            'hall' => $this->contract->hall->name,
             'isFileUpload' => $this->form->has_file,
             'attachedFile' => $this->getUploadedFileUrl(),
           //  'companyId' =>// $this->
             'hasFile' => (bool) $this->form->has_file,
-            'readOnly' => $isReadOnly,
             'language' => $this->langCode,
             'dict' => [
                 'symbol'  => t('symb.','requests'),
+                'contractInfo' => [
+                    'standNumber' => t('Stand`s number'),
+                    'standSquare' => t('Stand`s square, m2'),
+                    'hall' => t('Hall')
+                ],
                 'addSymbols' => t('Additional symbols', 'requests'),
                 'fileAttach' => [
                     'browse' => t('Browse'),
@@ -437,4 +455,14 @@ class FormHelper extends BaseFormHelper
         self::$valuesList = [];
         $this->formElements = [];
     }
+
+    protected function getContractNumber() :string
+    {
+        return $this->contract ? $this->contract->number : '';
+    }
+    
+    protected function getContractDate() :string
+    {
+        return $this->contract ? $this->contract->translateDateField('date') : '';
+    }     
 }

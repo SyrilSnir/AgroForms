@@ -40,6 +40,6 @@ abstract class FormController extends JsonController
         parent::init();
         $this->enableCsrfValidation = false;
     }
-    abstract public function actionGetForm() ;    
+    abstract public function actionGetForm($contractId) ;    
     abstract public function actionSendForm() ;    
 }

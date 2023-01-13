@@ -19,10 +19,30 @@ $this->title = t('Application №','requests') . $model->id;
 $attributes = [
     'formType.name:text:' . t('Form type', 'requests'),
     [
-        'attribute' => 'contracr',
+        'attribute' => 'contract',
         'label' => t('Number of contract'),
         'value' => $model->contract ? $model->contract->number : ''
     ],     
+    [
+        'attribute' => 'standNumber',
+        'label' => t('Stand`s number'),
+        'value' => $model->contract ? 
+             ( $model->contract->standNumber ? $model->contract->standNumber->number : '') :
+             ''
+    ],     
+    [
+        'attribute' => 'hall',
+        'label' => t('Hall'),
+        'value' => $model->contract ? 
+             ( $model->contract->hall ? $model->contract->hall->name : '') :
+             ''
+    ],     
+    [
+        'attribute' => 'standSquare',
+        'label' => t('Stand`s square, m2'),
+        'value' => $model->contract ? $model->contract->stand_square : ''
+    ],    
+    
     [
         'attribute' => 'company',
         'label' => t('Company','company'),

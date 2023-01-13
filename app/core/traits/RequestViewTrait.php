@@ -55,11 +55,12 @@ trait RequestViewTrait
         $this->viewPath = Yii::getAlias('@views') .  DIRECTORY_SEPARATOR .'requests';    
         $rejectLogs = $this->applicationRejectLogService->getLogsForRequest($id);
         $requestForm = $model->requestForm;
+        $contract = $model->contract;
         $statusForm = new EditRequestForm($model);  
         if ($requestForm->form->form_type_id == FormType::SPECIAL_STAND_FORM) {            
-            $formHelper = StandHelper::createViaRequest($userIdentity->getUser(), $langCode, $model);
+            $formHelper = StandHelper::createViaRequest($userIdentity->getUser(),$contract, $langCode, $model);
         } else {
-            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $model);            
+            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $contract, $langCode, $model);            
         }
         $formHtmlData = $formHelper->renderHtmlRequest();
         if ($statusForm->load(Yii::$app->request->post()) && $statusForm->validate()) {
@@ -100,12 +101,12 @@ trait RequestViewTrait
         /** @var UserIdentity $userIdentity */
         $userIdentity = Yii::$app->user->getIdentity();
         $langCode = Yii::$app->language;
-        
+        $contract = $model->contract;
         $requestForm = $model->requestForm;
         if ($requestForm->form->form_type_id == FormType::SPECIAL_STAND_FORM) {            
-            $formHelper = StandHelper::createViaRequest($userIdentity->getUser(), $langCode, $model);
+            $formHelper = StandHelper::createViaRequest($userIdentity->getUser(),$contract, $langCode, $model);
         } else {
-            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $model);            
+            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $contract, $langCode, $model);
         }
         return $formHelper;
     }

@@ -2,6 +2,7 @@
 
 namespace app\core\helpers\View\Form;
 
+use app\models\ActiveRecord\Contract\Contracts;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\ActiveRecord\Users\User;
@@ -69,15 +70,15 @@ abstract class BaseFormHelper
         $this->pdfHelper->getApi()->setAutoBottomMargin = 'stretch';
     } 
     
-    public abstract static function createViaForm(User $user, string $langCode, Form $form): self;
+    public abstract static function createViaForm(User $user, Contracts $contract, string $langCode, Form $form): self;
     
-    public abstract static function createViaRequest(User $user, string $langCode, Request $request): self; 
+    public abstract static function createViaRequest(User $user, Contracts $contract, string $langCode, Request $request): self; 
     
     public abstract function renderHtmlRequest(): string;
     
     public abstract function renderPDF(): mixed;
 
-    public abstract function getData(bool $isReadOnly = false) :array ;  
+    public abstract function getData() :array ;  
     
     public abstract function getFormPrice() :int ; 
     
@@ -93,17 +94,7 @@ abstract class BaseFormHelper
             'dateOfContract' => $this->getContractDate(),
         ]);
     }
-        
-    protected function getContractNumber() :string
-    {
-        return $this->request->contract ? $this->request->contract->number : '';
-    }
-    
-    protected function getContractDate() :string
-    {
-        return $this->request->contract ? $this->request->contract->translateDateField('date') : '';
-    } 
-    
+           
     protected function getPdfFooter(): string
     {        
         return  Yii::$app->view->renderFile('@pdf/request-footer.php',[
