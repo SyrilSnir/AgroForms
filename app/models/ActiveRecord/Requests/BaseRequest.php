@@ -46,6 +46,8 @@ abstract class BaseRequest extends ActiveRecord
      */
     const STATUS_INVOICED = 7; 
     const STATUS_ACCEPTED = 8; // Принята
+    const STATUS_PUBLICATED = 9; // Опубликовано на сайте
+    const STATUS_NOT_PUBLICATED = 10; // Снято с публикации на сайте
     
     const TYPE_STAND = 1; // Заказ стенда
     const TYPE_APPLICATION = 2; // Заявки

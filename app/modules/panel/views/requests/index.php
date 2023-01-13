@@ -74,7 +74,7 @@ $columnsConfig = [
                         'value' => function (Request $model) {
                             return RequestStatusHelper::getStatusLabel($model->status);
                         }
-                    ],
+                    ],                  
                     [
                     'attribute' => 'price',
                       'label' => Yii::t('app','Price'),
@@ -235,7 +235,6 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
  <?= GridView::widget($fullGridConfig); ?>
         </div>
 </div>
-
 <?php
  Modal::begin([
      'title' => '<h3>' . t('Will be soon') .'...</h3>',
@@ -244,3 +243,4 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
      ],
  ]);
 Modal::end();
+//\kartik\grid\DataColumn::class;

@@ -128,6 +128,7 @@ class RequestsController extends ManageController
         }
         return $this->render('edit', [
             'model' => $editRequestForm,
+            'hasPublication' => $model->form->published
         ]);           
     }
            

@@ -10,6 +10,7 @@ use yii\widgets\ActiveForm;
 /** @var View $this */
 /** @var ActiveForm $form */
 /** @var EditRequestForm $model */
+/** @var boolean $hasPublication */
 $this->title = Yii::t('app/requests', 'Change status');
 ?>
 
@@ -21,7 +22,7 @@ $this->title = Yii::t('app/requests', 'Change status');
                     <div class="row">
                         <div class="col-md-6">                           
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'status')->dropDownList(RequestStatusHelper::statusList(false)) ?>
+    <?= $form->field($model, 'status')->dropDownList(RequestStatusHelper::statusList(false, $hasPublication)) ?>
     <?= $form->field($model, 'contractId')->widget(Select2::class,[
         'data' => $model->contractsList(),
         'options' => ['placeholder' => t('Select contract number...', 'contracts')],

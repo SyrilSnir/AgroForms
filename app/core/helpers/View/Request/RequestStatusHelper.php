@@ -50,7 +50,7 @@ class RequestStatusHelper extends StatusHelper
         ]);        
     }
 
-    public static function statusList(bool $isMember = true): array
+    public static function statusList(bool $isMember = true, bool $hasPublicate = true): array
     {
         $statusList[BaseRequest::STATUS_NEW] = t('New','requests');
         if ($isMember) {
@@ -62,7 +62,10 @@ class RequestStatusHelper extends StatusHelper
         $statusList[BaseRequest::STATUS_CHANGED] = t('Changed','requests');
         $statusList[BaseRequest::STATUS_REJECTED] = t('Rejected','requests');
         $statusList[BaseRequest::STATUS_ACCEPTED] = t('Accepted','requests');
-        
+        if ($hasPublicate) {
+            $statusList[BaseRequest::STATUS_PUBLICATED] = t('Published on the site','requests');
+            $statusList[BaseRequest::STATUS_NOT_PUBLICATED] = t('Removed from the site','requests');
+        }
         return $statusList;
     }
 

@@ -33,6 +33,7 @@ use yii\db\ActiveQuery;
  * @property int $company_id Id компании
  * 
  * @property bool $was_rejected Была отклонена
+ * @property bool $published Опубликовать на сайте
  * 
  * @property FormType $formType
  * @property Form $form

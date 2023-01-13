@@ -51,6 +51,8 @@ return [
    'm' => 'м',
    'Additional symbols' => 'Дополнительные символы',
    'Payment is made in Russian rubles at the exchange rate of the Central Bank of the Russian Federation on the date of payment' => 
-   'Оплата производится в российских рублях по курсу ЦБ РФ на дату платежа',   
+   'Оплата производится в российских рублях по курсу ЦБ РФ на дату платежа',  
+   'Published on the site' => 'Опубликована на сайте',
+   'Removed from the site' => 'Снята с публикации на сайте',
 ];
 
