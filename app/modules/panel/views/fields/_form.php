@@ -1,6 +1,7 @@
 <?php
 
 use app\models\ActiveRecord\Forms\ElementType;
+use app\models\ActiveRecord\Forms\Form;
 use app\models\Forms\Manage\Forms\FieldForm;
 use kartik\grid\GridView;
 use kartik\select2\Select2;
@@ -20,6 +21,13 @@ use function GuzzleHttp\json_encode;
 /** @var FieldForm $model */
 /** @var int|null $formId */
 /** @var bool $isNew */
+
+$availablePublish = false;
+if ($model->formId) {
+    /** @var Form $form */
+    $form = Form::findOne($model->formId);
+    $availablePublish = $form->published;
+}
 
 if (!$isNew) {
 $columnsConfig = [
@@ -117,7 +125,16 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                         'offText' => Yii::t('app', 'No'),
                     ]
             ]) 
-        ?>                            
+        ?> 
+    <?php if($availablePublish): ?>
+        <?= $form->field($model, 'published')->widget(SwitchInput::class,[
+                'pluginOptions' => [
+                        'onText' => Yii::t('app', 'Yes'),
+                        'offText' => Yii::t('app', 'No'),
+                    ]
+            ]) 
+        ?>  
+    <?php endif; ?>
     <?php // $form->field($model, 'order')->textInput() ?>
                            
     <?php echo $form->field($model, 'fieldGroupId')->dropDownList($model->fieldGroupsList()) ?>

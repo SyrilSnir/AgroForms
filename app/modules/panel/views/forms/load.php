@@ -17,6 +17,7 @@ if ($readOnly) {
 $widgetConfig = [
             'user' => $user,
             'formId' => $form->id,
+            'contractId' => 0,
             'readOnly' => $readOnly
         ];
 

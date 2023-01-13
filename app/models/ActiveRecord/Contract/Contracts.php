@@ -57,6 +57,15 @@ class Contracts extends ActiveRecord
         $contract->date =  DateTime::createFromFormat('d.m.Y', $form->date)->getTimestamp();
         return $contract;
     }
+    
+    public static function createDummy(): self
+    {
+        $contract = new self();
+        $contract->number = '0000';
+        return $contract;
+    //    $contract->exhibition_id = $exhibitionId;
+        
+    }
 
     /**
      * 

@@ -363,9 +363,9 @@ class FormHelper extends BaseFormHelper
             'title' => $this->form->headerName,
             'formType' => $this->form->form_type_id,
             'formId' => $this->form->id,
-            'standNumber' => $this->contract->standNumber->number,
+            'standNumber' => $this->contract->standNumber ? $this->contract->standNumber->number : '',
             'standSquare' => $this->contract->stand_square,
-            'hall' => $this->contract->hall->name,
+            'hall' => $this->contract->hall ? $this->contract->hall->name : '',
             'isFileUpload' => $this->form->has_file,
             'attachedFile' => $this->getUploadedFileUrl(),
           //  'companyId' =>// $this->

@@ -11,6 +11,7 @@ use app\core\services\operations\Requests\ApplicationService;
 use app\core\services\operations\Requests\AttachedFilesService;
 use app\core\services\operations\View\Requests\ApplicationViewService;
 use app\core\traits\InfoMessageTrait;
+use app\models\ActiveRecord\Contract\Contracts;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\AttachedFilesForm;
@@ -96,13 +97,17 @@ class ApplicationController extends FormController
         
     }
     
-    public function actionGetForm($contractId)
+    public function actionGetForm($contractId = 0)
     {
         /** @var Form $form */
         /** @var Request $request */
         /** @var UserIdentity $userIdentity */
         $formId = Yii::$app->session->get('OPENED_FORM_ID');
-        $contract = \app\models\ActiveRecord\Contract\Contracts::findOne($contractId);
+        if (empty($contractId)) {
+            $contract = Contracts::createDummy();
+        } else {
+            $contract = Contracts::findOne($contractId);
+        }
         $langCode = Yii::$app->language;
         if (!$formId) {
             throw new DomainException(t('The requested form was not found on the server', 'exception'));
