@@ -72,7 +72,9 @@ class RequestQuery extends ActiveQuery
                                         BaseRequest::STATUS_ACCEPTED,
                                         BaseRequest::STATUS_INVOICED,
                                         BaseRequest::STATUS_PAID,
-                                        BaseRequest::STATUS_PARTIAL_PAID,                                   
+                                        BaseRequest::STATUS_PARTIAL_PAID, 
+                                        BaseRequest::STATUS_PUBLICATED,
+                                        BaseRequest::STATUS_NOT_PUBLICATED
                                     ] 
                                 ]);        
     }

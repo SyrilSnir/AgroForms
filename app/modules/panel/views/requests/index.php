@@ -99,9 +99,42 @@ $columnsConfig = [
                         
 ($isAcceptDeclineShowed ?               '<span class="action__wrapper">{accept}</span>
                                        <span class="action__wrapper">{reject}</span>' : '') .
-                        
+                                       '<span class="action__wrapper">{publicate}{withdraw}</span>' .
                                        '<span class="action__wrapper">{pdf}</span>',
                         'buttons' => [
+                            'withdraw' => function ($url, $model, $key) {
+                                    /** @var Request $model */
+                                if ($model->form->published && $model->status == BaseRequest::STATUS_PUBLICATED) {
+                                    $title = t('Remove from site','requests');
+                                    $iconName = "fa-times";
+                                    $url = Url::current(['withdraw', 'id' => $key]);
+                                    $options = [
+                                        'title' => $title,
+                                        'aria-label' => $title,
+                                    ];                                  
+                                    $icon = Html::tag('span', '', ['class' => "fa $iconName"]);
+                                    return Html::a($icon, $url,$options);                            
+                                }
+                                return false;
+                            },
+                            'publicate' => function ($url, $model, $key) {
+                                    /** @var Request $model */
+                                if ($model->form->published && in_array($model->status, [
+                                    BaseRequest::STATUS_PAID,
+                                    BaseRequest::STATUS_NOT_PUBLICATED,
+                                ])) {                                
+                                    $title = t('Publish on site','requests');
+                                    $iconName = "fa-internet-explorer";
+                                    $url = Url::current(['publish', 'id' => $key]);
+                                    $options = [
+                                        'title' => $title,
+                                        'aria-label' => $title,
+                                    ];                                  
+                                    $icon = Html::tag('span', '', ['class' => "fa $iconName"]);
+                                    return Html::a($icon, $url,$options); 
+                                }
+                                return false;
+                            },
                             'accept' => function ($url, $model, $key) {
                                     /** @var Request $model */
                                 $title = t('Accept application','requests');
@@ -113,7 +146,7 @@ $columnsConfig = [
                                 ];                                  
                                 $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
                                 return Html::a($icon, $url,$options);                            
-                            },
+                            },                                    
                               'reject' => function ($url, $model, $key) {
                                     /** @var Request $model */
                                 $title = t('Reject application','requests');

@@ -140,6 +140,30 @@ class RequestService
         $request->parialPaid();
         $request->save();
     } 
+    
+    /**
+     * Публикация на сайте
+     * @param int $id Идентификатор заявки
+     */
+    public function publish(int $id) 
+    {
+        /** @var Request $request */
+        $request = $this->requests->get($id);
+        $request->publish();
+        $request->save();        
+    }
+
+    /**
+     * Снять с публикации на сайте
+     * @param int $id Идентификатор заявки
+     */    
+    public function withdraw(int $id) 
+    {
+        /** @var Request $request */
+        $request = $this->requests->get($id);
+        $request->withdraw();
+        $request->save();        
+    }
 
     public function changeStatus(EditRequestForm $form)
     {

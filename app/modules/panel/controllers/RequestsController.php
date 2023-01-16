@@ -209,4 +209,24 @@ class RequestsController extends ManageController
         }        
         return $this->redirect(Url::previous());        
     }  
+    
+    public function actionPublish($id)
+    {
+        try {
+            $this->service->publish($id);
+        } catch (DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }        
+        return $this->redirect(Url::previous());        
+    }    
+    
+    public function actionWithdraw($id)
+    {
+        try {
+            $this->service->withdraw($id);
+        } catch (DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }        
+        return $this->redirect(Url::previous());        
+    }    
 }

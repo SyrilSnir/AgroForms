@@ -33,7 +33,6 @@ use yii\db\ActiveQuery;
  * @property int $company_id Id компании
  * 
  * @property bool $was_rejected Была отклонена
- * @property bool $published Опубликовать на сайте
  * 
  * @property FormType $formType
  * @property Form $form
@@ -283,6 +282,22 @@ class Request extends FormManipulation
         $this->status = BaseRequest::STATUS_PAID;
     }
     
+    /**
+     * Публикация на сайте
+     */
+    public function publish()
+    {
+        $this->status = BaseRequest::STATUS_PUBLICATED;
+    }
+
+    /**
+     * Отмена публикации
+     */
+    public function withdraw()
+    {
+        $this->status = BaseRequest::STATUS_NOT_PUBLICATED;
+    }
+
     /**
      * Частичная оплата
      */
