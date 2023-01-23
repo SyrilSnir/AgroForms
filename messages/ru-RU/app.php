@@ -196,6 +196,9 @@ return [
     'Logo for the website' => 'Логотип на сайт',
     'Logo to catalog' => 'Логотип в каталог',
     'Valid file types' => 'Допустимые типы файлов',
-    'Parent section' => 'Родительский раздел'
+    'Parent section' => 'Родительский раздел',
+    'Number of free' => 'Количество бесплатных',
+    'Price per one' => 'Цена за ед.',
+    'm2 per badge (free)' => 'm2 на бейдж (бесплатные)'
 ];
 

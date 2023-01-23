@@ -4,7 +4,9 @@ export default class FieldParams {
         const fieldsConfig = $('#fields-config');
         this.$elementTypeSelector = $('#element-type-selector'); 
         this.attachmentType = fieldsConfig.data('attachment');
-        this.$enumWrapper = $('#attribute-enums-wrapper');        
+        this.$enumWrapper = $('#attribute-enums-wrapper');    
+        this.$freeCounterBlock = $('#free-counter__block');
+        this.$badgeBlock = $('#badge__block');
         this.$elementTypeSelector.on('change',this.elementTypeSelectorChangeHandler.bind(this));       
         this.textType = fieldsConfig.data('text');
         this.htmlType = fieldsConfig.data('html');
@@ -15,6 +17,8 @@ export default class FieldParams {
         this.equipment = fieldsConfig.data('equipment');
         this.frieze = fieldsConfig.data('frieze');
         this.group = fieldsConfig.data('group');
+        this.freeCounter = fieldsConfig.data('free_counter');
+        this.badge = fieldsConfig.data('badge');
         this.$htmlParamsBlock = $('#html-params');
         this.$numberParamsBlock = $('#number-params');
         this.$requiredBlock = $('#required-block');
@@ -27,7 +31,6 @@ export default class FieldParams {
     }
     elementTypeSelectorChangeHandler(e) {
         const value = parseInt(e.target.value);
-        console.log(value,this.textType,this.htmlType,this.computedType);
 
         if(this.enumValues.indexOf(value) !== -1) {
             this.$enumWrapper.removeClass('hide');
@@ -36,6 +39,9 @@ export default class FieldParams {
             this.$enumWrapper.addClass('hide');
             $('#unit-price__container').show();
         }
+        (this.freeCounter.indexOf(value) !== -1) ?
+            this.freeCountBlockShow(true) :
+            this.freeCountBlockShow(false);
         (this.textType.indexOf(value) !== -1) ?
             this.textParamsShow(true) :
             this.textParamsShow(false);
@@ -60,9 +66,17 @@ export default class FieldParams {
         (this.frieze == value) ?
             this.friezeParamShow(true):
             this.friezeParamShow(false);
+        (this.badge == value) ?
+            this.badgeParamShow(true):
+            this.badgeParamShow(false);
         (this.group == value) ?
             this.groupParamShow(true):
             this.groupParamShow(false);
+    }
+    freeCountBlockShow(isShow) {
+        isShow ?
+            this.$freeCounterBlock.removeClass('hide'):
+            this.$freeCounterBlock.addClass('hide');
     }
     computedParamsShow( isShow ) {
         isShow ? 
@@ -103,6 +117,11 @@ export default class FieldParams {
         isShow ? 
             this.$friezeBlock.removeClass('hide') :
             this.$friezeBlock.addClass('hide');
+    }    
+    badgeParamShow( isShow ) {
+        isShow ? 
+            this.$badgeBlock.removeClass('hide') :
+            this.$badgeBlock.addClass('hide');
     }    
     groupParamShow( isShow ) {
         isShow ? 

@@ -11,7 +11,6 @@ use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Application;
 use app\models\ActiveRecord\Requests\Request;
-use app\models\Forms\Requests\AttachedFilesForm;
 use app\models\Forms\Requests\DynamicForm;
 use Yii;
 use function GuzzleHttp\json_encode;
@@ -98,7 +97,7 @@ class ApplicationService
     public function edit(Request $request, DynamicForm $form, string $langCode)
     {
         /** @var Application $application */
-        $formHelper = FormHelper::createViaRequest($request->user, $langCode, $request);
+        $formHelper = FormHelper::createViaRequest($request->user,$request->contract, $langCode, $request);
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
         $serializedFields = json_encode($fields);    
     //    $total = $this->fieldService->calculateTotal($fields,$form->basePrice);
@@ -123,8 +122,8 @@ class ApplicationService
     }
     
     protected function setApplicationTotal(Request $request, Application $application): Application
-    {
-        $formHelper = FormHelper::createViaRequest(Yii::$app->user->getIdentity()->getUser(), Yii::$app->language, $request);
+    {        
+        $formHelper = FormHelper::createViaRequest(Yii::$app->user->getIdentity()->getUser(),$request->contract, Yii::$app->language, $request);
         $total = $formHelper->getFormPrice();
         if ($total > 0) {
             $application->amount = $total;

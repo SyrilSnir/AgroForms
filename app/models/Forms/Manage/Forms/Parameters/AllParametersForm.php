@@ -33,13 +33,29 @@ class AllParametersForm extends BaseParametersForm
     //
     public $digitPrice;
     public $freeDigitCount; 
+    
     /**
      * 
      * @var int
      */
-    public $groupType;
+    public $freeCount;
+    /**
+     * 
+     * @var int
+     */
+    public $metersPerOne;
     
+    /**
+     * 
+     * @var int
+     */    
     public $unitPrice;    
+    
+    /**
+     * 
+     * @var int
+     */
+    public $groupType;    
     
     public function __construct(Field $field = null, $config = [])
     {
@@ -50,6 +66,8 @@ class AllParametersForm extends BaseParametersForm
         $this->specialPriceType = $this->paramsArray['specialPriceType'] ?? 0;
         $this->required = $this->paramsArray['required'] ?? false; 
         $this->freeDigitCount = $this->paramsArray['freeDigitCount'] ?? 0;
+        $this->freeCount = $this->paramsArray['freeCount'] ?? 0;
+        $this->metersPerOne = $this->paramsArray['metersPerOne'] ?? 0;
         $this->digitPrice = $this->paramsArray['digitPrice'] ?? 0;  
         $this->groupType = $this->paramsArray['groupType'] ?? self::STANDART_GROUP_TYPE;  
         $this->html = $this->paramsArray['html'] ?? ''; 
@@ -67,7 +85,7 @@ class AllParametersForm extends BaseParametersForm
         return [
                 [['required','isComputed','allCategories'], 'boolean'],
                 [['text','textEng','htmlEng','html'], 'safe'],
-                [['unit','unitPrice','specialPriceType','digitPrice', 'freeDigitCount','groupType','attachment'], 'integer'],
+                [['unit','unitPrice','specialPriceType','digitPrice', 'freeDigitCount','groupType','attachment','freeCount','metersPerOne'], 'integer'],
                 ['categories','each', 'rule' => ['integer']],            
             ];
     }         
@@ -89,7 +107,9 @@ class AllParametersForm extends BaseParametersForm
             'freeDigitCount' => Yii::t('app','The number of free characters in the frieze inscription'),
             'digitPrice' => Yii::t('app','The cost of the frieze lettering symbol'),
             'groupType' => t('Group type'),
-            'attachment' => t('Valid file types')
+            'attachment' => t('Valid file types'),
+            'freeCount' => Yii::t('app','Number of free'),   
+            'metersPerOne' => Yii::t('app','m2 per badge (free)'),            
         ];
     }
 

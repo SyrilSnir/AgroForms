@@ -212,5 +212,31 @@ class User extends ActiveRecord
     public function unblock() 
     {
         $this->active = static::STATUS_ACTIVE;
-    }    
+    }
+
+    public function getName(): string 
+    {
+        $nameArray = explode(' ', $this->fio);
+        $cnt = count($nameArray);
+        if (empty($cnt)) {
+            return '';
+        }
+        return ($cnt == 1) ? $nameArray[0] : $nameArray[1];
+    }
+    
+    public function getMiddleName(): string 
+    {
+        $nameArray = explode(' ', $this->fio);        
+        return count($nameArray) <= 2 ? '' : $nameArray[2];
+    }
+    
+    public function getSurName(): string 
+    {
+        $nameArray = explode(' ', $this->fio);        
+        if (count($nameArray) <= 1) {
+            return '';
+        }
+        return $nameArray[0];
+
+    }
 }

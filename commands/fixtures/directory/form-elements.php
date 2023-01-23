@@ -22,7 +22,7 @@ return [
     ['id' => ElementType::ELEMENT_PERIOD, 'name' => 'Выбор периода'],
     ['id' => ElementType::ELEMENT_FILE, 'name' => 'Файловое вложение'],
     ['id' => ElementType::ELEMENT_IFORMATION_FORM, 'name' => 'Блок (сайт, e-mail, телефон)'],
-    ['id' => ElementType::ELEMENT_BADGE, 'name' => 'Файловое вложение'],
-    ['id' => ElementType::ELEMENT_RUBRICATOR, 'name' => 'Файловое вложение'],
+    ['id' => ElementType::ELEMENT_BADGE, 'name' => 'Бейдж участника'],
+    ['id' => ElementType::ELEMENT_RUBRICATOR, 'name' => 'Рубрикатор'],
     ['id' => ElementType::ELEMENT_ADDRESS_BLOCK, 'name' => 'Адресный блок'],
 ];

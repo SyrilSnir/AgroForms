@@ -223,7 +223,6 @@ class Field extends ActiveRecord
                 ->all();
     }
 
-
     public static function find(): FieldQuery
     {
         return new FieldQuery(static::class);

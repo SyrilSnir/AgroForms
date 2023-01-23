@@ -79,7 +79,9 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         data-equipment="<?php echo json_encode(ElementType::ELEMET_ADDITIONAL_EQUIPMENT)?>"
         data-group="<?php echo json_encode(ElementType::ELEMENT_GROUP)?>"
         data-frieze="<?php echo json_encode(ElementType::ELEMENT_FRIEZE) ?>"
+        data-badge="<?php echo json_encode(ElementType::ELEMENT_BADGE) ?>"
         data-datetime="<?php echo json_encode(ElementType::ELEMENT_DATE_TIME) ?>"
+        data-free_counter="<?php echo json_encode(ElementType::HAS_FREE_COUNTER) ?>"
         >
         <div class="container-fluid">
             <div class="card card-default">
@@ -133,7 +135,10 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                         'offText' => Yii::t('app', 'No'),
                     ]
             ]) 
-        ?>  
+        ?>
+                            
+    <?php else: ?>
+        <?= $form->field($model, 'published')->hiddenInput(['value' => 0])->label(false) ?>
     <?php endif; ?>
     <?php // $form->field($model, 'order')->textInput() ?>
                            
@@ -178,6 +183,12 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
             <div id="computed-params__container"<?php if(!$model->parameters->isComputed): ?> class="hide"<?php endif ?>>
                 <div id="unit-price__container"<?php if ($model->hasEnums ):?> style="display: none;"<?php endif; ?>>
                     <?= $form->field($model->parameters, 'unitPrice')->textInput() ?>
+                    <div id="free-counter__block"<?php if (!in_array($model->elementTypeId, ElementType::HAS_FREE_COUNTER)):?> class="hide"<?php endif; ?>>
+                        <?php echo $form->field($model->parameters, 'freeCount')->textInput(); ?>
+                    </div>
+                    <div id="badge__block"<?php if ($model->elementTypeId != ElementType::ELEMENT_BADGE):?> class="hide"<?php endif; ?>>
+                        <?php echo $form->field($model->parameters, 'metersPerOne')->textInput(); ?>
+                    </div>                    
                 </div>
                 <?php if (!$isNew): ?>
                 <div class="special-price-params__container">
@@ -270,14 +281,14 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
             <?php elseif ($model->parameters->isComputed): ?>
                 <div class="special-price-params__container">
                     <h5><?php echo t('Special price rules')?> </h5>
-                <section class="content">
-                    <div class="card">
-                        <div class="card-body">
+                    <section class="content">
+                        <div class="card">
+                            <div class="card-body">
                                 <?= $form->field($model->parameters, 'specialPriceType')->dropDownList($model->parameters->getSpecialPriceTypes()) ?> 
                                 <?= GridView::widget($fullGridConfig); ?>
+                            </div>
                         </div>
-                    </div>
-                </section>                
+                    </section>                
                 </div>
                 <?php endif ;?>                            
                             

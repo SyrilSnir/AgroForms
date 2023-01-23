@@ -17,10 +17,14 @@ abstract class ComputedField extends FillableField
     
     public $specialPriceType;   
     
+    public $unitPrice;
+
+
     public function __construct(Field $field = null, $config = [])
     {
         parent::__construct($field, $config);
         $this->isComputed = $this->paramsArray['isComputed'] ?? false;        
+        $this->unitPrice = $this->paramsArray['unitPrice'] ?? 0;        
         $this->specialPriceType = $this->paramsArray['specialPriceType'] ?? 0;        
     }
 
@@ -29,7 +33,7 @@ abstract class ComputedField extends FillableField
     {
         $rules = [
              [['isComputed'], 'boolean'],
-            [['specialPriceType'],'integer'],
+            [['specialPriceType','unitPrice'],'integer'],
         ];
         return ArrayHelper::merge($rules, parent::rules());
     }
@@ -38,6 +42,7 @@ abstract class ComputedField extends FillableField
     {
         $attributeLabels = [
             'isComputed' => Yii::t('app','Calculated field'),
+            'unitPrice' => Yii::t('app','Price per one'),            
         ];
         return ArrayHelper::merge($attributeLabels, parent::attributeLabels());
     }
@@ -50,6 +55,12 @@ abstract class ComputedField extends FillableField
                 'value' => $this->isComputed ? t('Yes'): t('No')          
             ],            
         ];
+        if ($this->isComputed) {
+            $attributes['unitPrice'] = [
+                'attribute' => 'unitPrice',
+                'value' => $this->unitPrice
+            ];
+        }
         return ArrayHelper::merge($attributes, parent::getViewParameters());
     }    
 }

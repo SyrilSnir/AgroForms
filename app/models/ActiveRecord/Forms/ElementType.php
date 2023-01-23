@@ -36,7 +36,7 @@ class ElementType extends ActiveRecord
     const ELEMENT_IFORMATION_FORM = 20; // Сайт email телефон
     const ELEMENT_RUBRICATOR = 21; // Рубрикатор
     const ELEMENT_BADGE = 22; // Бейдж
-    const ELEMENT_ADDRESS_BLOCK = 22; // Адресный блок
+    const ELEMENT_ADDRESS_BLOCK = 23; // Адресный блок
     
     const DEFAULT_ELEMENT_TYPE = self::ELEMENT_CHECKBOX;
     
@@ -52,7 +52,10 @@ class ElementType extends ActiveRecord
         self::ELEMENT_RADIO_BUTTON,
         self::ELEMET_ADDITIONAL_EQUIPMENT
     ];
-    
+    const HAS_FREE_COUNTER = [
+        self::ELEMENT_ADDRESS_BLOCK,
+        self::ELEMENT_IFORMATION_FORM,
+    ];
     const HAS_ATTACHMENT = [
         self::ELEMENT_FILE,
         self::ELEMENT_FILE_MULTIPLE
@@ -88,6 +91,9 @@ class ElementType extends ActiveRecord
         self::ELEMENT_SELECT_MULTIPLE,
         self::ELEMENT_RADIO_BUTTON,
         self::ELEMET_ADDITIONAL_EQUIPMENT,
+        self::ELEMENT_BADGE,
+        self::ELEMENT_ADDRESS_BLOCK,
+        self::ELEMENT_IFORMATION_FORM
     ];
     
     /**

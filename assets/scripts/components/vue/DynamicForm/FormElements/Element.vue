@@ -22,6 +22,9 @@ import DateBlock from './Units/DateBlock';
 import DateMultipleBlock from './Units/DateMultipleBlock';
 import ImportantInformationBlock from './Units/ImportantInformation';
 import FileBlock from './Units/FileBlock';
+import AddressBlock from './Units/AddressBlock';
+import BadgeBlock from './Units/BadgeBlock';
+import InformationForm from './Units/InformationForm';
 export default {
     props: [
         'unitData','lang','dic'
@@ -44,6 +47,9 @@ export default {
         'date-time': DateTimeBlock,
         'date': DateBlock,
         'file': FileBlock,
+        'address-block': AddressBlock,
+        'badge': BadgeBlock,
+        'information-form': InformationForm,
         'undefined': UndefinedBlock
     },    
     data() {
@@ -66,6 +72,9 @@ export default {
                 blockGroup: 16,
                 blockFrieze: 17,
                 blockDateTime: 18,
+                blockInformationForm: 20,
+                blockBadge: 22,
+                blockAddress: 23,
             }
         }
     },
@@ -111,6 +120,12 @@ export default {
                     return 'group';
                 case this.typesList.blockFile:
                     return 'file';
+                case this.typesList.blockAddress:
+                    return 'address-block';
+                case this.typesList.blockInformationForm:
+                    return 'information-form';
+                case this.typesList.blockBadge:
+                    return 'badge';
                 default:
                     return 'undefined';
             }

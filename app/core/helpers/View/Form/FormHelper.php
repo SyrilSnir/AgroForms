@@ -4,6 +4,8 @@ namespace app\core\helpers\View\Form;
 
 use app\core\helpers\View\Form\FormElements\CountableElementInterface;
 use app\core\helpers\View\Form\FormElements\ElementAdditionEquipmentBlock;
+use app\core\helpers\View\Form\FormElements\ElementAddressBlock;
+use app\core\helpers\View\Form\FormElements\ElementBadge;
 use app\core\helpers\View\Form\FormElements\ElementCheckbox;
 use app\core\helpers\View\Form\FormElements\ElementCheckNumberInput;
 use app\core\helpers\View\Form\FormElements\ElementDate;
@@ -15,6 +17,7 @@ use app\core\helpers\View\Form\FormElements\ElementGroup;
 use app\core\helpers\View\Form\FormElements\ElementHeader;
 use app\core\helpers\View\Form\FormElements\ElementImportantInformationBlock;
 use app\core\helpers\View\Form\FormElements\ElementInformationBlock;
+use app\core\helpers\View\Form\FormElements\ElementInformationForm;
 use app\core\helpers\View\Form\FormElements\ElementNumberInput;
 use app\core\helpers\View\Form\FormElements\ElementRadio;
 use app\core\helpers\View\Form\FormElements\ElementSelect;
@@ -89,7 +92,7 @@ class FormHelper extends BaseFormHelper
         return $instance;
     }        
     
-    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN, int $date = null,int $requestId = null) : ?FormElementInterface
+    public static function getElement(Field $field, string $langCode = Languages::RUSSIAN, int $date = null,int $requestId = null,Contracts $contract = null) : ?FormElementInterface
     {
         /** @var FormElement|null $formElement */
         /** @var PriceModificator $priceModificator */
@@ -146,6 +149,19 @@ class FormHelper extends BaseFormHelper
             case ElementType::ELEMENT_FILE:
                 $formElement = new ElementFileInput($field,null,$langCode);
                 break;
+            case ElementType::ELEMENT_ADDRESS_BLOCK:
+                $formElement = new ElementAddressBlock($field,null,$langCode);
+                break;
+            case ElementType::ELEMENT_IFORMATION_FORM:
+                $formElement = new ElementInformationForm($field,null,$langCode);
+                break;
+            case ElementType::ELEMENT_BADGE:
+                $formElement = new ElementBadge($field, null, $langCode);
+                if (!empty($contract)) {
+                    $formElement->setContract($contract);
+                }
+                break;
+            
             default: 
                 $formElement = new ElementUnknown($field, null, $langCode);
                 break;
@@ -193,7 +209,7 @@ class FormHelper extends BaseFormHelper
         $this->formElements = [];
         if ($this->form) {
             foreach ($this->form->rootFormFields as $field) {
-                $formElement = self::getElement($field, $this->langCode, $date, $requestId);
+                $formElement = self::getElement($field, $this->langCode, $date, $requestId, $this->contract);
                 if ($formElement) {
                     array_push($this->formElements,$formElement);
                 }
