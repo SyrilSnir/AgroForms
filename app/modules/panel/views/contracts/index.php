@@ -4,7 +4,7 @@ use app\core\helpers\Utils\DateHelper;
 use app\core\helpers\View\Contract\ContractStatusHelper;
 use app\models\ActiveRecord\Contract\Contracts;
 use app\models\ActiveRecord\Exhibition\Exhibition;
-use app\models\SearchModels\Exhibition\ExhibitionSearch;
+use app\models\SearchModels\Contracts\ContractSearch;
 use kartik\grid\GridView;
 use kotchuprik\sortable\grid\Column;
 use yii\data\ActiveDataProvider;
@@ -14,7 +14,7 @@ use yii\helpers\Url;
 use yii\web\View;
 
 /* @var $this View */
-/* @var $searchModel ExhibitionSearch */
+/* @var $searchModel ContractSearch */
 /* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app/title','Contracts list');
@@ -50,6 +50,7 @@ $columnsConfig = [
                             'width' => '200px',
                             'filterWidgetOptions' => [
                                 'options' => ['placeholder' => ''],
+                                'pluginOptions' => ['allowClear' => true],                                
                             ]
                         ],
                         [
@@ -58,7 +59,34 @@ $columnsConfig = [
                             'format' => 'raw',
                             'filter' => $searchModel->getExhibitionsList(),
                             'value' => function (Contracts $model) { return $model->exhibition ? $model->exhibition->title: '' ;}
-                        ],                         
+                        ], 
+                        [
+                            'attribute' => 'hall_id',
+                            'label' => t('Hall'),
+                            'format' => 'text',
+                            'filter' => $searchModel->hallsList(),
+                            'filterType' => GridView::FILTER_SELECT2,                            
+                            'value' => 'hall.name',
+                            'width' => '100px',
+                            'filterWidgetOptions' => [
+                                'options' => ['placeholder' => ''],
+                                'pluginOptions' => ['allowClear' => true],                                
+                            ]                            
+                        ],
+                        [
+                            'attribute' => 'stand_number_id',
+                            'label' => t('Stand`s number'),
+                            'format' => 'text',
+                            'filter' => $searchModel->standNumbersList(),
+                            'filterType' => GridView::FILTER_SELECT2,                            
+                            'value' => 'standNumber.number',
+                            'width' => '150px',
+                            'filterWidgetOptions' => [
+                                'options' => ['placeholder' => ''],
+                                'pluginOptions' => ['allowClear' => true],                                
+                            ]                            
+                        ],                                
+                        'stand_square:text:'. t('Stand`s square, m2'),
                         [
                             'label' => Yii::t('app','Date'),
                             'attribute' => 'date',
