@@ -58,7 +58,23 @@ return [
         ],
         'gridview' =>  [
            'class' => Module::class
-        ]
+        ],
+        'treemanager' =>  [
+             'class' => \kartik\tree\Module::class,
+             // other module settings, refer detailed documentation
+            'treeStructure' => [
+                'treeAttribute' => 'root',
+                'leftAttribute' => 'lft',
+                'rightAttribute' => 'rgt',
+                'depthAttribute' => 'depth',
+            ],
+            'dataStructure' => [
+                'keyAttribute' => 'id',
+                'nameAttribute' => 'name',
+                'iconAttribute' => 'icon',
+                'iconTypeAttribute' => 'icon_type'                
+            ]
+         ],        
     ],    
     'components' => [
         'i18n' => [

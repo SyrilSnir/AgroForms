@@ -42,10 +42,9 @@ use yiidreamteam\upload\ImageUploadBehavior;
  * @property LegalAddress $legalAddress
  * @property PostalAddress $postalAddress
  * 
- * --------- Методы из поведения ImageUploadBehavior ------------
  * @method string getThumbFilePath(string $attribute, string $profile = 'thimb') Вернуть путь к превьюшке
  * @method string getThumbFileUrl(string $attribute,string $profile = 'thumb',string $emptyUrl = null) - URL превьюшки
- * --------------------------------------------------------------
+ * @method void createThumbs() Создание превьюшки 
  * 
  */
 class Company extends ActiveRecord
@@ -122,7 +121,7 @@ class Company extends ActiveRecord
         $company->bankDetails = $bankDetails;
         $company->contacts = $contacts;
         $company->postalAddress = $postalAddress;
-        $company->legalAddress = $legalAddress;
+        $company->legalAddress = $legalAddress;        
         return $company;
     }
     /**

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93f5560cc98f193982ae969d056b7d1e",
+    "content-hash": "6d92ef6e1ee0d080dfedb495f4231674",
     "packages": [
         {
             "name": "2amigos/yii2-multi-select-widget",
@@ -151,6 +151,28 @@
                 "bower-asset/jquery": ">=1.11.0"
             },
             "type": "bower-asset"
+        },
+        {
+            "name": "bower-asset/fancytree",
+            "version": "v2.38.2",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:mar10/fancytree.git",
+                "reference": "594ee753b186f70577ad669daef4d2a32b99aef0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mar10/fancytree/zipball/594ee753b186f70577ad669daef4d2a32b99aef0",
+                "reference": "594ee753b186f70577ad669daef4d2a32b99aef0"
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.7",
+                "bower-asset/jquery-ui": ">=1.8.6"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "bower-asset/inputmask",
@@ -4432,6 +4454,112 @@
                 }
             ],
             "time": "2022-10-10T09:34:08+00:00"
+        },
+        {
+            "name": "wbraganca/yii2-fancytree-widget",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wbraganca/yii2-fancytree-widget.git",
+                "reference": "97fd3b72aacb067efce839076f8000d43dd06cae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wbraganca/yii2-fancytree-widget/zipball/97fd3b72aacb067efce839076f8000d43dd06cae",
+                "reference": "97fd3b72aacb067efce839076f8000d43dd06cae",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/fancytree": ">=2.12",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-jui": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "wbraganca\\fancytree\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Wanderson Bragança",
+                    "email": "wanderson.wbc@gmail.com"
+                }
+            ],
+            "description": "The yii2-fancytree widget is a Yii 2 wrapper for the [Fancytree](https://github.com/mar10/fancytree). A JavaScript dynamic tree view plugin for jQuery with support for persistence, keyboard, checkboxes, tables, drag'n'drop, and lazy loading",
+            "keywords": [
+                "fancytree",
+                "treeview",
+                "wbraganca",
+                "yii2",
+                "yii2-fancytree-widget"
+            ],
+            "support": {
+                "issues": "https://github.com/wbraganca/yii2-fancytree-widget/issues",
+                "source": "https://github.com/wbraganca/yii2-fancytree-widget",
+                "wiki": "https://github.com/wbraganca/yii2-fancytree-widget/wiki/"
+            },
+            "time": "2015-11-08T14:15:16+00:00"
+        },
+        {
+            "name": "wokster/yii2-nested-sets-tree-behavior",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wokster/yii2-nested-sets-tree-behavior.git",
+                "reference": "fd9e4d1f39986772a0fe384396be3230d70ec3c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wokster/yii2-nested-sets-tree-behavior/zipball/fd9e4d1f39986772a0fe384396be3230d70ec3c2",
+                "reference": "fd9e4d1f39986772a0fe384396be3230d70ec3c2",
+                "shasum": ""
+            },
+            "require": {
+                "creocoder/yii2-nested-sets": "^0.9.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "wokster\\treebehavior\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maksym Tymofeiev",
+                    "email": "wokster@list.ru"
+                }
+            ],
+            "description": "NestedSetsTreeBehavior for build array from creocoder nested sets behavior and fancytree widget",
+            "keywords": [
+                "Behavior",
+                "array",
+                "creocoder",
+                "extension",
+                "fancytree",
+                "nested sets",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/wokster/yii2-nested-sets-tree-behavior/issues",
+                "source": "https://github.com/wokster/yii2-nested-sets-tree-behavior/tree/1.0"
+            },
+            "time": "2017-07-27T17:03:14+00:00"
         },
         {
             "name": "yii-dream-team/yii2-upload-behavior",

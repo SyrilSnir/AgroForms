@@ -11,6 +11,9 @@ use yii\db\ActiveRecord;
  * @author kotov
  */
 trait CreatedTimestampTrait
+/**
+ * @method void touch(string $attribute) Обновить аттрибут до текущего времени
+ */
 {
     public function behaviors()
     {

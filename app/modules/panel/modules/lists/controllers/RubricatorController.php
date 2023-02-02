@@ -8,6 +8,8 @@ use app\core\traits\GridViewTrait;
 use app\models\Forms\Nomenclature\RubricatorForm;
 use app\models\SearchModels\Nomenclature\RubricatorSearch;
 use app\modules\panel\controllers\CrudController;
+use DomainException;
+use Yii;
 
 /**
  * Description of RubricatorController
@@ -30,5 +32,24 @@ class RubricatorController extends CrudController
     {
        parent::__construct($id, $module,$service,$repository,$form, $config);
         $this->searchModel = $searchModel;
-    } 
+    }
+    
+    public function actionUpdateAjax() 
+    {
+        $rubricatorId = Yii::$app->request->post('id');
+        if (empty($rubricatorId)) {
+            throw new DomainException('Не найден раздел рубрикатора');
+        }
+        $model = $this->findModel($rubricatorId);
+        $form = $this->form::createWithModel($model);
+        $this->prepareUpdate($form);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $this->service->edit($id, $form);
+            return $this->refresh();
+        }
+        return $this->renderAjax('form-ajax', [
+            'model' => $form,
+            'isUpdate' => !$model->isNewRecord
+        ]);         
+    }
 }

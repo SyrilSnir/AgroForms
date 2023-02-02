@@ -4,7 +4,9 @@ namespace app\models\ActiveRecord\Nomenclature;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\ActiveRecord\Nomenclature\Query\RubricatorQuery;
+use app\models\Forms\Nomenclature\RubricatorForm;
 use creocoder\nestedsets\NestedSetsBehavior;
+use wokster\treebehavior\NestedSetsTreeBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -32,8 +34,14 @@ use yii\db\ActiveRecord;
  * @method ActiveQuery prev() Вернуть предыдущего соседа
  * @method ActiveQuery next() Вернуть следующего соседа
  * @method boolean isRoot() Проверить, является ли корнем
- * @method boolean isLeaf() Проверить, является ли узлом
  * @method boolean isChildOf(ActiveRecord $node) Является ли дочерним для заданного узла
+ * @method boolean isLeaf() Проверить, является ли узлом
+ * @method void beforeInsert() Вызывается перед вставкой элемента
+ * @method void beforeUpdate() Вызывается перед обновлением элемента
+ * @method void afterInsert() Вызывается после вставки элемента
+ * @method void afterUpdate() Вызывается после обновлением элемента
+ * 
+ * @method array tree() Представление дерева в виде ассоциативного масссив
  */
 class Rubricator extends ActiveRecord
 {
@@ -64,16 +72,27 @@ class Rubricator extends ActiveRecord
         $model = new self();
         $model->name = $name;
         $model->nameEng = $nameEng;
-        $model->order = $order;
+        $model->order = $order;        
         return $model;
                 
-    }    
+    }  
     
+    public function edit(RubricatorForm $form): void
+    {
+        $this->name = $form->name;
+        $this->nameEng = $form->nameEng;
+        $this->order = $form->order;
+    }
+
+
     public function behaviors() {
         return [
             'tree' => [
                 'class' => NestedSetsBehavior::class,
             ],
+            'htmlTree' => [
+                'class' => NestedSetsTreeBehavior::class
+            ]
         ];
     }  
     

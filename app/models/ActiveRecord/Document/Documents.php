@@ -31,7 +31,8 @@ use yiidreamteam\upload\FileUploadBehavior;
  * 
  * @method string|null getUploadedFileUrl(string $attribute) Получить Url загруженного файла
  * @method string getUploadedFilePath(string $attribute) Получить путь к загруженному файлу
- * 
+ * @method void cleanFiles() Удалить связанные с аттрибутом файлы
+ * @method string resolvePath(string $path) Получить путь из шаблонной строки
  */
 class Documents extends ActiveRecord
 {
@@ -59,7 +60,7 @@ class Documents extends ActiveRecord
         $document->description = $description;
         $document->description_eng = $descriptionEng;
         $document->company_id = $companyId;
-        $document->exhibition_id = $exhibitionId;
+        $document->exhibition_id = $exhibitionId;       
         return $document;
     }    
     

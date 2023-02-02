@@ -41,7 +41,7 @@
            placeholder="">                        
        </div> 
    </div> 
-       <button @click="addFormBlock" class="btn btn-primary">Добавить еще:</button>     
+       <button @click="addFormBlock" class="btn btn-primary">Добавить еще</button>     
    </div> 
 </template>
  <script>
