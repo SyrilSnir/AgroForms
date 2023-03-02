@@ -2,11 +2,11 @@
 
 namespace app\models\ActiveRecord\Nomenclature;
 
+use app\core\behaviors\NestedSetsTreeBehavior;
 use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\ActiveRecord\Nomenclature\Query\RubricatorQuery;
 use app\models\Forms\Nomenclature\RubricatorForm;
 use creocoder\nestedsets\NestedSetsBehavior;
-use wokster\treebehavior\NestedSetsTreeBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -20,7 +20,9 @@ use yii\db\ActiveRecord;
  * @property int $rgt
  * @property int $order
  * @property int $depth
+ * @property bool $deleted
  * @property Rubricator $parent
+ * @property Rubricator[] $siblings все соседние элементы, включая самого себя
  * 
  * @method boolean makeRoot(boolean $runValidation = true,array $attributes = null) Создать корневой элемент
  * @method boolean prependTo(ActiveRecord $node,boolean $runValidation = true,array $attributes = null) Добавить, как первый дочерний элемент
@@ -41,7 +43,7 @@ use yii\db\ActiveRecord;
  * @method void afterInsert() Вызывается после вставки элемента
  * @method void afterUpdate() Вызывается после обновлением элемента
  * 
- * @method array tree() Представление дерева в виде ассоциативного масссив
+ * @method array tree(bool $showAll) Представление дерева в виде ассоциативного масссив
  */
 class Rubricator extends ActiveRecord
 {
@@ -60,7 +62,7 @@ class Rubricator extends ActiveRecord
         $model->makeRoot();
         return $model;
                 
-    }
+    }    
     
     /**
      * Создать обычный раздел
@@ -73,17 +75,23 @@ class Rubricator extends ActiveRecord
         $model->name = $name;
         $model->nameEng = $nameEng;
         $model->order = $order;        
-        return $model;
-                
+        return $model;                
     }  
     
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        if (!$this->isRussian()) {
+            $this->labelAttribute = 'nameEng';
+        }
+    }
+
+
     public function edit(RubricatorForm $form): void
     {
         $this->name = $form->name;
         $this->nameEng = $form->nameEng;
-        $this->order = $form->order;
     }
-
 
     public function behaviors() {
         return [
@@ -104,6 +112,20 @@ class Rubricator extends ActiveRecord
         return new RubricatorQuery(static::class);
     }
     
+    public function getSiblings($includeMyself = true): array
+    {
+        if ($this->isRoot()) {
+            return [];
+        }
+        $parent = $this->getParent();
+        $children = $parent->directChildren(); 
+        if (!$includeMyself) {
+            $children->andFilterWhere(['!=','id',$this->id]);
+        }
+        return $children->orderBy('lft')->all();
+    }
+
+
     /**
      * {@inheritdoc}
      */
@@ -119,10 +141,14 @@ class Rubricator extends ActiveRecord
         ];
     } 
     
+    /**
+     * 
+     * @return self|null
+     */
     public function getParent() 
     {
         if (!$this->isRoot()) {
-            return $this->parents()->andWhere(['depth' => $this->depth - 1])->one();
+            return $this->parents(1)->one();
         } else {
             return null;
         }
@@ -138,5 +164,75 @@ class Rubricator extends ActiveRecord
             [['lft', 'rgt', 'depth','order'], 'integer'],
             [['name', 'nameEng'], 'string', 'max' => 255],
         ];
+    }
+    
+    public function sortedTree($showAll = false) :array
+    {
+        $arr =  $this->tree($showAll);
+        
+        $this->orderedSort($arr);
+        return $arr;
+    }
+    
+    private function orderedSort(array &$arr) 
+    {
+        usort($arr, function($a1, $a2) {
+            if($a1['order'] > $a2['order']) return 1;
+            if($a1['order'] < $a2['order']) return -1;
+            return 0;
+        });
+        foreach ($arr as &$element) {
+            if(!empty($element['children'])) {
+                $this->orderedSort($element['children']);
+            }        
+        }
+    }
+    
+    public function sortedList(): array 
+    {
+        $tree = $this->tree();
+        $elements = [];
+        $this->getSortedElements($tree, $elements);
+        return $elements;
+    }
+    
+    private function getSortedElements($arr, &$elements)
+    {
+        usort($arr, function($a1, $a2) {
+            if($a1['order'] > $a2['order']) return 1;
+            if($a1['order'] < $a2['order']) return -1;
+            return 0;
+        });
+        foreach ($arr as $element) {
+            $elements[$element['id']] = str_repeat('► ', $element['depth']) . $element['name'];
+            if(!empty($element['children'])) {
+                $this->getSortedElements($element['children'],$elements);
+            }        
+        }        
+    }
+    
+    public function directChildren() 
+    {
+        if ($this->isLeaf()) {
+            return null;
+        }
+        return $this->children(1)->orderBy('order');
+    }
+    
+    public function reindexDirectChildren()
+    {
+        $children = $this->directChildren()->all();
+        if (empty($children)) {
+            return;
+        }
+        $index = 1;
+        array_walk($children, function(Rubricator $item) use (&$index) {
+            if ($item->order != $index) {
+                $item->order = $index;
+                $item->save();                        
+            }
+            $index++;
+        });
+        return $children;
     }
 }

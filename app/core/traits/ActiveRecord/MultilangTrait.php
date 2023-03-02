@@ -23,7 +23,7 @@ trait MultilangTrait
     
     public function __get($name)
     {
-        if (Yii::$app->language == Languages::RUSSIAN || $this->multilangEnabled == false) {
+        if ($this->isRussian() || $this->multilangEnabled == false) {
             return parent::__get($name);
         }
         $prop_eng = $name . '_eng';
@@ -63,5 +63,12 @@ trait MultilangTrait
     public function allAvailableFields() : array 
     {
         return ArrayHelper::merge($this->attributes(), $this->extraMultilangFields());
+    }
+    public function isRussian() :bool
+    {
+        if (Yii::$app->language == Languages::RUSSIAN) {
+            return true;
+        }
+        return false;
     }
 }

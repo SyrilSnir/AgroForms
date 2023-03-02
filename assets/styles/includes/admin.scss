@@ -259,3 +259,12 @@ table {
     padding: 20px;
     text-align: center;    
 }
+
+.card-header {
+    .buttons__wrappper {
+        text-align: right;
+    }
+    button, a {
+        margin-right: .5rem;
+    }
+}

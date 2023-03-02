@@ -24,4 +24,24 @@ class RubricatorRepository implements RepositoryInterface
         }
         return $model;
     }
+    
+    /**
+     * 
+     * @param ActiveRecord $model
+     * @throws RuntimeException
+     */
+    public function remove(ActiveRecord $model) 
+    {
+        /** @var Rubricator $model */
+        $model->deleted = true;
+        if (!$model->save()) {
+            throw new RuntimeException('Ошибка удаления');
+        }
+        $allChildren = $model->children()->all();
+        foreach ($allChildren as $item) {
+            /** @var Rubricator $item */
+            $item->deleted = true;
+            $item->save();
+        }
+    }    
 }

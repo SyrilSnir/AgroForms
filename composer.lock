@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d92ef6e1ee0d080dfedb495f4231674",
+    "content-hash": "beb4b91a2a18a8a991826e445a372db3",
     "packages": [
         {
             "name": "2amigos/yii2-multi-select-widget",
@@ -4510,56 +4510,6 @@
                 "wiki": "https://github.com/wbraganca/yii2-fancytree-widget/wiki/"
             },
             "time": "2015-11-08T14:15:16+00:00"
-        },
-        {
-            "name": "wokster/yii2-nested-sets-tree-behavior",
-            "version": "1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wokster/yii2-nested-sets-tree-behavior.git",
-                "reference": "fd9e4d1f39986772a0fe384396be3230d70ec3c2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wokster/yii2-nested-sets-tree-behavior/zipball/fd9e4d1f39986772a0fe384396be3230d70ec3c2",
-                "reference": "fd9e4d1f39986772a0fe384396be3230d70ec3c2",
-                "shasum": ""
-            },
-            "require": {
-                "creocoder/yii2-nested-sets": "^0.9.0",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "wokster\\treebehavior\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maksym Tymofeiev",
-                    "email": "wokster@list.ru"
-                }
-            ],
-            "description": "NestedSetsTreeBehavior for build array from creocoder nested sets behavior and fancytree widget",
-            "keywords": [
-                "Behavior",
-                "array",
-                "creocoder",
-                "extension",
-                "fancytree",
-                "nested sets",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/wokster/yii2-nested-sets-tree-behavior/issues",
-                "source": "https://github.com/wokster/yii2-nested-sets-tree-behavior/tree/1.0"
-            },
-            "time": "2017-07-27T17:03:14+00:00"
         },
         {
             "name": "yii-dream-team/yii2-upload-behavior",

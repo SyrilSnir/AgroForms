@@ -119,6 +119,10 @@ return [
     'Are you sure you want to delete the fields group?' => 'Вы действительно хотите удалить группу полей?',
     'Are you sure you want to delete the unit?' => 'Вы действительно хотите удалить единицу измерения?',
     'Are you sure you want to delete the valute?' => 'Вы действительно хотите удалить валюту?',
+    'Are you sure you want to delete the section with all child subsections?' => 
+        'Вы действительно хотите удалить раздел со всеми дочерними подразделами?',
+    'Are you sure you want to delete the section?' => 
+        'Вы действительно хотите удалить раздел?',        
     'Mail server' => 'Сервер исходящей почты',
     'SMTP port' => 'Порт SMTP',
     'Use secure connection (TLS)' => 'Использовать защищенное соединение (TLS)',
@@ -199,6 +203,10 @@ return [
     'Parent section' => 'Родительский раздел',
     'Number of free' => 'Количество бесплатных',
     'Price per one' => 'Цена за ед.',
-    'm2 per badge (free)' => 'm2 на бейдж (бесплатные)'
+    'm2 per badge (free)' => 'm2 на бейдж (бесплатные)',
+    'New section' => 'Новый раздел',
+    'Parent section' => 'Родительский раздел',
+    'Show deleted sections' => 'Показать удаленные разделы',
+    'Hide deleted sections' => 'Скрыть удаленные разделы',
 ];
 
