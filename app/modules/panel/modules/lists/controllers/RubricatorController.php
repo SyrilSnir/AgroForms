@@ -70,7 +70,7 @@ class RubricatorController extends CrudController
         $form = $this->form::createWithModel($model);
         $this->prepareUpdate($form);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            $this->service->edit($id, $form);
+            $this->service->edit($rubricatorId, $form);
             return $this->refresh();
         }
         
