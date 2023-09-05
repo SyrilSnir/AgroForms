@@ -208,5 +208,6 @@ return [
     'Parent section' => 'Родительский раздел',
     'Show deleted sections' => 'Показать удаленные разделы',
     'Hide deleted sections' => 'Скрыть удаленные разделы',
+    'Logo available' => 'Доступен логотип'
 ];
 

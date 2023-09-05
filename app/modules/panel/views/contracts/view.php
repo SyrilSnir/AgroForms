@@ -1,6 +1,7 @@
 <?php
 
 use app\core\helpers\View\Contract\ContractStatusHelper;
+use app\core\helpers\View\YesNoStatusHelper;
 use app\models\ActiveRecord\Contract\Contracts;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -43,7 +44,13 @@ $this->title = t('Contract', 'contracts') . ' № ' .$model->number;
                     'label' => Yii::t('app', 'Status'),
                     'format' => 'raw',
                     'value' => ContractStatusHelper::getStatusLabel($model->status)
-                ],                
+                ],
+                [
+                    'attribute' => 'is_logo',
+                    'label' => t('Logo available'),
+                    'format' => 'raw',
+                    'value' => YesNoStatusHelper::getStatusLabel($model->is_logo)
+                ]                  
             ],
         ]); ?>
     </div>

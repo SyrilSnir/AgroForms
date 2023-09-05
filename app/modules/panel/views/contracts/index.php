@@ -2,6 +2,7 @@
 
 use app\core\helpers\Utils\DateHelper;
 use app\core\helpers\View\Contract\ContractStatusHelper;
+use app\core\helpers\View\YesNoStatusHelper;
 use app\models\ActiveRecord\Contract\Contracts;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\SearchModels\Contracts\ContractSearch;
@@ -92,6 +93,7 @@ $columnsConfig = [
                             'attribute' => 'date',
                             'value' => function (Contracts $model) {
                                 /** @var Exhibition $model */
+
                                 return DateHelper::timestampToDate($model->date);
                             }
                             
@@ -105,6 +107,15 @@ $columnsConfig = [
                                 return ContractStatusHelper::getStatusLabel($model->status);
                             }
                         ],
+                        [
+                            'attribute' => 'is_logo',
+                            'label' => t('Logo available'),
+                            'format' => 'raw',
+                            'filter' => YesNoStatusHelper::statusList(),
+                            'value' => function (Contracts $model) {
+                                return YesNoStatusHelper::getStatusLabel($model->is_logo);
+                            }
+                        ],                                
                         ['class' => ActionColumn::class],
                     ], 
                     'options' => [
@@ -117,7 +128,7 @@ $columnsConfig = [
 $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
 $fullGridConfig = array_merge($columnsConfig,$gridConfig);        
 ?>
-<section class="content">
+<section class="content content-large">
     <div class="card">
         <div class="card-body">
 

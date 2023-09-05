@@ -25,6 +25,7 @@ class ContractForm extends ManageForm
     public $square;
     public $exhibitionId;
     public $status;
+    public $isLogo;
 
     use GetCompanyNamesTrait, 
             GetExhibitionsTrait, 
@@ -43,7 +44,7 @@ class ContractForm extends ManageForm
             $this->square = $model->stand_square;
             $this->hall = $model->hall_id;
             $this->standNumber = $model->stand_number_id;
-            
+            $this->isLogo = $model->is_logo;            
         }
     }
     
@@ -56,6 +57,7 @@ class ContractForm extends ManageForm
             [['number', 'status', 'date','companyId','exhibitionId'], 'required'],
             [['companyId', 'standNumber', 'square','hall'], 'integer'],
             [['date'],'date'],
+            [['isLogo'],'boolean'],
             [['number'], 'string', 'max' => 255]
         ];
     }
@@ -70,7 +72,8 @@ class ContractForm extends ManageForm
             'standNumber' => t('Stand`s number'),
             'hall' => t('Hall'),
             'companyId' => t('Company','company'),
-            'exhibitionId' => t('Exhibition'),            
+            'exhibitionId' => t('Exhibition'),   
+            'isLogo' => t('Logo available')
         ];
     }
 }

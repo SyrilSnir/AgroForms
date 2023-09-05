@@ -4,11 +4,11 @@ use app\core\helpers\View\Contract\ContractStatusHelper;
 use app\models\Forms\Manage\Contract\ContractForm;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
+use kartik\switchinput\SwitchInput;
 use yii\helpers\Html;
 use yii\web\JsExpression;
 use yii\web\View;
 use yii\widgets\ActiveForm;
-
 
 $selectExpression = new JsExpression('
                     function(e) { 
@@ -83,7 +83,13 @@ $selectExpression2 = new JsExpression('
     ]) ?>                               
     <?= $form->field($model, 'square')->textInput() ?>
     <?= $form->field($model, 'status')->dropDownList(ContractStatusHelper::statusList()) ?>                                                        
-
+    <?= $form->field($model, 'isLogo')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => t('Да'),
+                            'offText' => t('Нет'),
+                        ]
+        ]);
+    ?>
     <?= $form->field($model, 'date')->widget(DatePicker::class, [
            'options' => ['placeholder' => ''],
             'value' => $model->date,
@@ -100,7 +106,9 @@ $selectExpression2 = new JsExpression('
         <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php 
+    
+ActiveForm::end(); ?>
                             
                         </div>
                     </div>
