@@ -1,8 +1,8 @@
 <?php
 
 use app\core\helpers\View\Form\FormStatusHelper;
+use app\core\helpers\View\YesNoStatusHelper;
 use app\models\ActiveRecord\Forms\Form;
-use app\models\ActiveRecord\Forms\FormType;
 use app\models\SearchModels\Forms\FormSearch;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
@@ -54,7 +54,16 @@ $columnsConfig = [
                             'format' => 'raw',
                             'filter' => $searchModel->getExhibitionsList(),
                             'value' => function (Form $model) { return $model->exhibition ? $model->exhibition->title: '' ;}
-                        ],                        
+                        ],   
+                        [
+                            'attribute' => 'published',
+                            'label' => 'Опубликована на сайте',
+                            'format' => 'raw',
+                            'filter' => YesNoStatusHelper::statusList(),
+                            'value' => function (Form $model) {
+                                return YesNoStatusHelper::getStatusLabel($model->published);
+                            }                            
+                        ],
                         [
                             'attribute' => 'status',
                             'label' => Yii::t('app','Status'),

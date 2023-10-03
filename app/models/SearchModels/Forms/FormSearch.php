@@ -21,12 +21,14 @@ class FormSearch extends Model
     public $status;
     
     public $exhibitionId;
+    
+    public $published;
 
     use GetExhibitionsTrait;
     public function rules(): array
     {
         return [
-            [['name', 'title', 'status','exhibitionId'], 'safe'],
+            [['name','published' ,'title', 'status','exhibitionId'], 'safe'],
         ];
     }    
     public function search(array $params): ActiveDataProvider
@@ -45,6 +47,7 @@ class FormSearch extends Model
         $query->andFilterWhere(['like','name', $this->name]);
         $query->andFilterWhere(['like','title', $this->title]);
         $query->andFilterWhere(['status' => $this->status]);
+        $query->andFilterWhere(['published' => $this->published]);
         $query->andFilterWhere(['exhibition_id' => $this->exhibitionId]);
         $query->orderBy('order');
         return $dataProvider;

@@ -6,6 +6,7 @@ use app\core\traits\Lists\GetExhibitionsTrait;
 use app\core\traits\Lists\GetFormTypesListTrait;
 use app\core\traits\Lists\GetValutesListTrait;
 use app\models\ActiveRecord\Forms\Form;
+use app\models\Validators\PublishedValidator;
 use Yii;
 use yii\base\Model;
 
@@ -68,11 +69,13 @@ class FormsForm extends Model
     public function rules()
     {
         return [
+            [['status'],'safe'],
             [['title', 'name', 'slug', 'formType'], 'required'],
             [['order', 'formType','basePrice','valute','exhibitionId'],'integer'],
             [['hasFile','published'],'boolean'],
             [['order','basePrice'],'default','value' => 0],
             [['title', 'name', 'slug', 'description','titleEng', 'nameEng', 'descriptionEng'], 'string', 'max' => 255],
+            ['published', PublishedValidator::class],
         ];
     } 
     /**

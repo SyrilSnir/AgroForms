@@ -197,7 +197,7 @@ class FormHelper extends BaseFormHelper
     protected function appendFormElements()
     {
         $request = $this->getRequest();        
-        $date = microtime(true);
+        $date = time();
         if ($request && (!in_array($request->status, [BaseRequest::STATUS_REJECTED, BaseRequest::STATUS_DRAFT]))) {
             $date = $request->activate_at ? $request->activate_at : $request->created_at;
         }
