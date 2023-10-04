@@ -3,9 +3,11 @@
 namespace app\models\ActiveRecord\Requests;
 
 use app\models\ActiveRecord\Forms\Field;
+use app\models\Forms\Manage\Forms\Parameters\AttachmentField;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\UploadedFile;
 use yiidreamteam\upload\FileUploadBehavior;
 
 /**
@@ -16,13 +18,8 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property int $field_id Поле формы
  * @property string $file_name Имя файла
  * @property int $type Тип вложения
- *
- * --------- Методы из поведения FileUploadBehavior ------------
- * 
  * @method string getUploadedFilePath(string $attribute) Вернуть путь к загруженному файлу
  * @method string getUploadedFileUrl(string $attribute) Вернуть URL загруженного файла
- * 
- * -------------------------------------------------------------
  * @property Field $field
  * @property Request $request
  */
@@ -45,14 +42,14 @@ class AttachedFiles extends ActiveRecord
         return 'attached_files';
     }
     
-    public static function create(int $requestId, int $fieldId,int $type, \yii\web\UploadedFile $file): self
+    public static function create(int $requestId, int $fieldId,UploadedFile $file): self
     {
         $model = new self();
        
         $model->request_id = $requestId;
         $model->field_id = $fieldId;
         $model->file_name = $file;
-        $model->type = $type;
+        $model->type = $model->getFileType($fieldId);
         $model->configureFileUploadParameters();
         return $model;
     }
@@ -94,4 +91,13 @@ class AttachedFiles extends ActiveRecord
         $this->filePath = $attachedFilesPath . DIRECTORY_SEPARATOR . $this->request_id . DIRECTORY_SEPARATOR . $this->field_id . DIRECTORY_SEPARATOR . '[[pk]]-[[filename]].[[extension]]';
         $this->fileUrl = "@attachedUrl/$this->request_id/$this->field_id/[[pk]]-[[filename]].[[extension]]";        
     }
+
+    protected function getFileType(int $fieldId) :int
+    {
+        /** @var AttachmentField $fieldParams */
+        $fieldParams = Field::findOne($fieldId)->getFieldParams();       
+        if (is_a($fieldParams, AttachmentField::class)) {
+            return (int) $fieldParams->attachment;
+        }
+    }    
 }

@@ -31,7 +31,19 @@ class AttachmentField extends BaseParametersForm
     //put your code here
     public function getViewParameters(): array
     {
-        return [];
+        $attributes['attachment'] = [
+            'attribute' => 'attachment',
+            'value' => BaseParametersForm::attachmentTypesList()[$this->attachment]
+        ];     
+
+        return $attributes;        
     }
+    
+    public function attributeLabels(): array
+    {
+        return [
+            'attachment' => t('Valid file types'),
+        ];
+    }    
 
 }

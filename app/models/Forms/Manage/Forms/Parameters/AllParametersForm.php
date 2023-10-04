@@ -125,8 +125,5 @@ class AllParametersForm extends BaseParametersForm
             SpecialPriceTypes::TYPE_PERCENT => t('Percentage of base cost'),
             SpecialPriceTypes::TYPE_COEFFICIENT => t('Markup factor'),
         ];
-    }    
-    
-    
-
+    }            
 }

@@ -3,7 +3,9 @@
 namespace app\core\services\operations\Requests;
 
 use app\core\repositories\manage\Requests\AttacmentFileRepository;
+use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Requests\AttachedFiles;
+use app\models\Forms\Manage\Forms\Parameters\AttachmentField;
 use app\models\Forms\Requests\RemoveAttachmentForm;
 use yii\web\UploadedFile;
 
@@ -18,8 +20,9 @@ class AttachedFilesService
      * 
      * @var AttacmentFileRepository
      */
-    protected $repository;
-    
+    protected $repository;    
+
+
     public function __construct(AttacmentFileRepository $repository)
     {
         $this->repository = $repository;
@@ -43,7 +46,6 @@ class AttachedFilesService
         {
             $attached->configureFileUploadParameters();
             $attached->delete();
-        }
-        
-    }
+        }        
+    }    
 }

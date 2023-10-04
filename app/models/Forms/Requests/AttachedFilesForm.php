@@ -2,7 +2,7 @@
 
 namespace app\models\Forms\Requests;
 
-use yii\base\Model;
+use app\models\Forms\Manage\Forms\Parameters\BaseParametersForm;
 use yii\web\UploadedFile;
 
 /**
@@ -10,7 +10,7 @@ use yii\web\UploadedFile;
  *
  * @author kotov
  */
-class AttachedFilesForm extends Model
+class AttachedFilesForm extends BaseParametersForm
 {
     public $files = [];
     
@@ -54,5 +54,10 @@ class AttachedFilesForm extends Model
             return true;
         }
         return false;
-    }    
+    }
+
+    public function getViewParameters(): array
+    {   
+        return [];
+    }
 }

@@ -2,7 +2,9 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\repositories\readModels\Requests\AttachedFilesReadRepository;
 use app\models\ActiveRecord\Requests\AttachedFiles;
+use app\models\Forms\Manage\Forms\Parameters\AttachmentField;
 
 /**
  * Description of ElementFileInput
@@ -53,12 +55,58 @@ class ElementFileInput extends FormElement
     
     public function renderHtml(array $valuesList = []): string
     {
-        return '';
+        /** @var AttachmentField $fieldParams */
+        $fieldParams = $this->field->getFieldParams();
+        $attachmentType = (int) $fieldParams->attachment;
+        switch ($attachmentType) {
+            case AttachedFiles::STANDART_TYPE:
+                $renderedData = 'STANDART';
+                break;
+            case AttachedFiles::SITE_LOGO_TYPE:
+                $renderedData = $this->renderLogoHtml();
+                break;
+            case AttachedFiles::CATALOG_LOGO_TYPE:
+                $renderedData = 'CATALOG';
+                break;
+        }
+        return "<pre>". $renderedData . "</pre>";
     }
 
     public function renderPDF(array $valuesList = []): string
     {
         return '';
+    }
+    
+    protected function renderLogoHtml():string
+    {   
+
+        $result = '';
+        $urls = $this->getFilesUrl();
+        foreach ($urls as $url) {
+            $result.= '<div class="logo-block clearfix">
+                  <div class="attachment-pushed">
+                    <h4 class="attachment-heading">'. $this->field->name .'</h4>
+
+                    <!-- /.attachment-text -->
+                  </div>                
+                  <img class="attachment-img" src="'. $url. '" alt="Логотип">
+
+
+                  <!-- /.attachment-pushed -->
+                </div>';
+        }
+        return $result;
+    }
+    
+    protected function getFilesUrl(): array
+    {
+        $result = [];
+        $attachedFiles = AttachedFilesReadRepository::findByFieldId($this->field->id);
+        foreach ($attachedFiles as $file) {
+            $file->configureFileUploadParameters();
+            $result[] = $file->getUploadedFileUrl('file_name');
+        }
+        return $result;
     }
 
 }

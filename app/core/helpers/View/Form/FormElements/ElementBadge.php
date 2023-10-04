@@ -30,10 +30,10 @@ class ElementBadge  extends FormElement implements CountableElementInterface
         }
         if ($this->contract) {
             $data['badge_info'] = [
-              'name' => $this->contract->company->member->getName(),
-              'middle_name' => $this->contract->company->member->getMiddleName(),
-              'surname' => $this->contract->company->member->getSurName(),
-              'company' => $this->contract->company->name
+              'name' => $this->contract->company ? $this->contract->company->member->getName() : 'Демо',
+              'middle_name' => $this->contract->company ? $this->contract->company->member->getMiddleName(): 'Демо',
+              'surname' => $this->contract->company ? $this->contract->company->member->getSurName() : 'Демо',
+              'company' => $this->contract->company ? $this->contract->company->name : 'Демо'
             ];
         }
         if (key_exists('value', $valuesList)) {

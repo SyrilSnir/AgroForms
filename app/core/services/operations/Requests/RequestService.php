@@ -68,6 +68,7 @@ class RequestService
         }
         foreach ($request->attachments as $attachment) {
             /** @var AttachedFiles $attachment */
+            $attachment->configureFileUploadParameters();            
             $attachment->delete();
         }
         $this->requests->remove($request);

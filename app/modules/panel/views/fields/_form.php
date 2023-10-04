@@ -3,6 +3,7 @@
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\Forms\Manage\Forms\FieldForm;
+use app\models\Forms\Manage\Forms\Parameters\BaseParametersForm;
 use kartik\grid\GridView;
 use kartik\select2\Select2;
 use kartik\switchinput\SwitchInput;
@@ -235,7 +236,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         
         
         <div id="attachment"<?php if (!in_array($model->elementTypeId, ElementType::HAS_ATTACHMENT)):?> class="hide"<?php endif; ?>>
-            <?= $form->field($model->parameters, 'attachment')->dropDownList($model->parameters->attachmentTypesList()) ?> 
+            <?= $form->field($model->parameters, 'attachment')->dropDownList(BaseParametersForm::attachmentTypesList()) ?> 
         </div>        
         
         <div id="additional-equipment"<?php if ($model->elementTypeId != ElementType::ELEMET_ADDITIONAL_EQUIPMENT):?> class="hide"<?php endif; ?>>

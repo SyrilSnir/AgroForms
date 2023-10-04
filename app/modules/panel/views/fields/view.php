@@ -1,5 +1,6 @@
 <?php
 
+use app\core\helpers\View\YesNoStatusHelper;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\FieldEnum;
@@ -38,7 +39,31 @@ $this->title = $model->name;
                 'name:text:' . Yii::t('app','Name'),
                 'description:text:' . Yii::t('app','Description'),
                 'form.name:text:' . Yii::t('app', 'Form'),
-                'elementType.name:text:' . Yii::t('app', 'Element type')
+                'elementType.name:text:' . Yii::t('app', 'Element type'),
+                [
+                      'attribute' => 'showed_in_request',
+                      'label' => Yii::t('app', 'Show in application'),
+                      'format' => 'raw',
+                      'value' => YesNoStatusHelper::getStatusLabel($model->showed_in_request)
+                ],                 
+                [
+                      'attribute' => 'showed_in_pdf',
+                      'label' => Yii::t('app', 'Show in printed form'),
+                      'format' => 'raw',
+                      'value' => YesNoStatusHelper::getStatusLabel($model->showed_in_pdf)
+                ], 
+                [
+                      'attribute' => 'to_export',
+                      'label' => Yii::t('app', 'Add to export'),
+                      'format' => 'raw',
+                      'value' => YesNoStatusHelper::getStatusLabel($model->to_export)
+                ],                 
+                [
+                      'attribute' => 'published',
+                      'label' => Yii::t('app','Available for publication on the site'),
+                      'format' => 'raw',
+                      'value' => YesNoStatusHelper::getStatusLabel($model->published)
+                ],                 
             ],
         ]); ?>
     </div>

@@ -39,7 +39,7 @@ trait FieldParametersTrait
                 return new GroupFieldParametersForm($field);
             case ElementType::ELEMENT_FILE:
             case ElementType::ELEMENT_FILE_MULTIPLE:
-                return new AttachedFilesForm($field);
+                return new \app\models\Forms\Manage\Forms\Parameters\AttachmentField($field);
             case ElementType::ELEMENT_ADDRESS_BLOCK:
             case ElementType::ELEMENT_IFORMATION_FORM:
                 return new FreeCountForm($field);

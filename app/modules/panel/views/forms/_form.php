@@ -90,7 +90,7 @@ echo $form->field($model, 'descriptionEng')->widget(CKEditor::className(),[
             </div>
         </div>
 
-<?php if (in_array($model->formType, FormType::HAS_DYNAMIC_FIELDS)): ?>
+<?php if (isset($showDeletedForm)): ?>
 <?php 
 $action = Yii::$app->getRequest()->getPathInfo(); //.  Yii::$app->getRequest()->getQueryString();
 //dump($action); die();

@@ -53,7 +53,7 @@ abstract class BaseParametersForm extends Model
         ];
     }
     
-    public function attachmentTypesList(): array 
+    public static function attachmentTypesList(): array 
     {
         return [
             AttachedFiles::STANDART_TYPE =>  t('Any file types'),
