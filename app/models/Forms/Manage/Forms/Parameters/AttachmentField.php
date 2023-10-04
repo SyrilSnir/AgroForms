@@ -3,13 +3,14 @@
 namespace app\models\Forms\Manage\Forms\Parameters;
 
 use app\models\ActiveRecord\Forms\Field;
+use yii\helpers\ArrayHelper;
 
 /**
  * Description of AttachmentField
  *
  * @author kotov
  */
-class AttachmentField extends BaseParametersForm
+class AttachmentField extends ComputedField
 {
     
     public $attachment;
@@ -23,10 +24,11 @@ class AttachmentField extends BaseParametersForm
     }
     
     public function rules(): array
-    {
-        return [
+    {        
+        $rules = [
                 [['attachment'], 'integer'],            
         ];
+        return ArrayHelper::merge($rules, parent::rules());
     }
     //put your code here
     public function getViewParameters(): array
@@ -36,14 +38,15 @@ class AttachmentField extends BaseParametersForm
             'value' => BaseParametersForm::attachmentTypesList()[$this->attachment]
         ];     
 
-        return $attributes;        
+        return  ArrayHelper::merge(parent::getViewParameters(), $attributes);       
     }
     
     public function attributeLabels(): array
     {
-        return [
+        $attributeLabels = [
             'attachment' => t('Valid file types'),
         ];
+        return ArrayHelper::merge($attributeLabels, parent::attributeLabels()); 
     }    
 
 }

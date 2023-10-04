@@ -93,7 +93,8 @@ class ElementType extends ActiveRecord
         self::ELEMET_ADDITIONAL_EQUIPMENT,
         self::ELEMENT_BADGE,
         self::ELEMENT_ADDRESS_BLOCK,
-        self::ELEMENT_IFORMATION_FORM
+        self::ELEMENT_IFORMATION_FORM,
+        self::ELEMENT_FILE
     ];
     
     /**
