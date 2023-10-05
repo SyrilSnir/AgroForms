@@ -34,7 +34,12 @@ class ElementInformationForm extends FormElement implements CountableElementInte
 
     public function renderHtml(array $valuesList = []): string
     {
-        return 'BADGE';
+        if (key_exists('value', $valuesList)) {
+            return $this->view->renderFile('@fields/information.php',[
+                'values' => $valuesList['value']
+            ]);
+            }
+        return '';
     }
 
     public function renderPDF(array $valuesList = []): string

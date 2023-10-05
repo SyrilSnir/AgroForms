@@ -15,6 +15,9 @@ Yii::setAlias('@pdf', dirname(__DIR__) . DIRECTORY_SEPARATOR .
 Yii::setAlias('@elements', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
         'app' .DIRECTORY_SEPARATOR .'views' . DIRECTORY_SEPARATOR . 
         'templates'. DIRECTORY_SEPARATOR . 'elements');
+Yii::setAlias('@fields', dirname(__DIR__) . DIRECTORY_SEPARATOR . 
+        'app' .DIRECTORY_SEPARATOR .'views' . DIRECTORY_SEPARATOR . 
+        'templates'. DIRECTORY_SEPARATOR . 'fields');
 Yii::setAlias('@fixtures', dirname(__DIR__) . DIRECTORY_SEPARATOR .
         'commands' . DIRECTORY_SEPARATOR . 'fixtures');
 

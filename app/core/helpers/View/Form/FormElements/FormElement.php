@@ -9,6 +9,7 @@ use app\core\providers\Data\FieldEnumProvider;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Nomenclature\Unit;
 use app\models\Data\Languages;
+use yii\web\View;
 use function GuzzleHttp\json_decode;
 /**
  * Description of FormElement
@@ -48,6 +49,12 @@ abstract class FormElement implements FormElementInterface
      * @var ?int
      */
     protected $requestId;
+    
+    /**
+     * 
+     * @var View
+     */
+    protected $view;
 
     public function __construct(Field $field, FieldEnumProvider $enumProvider = null, string $langCode = Languages::RUSSIAN)
     {
@@ -55,6 +62,7 @@ abstract class FormElement implements FormElementInterface
         $this->fieldParameters = json_decode($this->field->parameters, true);
         $this->langCode = $langCode;
         $this->fieldEnumProvider = $enumProvider;
+        $this->view = \Yii::$app->view;
     }
     
     public function getData(array $valuesList = []): array
