@@ -34,6 +34,7 @@
 </template>
 <script>  
 import { labelMixin } from './Mixins/labelMixin';
+import { computedMixin } from './Mixins/computedMixin';
 import * as constants from '../../utils/constants';
 import axios from 'axios';
 export default {
@@ -45,7 +46,10 @@ export default {
             selectedFile: '',
 
         }
-    },  
+    },
+    created() {
+        this.$emit('changeField',this.getData());
+    },
     computed: {
         isFileExist() {
             return this.params.file_exist;
@@ -61,14 +65,26 @@ export default {
         },
         mimeFilter() {
             return this.params.file_types;
-        }
+        },
+        total() {
+            let total = 0;
+            if (!this.isComputed && !(this.isFileExist || this.isFileSelect)) {
+                return 0;
+            }
+            total = +this.unitPrice;
+            if (isNaN(total)) {
+                return 0;
+            }
+            return total;               
+        },        
     },
     props: [
         'params',
         'dic'
     ],    
     mixins: [
-        labelMixin
+        labelMixin,
+        computedMixin
     ],
     methods: {
         onChange(e) {
@@ -85,12 +101,20 @@ export default {
             this.$emit('changeField',this.getData());             
         },
         getData() {
-            return {
-                id: this.params.id,                   
-                value: this.val,                       
+            let data = {
+                id: this.params.id,                  
+                file: this.val,
                 valid: true,
+                data: {
+                    value: this.unitPrice,
+                },
                 [constants.ATTACHMENT_ATTRIBUTE]: true,
             };
+            if (this.isComputed) {
+                   data.computed = true;
+                   data.total = this.unitPrice;
+            }            
+            return data;
         },  
         removeFile() {
             const formData = new FormData();
@@ -104,10 +128,8 @@ export default {
                     }
                 }
             ).then((response) => {
-                //this.val = null;
-                //this.selectedFile = '';
-                //this.isFileSelect = false;  
-                this.params.file_exist = false;              
+                this.params.file_exist = false;
+                this.$emit('changeField',this.getData());               
             }).catch((error) => {
                 console.log("FAILURE!!!");
                 console.log(error);

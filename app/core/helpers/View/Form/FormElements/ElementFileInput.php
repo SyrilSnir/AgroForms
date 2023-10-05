@@ -11,7 +11,7 @@ use app\models\Forms\Manage\Forms\Parameters\AttachmentField;
  *
  * @author kotov
  */
-class ElementFileInput extends FormElement
+class ElementFileInput extends FormElement  implements CountableElementInterface
 {
     public function getData(array $valuesList = []): array
     {
@@ -83,17 +83,10 @@ class ElementFileInput extends FormElement
         $result = '';
         $urls = $this->getFilesUrl();
         foreach ($urls as $url) {
-            $result.= '<div class="logo-block clearfix">
-                  <div class="attachment-pushed">
-                    <h4 class="attachment-heading">'. $this->field->name .'</h4>
-
-                    <!-- /.attachment-text -->
-                  </div>                
-                  <img class="attachment-img" src="'. $url. '" alt="Логотип">
-
-
-                  <!-- /.attachment-pushed -->
-                </div>';
+            $result.= '<div class="logo-block clearfix">' .
+'<div class="attachment-pushed">'.
+'<h4 class="attachment-heading">'. $this->field->name .
+'</h4></div><img class="attachment-img" src="'. $url. '" alt="Логотип"></div>';
         }
         return $result;
     }
@@ -109,4 +102,11 @@ class ElementFileInput extends FormElement
         return $result;
     }
 
+    public function getPrice(array $valuesList = []): int
+    {
+        if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
+            return $this->modifyPrice($valuesList['value']);
+        }
+        return 0;       
+    }
 }

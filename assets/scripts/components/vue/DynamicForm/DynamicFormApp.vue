@@ -159,12 +159,15 @@ export default {
             return valid;
         },      
       fieldsModificate(field) {
-        if (field.hasOwnProperty(constants.ATTACHMENT_ATTRIBUTE)) {
-            this.files[field.id] = field.value;
-            return;
-        }
         let computed = false;
         let total = 0;
+        if (field.hasOwnProperty(constants.ATTACHMENT_ATTRIBUTE)) {
+            if (!field.file) {
+                return;
+            }
+            this.files[field.id] = field.file;
+           // return;
+        }
         if(field.hasOwnProperty('computed')) {
             computed = true;
             total = field.total;
