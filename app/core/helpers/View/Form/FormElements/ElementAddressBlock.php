@@ -34,7 +34,12 @@ class ElementAddressBlock extends FormElement implements CountableElementInterfa
 
     public function renderHtml(array $valuesList = []): string
     {
-        return 'BADGE';
+        if (key_exists('value', $valuesList)) {
+            return $this->view->renderFile('@fields/address.php',[
+                'values' => $valuesList['value']
+            ]);
+            }
+        return '';
     }
 
     public function renderPDF(array $valuesList = []): string
