@@ -34,11 +34,11 @@ class ElementRubricator extends FormElement implements CountableElementInterface
 
     public function renderHtml(array $valuesList = []): string
     {
-        
+        return 'Рубрикатор';
     }
 
     public function renderPDF(array $valuesList = []): string
     {
-        
+        return 'Рубрикатор';
     }
 }

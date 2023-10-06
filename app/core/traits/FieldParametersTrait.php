@@ -8,6 +8,7 @@ use app\models\Forms\Manage\Forms\FieldParametersForm;
 use app\models\Forms\Manage\Forms\Parameters\AttachmentField;
 use app\models\Forms\Manage\Forms\Parameters\BadgesParameters;
 use app\models\Forms\Manage\Forms\Parameters\BaseParametersForm;
+use app\models\Forms\Manage\Forms\Parameters\CheckboxForm;
 use app\models\Forms\Manage\Forms\Parameters\FreeCountForm;
 use app\models\Forms\Manage\Forms\Parameters\FrizeForm;
 use app\models\Forms\Manage\Forms\Parameters\GroupFieldParametersForm;
@@ -46,7 +47,9 @@ trait FieldParametersTrait
             case ElementType::ELEMENT_BADGE:
                 return new BadgesParameters($field);
             case ElementType::ELEMENT_RUBRICATOR:
-                return new FreeCountForm($field);
+                return new FreeCountForm($field); 
+            case ElementType::ELEMENT_CHECKBOX:
+                return new CheckboxForm($field);
             default:
                 return new FieldParametersForm($field);
         }

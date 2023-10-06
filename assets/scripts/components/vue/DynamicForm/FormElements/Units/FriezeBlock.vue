@@ -4,12 +4,26 @@
         <div class="col-12">    
             <div class="input-group">
                 <input 
+                    v-if="friezeFieldType != 1"
                     :id="id"
                     type="text" 
                     class="form-control"
                     v-model="val"
                     @change="onChange($event)"
                     placeholder="Enter ...">  
+                <textarea 
+                    v-else
+                    name="frieze__area" 
+                    cols="30" 
+                    rows="10"
+                    :id="id"
+                    type="text" 
+                    class="form-control"
+                    v-model="val"
+                    @change="onChange($event)"
+                    placeholder="Enter ..."  
+                >                  
+                </textarea>
                         
             </div>
             <div  class="col-12" v-if="isPaid">
@@ -58,6 +72,9 @@
         frizeDigitPrice() {
             return parseInt(this.params.parameters.digitPrice);
         },
+        friezeFieldType() {
+            return parseInt(this.params.parameters.friezeFieldType);
+        },        
         frizeFreeDigits() {
             return parseInt(this.params.parameters.freeDigitCount);
         },

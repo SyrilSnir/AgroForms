@@ -29,12 +29,14 @@ class CheckboxForm extends ComputedField
     
     public function getViewParameters(): array
     {
-        $attributes = [
-            'hasCommentField' => [
+        $attributes = [];
+        if ($this->hasCommentField) {
+            $attributes['hasCommentField'] = [
                 'attribute' => 'hasCommentField',
+                'format' => 'raw',
                 'value' => YesNoStatusHelper::getStatusLabel($this->hasCommentField)
-            ],            
-        ];
+            ];            
+        }
         return ArrayHelper::merge(parent::getViewParameters(),$attributes);
     }
 
