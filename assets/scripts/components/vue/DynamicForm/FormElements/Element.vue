@@ -25,6 +25,7 @@ import FileBlock from './Units/FileBlock';
 import AddressBlock from './Units/AddressBlock';
 import BadgeBlock from './Units/BadgeBlock';
 import InformationForm from './Units/InformationForm';
+import RubricatorBlock from './Units/RubricatorBlock';
 export default {
     props: [
         'unitData','lang','dic'
@@ -50,6 +51,7 @@ export default {
         'address-block': AddressBlock,
         'badge': BadgeBlock,
         'information-form': InformationForm,
+        'rubricator': RubricatorBlock,
         'undefined': UndefinedBlock
     },    
     data() {
@@ -73,6 +75,7 @@ export default {
                 blockFrieze: 17,
                 blockDateTime: 18,
                 blockInformationForm: 20,
+                blockRubricator: 21,
                 blockBadge: 22,
                 blockAddress: 23,
             }
@@ -126,6 +129,8 @@ export default {
                     return 'information-form';
                 case this.typesList.blockBadge:
                     return 'badge';
+                case this.typesList.blockRubricator:
+                    return 'rubricator';
                 default:
                     return 'undefined';
             }

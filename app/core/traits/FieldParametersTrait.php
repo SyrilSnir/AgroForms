@@ -45,6 +45,8 @@ trait FieldParametersTrait
                 return new FreeCountForm($field);
             case ElementType::ELEMENT_BADGE:
                 return new BadgesParameters($field);
+            case ElementType::ELEMENT_RUBRICATOR:
+                return new FreeCountForm($field);
             default:
                 return new FieldParametersForm($field);
         }

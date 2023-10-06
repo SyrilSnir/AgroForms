@@ -20,6 +20,7 @@ use app\core\helpers\View\Form\FormElements\ElementInformationBlock;
 use app\core\helpers\View\Form\FormElements\ElementInformationForm;
 use app\core\helpers\View\Form\FormElements\ElementNumberInput;
 use app\core\helpers\View\Form\FormElements\ElementRadio;
+use app\core\helpers\View\Form\FormElements\ElementRubricator;
 use app\core\helpers\View\Form\FormElements\ElementSelect;
 use app\core\helpers\View\Form\FormElements\ElementSelectMultiple;
 use app\core\helpers\View\Form\FormElements\ElementTextField;
@@ -43,6 +44,7 @@ use app\models\ActiveRecord\Users\User;
 use app\models\Data\Languages;
 use app\models\Data\SpecialPriceTypes;
 use Yii;
+use ZipStream\Test\TimeTest;
 use function GuzzleHttp\json_decode;
 
 /**
@@ -155,6 +157,9 @@ class FormHelper extends BaseFormHelper
             case ElementType::ELEMENT_IFORMATION_FORM:
                 $formElement = new ElementInformationForm($field,null,$langCode);
                 break;
+            case ElementType::ELEMENT_RUBRICATOR:
+                $formElement = new ElementRubricator($field, null, $langCode);
+                break;                
             case ElementType::ELEMENT_BADGE:
                 $formElement = new ElementBadge($field, null, $langCode);
                 if (!empty($contract)) {

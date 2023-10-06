@@ -55,6 +55,7 @@ class ElementType extends ActiveRecord
     const HAS_FREE_COUNTER = [
         self::ELEMENT_ADDRESS_BLOCK,
         self::ELEMENT_IFORMATION_FORM,
+        self::ELEMENT_RUBRICATOR,
     ];
     const HAS_ATTACHMENT = [
         self::ELEMENT_FILE,
@@ -94,7 +95,8 @@ class ElementType extends ActiveRecord
         self::ELEMENT_BADGE,
         self::ELEMENT_ADDRESS_BLOCK,
         self::ELEMENT_IFORMATION_FORM,
-        self::ELEMENT_FILE
+        self::ELEMENT_FILE,
+        self::ELEMENT_RUBRICATOR,
     ];
     
     /**
