@@ -1,6 +1,10 @@
 r<template>
     <li>
-        <span v-if="canBeShowed" @click="isActive=!isActive"><i v-show="hasChildren" class="fa fa-chevron-down" aria-hidden="true"></i>{{ name }}<i  @click="addRubric" title="Добавить раздел" v-if="!hasChildren" class="add-item far fa-plus-square"></i></span>
+        <span :class="{rubric__checked : isChecked}" @click="isActive=!isActive">
+            <i v-show="hasChildren" class="fa fa-chevron-down" aria-hidden="true"></i>{{ name }}
+            <i @click="addRubric" v-if="!isChecked" title="Добавить раздел" v-show="!hasChildren" class="add-item far fa-plus-square"></i>
+            <i @click="addRubric" v-else title="Удалить раздел" v-show="!hasChildren" class="remove-item far fa-minus-square"></i>
+        </span>
         <ul v-show="isActive" v-if="hasChildren">
             <template v-for="rubric in rubrics.children"> 
               <rubricator-element :rubricsInCatalog="rubricsInCatalog" :rubrics="rubric"></rubricator-element>                      
@@ -34,8 +38,8 @@ export default {
         hasChildren() {
             return this.rubrics.children.length > 0;
         },
-        canBeShowed() {
-            if (this.hasChildren) return true;
+        isChecked() {
+            if (this.hasChildren) return false;
             //return //this.rubricsInCatalog // .eve
             let el = this.rubricsInCatalog.find((element) => {  
                 console.log(element.id,this.id);
@@ -46,9 +50,9 @@ export default {
             });
             console.log(el);
             if (el) {
-                return false;
-            } else {
                 return true;
+            } else {
+                return false;
             }
 
         }
@@ -66,7 +70,7 @@ export default {
 };
 </script>
 <style lang="css" scoped>
-    i.add-item {
+    i.add-item, i.remove-item {
         float: right;
         padding: 2px;
         cursor: pointer;

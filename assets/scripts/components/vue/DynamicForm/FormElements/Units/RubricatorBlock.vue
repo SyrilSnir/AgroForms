@@ -169,7 +169,9 @@ ul {
   color: #000;
   text-decoration: none;
 }
-
+.wtree li span.rubric__checked {
+  background: #EFA281;  
+}
 .wtree li span:hover, .wtree li span:focus {
   background: #EFA281;
   color: #000;
@@ -180,7 +182,18 @@ ul {
   color: #000;
   border: 1px solid #aaa;
 }
+.wtree li span.rubric__checked:hover, .wtree li span.rubric__checked:focus {
+  background: #e2d4ce;
+  color: #000;
+  border: 1px solid #aaa;
+}
+.wtree li span:hover + ul li span.rubric__checked, .wtree li span:focus + ul li span.rubric__checked {
+  background: #e2d4ce;
+  color: #000;
+  border: 1px solid #aaa;
+}
 .wtree li span:hover + ul li:after, .wtree li span:hover + ul li:before, .wtree li span:focus + ul li:after, .wtree li span:focus + ul li:before {
   border-color: #aaa;
 }     
+
  </style>
