@@ -66,7 +66,7 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
                 $renderedData = $this->renderLogoHtml();
                 break;
             case AttachedFiles::CATALOG_LOGO_TYPE:
-                $renderedData = 'CATALOG';
+                $renderedData = $this->renderCatalogHtml();
                 break;
         }
         return "<pre>". $renderedData . "</pre>";
@@ -75,6 +75,20 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
     public function renderPDF(array $valuesList = []): string
     {
         return '';
+    }
+
+    protected function renderCatalogHtml():string
+    {   
+
+        $result = '';
+        $urls = $this->getFilesUrl();
+        foreach ($urls as $url) {
+            $result.= '<div class="catalog-block clearfix">' .
+'<div class="attachment-pushed">'.
+'<h4 class="attachment-heading">'. $this->field->name .
+'</h4></div><a class="attachment-catalog" href="'. $url. '">'. $url. '</a></div>';
+        }
+        return $result;
     }
     
     protected function renderLogoHtml():string
