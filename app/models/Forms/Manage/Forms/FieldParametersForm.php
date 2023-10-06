@@ -28,14 +28,6 @@ class FieldParametersForm extends ComputedField
     public $allCategories;
     public $unit;
     public $categories;
-    
-    //
-
-
-
-
-
-    public $unitPrice;
 
 
     public function __construct(Field $field = null,$config = array())

@@ -208,6 +208,10 @@ return [
     'Parent section' => 'Родительский раздел',
     'Show deleted sections' => 'Показать удаленные разделы',
     'Hide deleted sections' => 'Скрыть удаленные разделы',
-    'Logo available' => 'Доступен логотип'
+    'Logo available' => 'Доступен логотип',
+    'Comment available' => 'Доступен комментарий',
+    'Text field' => 'Поле ввода (input)',
+    'Textarea' => 'Текстовая область (textarea)',
+    'Input field type' => 'Тип поля ввода'
 ];
 

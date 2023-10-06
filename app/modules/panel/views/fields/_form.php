@@ -75,6 +75,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         data-required="<?php echo json_encode(ElementType::HAS_REQUIRED)?>"
         data-number="<?php echo json_encode(ElementType::NUMBER_PARAMS)?>"
         data-computed="<?php echo json_encode(ElementType::COMPUTED_FIELDS)?>"
+        data-comment="<?php echo json_encode(ElementType::HAS_COMMENT)?>"
         data-enums="<?php echo json_encode(ElementType::HAS_ENUM_ATTRIBUTES)?>"
         data-attachment="<?php echo json_encode(ElementType::HAS_ATTACHMENT)?>"
         data-equipment="<?php echo json_encode(ElementType::ELEMET_ADDITIONAL_EQUIPMENT)?>"
@@ -164,6 +165,15 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                 ]) 
             ?>
         </div>
+        <div id="comment-block"<?php if (!in_array($model->elementTypeId, ElementType::HAS_COMMENT)):?> class="hide"<?php endif; ?>>
+            <?= $form->field($model->parameters, 'hasCommentField')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => Yii::t('app', 'Yes'),
+                            'offText' => Yii::t('app', 'No'),
+                        ]
+                ])
+            ?>
+        </div>        
         <div id="number-params"<?php if (!in_array($model->elementTypeId, ElementType::NUMBER_PARAMS)):?> class="hide"<?php endif; ?>>
             <?= $form->field($model->parameters, 'unit')->dropDownList($model->unitsList()) ?>                            
         </div>
@@ -267,6 +277,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         <div id="frieze-params"<?php if ($model->elementTypeId != ElementType::ELEMENT_FRIEZE):?> class="hide"<?php endif; ?>>
             <?= $form->field($model->parameters, 'freeDigitCount')->textInput() ?>      
             <?= $form->field($model->parameters, 'digitPrice')->textInput() ?>  
+            <?= $form->field($model->parameters, 'friezeFieldType')->dropDownList($model->parameters->friezeFieldTypesList()) ?>  
         </div>
         <div id="group-params"<?php if($model->elementTypeId != ElementType::ELEMENT_GROUP): ?> class="hide"<?php endif; ?>>
             <?= $form->field($model->parameters, 'groupType')->dropDownList($model->parameters->groupTypesList() ) ?>

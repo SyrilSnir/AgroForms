@@ -7,6 +7,7 @@ export default class FieldParams {
         this.$enumWrapper = $('#attribute-enums-wrapper');    
         this.$freeCounterBlock = $('#free-counter__block');
         this.$badgeBlock = $('#badge__block');
+        this.$commentBlock = $('#comment-block');
         this.$elementTypeSelector.on('change',this.elementTypeSelectorChangeHandler.bind(this));       
         this.textType = fieldsConfig.data('text');
         this.htmlType = fieldsConfig.data('html');
@@ -16,6 +17,7 @@ export default class FieldParams {
         this.enumValues = fieldsConfig.data('enums'); 
         this.equipment = fieldsConfig.data('equipment');
         this.frieze = fieldsConfig.data('frieze');
+        this.comment = fieldsConfig.data('comment');
         this.group = fieldsConfig.data('group');
         this.freeCounter = fieldsConfig.data('free_counter');
         this.badge = fieldsConfig.data('badge');
@@ -51,6 +53,9 @@ export default class FieldParams {
         (this.attachmentType.indexOf(value) !== -1) ?
             this.attachmentParamsShow(true):
             this.attachmentParamsShow(false);
+        (this.comment.indexOf(value) !== -1) ?
+            this.commentShow(true) :
+            this.commentShow(false);
         (this.requiredType.indexOf(value) !== -1) ?
             this.requiredShow(true) :
             this.requiredShow(false);
@@ -102,7 +107,12 @@ export default class FieldParams {
         isShow ? 
             this.$requiredBlock.removeClass('hide') :
             this.$requiredBlock.addClass('hide');
-    }    
+    }
+    commentShow( isShow ) {
+        isShow ? 
+            this.$commentBlock.removeClass('hide') :
+            this.$commentBlock.addClass('hide');
+    }        
     htmlParamsShow( isShow ) {
         isShow ? 
             this.$htmlParamsBlock.removeClass('hide') :

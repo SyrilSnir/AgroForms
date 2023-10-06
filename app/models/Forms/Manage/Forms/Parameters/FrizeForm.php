@@ -14,6 +14,7 @@ class FrizeForm extends BaseParametersForm
 {
     public $digitPrice;
     public $freeDigitCount;
+    public $friezeFieldType;    
     
     public function __construct(Field $field = null, $config = [])
     {
@@ -28,7 +29,7 @@ class FrizeForm extends BaseParametersForm
     public function rules(): array
     {
         return [
-            [['digitPrice', 'freeDigitCount'], 'integer'],
+            [['digitPrice', 'freeDigitCount','friezeFieldType'], 'integer'],
         ];
     }
 
@@ -36,7 +37,8 @@ class FrizeForm extends BaseParametersForm
     {
         return [
             'freeDigitCount' => Yii::t('app','The number of free characters in the frieze inscription'),
-            'digitPrice' => Yii::t('app','The cost of the frieze lettering symbol')
+            'digitPrice' => Yii::t('app','The cost of the frieze lettering symbol'),
+            'friezeFieldType' => Yii::t('app','Input field type'),            
         ];
     }
 
@@ -52,6 +54,11 @@ class FrizeForm extends BaseParametersForm
             'attribute' => 'digitPrice',
             'value' => $this->digitPrice
         ];   
+        
+        $attributes['friezeFieldType'] = [
+            'attribute' => 'digitPrice',
+            'value' => $this->friezeFieldTypesList()[$this->friezeFieldType]
+        ];        
 
         return $attributes;        
     }

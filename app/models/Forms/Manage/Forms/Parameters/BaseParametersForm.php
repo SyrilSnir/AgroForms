@@ -5,6 +5,7 @@ namespace app\models\Forms\Manage\Forms\Parameters;
 use app\core\traits\Lists\GetCategoriesListTrait;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Requests\AttachedFiles;
+use app\models\Data\FriezeFieldTypes;
 use yii\base\Model;
 use function GuzzleHttp\json_decode;
 
@@ -62,6 +63,13 @@ abstract class BaseParametersForm extends Model
         ];
     }
 
+    public static function friezeFieldTypesList(): array 
+    {
+        return [
+            FriezeFieldTypes::INPUT_TYPE =>  t('Text field'),
+            FriezeFieldTypes::TEXTAREA_TYPE =>  t('Textarea'), 
+        ];
+    }    
 
     public function getUnitPrice() {
         if (property_exists($this, 'unitPrice')) {

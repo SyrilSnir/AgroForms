@@ -5,6 +5,7 @@ namespace app\core\traits;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\Forms\Manage\Forms\FieldParametersForm;
+use app\models\Forms\Manage\Forms\Parameters\AttachmentField;
 use app\models\Forms\Manage\Forms\Parameters\BadgesParameters;
 use app\models\Forms\Manage\Forms\Parameters\BaseParametersForm;
 use app\models\Forms\Manage\Forms\Parameters\FreeCountForm;
@@ -12,7 +13,6 @@ use app\models\Forms\Manage\Forms\Parameters\FrizeForm;
 use app\models\Forms\Manage\Forms\Parameters\GroupFieldParametersForm;
 use app\models\Forms\Manage\Forms\Parameters\HtmlBlockForm;
 use app\models\Forms\Manage\Forms\Parameters\TextBlockForm;
-use app\models\Forms\Requests\AttachedFilesForm;
 
 /**
  *
@@ -39,7 +39,7 @@ trait FieldParametersTrait
                 return new GroupFieldParametersForm($field);
             case ElementType::ELEMENT_FILE:
             case ElementType::ELEMENT_FILE_MULTIPLE:
-                return new \app\models\Forms\Manage\Forms\Parameters\AttachmentField($field);
+                return new AttachmentField($field);
             case ElementType::ELEMENT_ADDRESS_BLOCK:
             case ElementType::ELEMENT_IFORMATION_FORM:
                 return new FreeCountForm($field);

@@ -15,12 +15,22 @@ class AllParametersForm extends BaseParametersForm
 {  
     //put your code here
     public $required;
+    /**
+     * 
+     * @var bool
+     */
     public $isComputed;
+    /**
+     * 
+     * @var bool
+     */
+    public $hasCommentField;
     /**
      * 
      * @var int
      */
     public $specialPriceType;
+    public $friezeFieldType;
     public $allCategories;
     public $html;
     public $htmlEng;
@@ -61,9 +71,11 @@ class AllParametersForm extends BaseParametersForm
     {
         parent::__construct($field, $config);
         $this->isComputed = $this->paramsArray['isComputed'] ?? false;        
+        $this->hasCommentField = $this->paramsArray['hasCommentField'] ?? false;               
         $this->allCategories = $this->paramsArray['allCategories'] ?? true;
         $this->categories = $this->paramsArray['categories'] ?? [];
         $this->specialPriceType = $this->paramsArray['specialPriceType'] ?? 0;
+        $this->friezeFieldType = $this->paramsArray['friezeFieldType'] ?? 0;
         $this->required = $this->paramsArray['required'] ?? false; 
         $this->freeDigitCount = $this->paramsArray['freeDigitCount'] ?? 0;
         $this->freeCount = $this->paramsArray['freeCount'] ?? 0;
@@ -83,9 +95,9 @@ class AllParametersForm extends BaseParametersForm
     public function rules(): array
     {
         return [
-                [['required','isComputed','allCategories'], 'boolean'],
+                [['required','isComputed','allCategories','hasCommentField'], 'boolean'],
                 [['text','textEng','htmlEng','html'], 'safe'],
-                [['unit','unitPrice','specialPriceType','digitPrice', 'freeDigitCount','groupType','attachment','freeCount','metersPerOne'], 'integer'],
+                [['unit','unitPrice','specialPriceType','digitPrice','friezeFieldType', 'freeDigitCount','groupType','attachment','freeCount','metersPerOne'], 'integer'],
                 ['categories','each', 'rule' => ['integer']],            
             ];
     }         
@@ -102,14 +114,16 @@ class AllParametersForm extends BaseParametersForm
             'unitPrice' => Yii::t('app','Price per one'),
             'isComputed' => Yii::t('app','Calculated field'),
             'specialPriceType' => Yii::t('app', 'Calculation for special price rules'),
-            'allCategories' => Yii::t('app/equipment', 'All categories'),    
+            'allCategories' => Yii::t('app/equipment', 'All categories'),
             'categories' => Yii::t('app', 'Categories'),
             'freeDigitCount' => Yii::t('app','The number of free characters in the frieze inscription'),
             'digitPrice' => Yii::t('app','The cost of the frieze lettering symbol'),
             'groupType' => t('Group type'),
             'attachment' => t('Valid file types'),
-            'freeCount' => Yii::t('app','Number of free'),   
-            'metersPerOne' => Yii::t('app','m2 per badge (free)'),            
+            'freeCount' => Yii::t('app','Number of free'),
+            'metersPerOne' => Yii::t('app','m2 per badge (free)'),
+            'hasCommentField' => Yii::t('app','Comment available'),
+            'friezeFieldType' => Yii::t('app','Input field type'),
         ];
     }
 

@@ -83,7 +83,9 @@ class ElementType extends ActiveRecord
         self::ELEMENT_NUMBER_INPUT,
         self::ELEMENT_CHECK_NUMBER_INPUT
     ];
-    
+    const HAS_COMMENT = [
+        self::ELEMENT_CHECKBOX
+    ];
     const COMPUTED_FIELDS = [
         self::ELEMENT_CHECKBOX,
         self::ELEMENT_CHECK_NUMBER_INPUT,
