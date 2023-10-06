@@ -3,7 +3,7 @@ r<template>
         <span :class="{rubric__checked : isChecked}" @click="isActive=!isActive">
             <i v-show="hasChildren" class="fa fa-chevron-down" aria-hidden="true"></i>{{ name }}
             <i @click="addRubric" v-if="!isChecked" title="Добавить раздел" v-show="!hasChildren" class="add-item far fa-plus-square"></i>
-            <i @click="addRubric" v-else title="Удалить раздел" v-show="!hasChildren" class="remove-item far fa-minus-square"></i>
+            <i @click="removeRubric" v-else title="Удалить раздел" v-show="!hasChildren" class="remove-item far fa-minus-square"></i>
         </span>
         <ul v-show="isActive" v-if="hasChildren">
             <template v-for="rubric in rubrics.children"> 
@@ -63,8 +63,11 @@ export default {
             'id': this.id,
             'name': this.name,
         };
-        console.log(rubric);
+       // console.log(rubric);
         eventBus.$emit('rubricWasAdded', rubric);
+      },
+      removeRubric() {
+        eventBus.$emit('rubricWasDelete', this.id);
       }
      }
 };

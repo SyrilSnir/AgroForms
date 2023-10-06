@@ -73,6 +73,14 @@ import { labelMixin } from './Mixins/labelMixin';
                     this.selected.push(data);
                     this.$emit('changeField',this.getData());
                 });
+                eventBus.$on('rubricWasDelete', (data) => {
+                    let itemIndex =this.selected.findIndex((el) => {
+                      return (el.id == data)
+                    });
+                    if (itemIndex >= 0) {
+                      this.removeRubric(itemIndex);
+                    }
+                });
             })
         })
      },
