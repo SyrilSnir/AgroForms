@@ -44,7 +44,6 @@ use app\models\ActiveRecord\Users\User;
 use app\models\Data\Languages;
 use app\models\Data\SpecialPriceTypes;
 use Yii;
-use ZipStream\Test\TimeTest;
 use function GuzzleHttp\json_decode;
 
 /**
@@ -237,6 +236,14 @@ class FormHelper extends BaseFormHelper
             }
             if (key_exists('checked', $field)) {
                 $valuesList[$id]['checked'] = $field['checked'];
+            }
+            if (key_exists('checkbox', $field)) {
+                if (key_exists('hasCommentField', $field)) {
+                    $valuesList[$id]['hasCommentField'] = $field['hasCommentField'];
+                }
+                if (key_exists('comment', $field)) {
+                    $valuesList[$id]['comment'] = $field['comment'];
+                }            
             }
         }
         self::$valuesList = $valuesList;

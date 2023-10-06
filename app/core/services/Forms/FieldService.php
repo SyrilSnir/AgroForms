@@ -92,9 +92,11 @@ class FieldService
              $element['equip'] = $field['equip'];
              if (key_exists('checked', $field['data'])) {
                  $element['checked'] = $field['data']['checked'];
-
              }
-             
+             if ($element['checkbox'] && $element['checked']) {
+                 $element['comment'] = $field['data']['comment'];
+                 $element['hasCommentField'] = (bool) $field['data']['hasCommentField'];
+             }             
              $resultArray[$index] = $element;
          }
          return $resultArray;
