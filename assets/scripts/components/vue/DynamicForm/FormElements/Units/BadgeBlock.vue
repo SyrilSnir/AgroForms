@@ -41,7 +41,11 @@
            placeholder="">                        
        </div> 
    </div>
-        <div v-if="isComputed" class="field__price"><span class="price">{{ total }}</span> {{ dic.valute }}</div>
+   <table v-if="isComputed" class="table"><tbody>
+      <tr style="font-weight: 600">
+          <td>{{ getName('Итого','Total') }}:</td>
+          <td style="text-align: right"><span class="price">{{ total | separate }}</span> {{ dic.valute }}</td>
+      </tr></tbody></table> 
        <button @click="addFormBlock" class="btn btn-primary">{{ getName('Добавить еще', 'Add more')  }}</button>     
    </div> 
 </template>

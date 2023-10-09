@@ -36,7 +36,10 @@ class ElementAddressBlock extends FormElement implements CountableElementInterfa
     {
         if (key_exists('value', $valuesList)) {
             return $this->view->renderFile('@fields/address.php',[
-                'values' => $valuesList['value']
+                'values' => $valuesList['value'],
+                'price' => $this->getPrice($valuesList),
+                'isComputed' => $this->isComputed(),
+                'valute' => $this->field->form->valute->symbol                
             ]);
             }
         return '';

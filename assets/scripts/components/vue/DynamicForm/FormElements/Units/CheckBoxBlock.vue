@@ -23,7 +23,7 @@
         <table v-if="checked && isComputed" class="table"><tbody>
       <tr style="font-weight: 600">
           <td>{{ getName('Итого','Total') }}:</td>
-          <td style="text-align: right"><span class="price">{{ total }}</span> {{ dic.valute }}</td>
+          <td style="text-align: right"><span class="price">{{ total | separate }}</span> {{ dic.valute }}</td>
       </tr></tbody></table>       
 
     </div>
@@ -34,6 +34,7 @@
     import { labelMixin } from './Mixins/labelMixin'
     import { computedMixin } from './Mixins/computedMixin'
     import { textTranslateMixin } from './Mixins/textTranslateMixin';
+    import { numberFormatMixin } from './Mixins/numberFormatMixin';
     export default {
         props: [
             'lang',
@@ -51,7 +52,8 @@
            unitMixin,
            computedMixin,
            labelMixin,
-           textTranslateMixin
+           textTranslateMixin,
+           numberFormatMixin
        ],
        created() {
            this.$emit('changeField',this.getData());

@@ -30,4 +30,11 @@
                   </div>
                 </div>
 <?php endforeach; ?>
+      <?php if($isComputed):  ?>
+<table class="table"><tbody>
+      <tr style="font-weight: 600">
+          <td><?php echo t('Total','requests') ?>:</td>
+          <td style="text-align: right"><?php echo number_format($price, 0, '.', ' ') . ' ' . $valute ?></td>
+      </tr></tbody></table>
+      <?php endif; ?>
 

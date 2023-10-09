@@ -60,16 +60,16 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
         $attachmentType = (int) $fieldParams->attachment;
         switch ($attachmentType) {
             case AttachedFiles::STANDART_TYPE:
-                $renderedData = 'STANDART';
+                $renderedData = $this->renderCatalogHtml($valuesList);
                 break;
             case AttachedFiles::SITE_LOGO_TYPE:
-                $renderedData = $this->renderLogoHtml();
+                $renderedData = $this->renderLogoHtml($valuesList);
                 break;
             case AttachedFiles::CATALOG_LOGO_TYPE:
-                $renderedData = $this->renderCatalogHtml();
+                $renderedData = $this->renderCatalogHtml($valuesList);
                 break;
         }
-        return "<pre>". $renderedData . "</pre>";
+        return $renderedData;
     }
 
     public function renderPDF(array $valuesList = []): string
@@ -77,9 +77,16 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
         return '';
     }
 
-    protected function renderCatalogHtml():string
+    protected function renderCatalogHtml($valuesList):string
     {   
 
+        return $this->view->renderFile('@fields/file/other.php',[
+            'fieldName' => $this->field->name,
+            'price' => $this->getPrice($valuesList),
+            'isComputed' => $this->isComputed(),
+            'valute' => $this->field->form->valute->symbol,
+            'urls' => $this->getFilesUrl()
+        ]);        
         $result = '';
         $urls = $this->getFilesUrl();
         foreach ($urls as $url) {
@@ -91,18 +98,15 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
         return $result;
     }
     
-    protected function renderLogoHtml():string
+    protected function renderLogoHtml($valuesList):string
     {   
-
-        $result = '';
-        $urls = $this->getFilesUrl();
-        foreach ($urls as $url) {
-            $result.= '<div class="logo-block clearfix">' .
-'<div class="attachment-pushed">'.
-'<h4 class="attachment-heading">'. $this->field->name .
-'</h4></div><img class="attachment-img" src="'. $url. '" alt="Логотип"></div>';
-        }
-        return $result;
+        return $this->view->renderFile('@fields/file/logo.php',[
+            'fieldName' => $this->field->name,
+            'price' => $this->getPrice($valuesList),
+            'isComputed' => $this->isComputed(),
+            'valute' => $this->field->form->valute->symbol,
+            'urls' => $this->getFilesUrl()
+        ]);
     }
     
     protected function getFilesUrl(): array
