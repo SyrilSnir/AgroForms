@@ -129,6 +129,9 @@ import { numberFormatMixin } from './Mixins/numberFormatMixin';
  }
  </script>
  <style scope>
+ .block__rubricator {
+  margin-bottom: 10px;
+ }
  .block__rubricator span > i {
     padding: 10px;
     transition: transform 0.2s ease-in-out;
