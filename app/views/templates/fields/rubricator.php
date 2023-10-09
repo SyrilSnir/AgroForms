@@ -22,7 +22,10 @@
       <?php foreach ($valuesList as $element):?>
       <tr>
           <td><?php echo ++$index; ?></td>
-          <td><?php echo $isRussian ? $element['name']: $element['nameEng']; ?></td>
+          <td><?php echo $isRussian ? $element['name']: 
+                        (key_exists('nameEng', $element) ? 
+                            $element['nameEng'] : 
+                            $element['name']); ?></td>
       </tr>              
       <?php endforeach; ?>
       <?php if($isComputed):  ?>
