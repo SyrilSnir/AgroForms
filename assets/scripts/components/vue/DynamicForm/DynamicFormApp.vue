@@ -162,10 +162,9 @@ export default {
         let computed = false;
         let total = 0;
         if (field.hasOwnProperty(constants.ATTACHMENT_ATTRIBUTE)) {
-            if (!field.file) {
-                return;
+            if (field.file) {                
+                this.files[field.id] = field.file;
             }
-            this.files[field.id] = field.file;
            // return;
         }
         if(field.hasOwnProperty('computed')) {

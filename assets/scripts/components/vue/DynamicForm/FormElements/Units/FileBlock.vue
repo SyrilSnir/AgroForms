@@ -30,11 +30,19 @@
 
 
 </div>
+<table v-if="isComputed" class="table"><tbody>
+      <tr style="font-weight: 600">
+          <td>{{ getName('Итого','Total') }}:</td>
+          <td style="text-align: right"><span class="price">{{ total | separate }}</span> {{ dic.valute }}</td>
+      </tr></tbody></table> 
 </div>
 </template>
 <script>  
 import { labelMixin } from './Mixins/labelMixin';
 import { computedMixin } from './Mixins/computedMixin';
+import { textTranslateMixin } from './Mixins/textTranslateMixin';
+import { numberFormatMixin } from './Mixins/numberFormatMixin';
+
 import * as constants from '../../utils/constants';
 import axios from 'axios';
 export default {
@@ -66,14 +74,16 @@ export default {
         mimeFilter() {
             return this.params.file_types;
         },
+        hasFile() {
+            return this.isFileExist || this.isFileSelect;
+        },
         total() {
             let total = 0;
-            if (!this.isComputed && !(this.isFileExist || this.isFileSelect)) {
-                return 0;
-            }
-            total = +this.unitPrice;
-            if (isNaN(total)) {
-                return 0;
+            if (this.isComputed && this.hasFile) {
+                total = +this.unitPrice;
+                if (isNaN(total)) {                    
+                    return 0;
+                }
             }
             return total;               
         },        
@@ -85,7 +95,9 @@ export default {
     ],    
     mixins: [
         labelMixin,
-        computedMixin
+        computedMixin,
+        textTranslateMixin,
+        numberFormatMixin
     ],
     methods: {
         onChange(e) {
@@ -107,13 +119,13 @@ export default {
                 file: this.val,
                 valid: true,
                 data: {
-                    value: this.unitPrice,
+                    value: this.total,
                 },
                 [constants.ATTACHMENT_ATTRIBUTE]: true,
             };
             if (this.isComputed) {
                    data.computed = true;
-                   data.total = this.unitPrice;
+                   data.total = this.total;
             }            
             return data;
         },  
