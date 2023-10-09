@@ -71,6 +71,9 @@ import { numberFormatMixin } from './Mixins/numberFormatMixin';
  }
  </script>
  <style scope>
+     .card:last-child {
+        margin-bottom: 0;
+    }
     .card label {
         font-weight: 300!important;
     }

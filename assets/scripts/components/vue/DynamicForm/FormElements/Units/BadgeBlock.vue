@@ -78,6 +78,9 @@ import { numberFormatMixin } from './Mixins/numberFormatMixin';
  }
  </script>
  <style scope>
+    .card:last-child {
+        margin-bottom: 0;
+    } 
    .form-group {
       margin: 2rem 0;
    }
