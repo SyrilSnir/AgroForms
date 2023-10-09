@@ -80,7 +80,8 @@ export default {
     },
     props: [
         'params',
-        'dic'
+        'dic',
+        'lang'
     ],    
     mixins: [
         labelMixin,
