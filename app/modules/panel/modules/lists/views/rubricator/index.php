@@ -19,10 +19,10 @@ $tree = Rubricator::findOne(1)->sortedTree($showAll);
 <div class="col-md-6">            
     <div class="card card-default">
         <div class="card-header">
-            <h3 class="card-title">Рубриактор</h3>
+            <h3 class="card-title"><?= t('Rubricator', 'title') ?></h3>
             <div class="buttons__wrappper">
             <?php 
-    echo Html::button('Новый раздел',[
+    echo Html::button(t('New section'),[
                                     'class' => 'btn btn-sm btn-success',
                                     'onclick' => '(function(event) {
                     $.post("/panel/lists/rubricator/create-ajax").done(function(data) {
@@ -68,7 +68,6 @@ echo FancytreeWidget::widget([
   return ["before", "after"];
                         }'),
                         'dragDrop' => new JsExpression('function(node, data) {
-                            console.log("DRAGDROP", data.otherNode.data.id, node.data.id);
                             $.get("/panel/lists/rubricator/move", {
                                 item:  data.otherNode.data.id,
                                 second: node.data.id,

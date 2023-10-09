@@ -4,7 +4,7 @@
         <input @change="change" class="custom-control-input" type="checkbox" :id="id" v-model="checked">
         <label :for="id" class="custom-control-label">{{ titleLabel }}</label>
         <div style="margin-top: 10px;" class="col-12" v-if="hasComment && checked">    
-            <p>Комментарий</p>
+            <p>{{ getName('Комментарий','Comment')}}</p>
             <div class="input-group"> 
                 <textarea 
                     name="comment__lield" 
@@ -27,6 +27,7 @@
     import { unitMixin } from './Mixins/unitMixin'
     import { labelMixin } from './Mixins/labelMixin'
     import { computedMixin } from './Mixins/computedMixin'
+    import { textTranslateMixin } from './Mixins/textTranslateMixin';
     export default {
         props: [
             'lang'
@@ -42,7 +43,8 @@
        mixins: [
            unitMixin,
            computedMixin,
-           labelMixin
+           labelMixin,
+           textTranslateMixin
        ],
        created() {
            this.$emit('changeField',this.getData());

@@ -212,6 +212,8 @@ return [
     'Comment available' => 'Доступен комментарий',
     'Text field' => 'Поле ввода (input)',
     'Textarea' => 'Текстовая область (textarea)',
-    'Input field type' => 'Тип поля ввода'
+    'Input field type' => 'Тип поля ввода',
+    'Selected categories' => 'Выбранные рубрики',
+    'Rubric' => 'Рубрика'
 ];
 

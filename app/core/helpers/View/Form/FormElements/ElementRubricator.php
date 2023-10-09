@@ -2,6 +2,8 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\models\Data\Languages;
+
 /**
  * Description of ElementRubricator
  *
@@ -34,7 +36,15 @@ class ElementRubricator extends FormElement implements CountableElementInterface
 
     public function renderHtml(array $valuesList = []): string
     {
-        return 'Рубрикатор';
+        
+        return $this->view->renderFile('@fields/rubricator.php',[
+            'valuesList' => $valuesList['value'],
+            'price' => $this->getPrice($valuesList),
+            'isComputed' => $this->isComputed(),
+            'isRussian' => $this->langCode == Languages::RUSSIAN,
+            'valute' => $this->field->form->valute->symbol       
+        ]);
+
     }
 
     public function renderPDF(array $valuesList = []): string

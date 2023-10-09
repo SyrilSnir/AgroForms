@@ -3,6 +3,7 @@
 namespace app\controllers\api;
 
 use app\controllers\JsonController;
+use app\models\ActiveRecord\Nomenclature\Rubricator;
 
 /**
  * Description of RubricatorController
@@ -12,9 +13,8 @@ use app\controllers\JsonController;
 class RubricatorController extends JsonController
 {
     public function actionGetList() 
-    {
-        $r = new \app\models\ActiveRecord\Nomenclature\Rubricator();
-        $tree = $r->sortedTree();
+    {        
+        $tree = Rubricator::findOne(1)->sortedTree(false);
         return $tree;
     }
 }

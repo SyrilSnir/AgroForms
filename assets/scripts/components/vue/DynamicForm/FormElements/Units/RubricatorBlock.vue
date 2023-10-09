@@ -8,7 +8,7 @@
         </template>
         <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Выбранные рубрики</h3>
+                <h3 class="card-title">{{ getName('Выбранные рубрики', 'Selected categories') }}</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
@@ -16,14 +16,14 @@
                   <thead>
                     <tr>
                       <th width="40">#</th>
-                      <th>Рубрика</th>
+                      <th>{{ getName('Рубрика', 'Category')}}</th>
                       <th width="20"></th>
                     </tr>
                   </thead>
                   <tbody>                    
                     <tr v-for="(el,index) in selected" :key="index">
                       <td>{{ index+1 }}</td>
-                      <td>{{ el.name }}</td>
+                      <td>{{  getName(el.name,el.nameEng) }}</td>
                       <td><i @click="removeRubric(index)" class="far fa-times-circle"></i></td>
                     </tr>
                     <tr v-if="isComputed">

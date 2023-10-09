@@ -1,9 +1,9 @@
 r<template>
     <li>
         <span :class="{rubric__checked : isChecked}" @click="isActive=!isActive">
-            <i v-show="hasChildren" class="fa fa-chevron-down" aria-hidden="true"></i>{{ name }}
-            <i @click="addRubric" v-if="!isChecked" title="Добавить раздел" v-show="!hasChildren" class="add-item far fa-plus-square"></i>
-            <i @click="removeRubric" v-else title="Удалить раздел" v-show="!hasChildren" class="remove-item far fa-minus-square"></i>
+            <i v-show="hasChildren" class="fa fa-chevron-down" aria-hidden="true"></i>{{ getName(name,nameEng) }}
+            <i @click="addRubric" v-if="!isChecked" :title="getName('Добавить раздел', 'Add section')" v-show="!hasChildren" class="add-item far fa-plus-square"></i>
+            <i @click="removeRubric" v-else :title=" getName('Удалить раздел', 'Remove section')" v-show="!hasChildren" class="remove-item far fa-minus-square"></i>
         </span>
         <ul v-show="isActive" v-if="hasChildren">
             <template v-for="rubric in rubrics.children"> 
@@ -13,6 +13,8 @@ r<template>
     </li>
 </template>
 <script>
+import { textTranslateMixin } from '../Mixins/textTranslateMixin';
+
 import { eventBus } from '../../../eventBus'
 export default {
     name: "RubricatorElement",
@@ -25,6 +27,9 @@ export default {
         'rubrics',
         'rubricsInCatalog',
     ],
+    mixins: [
+        textTranslateMixin
+    ],
     beforeCreate: function () {
         this.$options.components.RubricatorElement = require('./RubricatorElement.vue').default
     },     
@@ -34,7 +39,10 @@ export default {
         },
         name() {
             return this.rubrics.name;
-        },        
+        }, 
+        nameEng() {
+            return this.rubrics.nameEng;
+        },                
         hasChildren() {
             return this.rubrics.children.length > 0;
         },
@@ -48,7 +56,6 @@ export default {
                  } 
                  return false;
             });
-            console.log(el);
             if (el) {
                 return true;
             } else {
@@ -62,6 +69,7 @@ export default {
         let rubric = {
             'id': this.id,
             'name': this.name,
+            'nameEng': this.nameEng
         };
        // console.log(rubric);
         eventBus.$emit('rubricWasAdded', rubric);
