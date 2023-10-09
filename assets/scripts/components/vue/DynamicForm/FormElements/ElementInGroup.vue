@@ -17,7 +17,15 @@ import UndefinedBlock from './Units/UndefinedBlock';
 import RadioBlock from './Units/RadioBlock';
 import EquipmentBlock from './Units/EquipmentBlock';
 import GroupBlock from './Units/GroupBlock';
-import ImportantInformationBlock from './Units/ImportantInformation';        
+import DateTimeBlock from './Units/DateTimeBlock';
+import DateBlock from './Units/DateBlock';
+import DateMultipleBlock from './Units/DateMultipleBlock';
+import ImportantInformationBlock from './Units/ImportantInformation';
+import FileBlock from './Units/FileBlock';
+import AddressBlock from './Units/AddressBlock';
+import BadgeBlock from './Units/BadgeBlock';
+import InformationForm from './Units/InformationForm';
+import RubricatorBlock from './Units/RubricatorBlock';       
 export default {
     props: [
         'unitData','lang','dic'
@@ -36,6 +44,14 @@ export default {
         'equipment': EquipmentBlock,
         'frieze': FriezeBlock,
       //  'group': GroupBlock,
+        'date-multiple': DateMultipleBlock,
+        'date-time': DateTimeBlock,
+        'date': DateBlock,
+        'file': FileBlock,
+        'address-block': AddressBlock,
+        'badge': BadgeBlock,
+        'information-form': InformationForm,
+        'rubricator': RubricatorBlock,      
         'undefined': UndefinedBlock        
         
     },
@@ -45,16 +61,23 @@ export default {
                 blockCheckbox: 1,
                 blockSelect: 2,
                 blockMultiSelect: 3,
+                blockDate: 4,
+                blockDateMultiple: 5,
                 blockRadio: 6,
                 blockNumberInput: 7,
                 blockCheckNumber: 8,
                 blockTextInput: 9,
+                blockFile: 10,
                 blockImportantInformation: 12,
                 blockImportant: 13,
                 blockHeader: 14,
                 blockEquipment: 15,
-                blockGroup: 16,
-                blockFrieze: 17
+                blockFrieze: 17,
+                blockDateTime: 18,
+                blockInformationForm: 20,
+                blockRubricator: 21,
+                blockBadge: 22,
+                blockAddress: 23,
             }
         }
     },
@@ -90,8 +113,22 @@ export default {
                     return 'equipment';  
                 case this.typesList.blockFrieze:
                     return 'frieze';
-                case this.typesList.blockGroup:
-                    return 'group';
+                case this.typesList.blockDateTime:
+                    return 'date-time';
+                case this.typesList.blockDate:
+                    return 'date';
+                case this.typesList.blockDateMultiple:
+                    return 'date-multiple';
+                case this.typesList.blockFile:
+                    return 'file';
+                case this.typesList.blockAddress:
+                    return 'address-block';
+                case this.typesList.blockInformationForm:
+                    return 'information-form';
+                case this.typesList.blockBadge:
+                    return 'badge';
+                case this.typesList.blockRubricator:
+                    return 'rubricator';
                 default:
                     return 'undefined';
             }
