@@ -48,6 +48,15 @@ class ElementAddressBlock extends FormElement implements CountableElementInterfa
 
     public function renderPDF(array $valuesList = []): string
     {
-        return 'BADGE';        
+        if (key_exists('value', $valuesList)) {
+            return $this->view->renderFile('@fields/address__pdf.php',[
+                'values' => $valuesList['value'],
+                'price' => $this->getPrice($valuesList),
+                'isComputed' => $this->isComputed(),
+                'valute' => $this->field->form->valute->symbol,
+                'title' => $this->field->name,
+            ]);
+            }
+        return '';        
     }
 }

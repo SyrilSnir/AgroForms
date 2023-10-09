@@ -48,6 +48,15 @@ class ElementInformationForm extends FormElement implements CountableElementInte
 
     public function renderPDF(array $valuesList = []): string
     {
-        return 'BADGE';        
+        if (key_exists('value', $valuesList)) {
+            return $this->view->renderFile('@fields/information__pdf.php',[
+                'values' => $valuesList['value'],
+                'price' => $this->getPrice($valuesList),
+                'isComputed' => $this->isComputed(),
+                'valute' => $this->field->form->valute->symbol,
+                'title' => $this->field->name,                
+            ]);
+            }
+        return '';       
     }
 }
