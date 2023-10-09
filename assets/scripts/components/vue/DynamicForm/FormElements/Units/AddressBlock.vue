@@ -12,14 +12,14 @@
                 </button>
             </div>
         </div>
-        <label>Страна:</label>
+        <label>{{ getName('Страна', 'Country') }}:</label>
         <input 
             type="text" 
             class="form-control"
             v-model="item.country"
            @change="onChange($event)"               
             placeholder="">
-            <label>Область:</label>
+            <label>{{ getName('Область','Region') }}:</label>
         <input 
 
             type="text" 
@@ -27,21 +27,21 @@
             v-model="item.area"
            @change="onChange($event)"               
             placeholder="">
-            <label>Город:</label>
+            <label>{{ getName('Город', 'City') }}:</label>
         <input 
             type="text" 
             class="form-control"
             v-model="item.city"
            @change="onChange($event)"               
             placeholder="">                        
-            <label>Индекс:</label>
+            <label>{{ getName('Индекс', 'Poscode') }}:</label>
         <input 
             type="text" 
             class="form-control"
             v-model="item.index"
            @change="onChange($event)"               
             placeholder="">                        
-            <label>Адрес:</label>
+            <label>{{ getName('Адрес', 'Address') }}:</label>
         <input 
             type="text" 
             class="form-control"
@@ -50,13 +50,16 @@
             placeholder="">                        
         </div> 
     </div> 
-        <button @click="addFormBlock" class="btn btn-primary">Добавить еще</button>     
+    <div v-if="isComputed" class="field__price"><span class="price">{{ total }}</span> {{ dic.valute }}</div>
+        <button @click="addFormBlock" class="btn btn-primary">{{ getName('Добавить еще', 'Add more')  }}</button>     
     </div> 
  </template>
  <script>
-import { labelMixin } from './Mixins/labelMixin';
 import { computedMixin } from './Mixins/computedMixin';
 import { formList } from './Mixins/formListMixin';
+import { labelMixin } from './Mixins/labelMixin';
+import { textTranslateMixin } from './Mixins/textTranslateMixin';
+import { numberFormatMixin } from './Mixins/numberFormatMixin';
 
  export default {
      data() {
@@ -64,19 +67,20 @@ import { formList } from './Mixins/formListMixin';
             defaultElement : {
                     country: '',
                     area: '',
-                    areaEng: '',
                     city: '',
-                    cityEng: '',
                     index: '',
                     address: '',
                 },
         }
      },
+     props: ['params','dic','lang'],  
      mixins: [
       labelMixin,
       computedMixin,
-      formList
-     ],     
+      formList,
+      textTranslateMixin,
+      numberFormatMixin
+     ],    
  }
  </script>
  <style scope>

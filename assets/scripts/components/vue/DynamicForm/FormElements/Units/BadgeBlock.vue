@@ -11,28 +11,28 @@
                </button>
            </div>
        </div>
-       <label>Имя:</label>
+       <label>{{ getName('Имя', 'Name') }}:</label>
        <input 
            type="text" 
            class="form-control"
            v-model="item.name"
            @change="onChange($event)"           
            placeholder="">
-      <label>Отчество:</label>
+      <label>{{ getName('Отчество', 'Middle Name') }}:</label>
        <input 
            type="text" 
            class="form-control"
            v-model="item.middleName" 
            @change="onChange($event)"                     
            placeholder="">                        
-           <label>Фамилия:</label>
+           <label>{{ getName('Фамилия', 'Surname') }}:</label>
        <input 
            type="text" 
            class="form-control"
            v-model="item.surName" 
            @change="onChange($event)"       
            placeholder="">                        
-           <label>Компания:</label>
+           <label>{{ getName('Компания', 'Company')}}:</label>
            <input 
            type="text" 
            class="form-control"
@@ -40,14 +40,18 @@
            @change="onChange($event)"           
            placeholder="">                        
        </div> 
-   </div> 
-       <button @click="addFormBlock" class="btn btn-primary">Добавить еще</button>     
+   </div>
+        <div v-if="isComputed" class="field__price"><span class="price">{{ total }}</span> {{ dic.valute }}</div>
+       <button @click="addFormBlock" class="btn btn-primary">{{ getName('Добавить еще', 'Add more')  }}</button>     
    </div> 
 </template>
  <script>
 import { labelMixin } from './Mixins/labelMixin';
 import { computedMixin } from './Mixins/computedMixin';
 import { formList } from './Mixins/formListMixin';
+import { textTranslateMixin } from './Mixins/textTranslateMixin';
+import { numberFormatMixin } from './Mixins/numberFormatMixin';
+
  export default {
    data() {
         return {
@@ -58,11 +62,14 @@ import { formList } from './Mixins/formListMixin';
                     company: '',
                 },
         }
-     },   
+     },
+     props: ['params','dic','lang'],   
      mixins: [
       labelMixin,
       computedMixin,
-      formList
+      formList,
+      textTranslateMixin,
+      numberFormatMixin
      ],
  }
  </script>

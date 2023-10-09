@@ -21,11 +21,14 @@
                     </tr>
                   </thead>
                   <tbody>                    
-                    <tr v-for="(el,index) in selected">
+                    <tr v-for="(el,index) in selected" :key="index">
                       <td>{{ index+1 }}</td>
                       <td>{{ el.name }}</td>
                       <td><i @click="removeRubric(index)" class="far fa-times-circle"></i></td>
                     </tr>
+                    <tr v-if="isComputed">
+                      <td colspan="5" class="total">{{ dic.total.totalMsg }}: {{ total | separate }} {{ dic.valute }}</td>
+                  </tr>                    
                   </tbody>
                 </table>
               </div>
@@ -37,6 +40,8 @@
  import RubricatorElement from './Components/RubricatorElement';
  import { computedMixin } from './Mixins/computedMixin';
 import { labelMixin } from './Mixins/labelMixin';
+import { textTranslateMixin } from './Mixins/textTranslateMixin';
+import { numberFormatMixin } from './Mixins/numberFormatMixin';
 
  import { eventBus } from '../../eventBus'
  export default {
@@ -50,10 +55,12 @@ import { labelMixin } from './Mixins/labelMixin';
             selected: []
         }
      },
-     props: ['params'],
+     props: ['params','dic','lang'],
      mixins: [
       computedMixin,
-      labelMixin
+      labelMixin,
+      textTranslateMixin,
+      numberFormatMixin
      ],
      components : {
         RubricatorElement

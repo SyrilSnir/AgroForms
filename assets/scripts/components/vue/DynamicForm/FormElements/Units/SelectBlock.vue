@@ -15,6 +15,8 @@ import { selectMixin } from './Mixins/selectMixin';
 import { computedMixin } from './Mixins/computedMixin';  
 import { labelMixin } from './Mixins/labelMixin'
 import { textTranslateMixin } from './Mixins/textTranslateMixin';
+import { numberFormatMixin } from './Mixins/numberFormatMixin';
+
 export default {
         props: [
             'lang','dic'
@@ -71,7 +73,8 @@ export default {
            selectMixin,
            computedMixin,
            labelMixin,
-           textTranslateMixin           
+           textTranslateMixin,
+           numberFormatMixin        
        ],    
 }
 </script>

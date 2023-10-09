@@ -11,7 +11,7 @@
                 </button>
             </div>
         </div>
-        <label>Сайт:</label>
+        <label>{{ getName('Сайт','Site') }}:</label>
         <input 
             type="text" 
             class="form-control"
@@ -26,7 +26,7 @@
             v-model="item.email"
            @change="onChange($event)"               
             placeholder="">
-            <label>Телефон:</label>
+            <label>{{getName('Телефон', 'Phone')}}:</label>
         <input 
             type="text" 
             class="form-control"
@@ -35,13 +35,16 @@
             placeholder="">                        
         </div>       
     </div> 
-        <button @click="addFormBlock" class="btn btn-primary">Добавить еще</button>     
+        <div v-if="isComputed" class="field__price"><span class="price">{{ total }}</span> {{ dic.valute }}</div>
+        <button @click="addFormBlock" class="btn btn-primary">{{ getName('Добавить еще', 'Add more')  }}</button>     
     </div>  
  </template>
  <script>
  import { labelMixin } from './Mixins/labelMixin';
 import { computedMixin } from './Mixins/computedMixin';
 import { formList } from './Mixins/formListMixin';
+import { textTranslateMixin } from './Mixins/textTranslateMixin';
+import { numberFormatMixin } from './Mixins/numberFormatMixin';
 
  export default {
     data() {
@@ -53,10 +56,13 @@ import { formList } from './Mixins/formListMixin';
                 },
         }
      },
+     props: ['params','dic','lang'],
      mixins: [
       labelMixin,
       computedMixin,
-      formList
+      formList,
+      textTranslateMixin,
+        numberFormatMixin  
      ],        
  }
  </script>
