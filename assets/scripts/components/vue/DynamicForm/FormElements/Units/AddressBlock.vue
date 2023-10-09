@@ -88,4 +88,10 @@ import { numberFormatMixin } from './Mixins/numberFormatMixin';
  }
  </script>
  <style scope>
+    .card label {
+        font-weight: 300!important;
+    }
+    .card-title {
+        font-weight: 700;
+    }
  </style>

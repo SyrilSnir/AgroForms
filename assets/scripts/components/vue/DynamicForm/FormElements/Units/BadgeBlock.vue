@@ -81,4 +81,10 @@ import { numberFormatMixin } from './Mixins/numberFormatMixin';
    .form-group {
       margin: 2rem 0;
    }
+   .card label {
+        font-weight: 300!important;
+    }
+    .card-title {
+        font-weight: 700;
+    }   
  </style>

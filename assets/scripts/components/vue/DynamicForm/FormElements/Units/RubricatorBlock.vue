@@ -12,9 +12,7 @@
                 <table class="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th width="40">#</th>
-                      <th>{{ getName('Рубрика', 'Category')}}</th>
-                      <th width="20"></th>
+                      <th colspan="3">{{ getName('Выбранные рубрики', 'Selected categories') }}</th>
                     </tr>
                   </thead>
                   <tbody>                    
@@ -141,6 +139,7 @@ import { numberFormatMixin } from './Mixins/numberFormatMixin';
  .block__rubricator .main {
     /* padding: 15px 15px 15px 45px; */
     font-size: 18px;
+    font-weight: 700;
  }
 ul {
     margin-left: 20px;
