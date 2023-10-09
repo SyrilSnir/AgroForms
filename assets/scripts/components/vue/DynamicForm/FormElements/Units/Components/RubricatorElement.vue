@@ -24,6 +24,7 @@ export default {
         }
     },
     props: [
+        'lang',
         'rubrics',
         'rubricsInCatalog',
     ],

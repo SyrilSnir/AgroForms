@@ -3,13 +3,10 @@
        <div @click="isActive=!isActive" class="main"><span :class="{ active: isActive}"><i class="fa fa-chevron-down" aria-hidden="true"></i>{{ titleLabel }}</span></div>
         <template v-for="rubric in rubrics[0].children"> 
             <ul class="wtree">
-              <rubricator-element :rubricsInCatalog="selected" v-show="isActive" :rubrics="rubric"></rubricator-element>
+              <rubricator-element :rubricsInCatalog="selected" v-show="isActive" :rubrics="rubric" :lang="lang"></rubricator-element>
             </ul>                       
         </template>
         <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{{ getName('Выбранные рубрики', 'Selected categories') }}</h3>
-              </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
@@ -22,12 +19,12 @@
                   </thead>
                   <tbody>                    
                     <tr v-for="(el,index) in selected" :key="index">
-                      <td>{{ index+1 }}</td>
-                      <td>{{  getName(el.name,el.nameEng) }}</td>
+                      <td>{{ index + 1 }}</td>
+                      <td>{{ getName(el.name,el.nameEng) }}</td>
                       <td><i @click="removeRubric(index)" class="far fa-times-circle"></i></td>
                     </tr>
                     <tr v-if="isComputed">
-                      <td colspan="5" class="total">{{ dic.total.totalMsg }}: {{ total | separate }} {{ dic.valute }}</td>
+                      <th class="total">{{ dic.total.totalMsg }}:</th><th colspan="2" style="text-align: right;">{{ total | separate }} {{ dic.valute }}</th>
                   </tr>                    
                   </tbody>
                 </table>
