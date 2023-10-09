@@ -74,7 +74,21 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
 
     public function renderPDF(array $valuesList = []): string
     {
-        return '';
+        /** @var AttachmentField $fieldParams */
+        $fieldParams = $this->field->getFieldParams();
+        $attachmentType = (int) $fieldParams->attachment;
+        switch ($attachmentType) {
+            case AttachedFiles::STANDART_TYPE:
+                $renderedData = $this->renderCatalogPdf($valuesList);
+                break;
+            case AttachedFiles::SITE_LOGO_TYPE:
+                $renderedData = $this->renderLogoPdf($valuesList);
+                break;
+            case AttachedFiles::CATALOG_LOGO_TYPE:
+                $renderedData = $this->renderCatalogPdf($valuesList);
+                break;
+        }
+        return $renderedData;
     }
 
     protected function renderCatalogHtml($valuesList):string
@@ -86,16 +100,7 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
             'isComputed' => $this->isComputed(),
             'valute' => $this->field->form->valute->symbol,
             'urls' => $this->getFilesUrl()
-        ]);        
-        $result = '';
-        $urls = $this->getFilesUrl();
-        foreach ($urls as $url) {
-            $result.= '<div class="catalog-block clearfix">' .
-'<div class="attachment-pushed">'.
-'<h4 class="attachment-heading">'. $this->field->name .
-'</h4></div><a class="attachment-catalog" href="'. $url. '">'. $url. '</a></div>';
-        }
-        return $result;
+        ]);
     }
     
     protected function renderLogoHtml($valuesList):string
@@ -108,6 +113,29 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
             'urls' => $this->getFilesUrl()
         ]);
     }
+    
+    protected function renderCatalogPdf($valuesList):string
+    {   
+
+        return $this->view->renderFile('@fields/file/other__pdf.php',[
+            'fieldName' => $this->field->name,
+            'price' => $this->getPrice($valuesList),
+            'isComputed' => $this->isComputed(),
+            'valute' => $this->field->form->valute->symbol,
+            'urls' => $this->getFilesUrl()
+        ]);
+    }
+    
+    protected function renderLogoPdf($valuesList):string
+    {   
+        return $this->view->renderFile('@fields/file/logo__pdf.php',[
+            'fieldName' => $this->field->name,
+            'price' => $this->getPrice($valuesList),
+            'isComputed' => $this->isComputed(),
+            'valute' => $this->field->form->valute->symbol,
+            'urls' => $this->getFilesUrl()
+        ]);
+    }    
     
     protected function getFilesUrl(): array
     {

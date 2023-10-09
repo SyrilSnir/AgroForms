@@ -3,8 +3,6 @@
                             <tr>
                                 <th style="color:black;font-size: 9pt;width: 15px" colspan="2"><?= $title . ' №' . ++$index ?></th>            
                             </tr>
-                        </thead>                        
-                      <tbody>
                       <tr>
                         <th style="color:black;font-size: 8pt;width: 15px"><?= t('Surname', 'user')?></th>
                         <td style="font-size: 8pt;width: 15px"><?= $value['surName']?></td>

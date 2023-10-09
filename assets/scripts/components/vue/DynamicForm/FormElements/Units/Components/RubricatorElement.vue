@@ -1,6 +1,6 @@
 r<template>
     <li>
-        <span :class="{rubric__checked : isChecked}" @click="isActive=!isActive">
+        <span :class="{rubric__checked : isChecked,active: isActive}" @click="isActive=!isActive">
             <i v-show="hasChildren" class="fa fa-chevron-down" aria-hidden="true"></i>{{ getName(name,nameEng) }}
             <i @click="addRubric" v-if="!isChecked" :title="getName('Добавить раздел', 'Add section')" v-show="!hasChildren" class="add-item far fa-plus-square"></i>
             <i @click="removeRubric" v-else :title=" getName('Удалить раздел', 'Remove section')" v-show="!hasChildren" class="remove-item far fa-minus-square"></i>

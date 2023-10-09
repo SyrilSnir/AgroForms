@@ -147,6 +147,7 @@ import { numberFormatMixin } from './Mixins/numberFormatMixin';
  }
 ul {
     margin-left: 20px;
+    margin-bottom: 0;
 }
 
 .wtree li {

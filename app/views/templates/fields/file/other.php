@@ -9,7 +9,7 @@
 <div class="logo-block clearfix">
 <div class="attachment-pushed">
 <h4 class="attachment-heading"><?= $fieldName ?></h4>
-</div><a class="attachment-catalog" href="'. $url. '"><?= $url ?></a></div>
+</div><a class="attachment-catalog" href="<?= $url ?>"><?= $url ?></a></div>
 <?php endforeach; ?>
       <?php if($isComputed && !empty($urls)):  ?>
 <table class="table"><tbody>
@@ -18,4 +18,3 @@
           <td style="text-align: right"><?php echo number_format($price, 0, '.', ' ') . ' ' . $valute ?></td>
       </tr></tbody></table>
       <?php endif; ?>
-

@@ -5,11 +5,11 @@
 /** @var int $price */
 /** @var string $valute */
 ?>
-<?php        foreach ($urls as $url): ?>
+<?php foreach ($urls as $url): ?>
 <div class="logo-block clearfix">
 <div class="attachment-pushed">
 <h4 class="attachment-heading"><?= $fieldName ?>
-</h4></div><img class="attachment-img" src="<?= $url ?>" alt="Логотип"></div>
+</h4></div><img class="attachment-img" src="<?= $url ?>" alt="<?= $fieldName ?>"></div>
 <?php endforeach; ?>
       <?php if($isComputed && !empty($urls)):  ?>
 <table class="table"><tbody>
