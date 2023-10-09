@@ -50,7 +50,6 @@ export default {
             if (this.hasChildren) return false;
             //return //this.rubricsInCatalog // .eve
             let el = this.rubricsInCatalog.find((element) => {  
-                console.log(element.id,this.id);
                 if (element.id == this.id) {
                     return true;
                  } 

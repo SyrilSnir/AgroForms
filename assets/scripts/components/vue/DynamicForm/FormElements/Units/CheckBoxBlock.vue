@@ -20,6 +20,12 @@
                         
             </div>
         </div>
+        <table v-if="checked && isComputed" class="table"><tbody>
+      <tr style="font-weight: 600">
+          <td>{{ getName('Итого','Total') }}:</td>
+          <td style="text-align: right"><span class="price">{{ total }}</span> {{ dic.valute }}</td>
+      </tr></tbody></table>       
+
     </div>
 </div>
 </template>
@@ -30,7 +36,8 @@
     import { textTranslateMixin } from './Mixins/textTranslateMixin';
     export default {
         props: [
-            'lang'
+            'lang',
+            'dic'
         ],         
        data() {
            return {
