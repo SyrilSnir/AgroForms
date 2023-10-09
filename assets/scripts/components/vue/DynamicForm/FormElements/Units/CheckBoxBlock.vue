@@ -9,7 +9,7 @@
                 <textarea 
                     name="comment__lield" 
                     cols="30" 
-                    rows="10"
+                    :rows="rows"
                     type="text" 
                     class="form-control"
                     v-model="comment"
@@ -45,7 +45,7 @@
                 id: 'id' + this.params.id,                 
                 checked: this.params.checked,
                 comment: '',
-                valid: true                
+                valid: true,              
            }
        },        
        mixins: [
@@ -60,6 +60,9 @@
            this.comment = this.params.comment;
        }, 
        computed: { 
+            rows() {
+                return Math.round(this.comment.length / 100) + 1;
+            },
             hasComment() {
                 return this.parameters.hasCommentField == 1;
             },       

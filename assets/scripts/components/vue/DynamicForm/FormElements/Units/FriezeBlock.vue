@@ -15,7 +15,7 @@
                     v-else
                     name="frieze__area" 
                     cols="30" 
-                    rows="10"
+                    :rows="rows"
                     :id="id"
                     type="text" 
                     class="form-control"
@@ -69,6 +69,9 @@
         symsLength() {
             return this.val.trim().length;
         },
+        rows() {
+                return Math.round(this.val.length / 100) + 1;
+            },        
         frizeDigitPrice() {
             return parseInt(this.params.parameters.digitPrice);
         },
