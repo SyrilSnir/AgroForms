@@ -12,6 +12,7 @@
         <tr>
             <th colspan="2"><?= $title ?></th>            
         </tr>
+    </thead>
       <tr> 
         <th style="width: 15px"><?php echo t('Serial number') ?></th>
         <th style="text-align: left"><?php echo t('Rubric') ?></th>

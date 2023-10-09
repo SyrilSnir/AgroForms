@@ -1,6 +1,6 @@
 <template>
     <div class="block__rubricator">
-       <div @click="isActive=!isActive" class="main"><span :class="{ active: isActive}"><i class="fa fa-chevron-down" aria-hidden="true"></i>{{ titleLabel}}</span></div>
+       <div @click="isActive=!isActive" class="main"><span :class="{ active: isActive}"><i class="fa fa-chevron-down" aria-hidden="true"></i>{{ titleLabel }}</span></div>
         <template v-for="rubric in rubrics[0].children"> 
             <ul class="wtree">
               <rubricator-element :rubricsInCatalog="selected" v-show="isActive" :rubrics="rubric"></rubricator-element>

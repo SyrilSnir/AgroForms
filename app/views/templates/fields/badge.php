@@ -1,3 +1,6 @@
+<?php 
+    /** @var string $title */
+?>
 <?php $index = 1; ?>
 <?php foreach ($values as $value) :?>
 <div class="col-6">
@@ -5,21 +8,26 @@
 
                   <div class="table-responsive">
                     <table class="table">
+                        <thead>
+                            <tr>
+                                <th colspan="2"><?= $title ?></th>            
+                            </tr>
+                        </thead>                        
                       <tbody>
                       <tr>
-                        <th style="width:50%">Фамилия</th>
+                        <th style="width:50%"><?= t('Surname', 'user')?></th>
                         <td><?= $value['surName']?></td>
                       </tr>                          
                           <tr>
-                        <th>Имя</th>
+                        <th><?= t('Name', 'user')?></th>
                         <td><?= $value['name']?></td>
                       </tr>
                       <tr>
-                        <th>Отчество</th>
+                        <th><?= t('Middle Name', 'user')?></th>
                         <td><?= $value['middleName']?></td>
                       </tr>
                       <tr>
-                        <th>Компания</th>
+                        <th><?= t('Company', 'user')?></th>
                         <td><?= $value['company']?></td>
                       </tr>                      
                     </tbody></table>

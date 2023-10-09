@@ -50,7 +50,8 @@ class ElementBadge  extends FormElement implements CountableElementInterface
     {
         if (key_exists('value', $valuesList)) {
             return $this->view->renderFile('@fields/badge.php',[
-                'values' => $valuesList['value']
+                'values' => $valuesList['value'],
+                'title' => $this->field->name,
             ]);
             }
         return '';

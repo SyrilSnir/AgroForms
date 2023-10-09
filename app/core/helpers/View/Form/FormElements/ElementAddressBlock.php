@@ -39,7 +39,8 @@ class ElementAddressBlock extends FormElement implements CountableElementInterfa
                 'values' => $valuesList['value'],
                 'price' => $this->getPrice($valuesList),
                 'isComputed' => $this->isComputed(),
-                'valute' => $this->field->form->valute->symbol                
+                'valute' => $this->field->form->valute->symbol,
+                'title' => $this->field->name,
             ]);
             }
         return '';

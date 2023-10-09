@@ -31,5 +31,8 @@ return [
   'Enter your email or leave the one specified during registration' => 'Введите email или оставьте указанный при регистрации',
   'By this link you can activate the user' => 'По данной ссылке можно активировать пользователя',
   'Blocked' => 'Заблокирован',
+  'Name' => 'Имя',
+  'Surname' => 'Фамилия',
+  'Middle Name' => 'Отчество',
 ];
 

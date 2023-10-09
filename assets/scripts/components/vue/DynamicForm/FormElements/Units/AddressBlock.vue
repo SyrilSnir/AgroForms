@@ -34,7 +34,7 @@
             v-model="item.city"
            @change="onChange($event)"               
             placeholder="">                        
-            <label>{{ getName('Индекс', 'Poscode') }}:</label>
+            <label>{{ getName('Индекс', 'Zip code') }}:</label>
         <input 
             type="text" 
             class="form-control"

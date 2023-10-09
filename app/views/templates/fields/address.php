@@ -1,3 +1,6 @@
+<?php 
+    /** @var string $title */
+?>
 <?php $index = 1; ?>
 <?php foreach ($values as $value) :?>
 <div class="col-6">
@@ -5,25 +8,30 @@
 
                   <div class="table-responsive">
                     <table class="table">
+                        <thead>
+                            <tr>
+                                <th colspan="2"><?= $title ?></th>            
+                            </tr>
+                        </thead>                         
                       <tbody>
                       <tr>
-                        <th style="width:50%">Страна</th>
+                        <th style="width:50%"><?= t('Country')?></th>
                         <td><?= $value['country']?></td>
                       </tr>                          
                           <tr>
-                        <th>Область</th>
+                        <th><?= t('Region') ?></th>
                         <td><?= $value['area']?></td>
                       </tr>
                       <tr>
-                        <th>Город</th>
+                        <th><?= t('City')?></th>
                         <td><?= $value['city']?></td>
                       </tr>
                       <tr>
-                        <th>Ардес</th>
+                        <th><?= t('Address')?></th>
                         <td><?= $value['address']?></td>
                       </tr>                      
                       <tr>
-                        <th>Индекс</th>
+                        <th><?= t('Zip code', 'company')?></th>
                         <td><?= $value['index']?></td>
                       </tr>                       
                     </tbody></table>

@@ -214,6 +214,8 @@ return [
     'Textarea' => 'Текстовая область (textarea)',
     'Input field type' => 'Тип поля ввода',
     'Selected categories' => 'Выбранные рубрики',
-    'Rubric' => 'Рубрика'
+    'Rubric' => 'Рубрика',
+    'Region' => 'Область'
+
 ];
 
