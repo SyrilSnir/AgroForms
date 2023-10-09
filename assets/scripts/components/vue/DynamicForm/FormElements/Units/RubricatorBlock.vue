@@ -152,7 +152,7 @@ ul {
 
 .wtree li {
   list-style-type: none;
-   margin: 5px 0 5px 5px;
+   margin: 2px 0 2px 5px;
   position: relative;
 }
 .wtree li:before {
@@ -181,7 +181,7 @@ ul {
 .wtree li span {
   display: block;
   border: 1px solid #ddd;
-  padding: 5px; 
+  padding: 2px; 
   color: #000;
   text-decoration: none;
 }

@@ -11,7 +11,7 @@ use app\core\helpers\View\Form\FormElements\ElementCheckbox;
 
 <div class="input__field"><div class="field__name"><?= $fieldName ?></div>
 <?php  if (key_exists('value', $valuesList) && $valuesList['value'] > 0) : ?>
-    <div class="field__value form-control"><?= $checkbox->modifyPrice($valuesList['value']).' '. $valute ?></div>                
+    <div class="field__value form-control"><?= $checkbox->modifyPrice($valuesList['value']).' '. $valute ?></div>
 <?php endif;?>   
 
 </div>
