@@ -26,7 +26,7 @@ class ElementBadge  extends FormElement implements CountableElementInterface
         if ($metersPerOne <= 0 && $standSquare <= 0) {
             $data['parameters']['freeCount'] = 0;
         } else {
-            $data['parameters']['freeCount'] = intval($standSquare / $metersPerOne);
+            $data['parameters']['freeCount'] = ceil($standSquare / $metersPerOne);
         }
         if ($this->contract) {
             $data['badge_info'] = [
@@ -43,7 +43,19 @@ class ElementBadge  extends FormElement implements CountableElementInterface
     }
     public function getPrice(array $valuesList = []): int
     {
-        return 0;
+        if (!$this->isComputed() || !key_exists('value', $valuesList)) {
+            return 0;
+        }
+       // $this->contract->stand_square
+        $standSquare = $this->contract->stand_square;
+        $params = $this->getParameters();
+        $freeCount = ceil($standSquare / $params['metersPerOne'] );
+        $unitPrice = $params['unitPrice'];
+        $blocksCount = count($valuesList['value']);
+        if ($unitPrice <= 0 || $blocksCount <= $freeCount) {            
+            return 0;
+        }
+        return $unitPrice * ($blocksCount - $freeCount);
     }
 
     public function renderHtml(array $valuesList = []): string
@@ -52,14 +64,26 @@ class ElementBadge  extends FormElement implements CountableElementInterface
             return $this->view->renderFile('@fields/badge.php',[
                 'values' => $valuesList['value'],
                 'title' => $this->field->name,
+                'isComputed' => $this->isComputed(),
+                'price' => $this->getPrice($valuesList),                
+                'valute' => $this->field->form->valute->symbol,              
             ]);
-            }
+        }
         return '';
     }
 
     public function renderPDF(array $valuesList = []): string
     {
-        return 'BADGE';        
+        if (key_exists('value', $valuesList)) {
+            return $this->view->renderFile('@fields/badge__pdf.php',[
+                'values' => $valuesList['value'],
+                'title' => $this->field->name,
+                'isComputed' => $this->isComputed(),
+                'price' => $this->getPrice($valuesList),                
+                'valute' => $this->field->form->valute->symbol,              
+            ]);
+        }
+        return '';       
     }
     
     public function getContract(): Contracts

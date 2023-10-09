@@ -1,16 +1,15 @@
 <?php 
     /** @var string $title */
+    /** @var [] $values */
 ?>
-<?php $index = 1; ?>
+<?php $index = 0; ?>
 <?php foreach ($values as $value) :?>
 <div class="col-6">
-                  <p class="lead">#<?= $index++ ?></p>
-
                   <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th colspan="2"><?= $title ?></th>            
+                                <th colspan="2"><?= $title . ' №' . ++$index ?></th>            
                             </tr>
                         </thead>                        
                       <tbody>
@@ -34,3 +33,10 @@
                   </div>
                 </div>
 <?php endforeach; ?>
+      <?php if($isComputed):  ?>
+<table class="table"><tbody>
+      <tr style="font-weight: 600">
+          <td><?php echo t('Total','requests') ?>:</td>
+          <td style="text-align: right"><?php echo number_format($price, 0, '.', ' ') . ' ' . $valute ?></td>
+      </tr></tbody></table>
+      <?php endif; ?>
