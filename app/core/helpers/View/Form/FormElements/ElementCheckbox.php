@@ -11,14 +11,14 @@ class ElementCheckbox extends FormElement implements CountableElementInterface
 {    
     public function renderHtml(array $valuesList = []): string
     {
-        if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {
-            $text = '<div class="input__field"><div class="field__name">' . $this->field->name .  ':</div>'; 
-            if (key_exists('value', $valuesList) && $valuesList['value'] > 0) {
-                $text .= '<div class="field__value form-control">' . $this->modifyPrice($valuesList['value']) . ' '. $this->field->form->valute->symbol . '</div>';
-            }
-            return $text . '</div>';
-        }
-        return '';
+        return $this->view->renderFile('@fields/checkbox.php',[
+            'fieldName' => $this->field->name,
+            'valuesList' => $valuesList,
+            'checkbox' => $this,
+            'valute' => $this->field->form->valute->symbol,
+            'hasComment' => !!$valuesList['hasCommentField'],
+            'comment' => $valuesList['comment']
+        ]);
     }
     
     protected function transformData(array $fieldList, array $valuesList = []): array
