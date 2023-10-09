@@ -42,7 +42,8 @@ class ElementRubricator extends FormElement implements CountableElementInterface
             'price' => $this->getPrice($valuesList),
             'isComputed' => $this->isComputed(),
             'isRussian' => $this->langCode == Languages::RUSSIAN,
-            'valute' => $this->field->form->valute->symbol       
+            'valute' => $this->field->form->valute->symbol,
+            'title' => $this->field->name
         ]);
 
     }

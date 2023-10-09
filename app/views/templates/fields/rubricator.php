@@ -2,12 +2,16 @@
 /** @var [] $valuesList */
 /** @var boolean $isComputed */
 /** @var boolean $isRussian */
+/** @var string $title */
 /** @var string $valute */
 /** @var int $price */
     $index = 0;
     ?>
 <table class="table table-bordered">
     <thead>
+        <tr>
+            <th colspan="2"><?= $title ?></th>            
+        </tr>
       <tr> 
         <th style="width: 15px"><?php echo t('Serial number') ?></th>
         <th style="text-align: left"><?php echo t('Rubric') ?></th>
