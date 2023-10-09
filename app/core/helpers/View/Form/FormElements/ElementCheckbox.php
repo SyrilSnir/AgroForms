@@ -16,7 +16,8 @@ class ElementCheckbox extends FormElement implements CountableElementInterface
             'valuesList' => $valuesList,
             'checkbox' => $this,
             'valute' => $this->field->form->valute->symbol,
-            'hasComment' => !!$valuesList['hasCommentField'],
+            'hasComment' => key_exists('hasCommentField', $valuesList) ? !!$valuesList['hasCommentField'] :
+            false,
             'comment' => $valuesList['comment']
         ]);
     }
@@ -27,7 +28,8 @@ class ElementCheckbox extends FormElement implements CountableElementInterface
         if (!empty($valuesList) && key_exists('checked', $valuesList)) {
             $fieldList['value'] = $valuesList['value'];
             $fieldList['checked'] = $valuesList['checked'];
-            $fieldList['hasCommentField'] = $valuesList['hasCommentField'];
+            $fieldList['hasCommentField'] = key_exists('hasCommentField', $valuesList) ?
+                    $valuesList['hasCommentField'] : false;
             $fieldList['comment'] = $valuesList['comment'];
         }
         return $fieldList;
