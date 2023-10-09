@@ -56,8 +56,8 @@
        data() {           
            return {
             id: 'id' + this.params.id,
-            val: this.params.value,
-            currentVal: this.params.value,            
+            val: this.params.value ? this.params.value : '',
+            currentVal: this.params.value ? this.params.value : '',            
             valid: true,
            }
        },      

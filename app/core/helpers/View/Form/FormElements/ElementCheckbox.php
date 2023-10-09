@@ -55,6 +55,10 @@ class ElementCheckbox extends FormElement implements CountableElementInterface
             } else {
                 $text = '<tr style="color:black;font-family:Verdana;border:none;border-bottom:1px solid #ededed"><td colspan="2" style="font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;">' . $this->field->name .  ': </td>';
             }
+                if ($valuesList['hasCommentField'] && !empty($valuesList['comment'])) {
+                    $text.= '</tr><tr><td style="color:black;font-family:Verdana;font-size:8pt;font-weight:lighten;text-align:right;">' .
+                            $valuesList['comment'] . '</td>';
+                }            
             return $text . '</tr>';
         }
         return '';

@@ -33,8 +33,8 @@ class ElementFrieze extends FormElement implements CountableElementInterface
 
     public function renderPDF(array $valuesList = []): string
     {
-        $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td style="color:black;font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;"><b>' . $this->field->name . ': </b></td>';
-        $text .= '<td style="text-align: right;color:black;font-family:Verdana;font-size:10pt;padding-left:24pt">';
+        $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td colspan="2" style="color:black;font-family:Verdana;font-size:10pt;font-weight:bold;text-align:left;"><b>' . $this->field->name . ': </b></td></tr>';
+        $text .= '<tr><td colspan="2" style="text-align: right;color:black;font-family:Verdana;font-size:10pt;padding-left:24pt">';
         if (key_exists('value', $valuesList)) {
             $text.= $valuesList['value'];
         }
