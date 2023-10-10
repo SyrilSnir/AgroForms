@@ -27,6 +27,17 @@ class AllParametersForm extends BaseParametersForm
     public $hasCommentField;
     /**
      * 
+     * @var string
+     */
+    public $commentCaption;
+    /**
+     * 
+     * @var string
+     */
+    public $commentCaptionEng;    
+    
+    /**
+     * 
      * @var int
      */
     public $specialPriceType;
@@ -87,6 +98,8 @@ class AllParametersForm extends BaseParametersForm
         $this->text = $this->paramsArray['text'] ?? ''; 
         $this->textEng = $this->paramsArray['textEng'] ?? '';         
         $this->unit = $this->paramsArray['unit'] ?? '';         
+        $this->commentCaption = $this->paramsArray['commentCaption'] ?? '';
+        $this->commentCaptionEng = $this->paramsArray['commentCaptionEng'] ?? '';
         $this->unitPrice = $this->paramsArray['unitPrice'] ?? ''; 
         $this->attachment = $this->paramsArray['attachment'] ?? 0;
         
@@ -96,7 +109,7 @@ class AllParametersForm extends BaseParametersForm
     {
         return [
                 [['required','isComputed','allCategories','hasCommentField'], 'boolean'],
-                [['text','textEng','htmlEng','html'], 'safe'],
+                [['text','textEng','htmlEng','html','commentCaption','commentCaptionEng'], 'safe'],
                 [['unit','unitPrice','specialPriceType','digitPrice','friezeFieldType', 'freeDigitCount','groupType','attachment','freeCount','metersPerOne'], 'integer'],
                 ['categories','each', 'rule' => ['integer']],            
             ];
@@ -123,6 +136,8 @@ class AllParametersForm extends BaseParametersForm
             'freeCount' => Yii::t('app','Number of free'),
             'metersPerOne' => Yii::t('app','m2 per badge (free)'),
             'hasCommentField' => Yii::t('app','Comment available'),
+            'commentCaption' => Yii::t('app','Title for comment'),
+            'commentCaptionEng' => Yii::t('app','Title for comment') . ' (ENG)',
             'friezeFieldType' => Yii::t('app','Input field type'),
         ];
     }

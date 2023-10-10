@@ -4,7 +4,7 @@
         <input @change="change" class="custom-control-input" type="checkbox" :id="id" v-model="checked">
         <label :for="id" class="custom-control-label">{{ titleLabel }}</label>
         <div style="margin-top: 10px;" class="col-12" v-if="hasComment && checked">    
-            <p>{{ getName('Комментарий','Comment')}}</p>
+            <p>{{ getName(commentCaption,commentCaptionEng)}}</p>
             <div class="input-group"> 
                 <textarea 
                     name="comment__lield" 
@@ -57,7 +57,7 @@
        ],
        created() {
            this.$emit('changeField',this.getData());
-           this.comment = this.params.comment;
+           this.comment = this.params.comment ? this.params.comment : '';
        }, 
        computed: { 
             rows() {
@@ -65,7 +65,14 @@
             },
             hasComment() {
                 return this.parameters.hasCommentField == 1;
-            },       
+            },  
+            commentCaption() {
+                return this.parameters.commentCaption ? this.parameters.commentCaption : '';
+            },
+            commentCaptionEng() {
+                return this.parameters.commentCaptionEng ? this.parameters.commentCaptionEng : '';
+            },
+
            total() {
                if (!this.isComputed || !this.checked) {
                    return 0;

@@ -170,10 +170,19 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                     'pluginOptions' => [
                             'onText' => Yii::t('app', 'Yes'),
                             'offText' => Yii::t('app', 'No'),
-                        ]
+                        ],
+                    'pluginEvents' => [
+                        "switchChange.bootstrapSwitch" => 
+                            "function(e) { e.target.checked ? $('#comment-params__container').removeClass('hide') :
+                                $('#comment-params__container').addClass('hide'); }",
+                    ]                
                 ])
             ?>
-        </div>        
+            <div id="comment-params__container"<?php if(!$model->parameters->hasCommentField): ?> class="hide"<?php endif ?>>
+                    <?= $form->field($model->parameters, 'commentCaption')->textInput() ?>
+                    <?= $form->field($model->parameters, 'commentCaptionEng')->textInput() ?>
+            </div>
+        </div>  
         <div id="number-params"<?php if (!in_array($model->elementTypeId, ElementType::NUMBER_PARAMS)):?> class="hide"<?php endif; ?>>
             <?= $form->field($model->parameters, 'unit')->dropDownList($model->unitsList()) ?>                            
         </div>

@@ -215,7 +215,9 @@ return [
     'Input field type' => 'Тип поля ввода',
     'Selected categories' => 'Выбранные рубрики',
     'Rubric' => 'Рубрика',
-    'Region' => 'Область'
+    'Region' => 'Область',
+    'Title for comment' => 'Заголовок для комментария'
+
 
 ];
 
