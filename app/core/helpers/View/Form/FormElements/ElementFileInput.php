@@ -140,7 +140,10 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
     protected function getFilesUrl(): array
     {
         $result = [];
-        $attachedFiles = AttachedFilesReadRepository::findByFieldId($this->field->id);
+        if (!$this->getRequestId()) {
+            return $result;
+        }
+        $attachedFiles = AttachedFilesReadRepository::findByFieldAndRequest($this->field->id, $this->requestId);
         foreach ($attachedFiles as $file) {
             $file->configureFileUploadParameters();
             $result[] = $file->getUploadedFileUrl('file_name');

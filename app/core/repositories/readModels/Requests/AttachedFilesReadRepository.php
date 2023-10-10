@@ -30,4 +30,12 @@ class AttachedFilesReadRepository implements ReadRepositoryInterface
             ->andWhere(['field_id' => $fieldId])
             ->all();
     }
+    
+    public static function findByFieldAndRequest(int $fieldId,int $requestId)
+    {
+        return AttachedFiles::find()
+            ->andWhere(['field_id' => $fieldId])
+            ->andWhere(['request_id' => $requestId])
+            ->all();
+    }    
 }
