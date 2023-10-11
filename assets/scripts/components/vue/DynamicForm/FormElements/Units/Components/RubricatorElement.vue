@@ -7,7 +7,7 @@ r<template>
         </span>
         <ul v-show="isActive" v-if="hasChildren">
             <template v-for="rubric in rubrics.children"> 
-              <rubricator-element :rubricsInCatalog="rubricsInCatalog" :rubrics="rubric"></rubricator-element>                      
+              <rubricator-element :rubricsInCatalog="rubricsInCatalog" :rubrics="rubric" :lang="lang"></rubricator-element>                      
         </template>
         </ul>
     </li>
