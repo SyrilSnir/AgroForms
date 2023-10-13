@@ -8,6 +8,7 @@ use app\core\traits\Lists\GetFormsListTrait;
 use app\core\traits\Lists\GetUnitsTrait;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Forms\FieldLabels;
 use app\models\Forms\Manage\Forms\Parameters\AllParametersForm;
 use app\models\Forms\Manage\Forms\Parameters\BaseParametersForm;
 use app\models\Forms\MultiForm;
@@ -30,6 +31,7 @@ class FieldForm extends MultiForm
     public $nameEng;
     public $descriptionEng;    
     public $formId;
+    public $labelId;
     public $elementTypeId;
     public $fieldGroupId;
     public $order;
@@ -80,6 +82,7 @@ class FieldForm extends MultiForm
             $this->showInRequest = $model->showed_in_request;
             $this->showInPdf = $model->showed_in_pdf;
             $this->toExport = $model->to_export;
+            $this->labelId = $model->label_id;
             $this->published = $model->published;
             $this->hasEnums = $model->hasEnums();
             $this->isUpdated = true;
@@ -96,7 +99,7 @@ class FieldForm extends MultiForm
     {
         return [
             [['formId', 'elementTypeId', 'fieldGroupId'], 'required'],
-            [['formId', 'elementTypeId', 'fieldGroupId', 'order'], 'integer'],
+            [['formId', 'elementTypeId', 'fieldGroupId','labelId', 'order'], 'integer'],
             [['showInRequest','showInPdf','toExport','published'], 'boolean'],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'string', 'max' => 255],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'default','value' => ''],
@@ -125,6 +128,7 @@ class FieldForm extends MultiForm
             'showInPdf' => Yii::t('app', 'Show in printed form'),
             'published' => Yii::t('app','Available for publication on the site'),            
             'toExport' => Yii::t('app', 'Add to export'),
+            'labelId' => Yii::t('app', 'Field label'),
         ];
     }
  
@@ -132,6 +136,11 @@ class FieldForm extends MultiForm
     {
         return ArrayHelper::map(ElementType::find()->orderBy('id')->asArray()->all(),'id','name');       
     }
+    
+    public function fieldLabelsList():array
+    {
+        return ArrayHelper::map(FieldLabels::find()->orderBy('id')->asArray()->all(),'id','name');
+    }    
     
     public function fieldGroupsList(): array
     {

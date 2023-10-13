@@ -21,6 +21,7 @@ use function GuzzleHttp\json_decode;
  * @property int $form_id Форма
  * @property int $element_type_id Тип элемента формы
  * @property int $field_group_id Группа
+ * @property int $label_id Метка поля
  * @property int $order Позиция на экране
  * @property boolean $showed_in_request Отображать в заявке
  * @property boolean $showed_in_pdf Отображать в печатной форме
@@ -75,6 +76,7 @@ class Field extends ActiveRecord
             bool $showInPdf,
             bool $toExport,
             bool $published = false,
+            ?int $labelId = null,
             string $defaultValue = '',
             string $parameters = ''     
             ):self
@@ -94,6 +96,7 @@ class Field extends ActiveRecord
         $model->showed_in_pdf = $showInPdf;        
         $model->to_export = $toExport;
         $model->published = $published;
+        $model->label_id = $labelId;
         return $model;
     }
 
@@ -134,6 +137,7 @@ class Field extends ActiveRecord
             bool $showInPdf,
             bool $toExport,
             bool $published = false,
+            ?int $labelId = null,
             string $defaultValue = '',
             string $parameters = ''              
             )
@@ -151,6 +155,7 @@ class Field extends ActiveRecord
         $this->to_export = $toExport;
         $this->parameters = $parameters;
         $this->default_value = $defaultValue;   
+        $this->label_id = $labelId;
         $this->published = $published;
     }
 

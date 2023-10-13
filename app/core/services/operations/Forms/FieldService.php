@@ -63,6 +63,7 @@ class FieldService
                 $form->showInPdf,
                 $form->toExport,
                 $form->published,
+                $form->labelId,
                 $form->defaultValue,
                 $parameters
                 );
@@ -90,6 +91,7 @@ class FieldService
                 $form->showInPdf,
                 $form->toExport,
                 $form->published,
+                $form->labelId,
                 $form->defaultValue,
                 $parameters
                 );

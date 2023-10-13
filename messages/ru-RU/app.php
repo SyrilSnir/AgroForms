@@ -216,8 +216,7 @@ return [
     'Selected categories' => 'Выбранные рубрики',
     'Rubric' => 'Рубрика',
     'Region' => 'Область',
-    'Title for comment' => 'Заголовок для комментария'
-
-
+    'Title for comment' => 'Заголовок для комментария',
+    'Field label' => 'Метка для поля'
 ];
 

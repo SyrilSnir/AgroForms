@@ -135,9 +135,28 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
                 'pluginOptions' => [
                         'onText' => Yii::t('app', 'Yes'),
                         'offText' => Yii::t('app', 'No'),
+                    ],
+                    'pluginEvents' => [
+                        "switchChange.bootstrapSwitch" => 
+                            "function(e) { e.target.checked ? $('#published-params__container').removeClass('hide') :
+                                $('#published-params__container').addClass('hide'); }",
                     ]
             ]) 
         ?>
+    <div id="published-params__container"<?php if(!$model->published): ?> class="hide"<?php endif ?>>
+        <?= $form->field($model, 'labelId')->widget(
+                Select2::class,
+                [
+                    'data' =>  $model->fieldLabelsList(),                   
+                     'options' => [ 
+                         'prompt' => '',                         
+                    ],
+                    'pluginOptions' => ['allowClear' => true],
+                ]
+            );
+        ?>
+    </div>                            
+                            
                             
     <?php else: ?>
         <?= $form->field($model, 'published')->hiddenInput(['value' => 0])->label(false) ?>
