@@ -66,5 +66,6 @@ return [
     'New number' => 'Новый номер',
     'Edit number' => 'Изменить номер',
     'Rubricator' => 'Рубрикатор',
-    'Field labels' => 'Метки полей'
+    'Field labels' => 'Метки полей',
+    'New label' => 'Новая метка',
 ];

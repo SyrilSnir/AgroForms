@@ -18,7 +18,7 @@ $columnsConfig = [
                             'content'=> $rowsCountTemplate .
                                 Html::a('<i class="fas fa-plus"></i>',['create'], [
                                     'class' => 'btn btn-sm btn-success',
-                                    'title' => Yii::t('app/title', 'New unit'),
+                                    'title' => Yii::t('app/title', 'New label'),
                                 ])                            
                         ],
                     ],      

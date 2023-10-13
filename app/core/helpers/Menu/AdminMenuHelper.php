@@ -70,7 +70,7 @@ class AdminMenuHelper implements MenuHelperInterface
                                 ['label' => Yii::t('app/menu', 'Halls'), 'icon' => 'icon-stands', 'url' => ['/panel/lists/halls'],],
                                 ['label' => Yii::t('app/menu', 'Stand`s numbers'), 'icon' => 'icon-stand', 'url' => ['/panel/lists/stand-numbers'],],
                                 ['label' => Yii::t('app/menu', 'Rubricator'), 'icon' => 'icon-cats', 'url' => ['/panel/lists/rubricator'],],
-                                ['label' => Yii::t('app/menu', 'Сatalog field labels'), 'icon' => 'icon-cats', 'url' => ['/panel/lists/field-labels'],],
+                                ['label' => Yii::t('app/menu', 'Сatalog field labels'), 'icon' => 'paper-plane', 'url' => ['/panel/lists/field-labels'],],
                             ]
                         ],              
                 [

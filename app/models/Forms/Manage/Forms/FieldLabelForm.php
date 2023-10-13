@@ -45,9 +45,9 @@ class FieldLabelForm extends ManageForm
     public function attributeLabels()
     {
         return [
-            'name' => 'Name',
-            'nameEng' => 'Name Eng',
-            'code' => 'Code',
+            'name' => t('Name'),
+            'nameEng' => t('Name'). '(ENG)',
+            'code' => t('Character code'),
         ];
     }    
 }
