@@ -34,6 +34,7 @@ use function GuzzleHttp\json_decode;
  * @property ElementType $elementType Тип элемента
  * @property FieldGroup $fieldGroup Позиция на экране
  * @property Form $form Форма
+ * @property FieldLabels|null $label Метка
  * @property FieldEnum[] $enums Перечисляемые аттрибуты
  * @property BaseParametersForm $fieldParams Параметры
  * 
@@ -168,6 +169,11 @@ class Field extends ActiveRecord
     {
         return $this->hasOne(FieldGroup::class, ['id' => 'field_group_id']);
     }
+    
+    public function getLabel()
+    {
+        return $this->hasOne(FieldLabels::class, ['id' => 'label_id']);
+    }    
 
     public function getForm()
     {

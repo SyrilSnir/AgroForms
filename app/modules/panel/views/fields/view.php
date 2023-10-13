@@ -30,12 +30,8 @@ $this->title = $model->name;
         ]) ?>
         <?= Html::a(Yii::t('app','Back'), ['/panel/forms/update', 'id' => $model->form_id ], ['class' => 'btn btn-secondary']) ?>
     </p>
-
-<div class="card">
-    <div class="card-body">
-        <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [
+    <?php
+        $viewAttributes = [
                 'name:text:' . Yii::t('app','Name'),
                 'description:text:' . Yii::t('app','Description'),
                 'form.name:text:' . Yii::t('app', 'Form'),
@@ -63,8 +59,24 @@ $this->title = $model->name;
                       'label' => Yii::t('app','Available for publication on the site'),
                       'format' => 'raw',
                       'value' => YesNoStatusHelper::getStatusLabel($model->published)
-                ],                 
-            ],
+                ],             
+        ];
+        if ($model->published && $model->label) {
+            $viewAttributes[] = [
+                'attribute' => 'label_id',
+                'label' => Yii::t('app','Field label'),
+                'format' => 'text',
+                'value' => $model->label->name
+            ];
+        }
+        
+    ?>
+
+<div class="card">
+    <div class="card-body">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => $viewAttributes,
         ]); ?>
     </div>
 </div>
