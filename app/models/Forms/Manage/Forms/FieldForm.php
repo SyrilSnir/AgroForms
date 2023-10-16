@@ -99,6 +99,7 @@ class FieldForm extends MultiForm
     {
         return [
             [['formId', 'elementTypeId', 'fieldGroupId'], 'required'],
+            [['labelId'],'default','value' => null],
             [['formId', 'elementTypeId', 'fieldGroupId','labelId', 'order'], 'integer'],
             [['showInRequest','showInPdf','toExport','published'], 'boolean'],
             [['name', 'description','nameEng', 'descriptionEng', 'defaultValue'], 'string', 'max' => 255],
