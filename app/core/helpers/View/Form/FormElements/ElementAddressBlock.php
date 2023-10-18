@@ -2,6 +2,7 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\BaseFormHelper;
 use app\models\ActiveRecord\Geography\Country;
 
 /**
@@ -16,7 +17,12 @@ class ElementAddressBlock extends FormElement implements CountableElementInterfa
         $data = parent::transformData($fieldList, $valuesList);
         if (key_exists('value', $valuesList)) {
             $data['value'] = $valuesList['value'];
-        }                        
+        } 
+        if ($this->field->label_id) {
+            $data['label'] = $this->field->label->code;
+        } else {
+            $data['label'] = BaseFormHelper::COMPANY_ADDRESS_RUS;
+        }
         return $data;
     }
     public function getPrice(array $valuesList = []): int

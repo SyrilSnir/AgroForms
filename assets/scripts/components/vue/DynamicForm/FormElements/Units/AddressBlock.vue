@@ -75,12 +75,12 @@ import axios from "axios";
      components: {
          Select2
      },
-     beforeCreate: function() {
-        axios.get('/api/geography/get-countries')
+     created: function() {
+        axios.get('/api/geography/get-countries?label=' + this.label)
             .then((response) => {
                 this.myOptions = response.data;
             });
-    },     
+    },         
      data() {
         return {
             myValue: '',
@@ -102,6 +102,11 @@ import axios from "axios";
       textTranslateMixin,
       numberFormatMixin
      ], 
+     computed: {
+        label() {
+            return this.params.label;
+        }
+     },
      methods: {
         myChangeEvent(val){
             console.log(val);

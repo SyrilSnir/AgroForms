@@ -13,6 +13,6 @@ class CountriesHelper
 {
     public function countriesList()
     {
-        return Country::find()->select(['id','name AS text','name_eng'])->orderBy('id')->asArray()->all();
+        return Country::find()->select(['id','name','name_eng'])->orderBy('id')->asArray()->all();
     }
 }
