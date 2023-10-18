@@ -1,5 +1,5 @@
 <template>
-    <div class="form-group align-right">
+    <div class="form-group align-right agro">
        
        <div v-for="(item,index) in formElements" class="container-fluid">
         <div class="card card-default">
@@ -12,13 +12,17 @@
                 </button>
             </div>
         </div>
-        <label>{{ getName('Страна', 'Country') }}:</label>
-        <input 
-            type="text" 
-            class="form-control"
-            v-model="item.country"
-           @change="onChange($event)"               
-            placeholder="">
+            
+            <label :for="'select-country-' + index">{{ getName('Страна', 'Country') }}:</label>        
+            <Select2 
+            v-model="item.country" 
+            :id="'select-country-' + index"
+            :options="myOptions" 
+            @change="myChangeEvent($event)" 
+            @select="mySelectEvent($event)" 
+            :settings="{ placeholder: 'Select', theme: 'bootstrap',}"
+            />
+        
             <label>{{ getName('Область','Region') }}:</label>
         <input 
 
@@ -64,12 +68,25 @@ import { formList } from './Mixins/formListMixin';
 import { labelMixin } from './Mixins/labelMixin';
 import { textTranslateMixin } from './Mixins/textTranslateMixin';
 import { numberFormatMixin } from './Mixins/numberFormatMixin';
+import Select2 from 'v-select2-component';
+import axios from "axios";
 
  export default {
+     components: {
+         Select2
+     },
+     beforeCreate: function() {
+        axios.get('/api/geography/get-countries')
+            .then((response) => {
+                this.myOptions = response.data;
+            });
+    },     
      data() {
         return {
+            myValue: '',
+            myOptions: [],           
             defaultElement : {
-                    country: '',
+                    country: null,
                     area: '',
                     city: '',
                     index: '',
@@ -84,7 +101,15 @@ import { numberFormatMixin } from './Mixins/numberFormatMixin';
       formList,
       textTranslateMixin,
       numberFormatMixin
-     ],    
+     ], 
+     methods: {
+        myChangeEvent(val){
+            console.log(val);
+        },
+        mySelectEvent({id, text}){
+            console.log({id, text})
+        }        
+     }   
  }
  </script>
  <style scope>
@@ -97,4 +122,8 @@ import { numberFormatMixin } from './Mixins/numberFormatMixin';
     .card-title {
         font-weight: 700;
     }
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        text-align: right;
+        font-weight: 500;
+    }      
  </style>

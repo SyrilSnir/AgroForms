@@ -1,4 +1,6 @@
 @import "bootstrap/bootstrap";
+@import "../../node_modules/select2/dist/css/select2.min.css";
+@import "../../node_modules/select2-theme-bootstrap4/dist/select2-bootstrap.min.css";
 @import "fa/all.min.css";
 @import "includes/glyphicons.scss";
 @import "includes/request.scss";
@@ -16,6 +18,7 @@
 @import "includes/admin/tables.scss";
 @import "includes/admin/grid.scss";
 @import "includes/rubricator.scss";
+
 
 body {
     font-family:Roboto,sans-serif!important;

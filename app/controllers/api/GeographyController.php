@@ -14,6 +14,12 @@ use Yii;
  */
 class GeographyController extends JsonController
 {
+    public function actionGetCountries() 
+    {
+        $helper = new \app\core\helpers\Data\CountriesHelper();
+        return $helper->countriesList();
+    }
+    
     public function actionGetRegions()
     {
         $countryId = (int) Yii::$app->request->post('depdrop_parents')[0];

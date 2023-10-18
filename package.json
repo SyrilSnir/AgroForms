@@ -32,6 +32,8 @@
     "bootstrap": "^4.4.1",
     "jquery": "^3.6.0",
     "sass": "^1.35.2",
+    "select2-theme-bootstrap4": "^1.0.2",
+    "v-select2-component": "^0.4.7",
     "vue": "^2.6.14",
     "vue-loader": "^15.9.7",
     "vue-template-compiler": "^2.6.14"
