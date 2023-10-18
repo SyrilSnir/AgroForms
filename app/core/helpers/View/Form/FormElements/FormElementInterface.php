@@ -37,9 +37,15 @@ interface FormElementInterface
     
     public function getLenght(): int;
     
+    public function isGroup():bool;
+    
     public function getExcelHeader(): ExcelHeaderView;
     
     public function getExcelValue(array $valuesList = []): array|string;
     
     public function setRequestId(int $requestId): void;
+    
+    public function getCatalogData(array $valuesList): array;
+    
+    public function getElements(): array;
 }

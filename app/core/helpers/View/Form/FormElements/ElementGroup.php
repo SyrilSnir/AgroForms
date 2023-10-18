@@ -66,8 +66,18 @@ class ElementGroup extends FormElement implements CountableElementInterface
     public function isComputed(): bool
     {
         return true;
-    }    
+    } 
     
+    /**
+     * 
+     * @return FormElementInterface[]
+     */
+    public function getElements(): array
+    {
+        return $this->formElements;
+    }
+
+
     public function getData(array $valuesList = []): array
     {
         if ($this->groupType == BaseParametersForm::HIDDEN_GROUP_TYPE) {

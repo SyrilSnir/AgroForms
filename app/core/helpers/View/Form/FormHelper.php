@@ -44,6 +44,7 @@ use app\models\ActiveRecord\Users\User;
 use app\models\Data\Languages;
 use app\models\Data\SpecialPriceTypes;
 use Yii;
+use ZipStream\Test\TimeTest;
 use function GuzzleHttp\json_decode;
 
 /**
@@ -52,8 +53,7 @@ use function GuzzleHttp\json_decode;
  * @author kotov
  */
 class FormHelper extends BaseFormHelper
-{
-    
+{   
     /**
      * 
      * @var FormElementInterface[]
@@ -82,7 +82,7 @@ class FormHelper extends BaseFormHelper
         return $instance;
     }
     
-    public static function createViaRequest(User $user,Contracts $contract, string $langCode, Request $request): self
+    public static function createViaRequest(User $user, Contracts $contract, string $langCode, Request $request): self
     {
         $instance = new self($user, $langCode);
         $instance->form = $request->form;
@@ -289,6 +289,50 @@ class FormHelper extends BaseFormHelper
         return $result;
     }
     
+    public function getCatalogData(): array
+    {
+        $result = [];
+        if ($this->request->status != BaseRequest::STATUS_PUBLICATED) {
+            return $result;
+        }
+        $catalogElements = $this->getCatalogElements();
+        foreach ($catalogElements as $catalogElement) {
+            $val = [];
+            $fieldId = $catalogElement->getFieldId();
+            if (key_exists($fieldId, self::$valuesList)) {
+                $val = self::$valuesList[$fieldId];
+            }             
+            $result[] = $catalogElement->getCatalogData($val);
+        }    
+        return $result;        
+    }
+    
+    /**
+     * 
+     * @return FormElementInterface[]
+     */
+    protected function getCatalogElements(): array
+    {
+        $elements = [];
+        foreach ($this->formElements as $element) {
+            $field = $element->getField();
+            if ($element->isGroup()) {
+                foreach ($element->getElements() as $element) {
+                    if ($this->checkLabel($element->getField())) {
+                        $elements[] = $element;                        
+                    }                    
+                }
+                continue;
+            }
+            if ($this->checkLabel($field)) {
+                $elements[] = $element;
+            }            
+        }
+        return $elements;
+    }
+    
+
+
     protected function renderPDFElements(): string 
     {
         $result = '';

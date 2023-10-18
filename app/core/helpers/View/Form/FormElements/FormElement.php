@@ -6,9 +6,11 @@ use app\core\helpers\View\Form\ExcelHeaderView;
 use app\core\helpers\View\Form\Modificators\PriceModificator;
 use app\core\helpers\View\Form\PriceModifyInterface;
 use app\core\providers\Data\FieldEnumProvider;
+use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Nomenclature\Unit;
 use app\models\Data\Languages;
+use Yii;
 use yii\web\View;
 use function GuzzleHttp\json_decode;
 /**
@@ -62,7 +64,7 @@ abstract class FormElement implements FormElementInterface
         $this->fieldParameters = json_decode($this->field->parameters, true);
         $this->langCode = $langCode;
         $this->fieldEnumProvider = $enumProvider;
-        $this->view = \Yii::$app->view;
+        $this->view = Yii::$app->view;
     }
     
     public function getData(array $valuesList = []): array
@@ -110,6 +112,11 @@ abstract class FormElement implements FormElementInterface
     {
         return $this->requestId;
     }
+    
+    public function getElements(): array
+    {
+        return [];
+    }
 
     public function getTranslatableParameter(string $parameterName): string 
     {
@@ -146,8 +153,10 @@ abstract class FormElement implements FormElementInterface
     {
         return  (bool) $this->field->deleted;
     }
-
     
+    public function isGroup():bool {
+        return $this->field->element_type_id == ElementType::ELEMENT_GROUP;
+    }
 
     protected function transformData(array $fieldList, array $valuesList):array
     {
@@ -223,5 +232,15 @@ abstract class FormElement implements FormElementInterface
             }
         }
         return $result;
+    }
+    
+    public function getCatalogData(array $valuesList): array
+    {
+        $label = $this->field->label->code;
+        $value = $valuesList['value'];
+        return [
+            'label' => $label,
+            'value' => $value,
+        ];
     }
 }

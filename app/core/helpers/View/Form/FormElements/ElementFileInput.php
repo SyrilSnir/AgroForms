@@ -2,6 +2,7 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\BaseFormHelper;
 use app\core\repositories\readModels\Requests\AttachedFilesReadRepository;
 use app\models\ActiveRecord\Requests\AttachedFiles;
 use app\models\Forms\Manage\Forms\Parameters\AttachmentField;
@@ -157,5 +158,17 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
             return $this->modifyPrice($valuesList['value']);
         }
         return 0;       
+    }
+    
+    public function getCatalogData(array $valuesList): array
+    {
+        $attachedFiles = AttachedFilesReadRepository::findByFieldAndRequest($this->field->id, $this->requestId);
+        if (!empty($attachedFiles)) {
+            $filePath = $attachedFiles[0]->getUploadedFilePath('file_name');
+        }
+        return [
+            'label' => BaseFormHelper::SITE_LOGO,
+            'file' => $filePath,
+        ];
     }
 }
