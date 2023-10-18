@@ -12,17 +12,17 @@
                 </button>
             </div>
         </div>
-            
-            <label :for="'select-country-' + index">{{ getName('Страна', 'Country') }}:</label>        
+        <div class="select-country__block">
+            <label :for="id + 'select-country-' + index">{{ getName('Страна', 'Country') }}:</label>        
             <Select2 
             v-model="item.country" 
-            :id="'select-country-' + index"
+            :id="id + 'select-country-' + index"
             :options="myOptions" 
             @change="myChangeEvent($event)" 
             @select="mySelectEvent($event)" 
             :settings="{ placeholder: 'Select', theme: 'bootstrap',}"
             />
-        
+        </div>
             <label>{{ getName('Область','Region') }}:</label>
         <input 
 
@@ -118,6 +118,9 @@ import axios from "axios";
  }
  </script>
  <style scope>
+    .select-country__block {
+        position: relative;
+     }
     .card:last-child {
         margin-bottom: 0;
     }
