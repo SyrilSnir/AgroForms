@@ -33,8 +33,15 @@ trait GridViewTrait
      */
     private $showPagination = true;
     
+    /**
+     * Дополнительные данные
+     * @var array
+     */
+    private $additionalInformation = [];
+
+
     public function actionIndex() 
-    {
+    {        
         Url::remember();
         $dataProvider = $this->getDataProvider();
         $pageDataProvider = $this->configurePagination($dataProvider);
@@ -42,7 +49,7 @@ trait GridViewTrait
             'searchModel' => $this->searchModel,
             'dataProvider' => $pageDataProvider->getDataProvider(),
             'rowsCountForm' => $pageDataProvider->getRowsCountForm(),
-            'pagination' => $this->showPagination
+            'pagination' => $this->showPagination,
         ]);
     } 
     

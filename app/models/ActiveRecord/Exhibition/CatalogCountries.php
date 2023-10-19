@@ -2,48 +2,49 @@
 
 namespace app\models\ActiveRecord\Exhibition;
 
-use app\models\ActiveRecord\Nomenclature\Rubricator;
+use app\models\ActiveRecord\Geography\Country;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "catalog_rubrics".
+ * This is the model class for table "catalog_countries".
  *
  * @property int $catalog_id Запись в каталоге
- * @property int $rubric_id ID рубрики
+ * @property int $country_id ID страны
  *
  * @property Catalog $catalog
- * @property Rubricator $rubric
+ * @property Countries $country
  */
-class CatalogRubrics extends ActiveRecord
+class CatalogCountries extends ActiveRecord
 {
+            
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'catalog_rubrics';
+        return 'catalog_countries';
     }
-    
-    public static function create(int $catalogId, int $rubricId):self
+
+    public static function create(int $catalogId,int $coutryId): self
     {
         $model = new self();
         $model->catalog_id = $catalogId;
-        $model->rubric_id = $rubricId;
+        $model->country_id = $coutryId;
         return $model;
     }
-
+    
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['catalog_id', 'rubric_id'], 'required'],
-            [['catalog_id', 'rubric_id'], 'integer'],
-            [['catalog_id', 'rubric_id'], 'unique', 'targetAttribute' => ['catalog_id', 'rubric_id']],
+            [['catalog_id', 'country_id'], 'required'],
+            [['catalog_id', 'country_id'], 'integer'],
+            [['catalog_id', 'country_id'], 'unique', 'targetAttribute' => ['catalog_id', 'country_id']],
             [['catalog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Catalog::class, 'targetAttribute' => ['catalog_id' => 'id']],
-            [['rubric_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rubricator::class, 'targetAttribute' => ['rubric_id' => 'id']],
+            [['country_id'], 'exist', 'skipOnError' => true, 'targetClass' => Country::class, 'targetAttribute' => ['country_id' => 'id']],
         ];
     }
 
@@ -54,7 +55,7 @@ class CatalogRubrics extends ActiveRecord
     {
         return [
             'catalog_id' => 'Catalog ID',
-            'rubric_id' => 'Rubric ID',
+            'country_id' => 'Country ID',
         ];
     }
 
@@ -69,12 +70,12 @@ class CatalogRubrics extends ActiveRecord
     }
 
     /**
-     * Gets query for [[Rubric]].
+     * Gets query for [[Country]].
      *
      * @return ActiveQuery
      */
-    public function getRubric()
+    public function getCountry()
     {
-        return $this->hasOne(Rubricator::class, ['id' => 'rubric_id']);
+        return $this->hasOne(Countries::class, ['id' => 'country_id']);
     }
 }

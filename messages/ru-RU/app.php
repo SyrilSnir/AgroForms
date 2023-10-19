@@ -217,6 +217,9 @@ return [
     'Rubric' => 'Рубрика',
     'Region' => 'Область',
     'Title for comment' => 'Заголовок для комментария',
-    'Field label' => 'Метка для поля'
+    'Field label' => 'Метка для поля',
+    'Load data' => 'Загрузить данные',
+    'Data loaded successfully' => 'Данные успешно загружены',
+    'No data to upload' => 'No data to upload'
 ];
 

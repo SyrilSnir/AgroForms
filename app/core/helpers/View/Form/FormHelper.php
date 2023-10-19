@@ -213,7 +213,7 @@ class FormHelper extends BaseFormHelper
         $this->formElements = [];
         if ($this->form) {
             foreach ($this->form->rootFormFields as $field) {
-                $formElement = self::getElement($field, $this->langCode, $date, $requestId, $this->contract);
+                $formElement = self::getElement($field, $this->langCode, floor($date), $requestId, $this->contract);
                 if ($formElement) {
                     array_push($this->formElements,$formElement);
                 }

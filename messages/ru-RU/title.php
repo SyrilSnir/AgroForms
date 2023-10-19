@@ -68,4 +68,5 @@ return [
     'Rubricator' => 'Рубрикатор',
     'Field labels' => 'Метки полей',
     'New label' => 'Новая метка',
+    'Catalog to the site' => 'Каталог на сайт'
 ];

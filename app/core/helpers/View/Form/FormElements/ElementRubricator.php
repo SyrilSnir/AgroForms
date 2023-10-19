@@ -36,27 +36,31 @@ class ElementRubricator extends FormElement implements CountableElementInterface
 
     public function renderHtml(array $valuesList = []): string
     {
-        
-        return $this->view->renderFile('@fields/rubricator.php',[
-            'valuesList' => $valuesList['value'],
-            'price' => $this->getPrice($valuesList),
-            'isComputed' => $this->isComputed(),
-            'isRussian' => $this->langCode == Languages::RUSSIAN,
-            'valute' => $this->field->form->valute->symbol,
-            'title' => $this->field->name
-        ]);
-
+        if (key_exists('value', $valuesList)) {
+            return $this->view->renderFile('@fields/rubricator.php',[
+                'valuesList' => $valuesList['value'],
+                'price' => $this->getPrice($valuesList),
+                'isComputed' => $this->isComputed(),
+                'isRussian' => $this->langCode == Languages::RUSSIAN,
+                'valute' => $this->field->form->valute->symbol,
+                'title' => $this->field->name
+            ]);
+        }
+        return '';
     }
 
     public function renderPDF(array $valuesList = []): string
     {
-        return $this->view->renderFile('@fields/rubricator__pdf.php',[
-            'valuesList' => $valuesList['value'],
-            'price' => $this->getPrice($valuesList),
-            'isComputed' => $this->isComputed(),
-            'isRussian' => $this->langCode == Languages::RUSSIAN,
-            'valute' => $this->field->form->valute->symbol,
-            'title' => $this->field->name
-        ]);
+        if (key_exists('value', $valuesList)) {        
+            return $this->view->renderFile('@fields/rubricator__pdf.php',[
+                'valuesList' => $valuesList['value'],
+                'price' => $this->getPrice($valuesList),
+                'isComputed' => $this->isComputed(),
+                'isRussian' => $this->langCode == Languages::RUSSIAN,
+                'valute' => $this->field->form->valute->symbol,
+                'title' => $this->field->name
+            ]);
+        }
+        return '';
     }
 }

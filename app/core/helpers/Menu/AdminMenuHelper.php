@@ -86,6 +86,11 @@ class AdminMenuHelper implements MenuHelperInterface
                     ]
                 ],
                 [
+                    'label' => t('Catalog','menu'),
+                    'icon' => 'list-ul',
+                     'url' => ['/panel/catalog']
+                ],                 
+                [
                     'label' => t('Feedback','menu'),
                     'icon' => 'comment',
                      'url' => ['/panel/feedback']

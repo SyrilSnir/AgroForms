@@ -6,6 +6,8 @@ use app\core\repositories\exceptions\NotFoundException;
 use app\core\repositories\manage\DataManipulationTrait;
 use app\core\repositories\manage\RepositoryInterface;
 use app\models\ActiveRecord\Exhibition\Catalog;
+use app\models\ActiveRecord\Exhibition\CatalogCountries;
+use app\models\ActiveRecord\Exhibition\CatalogRubrics;
 use yii\db\ActiveRecord;
 
 /**
@@ -24,4 +26,14 @@ class CatalogRepository implements RepositoryInterface
         }
         return $model;
     }
+    
+    public function removeCountries(int $catalogId)
+    {
+        CatalogCountries::deleteAll(['catalogId' => $catalogId]);
+    }
+    
+    public function removeRubrics(int $catalogId)
+    {
+        CatalogRubrics::deleteAll(['catalogId' => $catalogId]);
+    }    
 }

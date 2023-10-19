@@ -13,10 +13,10 @@
             </div>
         </div>
         <div class="select-country__block">
-            <label :for="id + 'select-country-' + index">{{ getName('Страна', 'Country') }}:</label>        
+            <label :for="id + '-select-country-' + index">{{ getName('Страна', 'Country') }}:</label>        
             <Select2 
             v-model="item.country" 
-            :id="id + 'select-country-' + index"
+            :id="id + '-select-country-' + index"
             :options="myOptions" 
             @change="myChangeEvent($event)" 
             @select="mySelectEvent($event)" 

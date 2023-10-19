@@ -49,5 +49,6 @@ return [
     'Stand`s numbers' => 'Номера стендов',
     'Rubricator' => 'Рубрикатор',
     'Сatalog field labels' => 'Метки полей каталога',    
+    'Catalog' => 'Каталог',
 ];
 

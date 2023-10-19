@@ -53,7 +53,7 @@ class CrudController extends BaseAdminController
         $this->readRepository = $repository;
         $this->form = $form;
     }
-
+    
     /**
      * @param integer $id
      * @return ActiveRecord the loaded model
@@ -130,5 +130,7 @@ class CrudController extends BaseAdminController
     protected function prepareUpdate(Model $form) {
         $form->setScenario(ManageForm::SCENARIO_UPDATE);
     }
-    protected function prepareView(Model $form) {}    
+    protected function prepareView(Model $form) {}  
+    
+    protected function prepareIndex() {}
 }

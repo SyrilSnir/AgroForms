@@ -31,6 +31,12 @@ class AttachedFilesReadRepository implements ReadRepositoryInterface
             ->all();
     }
     
+    /**
+     * 
+     * @param int $fieldId
+     * @param int $requestId
+     * @return AttachedFiles[]
+     */
     public static function findByFieldAndRequest(int $fieldId,int $requestId)
     {
         return AttachedFiles::find()
