@@ -59,6 +59,12 @@ $columnsConfig = [
                         ],                        
                     ],
                     [
+                      'attribute' => 'exhibition_id',
+                      'label' => Yii::t('app','Exhibition'),
+                      'filter' => $searchModel->getExhibitionsList(),
+                      'value' => 'exhibition.title'
+                    ],                    
+                    [
                       'attribute' => 'form_id',
                       'label' => Yii::t('app','Form'),
                       'filter' => FormsHelper::formsList(),                        
@@ -251,7 +257,7 @@ $columnsConfig = [
 $fullGridConfig = array_merge($columnsConfig,$gridConfig);                       
 
 ?>
-
+<section class="content content-large">
 <div class="card full-view">
   <div class="card-header">
         <div class="card-body">
@@ -268,6 +274,8 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
  <?= GridView::widget($fullGridConfig); ?>
         </div>
 </div>
+</div>
+    </section>
 <?php
  Modal::begin([
      'title' => '<h3>' . t('Will be soon') .'...</h3>',

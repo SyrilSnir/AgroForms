@@ -3,6 +3,7 @@
 namespace app\models\SearchModels\Requests;
 
 use app\core\traits\Lists\GetCompanyNamesTrait;
+use app\core\traits\Lists\GetExhibitionsTrait;
 use app\core\traits\Lists\GetFormsListTrait;
 use app\core\traits\Lists\GetFormTypesListTrait;
 use app\models\ActiveRecord\Requests\Request;
@@ -19,8 +20,10 @@ class RequestSearch extends Model
     public $formType; 
     public $status;
     public $form_id;
+    public $exhibition_id;
     public $company;
 
+    use GetExhibitionsTrait;
     use GetFormTypesListTrait;
     use GetCompanyNamesTrait;
     use GetFormsListTrait;
@@ -28,7 +31,7 @@ class RequestSearch extends Model
     public function rules(): array
     {
         return [
-            [['formType','form_id','status','company'], 'safe'],
+            [['formType','form_id','exhibition_id','status','company'], 'safe'],
         ];
     }
     
@@ -68,6 +71,7 @@ class RequestSearch extends Model
                     'id',
                     'company',
                     'form_id',
+                    'exhibition_id',
                     'status',
                     'created_at',                    
                     'activate_at'
@@ -84,6 +88,7 @@ class RequestSearch extends Model
         $query->andFilterWhere(['form_type_id' => $this->formType]);
         $query->andFilterWhere(['status' => $this->status]);
         $query->andFilterWhere(['requests.form_id' => $this->form_id]);            
+        $query->andFilterWhere(['requests.exhibition_id' => $this->exhibition_id]);            
         $query->andFilterWhere(['users.company_id' => $this->company]);            
         return $dataProvider;
     }
