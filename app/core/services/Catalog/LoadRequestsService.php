@@ -40,7 +40,10 @@ class LoadRequestsService
             $result = $formHelper->getCatalogData();
             if (!empty($result)) {
                 $form = new CatalogForm();                
-                $catalogData = $this->modifyData($request->id,$exhibitionId, $result);
+                $catalogData = $this->modifyData($result);
+                $catalogData['requestId'] = $request->id;
+                $catalogData['exhibitionId'] = $exhibitionId; 
+                $catalogData['stand'] = $request->contract->standNumber->number;
                 $form->setAttributes($catalogData);
                 if ($form->validate()) {
                     array_push($forms, $form);
@@ -67,7 +70,7 @@ class LoadRequestsService
         }
     }
     
-    protected function modifyData(int $requestId,int $exhibitionId, array $data)
+    protected function modifyData(array $data)
     {
         $result = [];
         foreach ($data as $element) {
@@ -99,8 +102,6 @@ class LoadRequestsService
                     break;
             }
         }
-        $result['requestId'] = $requestId;
-        $result['exhibitionId'] = $exhibitionId;
         return $result;
     }
     /**

@@ -54,7 +54,8 @@ $columnsConfig = [
                             'width' => '500px',
                             'label' => t('Description'),
                             'format' => 'raw'                            
-                        ]
+                        ],
+                        'stand:raw:' . t('Stand`s number'),
                   //      ['class' => ActionColumn::class],
                     ], 
                     'options' => [

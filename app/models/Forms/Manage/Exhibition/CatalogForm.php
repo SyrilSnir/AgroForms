@@ -23,7 +23,9 @@ class CatalogForm extends ManageForm
     public $country;
     public $countryEng;
     public $rubricatorIds;
-    
+    public $stand;
+
+
     public function __construct(Catalog $model = null, $config = [])
     {
         if ($model) {
@@ -33,6 +35,7 @@ class CatalogForm extends ManageForm
             $this->descriptionEng = $model->description_eng;
             $this->exhibitionId = $model->exhibition_id;
             $this->requestId = $model->request_id;
+            
         }
         parent::__construct($config);
     }
@@ -45,7 +48,7 @@ class CatalogForm extends ManageForm
         return [
             [['exhibitionId','requestId'], 'required'],
             [['exhibitionId','requestId'], 'integer'],
-            [['description', 'descriptionEng'], 'string'],
+            [['description', 'descriptionEng','stand'], 'string'],
             [['rubricatorIds', 'country', 'countryEng'], 'default', 'value' => []],
             [['rubricatorIds', 'country', 'countryEng'], 'each', 'rule' => ['integer']],            
             [['logoFile', 'company', 'companyEng'], 'string', 'max' => 255],

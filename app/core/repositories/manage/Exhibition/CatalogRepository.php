@@ -29,11 +29,21 @@ class CatalogRepository implements RepositoryInterface
     
     public function removeCountries(int $catalogId)
     {
-        CatalogCountries::deleteAll(['catalogId' => $catalogId]);
+        CatalogCountries::deleteAll(['catalog_id' => $catalogId]);
     }
     
     public function removeRubrics(int $catalogId)
     {
-        CatalogRubrics::deleteAll(['catalogId' => $catalogId]);
-    }    
+        CatalogRubrics::deleteAll(['catalog_id' => $catalogId]);
+    }
+
+    public function remove(ActiveRecord $model)
+    {
+        /** @var Catalog $model */
+        $this->removeCountries($model->id);
+        $this->removeRubrics($model->id);
+        if (!$model->delete()) {
+            throw new RuntimeException('Ошибка удаления');
+        }
+    }
 }

@@ -3,8 +3,11 @@
 namespace app\models\ActiveRecord\Exhibition;
 
 use app\core\traits\ActiveRecord\MultilangTrait;
+use app\models\ActiveRecord\Geography\Country;
 use app\models\ActiveRecord\Nomenclature\Rubricator;
+use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Manage\Exhibition\CatalogForm;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
@@ -20,10 +23,14 @@ use yii\helpers\ArrayHelper;
  * @property string|null $company_eng Компания (ENG)
  * @property string|null $description Описание
  * @property string|null $description_eng Описание (ENG)
+ * @property string|null $stand Номер стенда
  *
  * @property CatalogRubrics[] $catalogRubrics
  * @property Exhibition $exhibition
+ * @property Request $request
  * @property Rubricator[] $rubrics
+ * @property Country[] $countries
+ * 
  */
 class Catalog extends ActiveRecord
 {
@@ -68,6 +75,7 @@ class Catalog extends ActiveRecord
         $model->logo_file = basename($form->logoFile);
         $model->countries = array_unique(ArrayHelper::merge($form->country, $form->countryEng));
         $model->rubrics = $form->rubricatorIds;
+        $model->stand = $form->stand;
         return $model;
     }
     
@@ -81,6 +89,7 @@ class Catalog extends ActiveRecord
         $this->description_eng = $form->descriptionEng;
         $this->country = $form->country;
         $this->country_eng = $form->countryEng;
+        $this->stand = $form->stand;
     }
 
     /**
@@ -120,6 +129,16 @@ class Catalog extends ActiveRecord
     {
         return $this->hasOne(Exhibition::class, ['id' => 'exhibition_id']);
     }
+    
+    /**
+     * Gets query for [[Request]].
+     *
+     * @return ActiveQuery
+     */
+    public function getRequest()
+    {
+        return $this->hasOne(Request::class, ['id' => 'request_id']);
+    }    
 
     /**
      * Gets query for [[Rubrics]].
@@ -128,7 +147,9 @@ class Catalog extends ActiveRecord
      */
     public function getRubrics()
     {
-        return $this->hasMany(Rubricator::class, ['id' => 'rubric_id'])->viaTable('catalog_rubrics', ['catalog_id' => 'id']);
+        $junctionTableName = CatalogRubrics::tableName();        
+        return $this->hasMany(Rubricator::class, ['id' => 'rubric_id'])
+                ->viaTable($junctionTableName, ['catalog_id' => 'id']);
     }
     
     public function afterSave($insert, $changedAttributes)
@@ -141,7 +162,7 @@ class Catalog extends ActiveRecord
     
     public function getLogoUrl(): string
     {
-        return \Yii::getAlias('@catalogUrl') . '/' .$this->id. '/' . $this->logo_file ;
+        return Yii::getAlias('@catalogUrl') . '/' .$this->id. '/' . $this->logo_file ;
     }
 
 
@@ -159,7 +180,7 @@ class Catalog extends ActiveRecord
                 $model->save();
             }
         }
-        $catalogPath = \Yii::getAlias('@catalogPath');
+        $catalogPath = Yii::getAlias('@catalogPath');
         if (!is_dir($catalogPath)) {
             mkdir($catalogPath);
         }
@@ -170,5 +191,12 @@ class Catalog extends ActiveRecord
             }
             copy($this->_oldFilePath, $destinationDir . DIRECTORY_SEPARATOR . $this->logo_file);
         }
+    }
+    
+    public function getCountries()
+    {
+        $junctionTableName = CatalogCountries::tableName();
+        return $this->hasMany(Country::class, ['id' => 'country_id'])
+                ->viaTable($junctionTableName, ['catalog_id' => 'id']);
     }
 }
