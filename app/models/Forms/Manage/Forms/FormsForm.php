@@ -75,7 +75,7 @@ class FormsForm extends Model
             [['hasFile','published'],'boolean'],
             [['order','basePrice'],'default','value' => 0],
             [['title', 'name', 'slug', 'description','titleEng', 'nameEng', 'descriptionEng'], 'string', 'max' => 255],
-            ['published', PublishedValidator::class],
+            /*['published', PublishedValidator::class],*/  // Снимаем ограничение на публикацию одной формы
         ];
     } 
     /**
