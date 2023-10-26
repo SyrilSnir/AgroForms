@@ -44,7 +44,6 @@ use app\models\ActiveRecord\Users\User;
 use app\models\Data\Languages;
 use app\models\Data\SpecialPriceTypes;
 use Yii;
-use ZipStream\Test\TimeTest;
 use function GuzzleHttp\json_decode;
 
 /**
@@ -98,6 +97,7 @@ class FormHelper extends BaseFormHelper
         /** @var FormElement|null $formElement */
         /** @var PriceModificator $priceModificator */
         $priceModificator = null;
+        $vList = $requestId ? self::$valuesList[$requestId] : [];
         switch ($field->element_type_id) {
             case ElementType::ELEMENT_HEADER:
                 $formElement = new ElementHeader($field, null, $langCode);
@@ -136,7 +136,7 @@ class FormHelper extends BaseFormHelper
                 $formElement = new ElementFrieze($field, null, $langCode);
                 break;
             case ElementType::ELEMENT_GROUP:
-                $formElement = new ElementGroup($field, null, $langCode, self::$valuesList, $date);
+                $formElement = new ElementGroup($field, null, $langCode, $vList, $date);
                 break;
             case ElementType::ELEMENT_DATE_TIME:
                 $formElement = new ElementDateTime($field, null, $langCode);
@@ -228,40 +228,41 @@ class FormHelper extends BaseFormHelper
             return;
         }
         $requestForm = $this->request->requestForm;
-        $valuesList = [];
+        $vList = [];
         $fields = json_decode($requestForm->fields,true);
         foreach ($fields as $id => $field) {
             if (key_exists('value', $field)) {
-                $valuesList[$id]['value'] = $field['value'];
+                $vList[$id]['value'] = $field['value'];
             }
             if (key_exists('checked', $field)) {
-                $valuesList[$id]['checked'] = $field['checked'];
+                $vList[$id]['checked'] = $field['checked'];
             }
             if (key_exists('checkbox', $field)) {
                 if (key_exists('hasCommentField', $field)) {
-                    $valuesList[$id]['hasCommentField'] = $field['hasCommentField'];
+                    $vList[$id]['hasCommentField'] = $field['hasCommentField'];
                 }
                 if (key_exists('comment', $field)) {
-                    $valuesList[$id]['comment'] = $field['comment'];
+                    $vList[$id]['comment'] = $field['comment'];
                 }            
             }
         }
-        self::$valuesList = $valuesList;
+        self::$valuesList[$this->request->id] = $vList;
     }    
-    
+  
     protected function getElements(): array 
     {
         $result = [];
         foreach ($this->formElements as $element) {
             $fieldId = $element->getFieldId();
             $val = [];
-
-            if (key_exists($fieldId, self::$valuesList)) {
-                $val = self::$valuesList[$fieldId];
+            if ($this->request) {
+                if (key_exists($fieldId, self::$valuesList[$this->request->id])) {
+                    $val = self::$valuesList[$this->request->id][$fieldId];
+                }
+                if (key_exists('requestId', self::$valuesList[$this->request->id])) {
+                    $val['requestId'] = self::$valuesList[$this->request->id]['requestId'];
+                }            
             }
-            if (key_exists('requestId', self::$valuesList)) {
-                $val['requestId'] = self::$valuesList['requestId'];
-            }            
             if (!$element->isDeleted() || !empty($val)) { 
                 $data = $element->getData($val);
                 if (!empty($data)) {
@@ -271,7 +272,7 @@ class FormHelper extends BaseFormHelper
         }
         return $result;
     }
-    
+   
     public function getElementsForExcel():array
     {
         $result = [];
@@ -281,8 +282,8 @@ class FormHelper extends BaseFormHelper
             }
             $fieldId = $element->getFieldId();
             $val = [];
-            if (key_exists($fieldId, self::$valuesList)) {
-                $val = self::$valuesList[$fieldId];
+            if (key_exists($fieldId, self::$valuesList[$this->request->id])) {
+                $val = self::$valuesList[$this->request->id][$fieldId];
             } 
             array_push($result, $element->getExcelValue($val));            
         }
@@ -299,8 +300,8 @@ class FormHelper extends BaseFormHelper
         foreach ($catalogElements as $catalogElement) {
             $val = [];
             $fieldId = $catalogElement->getFieldId();
-            if (key_exists($fieldId, self::$valuesList)) {
-                $val = self::$valuesList[$fieldId];
+            if (key_exists($fieldId, self::$valuesList[$this->request->id])) {
+                $val = self::$valuesList[$this->request->id][$fieldId];
             }             
             $result[] = $catalogElement->getCatalogData($val);
         }    
@@ -342,8 +343,8 @@ class FormHelper extends BaseFormHelper
             }
             $fieldId = $element->getFieldId();
             $val = [];
-            if (key_exists($fieldId, self::$valuesList)) {
-                $val = self::$valuesList[$fieldId];
+            if (key_exists($fieldId, self::$valuesList[$this->request->id])) {
+                $val = self::$valuesList[$this->request->id][$fieldId];
             } 
             $result.= $element->renderPDF($val);
         }
@@ -359,8 +360,8 @@ class FormHelper extends BaseFormHelper
             }
             $fieldId = $element->getFieldId();
             $val = [];
-            if (key_exists($fieldId, self::$valuesList)) {
-                $val = self::$valuesList[$fieldId];
+            if (key_exists($fieldId, self::$valuesList[$this->request->id])) {
+                $val = self::$valuesList[$this->request->id][$fieldId];
             } 
             if (empty($val) && $element->isDeleted()) {
                 continue;
@@ -391,11 +392,11 @@ class FormHelper extends BaseFormHelper
             }
             /** @var CountableElementInterface $element */
             if (is_a($element, ElementGroup::class)) {
-                $price += $element->getPrice(self::$valuesList);
+                $price += $element->getPrice(self::$valuesList[$this->request->id]);
             } else {
                 $fieldId = $element->getFieldId();
-                if (key_exists($fieldId, self::$valuesList)) {
-                    $val = self::$valuesList[$fieldId];
+                if (key_exists($fieldId, self::$valuesList[$this->request->id])) {
+                    $val = self::$valuesList[$this->request->id][$fieldId];
                     if (!empty($val)) {
                         $price += $element->getPrice($val);
                     }
@@ -488,7 +489,7 @@ class FormHelper extends BaseFormHelper
         $content = Yii::$app->view->renderFile('@pdf/dynamic-form.php',[
             'model' => $this->request,
             'fields' => $this->formElements,
-            'values' => self::$valuesList,
+            'values' => self::$valuesList[$this->request->id],
             'amount' => $this->getFormPrice(),
         ]);
         $header = $this->getPdfHeader();
@@ -523,9 +524,12 @@ class FormHelper extends BaseFormHelper
 
     public function removeRequest(): void
     {
-        parent::removeRequest();
-        self::$valuesList = [];
         $this->formElements = [];
+        if (!$this->request) {
+            return;            
+        }
+        unset(self::$valuesList[$this->request->id]);
+        parent::removeRequest();
     }
 
     protected function getContractNumber() :string

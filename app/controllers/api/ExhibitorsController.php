@@ -3,10 +3,13 @@
 namespace app\controllers\api;
 
 use app\controllers\JsonController;
+use app\core\helpers\Data\TreeTraversalHelper;
 use app\models\ActiveRecord\Exhibition\Catalog;
+use app\models\ActiveRecord\Nomenclature\Rubricator;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use function mb_substr;
 
 /**
  * Description of ExhibitorsController
@@ -70,9 +73,11 @@ class ExhibitorsController extends JsonController
             ];            
         }
         
-        
+        $tree = array_pop(Rubricator::findOne(1)->sortedTree(false));
+        TreeTraversalHelper::addAdditionalDataToTree($tree, ['checked' => false,'expanded' => false]);                
         return [
             'companies' => $result,
+            'rubricator' => $tree,
             'alphabet' => [
                 'rus' => [
                     'russian' => $rusLetters,

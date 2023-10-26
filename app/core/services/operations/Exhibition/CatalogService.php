@@ -41,8 +41,17 @@ class CatalogService implements DataManqageInterface
 
     public function remove(int $id): void
     {
-        
+        $model = $this->repository->get($id);
+        $this->repository->remove($model);
     }
+    
+    public function clearForExhibition(int $exhibitionId) :void
+    {
+        $models = $this->repository->getByExhibition($exhibitionId);
+        foreach ($models as $model) {
+            $this->repository->remove($model);
+        }
+    }    
     
   //  private function _afterCreate(M)
 }

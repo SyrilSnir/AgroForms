@@ -152,6 +152,16 @@ class Catalog extends ActiveRecord
                 ->viaTable($junctionTableName, ['catalog_id' => 'id']);
     }
     
+    public function beforeDelete()
+    {
+        $logoPath = $this->getLogoPath();
+        if (file_exists($logoPath)) {
+            unlink($logoPath);
+        }
+        return parent::beforeDelete();
+    }
+
+
     public function afterSave($insert, $changedAttributes)
     {
         if ($insert) {
@@ -162,8 +172,15 @@ class Catalog extends ActiveRecord
     
     public function getLogoUrl(): string
     {
-        return Yii::getAlias('@catalogUrl') . '/' .$this->id. '/' . $this->logo_file ;
+        return Yii::getAlias('@catalogUrl') . '/' .$this->id 
+                . '/' . $this->logo_file;
     }
+    
+    public function getLogoPath(): string
+    {
+        return Yii::getAlias('@catalogPath') . DIRECTORY_SEPARATOR .$this->id . 
+                DIRECTORY_SEPARATOR . $this->logo_file;
+    }    
 
 
     public function _actionsAfterInsert() 

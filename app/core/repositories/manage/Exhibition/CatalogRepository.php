@@ -8,6 +8,7 @@ use app\core\repositories\manage\RepositoryInterface;
 use app\models\ActiveRecord\Exhibition\Catalog;
 use app\models\ActiveRecord\Exhibition\CatalogCountries;
 use app\models\ActiveRecord\Exhibition\CatalogRubrics;
+use RuntimeException;
 use yii\db\ActiveRecord;
 
 /**
@@ -25,6 +26,16 @@ class CatalogRepository implements RepositoryInterface
             throw new NotFoundException('Элемент не найден');
         }
         return $model;
+    }
+    
+    /**
+     * 
+     * @param int $exhibitionId
+     * @return Catalog[]
+     */
+    public function getByExhibition(int $exhibitionId) : array
+    {
+        return Catalog::find()->andWhere(['exhibition_id' => $exhibitionId])->all();        
     }
     
     public function removeCountries(int $catalogId)
@@ -45,5 +56,5 @@ class CatalogRepository implements RepositoryInterface
         if (!$model->delete()) {
             throw new RuntimeException('Ошибка удаления');
         }
-    }
+    }   
 }

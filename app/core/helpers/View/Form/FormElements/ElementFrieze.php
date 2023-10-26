@@ -2,6 +2,8 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\models\Data\FriezeFieldTypes;
+
 /**
  * Description of ElementFrieze
  *
@@ -12,7 +14,7 @@ class ElementFrieze extends FormElement implements CountableElementInterface
     public function renderHtml(array $valuesList = []): string
     {
         $params = $this->getParameters();
-        $style = ($params['friezeFieldType'] == \app\models\Data\FriezeFieldTypes::TEXTAREA_TYPE) ?
+        $style = (key_exists('friezeFieldType', $params) && $params['friezeFieldType'] == FriezeFieldTypes::TEXTAREA_TYPE) ?
                 ' style="height:auto"':
                 '';
         $text = '<div class="input__field"><div class="field__name">' . $this->field->name . ':</div>';
