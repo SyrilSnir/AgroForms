@@ -29,6 +29,7 @@ use yii\helpers\ArrayHelper;
  * @property Exhibition $exhibition
  * @property Request $request
  * @property Rubricator[] $rubrics
+ * @property CatalogContacts[] $contacts
  * @property Country[] $countries
  * 
  */
@@ -215,5 +216,10 @@ class Catalog extends ActiveRecord
         $junctionTableName = CatalogCountries::tableName();
         return $this->hasMany(Country::class, ['id' => 'country_id'])
                 ->viaTable($junctionTableName, ['catalog_id' => 'id']);
+    }
+    
+    public function getContacts()
+    {
+        return $this->hasMany(CatalogContacts::class, ['catalog_id' => 'id']);
     }
 }

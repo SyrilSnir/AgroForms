@@ -75,7 +75,7 @@ export default {
         eventBus.$emit('rubricWasAdded', rubric);
       },
       removeRubric() {
-        eventBus.$emit('rubricWasDelete', this.id);
+        eventBus.$emit('rubricWasDelete', this.id);        
       }
      }
 };

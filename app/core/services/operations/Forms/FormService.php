@@ -62,6 +62,14 @@ class FormService
         $this->forms->save($model);        
     }  
     
+    public function restore(int $id)
+    {
+        /** @var Form $model */
+        $model = $this->forms->get($id);        
+        $model->restore();
+        $this->forms->save($model);        
+    }     
+    
     public function copy(CopyForm $form) :Form
     {
         /** @var Form $originalForm */        

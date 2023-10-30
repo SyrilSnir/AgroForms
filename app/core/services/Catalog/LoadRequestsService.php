@@ -100,6 +100,10 @@ class LoadRequestsService
                 case BaseFormHelper::RUBRICATOR:
                     $result['rubricatorIds'] = $this->getRubricatorIds($element['value']);
                     break;
+                case BaseFormHelper::CONTACTS:
+                    $result['contacts'] = $element['value'];
+                    break;                
+              //  case BaseFormHelper::
             }
         }
         return $result;
@@ -114,7 +118,7 @@ class LoadRequestsService
         }
         return [];
     }
-    
+   
     private function getCountryIds(array $data): array
     {
         if (!empty($data)) {

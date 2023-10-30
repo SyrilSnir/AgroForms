@@ -19,11 +19,16 @@ class CatalogForm extends ManageForm
     public $descriptionEng;
     public $company;
     public $companyEng;
-    public $logoFile;
     public $country;
     public $countryEng;
+    public $logoFile;
     public $rubricatorIds;
     public $stand;
+    /**
+     * 
+     * @var CatalogContactsForm[]
+     */
+    public $contactForms = [];
 
 
     public function __construct(Catalog $model = null, $config = [])
@@ -54,22 +59,19 @@ class CatalogForm extends ManageForm
             [['logoFile', 'company', 'companyEng'], 'string', 'max' => 255],
             [['exhibitionId'], 'exist', 'skipOnError' => true, 'targetClass' => Exhibition::class, 'targetAttribute' => ['exhibitionId' => 'id']],
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    } 
+    
+    public function setAttributes($values, $safeOnly = true)
     {
-        return [
-            'exhibition_id' => 'Exhibition ID',
-            'logo_file' => 'Logo File',
-            'company' => 'Company',
-            'company_eng' => 'Company Eng',
-            'country' => 'Country',
-            'country_eng' => 'Country Eng',
-            'description' => 'Description',
-            'description_eng' => 'Description Eng',
-        ];
-    }    
+        if (key_exists('contacts', $values) && !empty($values['contacts'])) {
+            foreach ($values['contacts'] as $contact) {
+                $contactForm = new CatalogContactsForm();
+                $contactForm->setAttributes($contact);
+                if ($contactForm->validate()) {
+                    $this->contactForms[] = $contactForm;
+                }
+            }
+        }
+        parent::setAttributes($values, $safeOnly);
+    }
 }

@@ -30,10 +30,10 @@ $columnsConfig = [
                                     'title'=>t('Default sort'),
                                     'data-pjax'=> '', 
                                 ]) .                            
-                                Html::a('<i class="fas fa-trash"></i>', ['trash'], [
+                               Html::a('<i class="fas fa-eye"></i>', ['/panel/forms'], [
                                     'class' => 'btn btn-outline-secondary',
-                                    'title'=>t('Trash'),                                     
-                                ]) .
+                                    'title'=>t('All forms'),
+                                ]). 
                                 Html::a('<i class="fas fa-plus"></i>',['create'], [
                                     'class' => 'btn btn-success',
                                     'title' => Yii::t('app', 'Add form'),
@@ -83,31 +83,21 @@ $columnsConfig = [
                                 return FormStatusHelper::getStatusLabel($model->status);
                             }
                         ],          
-                        [
-                            'class' => ActionColumn::class,  
-                            'template' => '{view}{update}{delete}&nbsp;&nbsp;&nbsp;{status}',
-                            'width' => '140px',
+                        [ 
+                            'class' => ActionColumn::class,
+                            'template' => '{view} {update} {restore}',
+                            'width' => '100px',   
                             'buttons' => [
-                                'status' => function ($url, $model, $key) {
-                                    /** @var Form $model */ 
-                                    if ($model->isStatusShowed()) {
-                                        if ($model->status == Form::STATUS_DRAFT) {
-                                            $title = t('Publish');
-                                            $iconName = "ok-sign";
-                                            $url = Url::current(['publish', 'id' => $key]);
-                                        } 
-                                        if ($model->status == Form::STATUS_ACTIVE) {                                        
-                                            $title = t('To draft');
-                                            $iconName = "remove-circle";
-                                            $url = Url::current(['unpublish', 'id' => $key]);
-                                        }
-                                        $options = [
-                                            'title' => $title,
-                                            'aria-label' => $title,
-                                        ];                                  
-                                        $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
-                                        return Html::a($icon, $url,$options);
-                                    }
+                                'restore' => function ($url, $model, $key) {
+                                    $title = t('Restore form','requests');
+                                    $iconName = "ok-circle";
+                                    $url = Url::current(['restore', 'id' => $key]);
+                                    $options = [
+                                        'title' => $title,
+                                        'aria-label' => $title,
+                                    ];                                  
+                                    $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-$iconName"]);
+                                    return Html::a($icon, $url,$options);        
                                 }
                             ]
                         ],
@@ -129,4 +119,6 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         </div>
     </div>
 </section>
+
+
 

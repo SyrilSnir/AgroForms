@@ -25,6 +25,7 @@ abstract class BaseFormHelper
     const COMPANY_ADDRESS_RUS = 'company-address-rus';
     const COMPANY_ADDRESS_ENG = 'company-address-eng'; 
     const RUBRICATOR = 'rubricator';
+    const CONTACTS = 'contacts';
     
     use FormElementsManagementTrait;
     /**
@@ -129,6 +130,7 @@ abstract class BaseFormHelper
             self::COMPANY_ADDRESS_RUS,
             self::COMPANY_ADDRESS_ENG,
             self::RUBRICATOR,
+            self::CONTACTS,
         ];
     }
     

@@ -33,7 +33,8 @@ class ExhibitorsController extends JsonController
     {
         $result = Catalog::find(['exhibition_id' => $exhibitionId])
                 ->joinWith(['countries','rubrics'])->asArray()->all();
-        $result = array_map(function($el){
+        $countriesList = [];
+        $result = array_map(function($el) use (&$countriesList){
             $el['show_description'] = false;
             $el['logo_url'] = Url::base(true). 
                     Yii::getAlias('@catalogUrl').'/'.
@@ -41,6 +42,16 @@ class ExhibitorsController extends JsonController
                     $el['logo_file'];
             $el['capital_letter'] = mb_convert_case(mb_substr($el['company'],0,1), MB_CASE_LOWER);
             $el['capital_letter_eng'] = mb_convert_case(mb_substr($el['company_eng'],0,1), MB_CASE_LOWER);
+            if (!empty($el['countries'])) {
+                foreach ($el['countries'] as $country) {
+                    if(!key_exists($country['id'], $countriesList)) {
+                        $countriesList[$country['id']] = [
+                            'name' => $country['name'],
+                            'nameEng' => $country['name_eng'],
+                        ];
+                    }
+                }
+            }
             return $el;
         },$result);
         $rusCapitalLetters = array_unique(ArrayHelper::getColumn($result, 'capital_letter'));
@@ -73,10 +84,11 @@ class ExhibitorsController extends JsonController
             ];            
         }
         
-        $tree = array_pop(Rubricator::findOne(1)->sortedTree(false));
+        $tree = Rubricator::findOne(1)->sortedTree(false)[0];
         TreeTraversalHelper::addAdditionalDataToTree($tree, ['checked' => false,'expanded' => false]);                
         return [
             'companies' => $result,
+            'countries' => $countriesList,
             'rubricator' => $tree,
             'alphabet' => [
                 'rus' => [

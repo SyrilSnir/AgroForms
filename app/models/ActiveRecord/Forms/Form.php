@@ -179,6 +179,12 @@ class Form extends ActiveRecord
         $this->status = self::STATUS_ACTIVE;
     }  
     
+    public function restore()
+    {
+        $this->deleted = false;
+    }
+
+
     public function isStatusShowed(): bool 
     {
         return ($this->status === self::STATUS_DRAFT || $this->status === self::STATUS_ACTIVE);

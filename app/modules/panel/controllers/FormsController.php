@@ -19,6 +19,7 @@ use app\models\Forms\Manage\Forms\FormsForm;
 use app\models\Forms\ShowDeletedForm;
 use app\models\SearchModels\Forms\FieldSearch;
 use app\models\SearchModels\Forms\FormSearch;
+use app\models\SearchModels\Forms\TrashFormSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
 use kotchuprik\sortable\actions\Sorting;
@@ -38,6 +39,12 @@ class FormsController extends BaseAdminController
      * @var FormService
      */
     protected $service;
+    
+    /**
+     * 
+     * @var TrashFormSearch
+     */
+    protected $trashSearch;
 
     public function actions()
     {
@@ -59,6 +66,7 @@ class FormsController extends BaseAdminController
             FormReadRepository $repository,
             FormService $service,
             FormSearch $searchModel,
+            TrashFormSearch $trashSearch,
             $config = array()
             )
     {
@@ -66,6 +74,7 @@ class FormsController extends BaseAdminController
         $this->readRepository = $repository;
         $this->service = $service;
         $this->searchModel = $searchModel;
+        $this->trashSearch = $trashSearch;
     }
 
     public function actionView($id)
@@ -88,11 +97,32 @@ class FormsController extends BaseAdminController
         return $this->redirect(Url::previous());
     }    
     
+    public function actionTrash()
+    {
+        Url::remember();
+        $dataProvider =  $this->trashSearch->search(Yii::$app->request->queryParams);;
+        $pageDataProvider = $this->configurePagination($dataProvider);
+        return $this->render('trash',[            
+            'searchModel' => $this->trashSearch,
+            'dataProvider' => $pageDataProvider->getDataProvider(),
+            'rowsCountForm' => $pageDataProvider->getRowsCountForm(),
+            'pagination' => $this->showPagination
+        ]);             
+    }
+    
     public function actionUnpublish($id)
     {
         $this->service->unpublish($id);
         return $this->redirect(Url::previous());
-    }     
+    } 
+
+    public function actionRestore($id)
+    {
+        /** @var User $user */        
+        $this->service->restore($id);
+        return $this->redirect(Url::previous());
+        
+    }    
     
      public function actionCreate()
     {

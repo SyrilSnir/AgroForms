@@ -4,6 +4,7 @@ namespace app\models\SearchModels\Forms;
 
 use app\core\traits\Lists\GetExhibitionsTrait;
 use app\models\ActiveRecord\Forms\Form;
+use app\models\ActiveRecord\Forms\Query\FormQuery;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -33,7 +34,7 @@ class FormSearch extends Model
     }    
     public function search(array $params): ActiveDataProvider
     {
-        $query = Form::find()->actual();
+        $query = $this->getQuery();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => false
@@ -51,5 +52,10 @@ class FormSearch extends Model
         $query->andFilterWhere(['exhibition_id' => $this->exhibitionId]);
         $query->orderBy('order');
         return $dataProvider;
+    }
+    
+    protected function getQuery() : FormQuery
+    {
+        return Form::find()->actual();
     }
 }

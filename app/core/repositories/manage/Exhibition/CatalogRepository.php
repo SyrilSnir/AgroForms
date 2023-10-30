@@ -6,6 +6,7 @@ use app\core\repositories\exceptions\NotFoundException;
 use app\core\repositories\manage\DataManipulationTrait;
 use app\core\repositories\manage\RepositoryInterface;
 use app\models\ActiveRecord\Exhibition\Catalog;
+use app\models\ActiveRecord\Exhibition\CatalogContacts;
 use app\models\ActiveRecord\Exhibition\CatalogCountries;
 use app\models\ActiveRecord\Exhibition\CatalogRubrics;
 use RuntimeException;
@@ -47,12 +48,18 @@ class CatalogRepository implements RepositoryInterface
     {
         CatalogRubrics::deleteAll(['catalog_id' => $catalogId]);
     }
+    
+    public function removeContacts(int $catalogId)
+    {
+        CatalogContacts::deleteAll(['catalog_id' => $catalogId]);
+    }    
 
     public function remove(ActiveRecord $model)
     {
         /** @var Catalog $model */
         $this->removeCountries($model->id);
         $this->removeRubrics($model->id);
+        $this->removeContacts($model->id);
         if (!$model->delete()) {
             throw new RuntimeException('Ошибка удаления');
         }
