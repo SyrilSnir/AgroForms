@@ -106,8 +106,44 @@ switch ($model->user_type_id) {
                     ]) ?>
         </div>
         <?php ActiveForm::end(); ?>               
-        <?php endif ;?>           
             </div> 
+        <?php else: ?>           
+        <div class="col-md-6">  
+        <?php 
+            $activateFornModel = new \app\models\Forms\User\Manage\PasswordResetForm($model->email);
+            $activateForm = ActiveForm::begin([
+                'action' => Url::to(['/panel/manager/users/invite', 'id' => $model->id ])
+            ]);
+        ?>            
+            <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"><?php t('Activate user','user')?></h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                          <i class="fas fa-minus"></i></button>
+                      </div>
+                    </div>
+                    <div class="card-body" style="display: block;">
+    <?= $activateForm->field($activateFornModel, 'email')
+                ->textInput()
+                ?>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+         <div class="form-group">
+            <?= Html::submitButton(t('Send a link to reset your password by email','user'), [
+                'class' => 'btn btn-primary mb-3' ]) ?>
+            <?= Html::tag('div',t('Generate a password recovery link','user'), 
+                    [
+                        'id' => 'get-activare-link',
+                        'class' => 'btn btn-primary mb-3',  
+                        'data-user' => $model->id
+                    ]) ?>
+        </div>
+        <?php ActiveForm::end(); ?>               
+        </div>                         
+        <?php endif ;?>           
 
 
     </div>

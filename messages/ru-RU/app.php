@@ -221,6 +221,6 @@ return [
     'Load data' => 'Загрузить данные',
     'Data loaded successfully' => 'Данные успешно загружены',
     'No data to upload' => 'Нет данных для выгрузки',
-    'All forms' => 'Все формы'
+    'All forms' => 'Все формы',
 ];
 

@@ -34,5 +34,7 @@ return [
   'Name' => 'Имя',
   'Surname' => 'Фамилия',
   'Middle Name' => 'Отчество',
+  'Generate a password recovery link' => 'Сформировать ссылку для восстановления пароля',
+  'Send a link to reset your password by email' => 'Отправить ссылку для восстановления пароля на E-mail'
 ];
 
