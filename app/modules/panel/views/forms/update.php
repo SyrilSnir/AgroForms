@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 /* @var $model FormsForm */
 
 $this->title = Yii::t('app/title', 'Edit form') . ': ' . $model->name;
-$anotherExhibitions = ArrayHelper::map(Exhibition::find()->andFilterWhere(['!=', 'id', $model->exhibitionId ])->orderBy('id')->asArray()->all(), 'id', 'title');
+$anotherExhibitions = ArrayHelper::map(Exhibition::find()->orderBy('id')->asArray()->all(), 'id', 'title');
 ?>
 
 <div class="update-form">

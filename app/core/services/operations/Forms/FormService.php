@@ -83,6 +83,8 @@ class FormService
         $formCopy->exhibition_id = $form->exhibitionId;
         $formCopy->status = Form::STATUS_DRAFT;
         $this->forms->save($formCopy);
+        $groups = [];
+        $groupFields = [];
         foreach ($originalForm->formFields as $field) {
             $fieldCopy = new Field();
             $fieldCopy->setAttributes($field->attributes,false);
@@ -90,6 +92,12 @@ class FormService
             $fieldCopy->isNewRecord = true;
             $fieldCopy->form_id = $formCopy->id;
             $fieldCopy->save();
+            if (!empty($fieldCopy->field_group_id)) {
+                array_push($groupFields,$fieldCopy);
+            }
+            if ($field->element_type_id === ElementType::ELEMENT_GROUP) {
+                $groups[$field->id] = $fieldCopy->id;
+            }            
             if (in_array($field->element_type_id,ElementType::HAS_ENUM_ATTRIBUTES)) {
                 foreach ($field->enums as $fieldEnum) {
                     $enumCopy = new FieldEnum();
@@ -101,6 +109,15 @@ class FormService
                 }
                     
             }
+        }
+        foreach ($groupFields as $groupField) {
+            /** @var Field $groupField */
+            if (key_exists($groupField->field_group_id, $groups)) {
+                $groupField->field_group_id = $groups[$groupField->field_group_id];
+            } else {
+                $groupField->field_group_id = null;
+            }
+            $groupField->save();
         }
         return $formCopy;
     }
