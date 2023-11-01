@@ -1,3 +1,4 @@
+import * as constants from '../../../utils/constants';
 export const formList = {
     props: [
         'params'
@@ -30,10 +31,10 @@ export const formList = {
     computed: {
         total() {
             let total = 0;
-            if (!this.isComputed || this.freeCount >= this.blocksCount) {
+            if (!this.isComputed || this.freeCount >= this.nonEmptyBlocksCount) {
                 return 0;
             }
-            let val = this.blocksCount - this.freeCount;
+            let val = this.nonEmptyBlocksCount - this.freeCount;
             total = val * (+this.unitPrice);
             if (isNaN(total)) {
                 return 0;
@@ -42,6 +43,20 @@ export const formList = {
         },        
         blocksCount() {
             return this.formElements.length;
+        },
+        nonEmptyBlocksCount() {
+            let elements = this.formElements.filter((item) => {
+                switch(this.name) {
+                    case constants.FORM_CONTACTS: 
+                        return !(item.site == '' && item.email == '' && item.phone == '');
+                    case constants.FORM_ADDRESS:
+                        return !(item.country == '' && item.area == '' && item.city == '' && item.index == '' && item.address == '');
+                    case constants.FORM_BADGE:
+                        return !(item.name == '' && item.middleName == '' && itemsurName == '' && company == '');
+                }
+                return true;
+            });
+            return elements.length;
         },
         freeCount() {
             return this.params.parameters.freeCount;

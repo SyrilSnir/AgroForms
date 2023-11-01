@@ -69,6 +69,7 @@ import { labelMixin } from './Mixins/labelMixin';
 import { textTranslateMixin } from './Mixins/textTranslateMixin';
 import { numberFormatMixin } from './Mixins/numberFormatMixin';
 import Select2 from 'v-select2-component';
+import * as constants from '../../utils/constants';
 import axios from "axios";
 
  export default {
@@ -83,6 +84,7 @@ import axios from "axios";
     },         
      data() {
         return {
+            name: constants.FORM_ADDRESS,
             myValue: '',
             myOptions: [],           
             defaultElement : {

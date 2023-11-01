@@ -102,4 +102,14 @@ class ExhibitorsController extends JsonController
             ]
         ];
     }
+    
+    public function actionDetail($catalogId) {            
+        $model = Catalog::find()->joinWith(['countries','rubrics','contacts'])->andWhere(['catalog.id' => $catalogId])->asArray()->one();
+        $model['logo_url'] = Url::base(true). 
+                    Yii::getAlias('@catalogUrl').'/'.
+                     $model['id'] . '/' .
+                    $model['logo_file'];
+        return $model;
+        
+    }
 }

@@ -55,10 +55,12 @@ import { computedMixin } from './Mixins/computedMixin';
 import { formList } from './Mixins/formListMixin';
 import { textTranslateMixin } from './Mixins/textTranslateMixin';
 import { numberFormatMixin } from './Mixins/numberFormatMixin';
+import * as constants from '../../utils/constants';
 
  export default {
    data() {
         return {
+            name: constants.FORM_BADGE,
             defaultElement : {
                     name: '',
                     middleName: '',
