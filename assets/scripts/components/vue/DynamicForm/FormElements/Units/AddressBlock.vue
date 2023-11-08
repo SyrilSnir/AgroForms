@@ -88,7 +88,7 @@ import axios from "axios";
             myValue: '',
             myOptions: [],           
             defaultElement : {
-                    country: null,
+                    country: '',
                     area: '',
                     city: '',
                     index: '',

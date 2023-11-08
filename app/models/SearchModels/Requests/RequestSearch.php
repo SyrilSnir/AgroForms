@@ -38,7 +38,7 @@ class RequestSearch extends Model
     public function searchForUser(int $userId,int $exhibitionId = null,$contractId = null, array $params = []) 
     {
         $dp = $this->baseSearch($params, $exhibitionId, $contractId);
-        $dp->query->forUser($userId);
+      //  $dp->query->($userId);
         return $dp;
     }
     

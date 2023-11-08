@@ -74,7 +74,7 @@ class UserManageForm extends ActiveRecord
             [['position','login'],'string'],
             [['position'],'default' ,'value' => ''],
             [['userType','company', 'gender','language'],'integer'],
-            [['company'], 'validateMemberUnique','on' => self::SCENARIO_DEFAULT],
+           // [['company'], 'validateMemberUnique','on' => self::SCENARIO_DEFAULT],
             [['phone','fio'], 'string', 'max' => 255],
             [['birthday'], 'safe'],  
             [
