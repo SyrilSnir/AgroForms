@@ -11,6 +11,9 @@ class ElementCheckbox extends FormElement implements CountableElementInterface
 {    
     public function renderHtml(array $valuesList = []): string
     {
+        if (!key_exists('checked', $valuesList) || !$valuesList['checked']) {
+            return '';
+        }
         return $this->view->renderFile('@fields/checkbox.php',[
             'fieldName' => $this->field->name,
             'valuesList' => $valuesList,
@@ -47,7 +50,7 @@ class ElementCheckbox extends FormElement implements CountableElementInterface
     }
 
     public function renderPDF(array $valuesList = []): string 
-    {
+    {        
         if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {
             if (key_exists('value', $valuesList) && $valuesList['value'] > 0) {
                 $text = '<tr style="border:none;border-bottom:1px solid #ededed"><td style="color:black;font-family:Verdana;font-size: 10pt;font-weight:bold;text-align:left;">' . $this->field->name .  ': </td>'; 
