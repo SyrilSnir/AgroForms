@@ -15,6 +15,8 @@ interface FormElementInterface
     
     public function renderHtml(array $valuesList = []): string;
     
+    public function isEmpty(array $valuesList = []): bool;
+    
     public function renderPDF(array $valuesList = []): string;
     
     public function getParameters():array;

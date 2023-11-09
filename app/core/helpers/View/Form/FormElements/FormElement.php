@@ -66,6 +66,10 @@ abstract class FormElement implements FormElementInterface
         $this->fieldEnumProvider = $enumProvider;
         $this->view = Yii::$app->view;
     }
+    public function isEmpty(array $valuesList = []): bool
+    {
+        return !(key_exists('value', $valuesList) && !empty($valuesList['value']));
+    }
     
     public function getData(array $valuesList = []): array
     {

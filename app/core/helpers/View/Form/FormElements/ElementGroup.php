@@ -166,14 +166,30 @@ class ElementGroup extends FormElement implements CountableElementInterface
         }
         return $price;
     }
+    
+    public function isEmpty(array $valuesList = []): bool
+    {
+        $result = true;
+        foreach($this->formElements as $element) { 
+            $val = [];
+            $fieldId = $element->getFieldId();
+            if (key_exists($fieldId, $this->valuesList)) {
+                $val = $this->valuesList[$fieldId];
+            }                 
+            $result = $element->isEmpty($val);
+            if (!$result) return $result;            
+        }
+        return $result;
+    }
 
     public function renderHtml(array $valuesList = []): string
     {
-        $price = $this->getPrice();
+      //  $price = $this->getPrice();
+        $isEmpty = $this->isEmpty();
         if ($this->groupType == BaseParametersForm::HIDDEN_GROUP_TYPE) {
             return '';
         }
-        if ($this->groupType == BaseParametersForm::CONDITIONALLY_HIDDEN_GROP_TYPE && $price <= 0) {
+        if ($this->groupType == BaseParametersForm::CONDITIONALLY_HIDDEN_GROP_TYPE && $isEmpty) {
             return '';
         }
         $result = '';
