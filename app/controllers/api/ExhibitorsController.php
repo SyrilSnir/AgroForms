@@ -56,7 +56,7 @@ class ExhibitorsController extends JsonController
         },$result);
         $rusCapitalLetters = array_unique(ArrayHelper::getColumn($result, 'capital_letter'));
         $engCapitalLetters = array_unique(ArrayHelper::getColumn($result, 'capital_letter_eng'));
-        $russianAlphabet = ['a','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','э','ю','я'];
+        $russianAlphabet = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','э','ю','я'];
         $latinAlphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9'];
         
         $rusLetters = [];
