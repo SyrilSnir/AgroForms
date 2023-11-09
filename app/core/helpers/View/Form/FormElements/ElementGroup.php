@@ -51,7 +51,7 @@ class ElementGroup extends FormElement implements CountableElementInterface
      * @param array $valuesList
      * @param int|null $date
      */
-    public function __construct(Field $field, FieldEnumProvider $enumProvider = null, string $langCode = Languages::RUSSIAN, $valuesList = [], int $date = null)
+    public function __construct(Field $field, FieldEnumProvider $enumProvider = null, string $langCode = Languages::RUSSIAN, $valuesList = [], int $date = null,int $requestId = null)
     {        
         parent::__construct($field, $enumProvider, $langCode);
         $parameters = $this->getParameters();
@@ -59,6 +59,9 @@ class ElementGroup extends FormElement implements CountableElementInterface
         $this->date = $date;
         if (key_exists('groupType', $parameters)) {
             $this->groupType = (int) $parameters['groupType'];
+        }
+        if ($requestId) {
+            $this->setRequestId($requestId);
         }
         $this->appendFormElements();
     }

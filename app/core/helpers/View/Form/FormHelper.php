@@ -136,7 +136,7 @@ class FormHelper extends BaseFormHelper
                 $formElement = new ElementFrieze($field, null, $langCode);
                 break;
             case ElementType::ELEMENT_GROUP:
-                $formElement = new ElementGroup($field, null, $langCode, $vList, $date);
+                $formElement = new ElementGroup($field, null, $langCode, $vList, $date, $requestId);
                 break;
             case ElementType::ELEMENT_DATE_TIME:
                 $formElement = new ElementDateTime($field, null, $langCode);

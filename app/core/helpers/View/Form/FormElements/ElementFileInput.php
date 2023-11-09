@@ -161,7 +161,7 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
     }
     
     public function getCatalogData(array $valuesList): array
-    {
+    {        
         $attachedFiles = AttachedFilesReadRepository::findByFieldAndRequest($this->field->id, $this->requestId);
         if (!empty($attachedFiles)) {
             $attachedFiles[0]->configureFileUploadParameters();
