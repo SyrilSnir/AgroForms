@@ -115,6 +115,15 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
         ]);
     }
     
+    public function isEmpty(array $valuesList = []): bool
+    {
+        if (!$this->getRequestId()) {
+            return true;
+        }
+        $attachedFiles = AttachedFilesReadRepository::findByFieldAndRequest($this->field->id, $this->requestId);
+        return (count($attachedFiles) == 0);
+    }
+    
     protected function renderCatalogPdf($valuesList):string
     {   
 
