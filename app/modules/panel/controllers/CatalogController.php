@@ -74,8 +74,8 @@ class CatalogController extends CrudController
         $catalogLoadForm = new CatalogLoadForm();
         if ($catalogLoadForm->load(Yii::$app->request->post()) && $catalogLoadForm) {
             $requests = $this->requestRepository->findExportedRequests($catalogLoadForm->exhibitionId);
-            if ($requests) {
-                $this->service->clearForExhibition($catalogLoadForm->exhibitionId);
+            $this->service->clearForExhibition($catalogLoadForm->exhibitionId);
+            if ($requests) {                
                 $catalogRows = $this->loadRequestsService->getCatalogForms($requests);
                 foreach ($catalogRows as $row) {
                     $this->service->create($row);
