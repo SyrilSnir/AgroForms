@@ -3,13 +3,16 @@
         <div v-if="!isFileExist" class="form-group">
             <p class="d-flex flex-column">
                     <span>{{ titleLabel }}</span>
-                </p>             
-<div class="input-group" v-if="isFileSelect">
-    <input class="form-control" :value="selectedFile" type="text" readonly>
-    <div class="input-group-append">
-        <div @click="cancelUpload" class="input-group-text"><i class="fas fa-times"></i><span>Cancel</span></div>
-    </div>    
-</div>
+                </p>  
+<template v-if="isFileSelect">
+    <div class="input-group">
+        <input class="form-control" :value="selectedFile" type="text" readonly>
+        <div class="input-group-append">
+            <div @click="cancelUpload" class="input-group-text"><i class="fas fa-times"></i><span>{{ getName('Отмена','Cancel') }}</span></div>
+        </div>    
+    </div>
+    <div v-if="!isValid" class="help-block">{{ getName('Неверный тип файла','Invalid file type') }}</div>  
+</template>
 <div v-else class="custom-file">
     <input @change="onChange" :id="id" :ref="id" type="file" :accept="mimeFilter" class="custom-file-input">
     <label class="custom-file-label input-group-text" :data-browse="dic.fileAttach.browse" :for="id">Select file</label>
@@ -57,10 +60,25 @@ export default {
     },
     created() {
         this.$emit('changeField',this.getData());
-    },
+    },    
     computed: {
         isFileExist() {
             return this.params.file_exist;
+        },
+        isSiteLogo() {
+            return this.params.parameters.attachment == 1;
+        }, 
+        isValid() {
+            if (!this.isSiteLogo || !this.selectedFile) {
+                console.log(this.selectedFile);
+                return true;
+            }
+            let fileExt = this.selectedFile.split('.').pop();
+            console.log(fileExt);
+            if (['jpg','jpeg','png','bmp'].indexOf(fileExt) == -1) {
+                return false;
+            }
+            return true;
         },
         fileUrl() {
             return this.params.file_url;
@@ -117,7 +135,7 @@ export default {
             let data = {
                 id: this.params.id,                  
                 file: this.val,
-                valid: true,
+                valid: this.isValid,
                 data: {
                     value: this.total,
                 },

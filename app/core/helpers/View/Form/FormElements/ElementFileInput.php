@@ -37,11 +37,13 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
         } else {
             $result['file_exist'] = false;        
         }
-        $fileTypeParameter = $this->getParameters('attached') ?? 0;
+        $fileTypeParameter = key_exists('attachment', $this->fieldParameters) ?
+                (int)$this->fieldParameters['attachment'] : 0;
         $result['file_types'] = '';
         switch ($fileTypeParameter) {
             case AttachedFiles::SITE_LOGO_TYPE:
                 $result['file_types'].='image/*';
+                break;
             case AttachedFiles::CATALOG_LOGO_TYPE:                
                 $result['file_types'].='image/jpeg,application/postscript,application/pdf';
                 break;
@@ -50,7 +52,7 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
                 $result['file_types'].='image/jpeg,application/postscript,application/pdf';
                 break;
         }
-        
+        $result['site_logo'] = $fileTypeParameter == AttachedFiles::SITE_LOGO_TYPE;
         return $result;
     }
     
