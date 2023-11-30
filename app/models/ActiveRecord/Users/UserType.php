@@ -52,12 +52,16 @@ class UserType extends ActiveRecord
     const ORGANIZER_USER_ID = 5;
     const ORGANIZER_USER_TYPE = 'organizer';
     
+    const MEDIA_MANAGER_USER_ID = 6;
+    const MEDIA_MANAGER_USER_TYPE = 'media-manager';
+    
     const ROLES = [
         self::ROOT_USER_ID => self::ROOT_USER_TYPE,
         self::MEMBER_USER_ID => self::MEMBER_USER_TYPE,
         self::ORGANIZER_USER_ID => self::ORGANIZER_USER_TYPE,
         self::MANAGER_USER_ID => self::MANAGER_USER_TYPE,
-        self::ACCOUNTANT_USER_ID => self::ACCOUNTANT_USER_TYPE
+        self::ACCOUNTANT_USER_ID => self::ACCOUNTANT_USER_TYPE,
+        self::MEDIA_MANAGER_USER_ID => self::MEDIA_MANAGER_USER_TYPE,
     ];    
     /**
      * {@inheritdoc}

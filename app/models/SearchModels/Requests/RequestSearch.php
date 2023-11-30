@@ -57,7 +57,7 @@ class RequestSearch extends Model
 
     protected function baseSearch(array $params = [], $exhibitionId = null, $contractId = null): ActiveDataProvider
     {
-        $query = Request::find()->select(['{{%requests}}.*','{{%users}}.company_id AS company'])->joinWith(['application','stand','user']); //->joinWith('stands');
+        $query = Request::find()->select(['{{%requests}}.*','{{%users}}.company_id AS company'])->joinWith(['application','form','stand','user']); //->joinWith('stands');
         if ($exhibitionId) {
             $query->forExhibition($exhibitionId);
         }
@@ -72,7 +72,7 @@ class RequestSearch extends Model
                     'company',
                     'form_id',
                     'exhibition_id',
-                    'status',
+                    'requests.status',
                     'created_at',                    
                     'activate_at'
                 ],                
@@ -86,7 +86,7 @@ class RequestSearch extends Model
             return $dataProvider;
         }
         $query->andFilterWhere(['form_type_id' => $this->formType]);
-        $query->andFilterWhere(['status' => $this->status]);
+        $query->andFilterWhere(['requests.status' => $this->status]);
         $query->andFilterWhere(['requests.form_id' => $this->form_id]);            
         $query->andFilterWhere(['requests.exhibition_id' => $this->exhibition_id]);            
         $query->andFilterWhere(['users.company_id' => $this->company]);            

@@ -41,11 +41,15 @@ class RbacController extends Controller
         
         $accountant = $auth->createRole(UserType::ACCOUNTANT_USER_TYPE);
         $accountant->description = 'Роль бухгалтера';
-        $auth->add($accountant);
+        $auth->add($accountant);                
         
         $manager = $auth->createRole(UserType::MANAGER_USER_TYPE);
         $manager->description = 'Роль менеджера';
         $auth->add($manager);
+        
+        $mediaManager = $auth->createRole(UserType::MEDIA_MANAGER_USER_TYPE);
+        $manager->description = 'Роль медиа-менеджера';
+        $auth->add($mediaManager);        
         
         $adminMenu = $auth->createPermission(Rbac::PERMISSION_ADMINISTRATOR_MENU);
         $adminMenu->description ='Меню администратора';
@@ -71,6 +75,12 @@ class RbacController extends Controller
         $accountantMenu->description = 'Меню бухгалтера';
         $auth->add($accountantMenu);
         $auth->addChild($accountant, $accountantMenu);
+        
+        $mediaManagerMenu = $auth->createPermission(Rbac::PERMISSION_MEDIA_MANAGER_MENU);
+        $mediaManagerMenu->description = 'Меню медиа-менеджера';
+        $auth->add($mediaManagerMenu);
+        $auth->addChild($mediaManager, $mediaManagerMenu);
+        
         
         Console::output('Роли установлены');
     }

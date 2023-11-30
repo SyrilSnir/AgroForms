@@ -3,6 +3,7 @@
 use app\core\helpers\Menu\AccountantMenuHelper;
 use app\core\helpers\Menu\AdminMenuHelper;
 use app\core\helpers\Menu\ManagerMenuHelper;
+use app\core\helpers\Menu\MediaManagerMenuHelper;
 use app\core\helpers\Menu\MemberMenuHelper;
 use app\core\helpers\Menu\OrganizerMenuHelper;
 use app\core\manage\Auth\Rbac;
@@ -42,6 +43,10 @@ use app\widgets\AdminLTE\Menu\MenuWidget;
         <?php 
             echo MenuWidget::widget(ManagerMenuHelper::getMenu())
         ?>        
+    <?php elseif (Yii::$app->user->can(Rbac::PERMISSION_MEDIA_MANAGER_MENU)): ?>
+        <?php 
+            echo MenuWidget::widget(MediaManagerMenuHelper::getMenu())
+        ?>             
     <?php elseif (Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)): ?>
     <?php 
         echo MenuWidget::widget(AccountantMenuHelper::getMenu())

@@ -28,6 +28,7 @@ $isPayShowed = (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
 
 $isDeleteShowed = (!Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&
                                         !Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) &&
+                                        !Yii::$app->user->can(Rbac::PERMISSION_MEDIA_MANAGER_MENU) &&
                                         !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU));
 
 $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';

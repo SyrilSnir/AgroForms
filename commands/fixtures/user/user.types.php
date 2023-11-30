@@ -32,6 +32,12 @@ return [
         'name' => 'Бухгалтер',
         'name_eng' => 'Accountant',
         'slug' => UserType::ACCOUNTANT_USER_TYPE,
-    ]    
+    ],
+    [
+        'id' => UserType::MEDIA_MANAGER_USER_ID,
+        'name' => 'Медиа-менеджер',
+        'name_eng' => 'Media manager',
+        'slug' => UserType::MEDIA_MANAGER_USER_TYPE,
+    ],
 ];
 

@@ -23,6 +23,7 @@ use app\models\Forms\Requests\EditRequestForm;
 use app\models\SearchModels\Requests\AcceptedRequestSearch;
 use app\models\SearchModels\Requests\AccountantRequestSearch;
 use app\models\SearchModels\Requests\ManagerRequestSearch;
+use app\models\SearchModels\Requests\MediaManagerRequestSearch;
 use app\models\SearchModels\Requests\NewRequestSearch;
 use app\models\SearchModels\Requests\RejectedRequestSearch;
 use DomainException;
@@ -54,6 +55,7 @@ class RequestsController extends ManageController
         Rbac::PERMISSION_ADMINISTRATOR_MENU,
         Rbac::PERMISSION_MANAGER_MENU,
         Rbac::PERMISSION_ACCOUNTANT_MENU,
+        Rbac::PERMISSION_MEDIA_MANAGER_MENU,
         Rbac::PERMISSION_ORGANIZER_MENU];
 
     use GridViewTrait,RequestViewTrait;
@@ -62,6 +64,7 @@ class RequestsController extends ManageController
             $id, 
             $module, 
             ManagerRequestSearch $managerSearchModel,
+            MediaManagerRequestSearch $mediaManagerSearchModel,
             AccountantRequestSearch $accountantSearchModel,
             RequestReadRepository $repository, 
             RequestService $requestService,
@@ -75,7 +78,10 @@ class RequestsController extends ManageController
     //    $this->service = $service;
         if (Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)) {
             $this->searchModel = $accountantSearchModel;
-        } else {
+        } elseif (Yii::$app->user->can(Rbac::PERMISSION_MEDIA_MANAGER_MENU)) {
+            $this->searchModel = $mediaManagerSearchModel;
+        }
+        else {
             $this->searchModel = $managerSearchModel;
         }
         $this->readRepository = $repository;
