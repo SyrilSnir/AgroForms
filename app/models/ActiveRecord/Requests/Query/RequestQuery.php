@@ -57,7 +57,7 @@ class RequestQuery extends ActiveQuery
     
     public function new()
     {
-        return $this->andWhere(['status' => 
+        return $this->andWhere(['requests.status' => 
                                     [
                                         BaseRequest::STATUS_NEW,
                                         BaseRequest::STATUS_CHANGED
@@ -67,7 +67,7 @@ class RequestQuery extends ActiveQuery
     
     public function accepted()
     {
-        return $this->andWhere(['status' => 
+        return $this->andWhere(['requests.status' => 
                                     [
                                         BaseRequest::STATUS_ACCEPTED,
                                         BaseRequest::STATUS_INVOICED,
@@ -81,7 +81,7 @@ class RequestQuery extends ActiveQuery
     
     public function rejected()
     {
-        return $this->andWhere(['status' => BaseRequest::STATUS_REJECTED ]);
+        return $this->andWhere(['requests.status' => BaseRequest::STATUS_REJECTED ]);
     }
     
 }
