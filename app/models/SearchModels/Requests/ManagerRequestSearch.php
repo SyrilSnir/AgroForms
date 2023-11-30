@@ -20,7 +20,7 @@ class ManagerRequestSearch extends RequestSearch
     public function search(array $params = [])
     {
         $dp = $this->baseSearch($params);
-        $dp->query->andFilterWhere(['!=', 'status', BaseRequest::STATUS_DRAFT]);
+        $dp->query->andFilterWhere(['!=', 'requests.status', BaseRequest::STATUS_DRAFT]);
         return $dp;
     }
 }

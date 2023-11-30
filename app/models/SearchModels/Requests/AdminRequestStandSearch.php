@@ -21,7 +21,7 @@ class AdminRequestStandSearch extends RequestStandSearch
     public function search(array $params): ActiveDataProvider
     {
         $dp = parent::search($params);
-        $dp->query->andFilterWhere(['!=', 'status', BaseRequest::STATUS_DRAFT]);
+        $dp->query->andFilterWhere(['!=', 'requests.status', BaseRequest::STATUS_DRAFT]);
         return $dp;
     }
 }

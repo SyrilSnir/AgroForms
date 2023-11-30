@@ -14,9 +14,9 @@ class AccountantRequestSearch extends ManagerRequestSearch
     public function search(array $params = [])
     {
         $dp = parent::search($params);
-        $dp->query->andFilterWhere(['!=', 'status', BaseRequest::STATUS_NEW]);        
-        $dp->query->andFilterWhere(['!=', 'status', BaseRequest::STATUS_REJECTED]);        
-        $dp->query->andFilterWhere(['!=', 'status', BaseRequest::STATUS_CHANGED]); 
+        $dp->query->andFilterWhere(['!=', 'requests.status', BaseRequest::STATUS_NEW]);        
+        $dp->query->andFilterWhere(['!=', 'requests.status', BaseRequest::STATUS_REJECTED]);        
+        $dp->query->andFilterWhere(['!=', 'requests.status', BaseRequest::STATUS_CHANGED]); 
         return $dp;
     }
 }

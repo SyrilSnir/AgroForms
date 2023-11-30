@@ -45,7 +45,7 @@ class RequestSearch extends Model
     public function searchForManager(array $params = [])
     {
         $dp = $this->baseSearch($params);
-        $dp->query->andFilterWhere(['!=', 'status', Request::STATUS_DRAFT]);
+        $dp->query->andFilterWhere(['!=', 'requests.status', Request::STATUS_DRAFT]);
         $dp->query->andFilterWhere(['!=', 'form_id', Request::STATUS_DRAFT]);
         return $dp;
     }
