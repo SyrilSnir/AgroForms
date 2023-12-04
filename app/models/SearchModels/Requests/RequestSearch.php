@@ -59,7 +59,7 @@ class RequestSearch extends Model
     {
         $query = Request::find()->select(['{{%requests}}.*','{{%users}}.company_id AS company'])->joinWith(['application','form','stand','user']); //->joinWith('stands');
         if ($exhibitionId) {
-            $query->forExhibition($exhibitionId);
+            $query->forExhibition($exhibitionId,'requests');
         }
         if ($contractId) {
             $query->forContract($contractId);
@@ -71,7 +71,7 @@ class RequestSearch extends Model
                     'id',
                     'company',
                     'form_id',
-                    'exhibition_id',
+                    'requests.exhibition_id',
                     'requests.status',
                     'created_at',                    
                     'activate_at'
