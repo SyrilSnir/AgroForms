@@ -233,7 +233,7 @@ class AdminController extends Controller
             if ($request->form->form_type_id !== FormType::DYNAMIC_ORDER_FORM) {
                 continue;
             }
-            $formHelper = FormHelper::createViaRequest($admin, Languages::RUSSIAN, $request);
+            $formHelper = FormHelper::createViaRequest($admin,$request->contract, Languages::RUSSIAN, $request);
             $realPrice = $formHelper->getFormPrice();
             /** @var Application $application */
             $application = $request->requestForm;
