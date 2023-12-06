@@ -5,6 +5,7 @@ use app\core\helpers\View\Request\RequestStatusHelper;
 use app\core\manage\Auth\Rbac;
 use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\SearchModels\Requests\NewRequestSearch;
 use app\models\SearchModels\Requests\RequestSearch;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
@@ -19,9 +20,9 @@ use yii\web\View;
 /* @var $modificationsProvider ActiveDataProvider */
 
 $this->title = Yii::t('app/title', 'Requests list');
+
 $action = Yii::$app->getRequest()->getPathInfo();
 $actionId = Yii::$app->controller->action->id;
-
 $isAcceptDeclineShowed = ($actionId === 'new');
 $isPayShowed = (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
     Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU));
@@ -30,69 +31,16 @@ $isDeleteShowed = (!Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&
                                         !Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) &&
                                         !Yii::$app->user->can(Rbac::PERMISSION_MEDIA_MANAGER_MENU) &&
                                         !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU));
-
-$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
-$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
-$columnsConfig = [
-                'toolbar' => [
-                    [
-                        'content'=> $rowsCountTemplate .
-                                Html::a('<i class="fas fa-file-excel"></i>', ['excel'], [
-                                    'class' => 'btn btn-outline-secondary',
-                                    'title'=>t('Export to Excel'),
-                                    'data-pjax'=> '', 
-                                ])
-                    ],
-                ],      
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel, 
-                'columns' => [
-                    [
-                        'label' => Yii::t('app/company','Company'),
-                        'value' => 'user.company.name',
-                        'attribute' => 'company',
-                        'format' => 'text',
-                        'filter' => $searchModel->companiesList(),
-                        'filterType' => GridView::FILTER_SELECT2,
-                        'filterWidgetOptions' => [
-                            'options' => ['prompt' => ''],
-                            'pluginOptions' => ['allowClear' => true],
-                        ],                        
-                    ],
-                    [
-                      'attribute' => 'exhibition_id',
-                      'label' => Yii::t('app','Exhibition'),
-                      'filter' => $searchModel->getExhibitionsList(),
-                      'value' => 'exhibition.title'
-                    ],                    
-                    [
-                      'attribute' => 'form_id',
-                      'label' => Yii::t('app','Form'),
-                      'filter' => FormsHelper::formsList(),                        
-                      'value' => 'header'
-                    ],
-                  // 'header:text:' . Yii::t('app','Form'),
-                    [
-                        'attribute' => 'status',
-                        'width' => '160px',
-                        'label' => Yii::t('app','Status'),
-                        'format' => 'raw',
-                        'filter' => RequestStatusHelper::statusList(false),
-                        'value' => function (Request $model) {
-                            return RequestStatusHelper::getStatusLabel($model->status);
-                        }
-                    ],                  
-                    [
-                    'attribute' => 'price',
-                      'label' => Yii::t('app','Price'),
-                      'value' => function (Request $model) {
-                        return $model->requestForm->amount . ' ' .$model->form->valute->symbol;
-                      }
-                      ],
-                    'created_at:datetime:' . Yii::t('app','Created at'),
-                    'activate_at:datetime:' . Yii::t('app','Sended at'),
-
-                    [
+$requestsTypes = $searchModel::class;
+if ($requestsTypes === NewRequestSearch::class) {
+    $requestStatusList = RequestStatusHelper::newRequestsStatusList();
+}
+ elseif ($requestsTypes === \app\models\SearchModels\Requests\AcceptedRequestSearch::class) {
+    $requestStatusList = RequestStatusHelper::acceptedRequestsStatusList();
+} else {
+    $requestStatusList = RequestStatusHelper::statusList(false);
+}
+$actionColumnsConfig = [
                         'class' => ActionColumn::class,
                         'hAlign' => GridView::ALIGN_LEFT,
                         'width' => '260px',
@@ -252,8 +200,79 @@ $columnsConfig = [
                                         !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
                             }
                         ]                        
+                    ];
+
+
+$rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$columns = [
+        [
+            'label' => Yii::t('app/company','Company'),
+            'value' => 'user.company.name',
+            'attribute' => 'company',
+            'format' => 'text',
+            'filter' => $searchModel->companiesList(),
+            'filterType' => GridView::FILTER_SELECT2,
+            'filterWidgetOptions' => [
+                'options' => ['prompt' => ''],
+                'pluginOptions' => ['allowClear' => true],
+            ],                        
+        ],
+        [
+          'attribute' => 'exhibition_id',
+          'label' => Yii::t('app','Exhibition'),
+          'filter' => $searchModel->getExhibitionsList(),
+          'value' => 'exhibition.title'
+        ],                    
+        [
+          'attribute' => 'form_id',
+          'label' => Yii::t('app','Form'),
+          'filter' => FormsHelper::formsList(),                        
+          'value' => 'header'
+        ],    
+];
+if ($requestsTypes !== \app\models\SearchModels\Requests\RejectedRequestSearch::class) {
+    $columns[] = [
+                    'attribute' => 'status',
+                    'width' => '160px',
+                    'label' => Yii::t('app','Status'),
+                    'format' => 'raw',
+                    'filter' => $requestStatusList,
+                    'value' => function (Request $model) {
+                        return RequestStatusHelper::getStatusLabel($model->status);
+                    }
+                 ];  
+}
+$columns = array_merge($columns, [
+                  // 'header:text:' . Yii::t('app','Form'),
+                
+                    [
+                    'attribute' => 'price',
+                      'label' => Yii::t('app','Price'),
+                      'value' => function (Request $model) {
+                        return $model->requestForm->amount . ' ' .$model->form->valute->symbol;
+                      }
+                      ],
+                    'created_at:datetime:' . Yii::t('app','Created at'),
+                    'activate_at:datetime:' . Yii::t('app','Sended at'),
+                    $actionColumnsConfig,
+                ]);
+
+
+$columnsConfig = [
+                'toolbar' => [
+                    [
+                        'content'=> $rowsCountTemplate .
+                                Html::a('<i class="fas fa-file-excel"></i>', ['excel'], [
+                                    'class' => 'btn btn-outline-secondary',
+                                    'title'=>t('Export to Excel'),
+                                    'data-pjax'=> '', 
+                                ])
                     ],
-                ],    
+                ],      
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel, 
+                'columns' => $columns,    
     ];
 $fullGridConfig = array_merge($columnsConfig,$gridConfig);                       
 

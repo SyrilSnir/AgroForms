@@ -68,5 +68,22 @@ class RequestStatusHelper extends StatusHelper
         }
         return $statusList;
     }
+    
+    public static function acceptedRequestsStatusList() : array
+    {
+        $statusList[BaseRequest::STATUS_INVOICED] = t('Invoiced','requests');
+        $statusList[BaseRequest::STATUS_PAID] = t('Paid','requests');
+        $statusList[BaseRequest::STATUS_PARTIAL_PAID] = t('Partial paid','requests');
+        $statusList[BaseRequest::STATUS_ACCEPTED] = t('Accepted','requests');
+        $statusList[BaseRequest::STATUS_PUBLICATED] = t('Published on the site','requests');
+        $statusList[BaseRequest::STATUS_NOT_PUBLICATED] = t('Removed from the site','requests');        
+        return $statusList;       
+    }
 
+    public static function newRequestsStatusList() : array
+    {
+        $statusList[BaseRequest::STATUS_NEW] = t('New','requests');
+        $statusList[BaseRequest::STATUS_CHANGED] = t('Changed','requests');
+        return $statusList;        
+    }    
 }
