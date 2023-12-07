@@ -138,6 +138,8 @@ export default {
                 valid: this.isValid,
                 data: {
                     value: this.total,
+                    file_exist: this.hasFile,
+
                 },
                 [constants.ATTACHMENT_ATTRIBUTE]: true,
             };

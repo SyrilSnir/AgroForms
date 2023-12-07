@@ -237,6 +237,9 @@ class FormHelper extends BaseFormHelper
             if (key_exists('checked', $field)) {
                 $vList[$id]['checked'] = $field['checked'];
             }
+            if (key_exists('file_exist', $field)) {
+                $vList[$id]['file_exist'] = $field['file_exist'];
+            }            
             if (key_exists('checkbox', $field)) {
                 if (key_exists('hasCommentField', $field)) {
                     $vList[$id]['hasCommentField'] = $field['hasCommentField'];

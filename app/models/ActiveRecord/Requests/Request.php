@@ -335,5 +335,5 @@ class Request extends FormManipulation
     public function getAttachments() 
     {
         return $this->hasMany(AttachedFiles::class, ['request_id' => 'id']);
-    }    
+    }   
 }

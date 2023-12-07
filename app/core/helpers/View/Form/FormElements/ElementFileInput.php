@@ -165,6 +165,9 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
 
     public function getPrice(array $valuesList = []): int
     {
+        if ($this->isEmpty()) {
+            return 0;
+        }
         if (key_exists('value', $valuesList) && intval($valuesList['value'])) {
             return $this->modifyPrice($valuesList['value']);
         }

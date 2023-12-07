@@ -131,21 +131,16 @@ class ApplicationController extends FormController
         /** @var Form $appForm */
         $form = new DynamicForm();
         $attachedForm = new AttachedFilesForm();
-                
+        $attachedForm->load(Yii::$app->request->post());                
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE');
         try {
             if ($form->load(Yii::$app->request->post()) && $form->validate()) {
                 if ($formChangeType === Request::FORM_UPDATE) {
                     $requestId = Yii::$app->session->get('REQUEST_ID');
              /** @var Request $request */
-                    $request = $this->updateRequest($requestId, $form);                                        
+                    $request = $this->updateRequest($requestId, $form,$attachedForm);                                        
                 } else {
-                    $request = $this->createRequest($form);
-                }
-                if ($attachedForm->load(Yii::$app->request->post()) && $attachedForm->validate()) {
-                    foreach ($attachedForm->fileFields as $index => $fieldId) {
-                        $this->attachedFilesService->create($request->id, $fieldId, $attachedForm->files[$index]);
-                    }
+                    $request = $this->createRequest($form,$attachedForm);
                 }                
                 $appForm = $this->formRepository->get($form->formId); 
                 
@@ -160,17 +155,17 @@ class ApplicationController extends FormController
         }        
     }
 
-    private function createRequest(DynamicForm $form): Request
+    private function createRequest(DynamicForm $form, AttachedFilesForm $attachedForm): Request
     {
-        $request = $this->applicationService->create($form); 
+        $request = $this->applicationService->create($form, $attachedForm); 
         return $request;
     }
     
-    private function updateRequest(int $requestId, DynamicForm $form): Request
+    private function updateRequest(int $requestId, DynamicForm $form, AttachedFilesForm $attachedForm): Request
     {
         /** @var Request $request */
         $request = $this->requestRepository->get($requestId);
-        $this->applicationService->edit($request, $form, Yii::$app->language);   
+        $this->applicationService->edit($request, $form, $attachedForm,Yii::$app->language);   
         return $request;
     }      
 

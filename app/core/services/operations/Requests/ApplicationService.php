@@ -11,6 +11,7 @@ use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\Application;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\Forms\Requests\AttachedFilesForm;
 use app\models\Forms\Requests\DynamicForm;
 use Yii;
 use function GuzzleHttp\json_encode;
@@ -33,6 +34,12 @@ class ApplicationService
      * @var FormRepository
      */
     public $form;
+    
+    /**
+     * @var AttachedFilesService
+     */
+    public $attachedFilesService;
+    
     /**
      *
      * @var RequestRepository
@@ -49,16 +56,18 @@ class ApplicationService
             ApplicationRepository $application, 
             RequestRepository $requests,
             FormRepository $formRepository,
-            FieldService $fieldService
+            FieldService $fieldService,
+            AttachedFilesService $attachedFilesService,
             )
     {
         $this->application = $application;        
         $this->requests = $requests;
         $this->fieldService = $fieldService;
-        $this->form = $formRepository;
+        $this->attachedFilesService = $attachedFilesService;
+        $this->form = $formRepository;        
     }
     
-    public function create(DynamicForm $form)
+    public function create(DynamicForm $form, AttachedFilesForm $attachedForm)
     {    
         /** @var Form $appForm */
         $fields = $this->fieldService->prepareFieldsBeforeSave($form->fields);
@@ -89,12 +98,13 @@ class ApplicationService
         if ($form->loadedFile) {
            $application->setFile($form->loadedFile);
         }
+        $this->attachFiles($request, $attachedForm);
         $this->application->save($application);        
         $this->setApplicationTotal($request, $application);
         return $request;
     }
     
-    public function edit(Request $request, DynamicForm $form, string $langCode)
+    public function edit(Request $request, DynamicForm $form, AttachedFilesForm $attachedForm, string $langCode)
     {
         /** @var Application $application */
         $formHelper = FormHelper::createViaRequest($request->user,$request->contract, $langCode, $request);
@@ -115,7 +125,8 @@ class ApplicationService
         $application->edit($serializedFields, $total);
         if ($form->loadedFile) {
            $application->setFile($form->loadedFile);
-        }        
+        } 
+        $this->attachFiles($request, $attachedForm);
         $this->application->save($application); 
         $this->setApplicationTotal($request, $application);  
         return $request;
@@ -130,5 +141,14 @@ class ApplicationService
             $this->application->save($application);            
         }        
         return $application;        
+    }
+    
+    protected function attachFiles(Request $request, AttachedFilesForm $attachedForm) : void
+    {
+        if ($attachedForm->validate()) {
+            foreach ($attachedForm->fileFields as $index => $fieldId) {
+                $this->attachedFilesService->create($request->id, $fieldId, $attachedForm->files[$index]);
+            }                        
+        }        
     }
 }
