@@ -31,7 +31,8 @@ class MediaManagerMenuHelper implements MenuHelperInterface
                         'label' => t('Catalog','menu'),
                         'icon' => 'list-ul',
                          'url' => ['/panel/catalog']
-                    ],                    
+                    ],   
+                    ['label' => Yii::t('app/menu', 'Rubricator'), 'icon' => 'icon-cats', 'url' => ['/panel/lists/rubricator'],],                    
                 ]
             ];
     }
