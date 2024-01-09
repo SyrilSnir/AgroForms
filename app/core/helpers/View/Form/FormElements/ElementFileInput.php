@@ -180,6 +180,8 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
         if (!empty($attachedFiles)) {
             $attachedFiles[0]->configureFileUploadParameters();
             $filePath = $attachedFiles[0]->getUploadedFilePath('file_name');
+        } else {
+            $filePath = '';
         }
         return [
             'label' => BaseFormHelper::SITE_LOGO,
