@@ -1,15 +1,14 @@
 <?php
 
-use app\models\Forms\Nomenclature\EquipmentForm;
+use app\models\Forms\Nomenclature\EquipmentPricesForm;
 use yii\web\View;
 
 
 
 /** @var View $this  */
-/** @var EquipmentForm $model  */
-/** @var bool $isUpdate  */
+/** @var EquipmentPricesForm $model  */
 
-$this->title = Yii::t('app/title','New equipment');
+$this->title = Yii::t('app/title','New price');
 ?>
 
 <div class="create-form">

@@ -11,12 +11,15 @@ use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Companies\Contact;
 use app\models\ActiveRecord\Companies\LegalAddress;
 use app\models\ActiveRecord\Companies\PostalAddress;
+use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\FieldGroup;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Geography\City;
 use app\models\ActiveRecord\Geography\Country;
 use app\models\ActiveRecord\Geography\Region;
+use app\models\ActiveRecord\Nomenclature\Equipment;
+use app\models\ActiveRecord\Nomenclature\EquipmentPrices;
 use app\models\ActiveRecord\Requests\Application;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\ActiveRecord\Requests\RequestStand;
@@ -247,4 +250,17 @@ class AdminController extends Controller
         }
         return ExitCode::OK;         
     }
+    
+    public function actionMigratePrices()
+    {
+        /** @var Exhibition $migratedExhibition */
+        $migratedExhibition = Exhibition::findOne(['title' => 'Агросалон 2022']);
+        $nomenclatureList = Equipment::find()->asArray()->all();
+        foreach ($nomenclatureList as $item) {
+            $priceElement = EquipmentPrices::create($migratedExhibition->id, $item['id'], $item['price']);
+            $priceElement->save();
+        }
+        return ExitCode::OK;
+    }
+            
 }

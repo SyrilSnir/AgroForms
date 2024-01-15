@@ -5,11 +5,14 @@ namespace app\modules\panel\modules\lists\controllers;
 use app\core\repositories\readModels\Nomenclature\EquipmentReadRepository;
 use app\core\services\operations\Nomenclature\EquipmentService;
 use app\core\traits\GridViewTrait;
+use app\models\ActiveRecord\Nomenclature\Equipment;
 use app\models\Forms\Nomenclature\EquipmentForm;
+use app\models\SearchModels\Nomenclature\EquipmentPricesSearch;
 use app\models\SearchModels\Nomenclature\EquipmentSearch;
 use app\modules\panel\controllers\AccessRule\BaseAdminController;
 use DomainException;
 use Yii;
+use yii\helpers\Url;
 
 /**
  * Description of EquipmentsController
@@ -53,12 +56,16 @@ class EquipmentsController extends BaseAdminController
         }
         return $this->render('create', [
             'model' => $form,
+            'isUpdate' => false,
         ]);
     }
     
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($id)    
+    {        
+        /** @var Equipment $model */
+        $model = $this->findModel($id); 
+        Url::remember();
+        $pricesSearchModel = new EquipmentPricesSearch($model->id); 
         $form = new EquipmentForm($model);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $this->service->edit($id, $form);
@@ -66,6 +73,9 @@ class EquipmentsController extends BaseAdminController
         }
         return $this->render('update', [
             'model' => $form,
+            'isUpdate' => true,
+            'equipmentId' => $id,
+            'pricesDataProvider' => $pricesSearchModel->search()
         ]);                        
     }
 }
