@@ -33,7 +33,8 @@ export default {
         'val',
         'dic',
         'fieldId',
-        'lang'
+        'lang',
+        'exhibitionId'
     ],
     data() {
         return {         
@@ -42,6 +43,8 @@ export default {
             expand: false,
             inputs: []
         }
+    },
+    computed: {
     },
     created() {
         this.eventBus.$on('expand',this.expandElement);        
@@ -68,7 +71,7 @@ export default {
             return 'equipment-' + id;
         }, 
         getEquipments() {
-            axios.get('/api/equipment/get-equipments?categoryId=' + this.id + '&fieldId=' + this.fieldId)
+            axios.get('/api/equipment/get-equipments?exhibitionId=' + this.exhibitionId + '&categoryId=' + this.id + '&fieldId=' + this.fieldId)
                 .then((response) => {
                     this.equipments = response.data;
                     const eqKeys = Object.keys(this.equipments);

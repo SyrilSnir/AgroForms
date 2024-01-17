@@ -76,7 +76,7 @@ class EquipmentPriceController extends BaseAdminController
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
-        $this->form->equipmentId = $equipment->id;
+        $form->equipmentId = $equipment->id;
         return $this->render('create', [
             'model' => $form,
             'isUpdate' => false

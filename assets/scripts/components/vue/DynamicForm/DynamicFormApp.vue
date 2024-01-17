@@ -12,11 +12,12 @@
                 </div>
             </div>
             <template v-for="elem in elements">
-                <el :unitData="elem" v-if="!elem.isGroup" @modification="fieldsModificate" :lang="language" :dic="dict"></el>
+                <el :unitData="elem" v-if="!elem.isGroup" @modification="fieldsModificate" :lang="language" :dic="dict" :exhibitionId="exhibitionId"></el>
                 <group 
                     :fields="elem.fields"
                     :title="getFieldName(elem.name,elem.name_eng)"
                     :lang="language"
+                    :exhibitionId="exhibitionId"
                     :dic="dict"
                     v-if="elem.isGroup"
                     @modification="fieldsModificate"
@@ -85,6 +86,7 @@ export default {
             fields: {},
             formData : new FormData(), 
             formId : null,
+            exhibitionId : null,
             isComputed: false,
             userId : null,
             companyId: null,            
@@ -116,6 +118,7 @@ export default {
             this.basePrice = response.data.basePrice;
             this.totalPrice = this.basePrice;
             this.formId = response.data.formId;
+            this.exhibitionId = response.data.exhibitionId;
             this.isFileUpload = response.data.isFileUpload;
             this.language = response.data.language;
             this.dict = response.data.dict;                    

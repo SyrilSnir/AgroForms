@@ -1,6 +1,6 @@
 <template>
     <div class="comp">
-        <component :is="currentElement" :params="unitData" @changeField="fieldChanged" :lang="lang" :dic="dic"></component>
+        <component :is="currentElement" :params="unitData" @changeField="fieldChanged" :lang="lang" :dic="dic" :exhibitionId="exhibitionId"></component>
     </div>
 </template>
 <script>
@@ -28,7 +28,7 @@ import InformationForm from './Units/InformationForm';
 import RubricatorBlock from './Units/RubricatorBlock';
 export default {
     props: [
-        'unitData','lang','dic'
+        'unitData','lang','dic','exhibitionId'
     ],
     components: {
         'important': ImportantBlock,

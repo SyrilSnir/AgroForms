@@ -2,7 +2,7 @@
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use app\models\SearchModels\Geografy\EquipmentSearch;
+use app\models\SearchModels\Nomenclature\EquipmentSearch;
 
 /* @var $this yii\web\View */
 /* @var $searchModel EquipmentSearch */
@@ -26,10 +26,43 @@ $columnsConfig = [
                     'filterModel' => $searchModel,
                     'columns' => [                    
                         'name:text:' . Yii::t('app','Name'),
-                        'code:text:' . Yii::t('app','Code'),
-                        'description:text:' . Yii::t('app','Description'),
-                        'unit.name:text:' . Yii::t('app','Unit'),
-                        'price:text:' . Yii::t('app','Price'),
+                        [
+                            'attribute' => 'code',
+                            'value' => 'code',
+                            'label' => Yii::t('app','Code'),
+                            'width' => '75px',                            
+                        ],                        
+                        [
+                            'attribute' => 'description',
+                            'value' => 'description',
+                            'label' => Yii::t('app','Description'),
+                            'width' => '350px',                            
+                        ],
+                        [
+                            'attribute' => 'group_id',
+                            'value' => 'equipmentGroup.name',
+                            'label' => Yii::t('app','Category'),
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => $searchModel->categoriesList(),
+                            'width' => '200px',
+                            'filterWidgetOptions' => [
+                                'options' => ['placeholder' => ''],
+                                'pluginOptions' => ['allowClear' => true],                                
+                            ]
+                        ],
+                        [
+                            'attribute' => 'unit_id',
+                            'value' => 'unit.name',
+                            'label' => Yii::t('app','Unit'),
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => $searchModel->unitsList(),
+                            'width' => '150px',
+                            'filterWidgetOptions' => [
+                                'options' => ['placeholder' => ''],
+                                'pluginOptions' => ['allowClear' => true],                                
+                            ]
+                        ],                        
+                       // 'unit.name:text:' . Yii::t('app','Unit'),
                         ['class' => ActionColumn::class],
                     ],
                 ];
@@ -37,7 +70,7 @@ $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.g
 $fullGridConfig = array_merge($columnsConfig,$gridConfig);
 
 ?>
-<section class="content">
+<section class="content content-large">
     <div class="card">
         <div class="card-body">
                 <?= GridView::widget($fullGridConfig); ?>

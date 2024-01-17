@@ -436,6 +436,7 @@ class FormHelper extends BaseFormHelper
         $formData = [
             'userId' => $this->user->id,
             'companyId' => $this->user->company_id,
+            'exhibitionId' => $this->form->exhibition_id,
             'title' => $this->form->headerName,
             'formType' => $this->form->form_type_id,
             'formId' => $this->form->id,

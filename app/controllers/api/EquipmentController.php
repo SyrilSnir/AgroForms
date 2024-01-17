@@ -9,6 +9,7 @@ use app\core\providers\Data\FieldEnumProvider;
 use app\core\providers\Data\Nomenclature\EquipmentGroupProvider;
 use app\core\providers\Data\Nomenclature\EquipmentProvider;
 use app\models\ActiveRecord\Forms\Field;
+use app\models\ActiveRecord\Nomenclature\Equipment;
 use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use Yii;
@@ -52,7 +53,7 @@ class EquipmentController extends JsonController
         return $this->equipmentGroupProvider->getList();
     }
     
-    public function actionGetEquipments(int $categoryId,int $fieldId = null):array   
+    public function actionGetEquipments(int $exhibitionId, int $categoryId,int $fieldId = null):array   
     {
         $request = null;
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE');
@@ -60,7 +61,7 @@ class EquipmentController extends JsonController
             $requestId = Yii::$app->session->get('REQUEST_ID');
             $request = Request::findOne($requestId);
         }
-        $date = microtime(true);
+        $date = time();
         if ($request && (!in_array($request->status, [BaseRequest::STATUS_REJECTED, BaseRequest::STATUS_DRAFT]))) {
             $date = $request->activate_at ? $request->activate_at : $request->created_at;
         }
@@ -71,12 +72,25 @@ class EquipmentController extends JsonController
             $field = Field::findOne($fieldId);
             $element = new ElementAdditionEquipmentBlock($field,  new FieldEnumProvider(),$langCode);
             FormHelper::appendPriceModificators($field, $element, $date);
-            $equipmentList = array_map(function($el) use ($element) {
-                $el['price'] = $element->modifyPrice($el['price']);
+            $equipmentList = array_map(function($el) use ($element,$exhibitionId) {                
+                $eq = Equipment::findOne($el['id']); 
+                $price = $eq->getExhibitionPrice($exhibitionId);
+                if ($price) {
+                    $el['price'] = $element->modifyPrice($price);
+                } else {
+                    $el['price'] = 0;
+                }
                 return $el;
                 
             },$equipmentList);
         }
+        $equipmentList = array_filter($equipmentList, function($el) {
+            if ($el['price'] > 0) {
+                return true;
+            }
+            return false;
+        });
         return $equipmentList;
     }
+        
 }

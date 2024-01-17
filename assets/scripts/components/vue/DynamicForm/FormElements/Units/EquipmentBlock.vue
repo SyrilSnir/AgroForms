@@ -11,6 +11,7 @@
                     :eventBus="bus"
                     :dic="dic"
                     :lang="lang"
+                    :exhibitionId="exhibitionId"
                     @changeValue="setValue"                  
                 ></equipment-list>            
             </li>
@@ -44,7 +45,8 @@ import EquipmentList from "./Components/EquipmentList"
 export default {
     props: [
         'dic',
-        'lang'
+        'lang',
+        'exhibitionId'
     ],
     data() {   
         let val = {};
@@ -90,7 +92,7 @@ export default {
     methods: {
         isShowed(id) {
             console.log('Id = ', id);
-            return ( this.allCategories || this.availableCategories.indexOf(id) !== -1);
+            return ( this.allCategories || this.availableCategories.indexOf(id.toString()) !== -1);
         },
         expand(id) {
             this.bus.$emit('expand',id);

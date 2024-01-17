@@ -15,21 +15,26 @@ class ElementAdditionEquipmentBlock extends FormElement implements CountableElem
 {
      private function processEquipmentValues($values)
      {
+         $exhibitionId = $this->field->form->exhibition_id;
+                 
          /** @var Equipment $equipment */
          $eqRepository = new EquipmentRepository();;
          $resArray = [];
          foreach ($values as $value) {             
              $equipment = $eqRepository->get($value['id']);
-             $resArray[$equipment->id] = [
-                 'id' => $equipment->id,
-                 'name' => $equipment->name,
-                 'code' => $equipment->code,
-                 'group' => $equipment->equipmentGroup->name,
-                 'group_id' => $equipment->equipmentGroup->id,
-                 'unit' => $equipment->unit->short_name,
-                 'count' => $value['count'],
-                 'price' => $this->modifyPrice($equipment->price),
-             ];
+             $price = $equipment->getExhibitionPrice($exhibitionId);
+             if ($price) {
+                $resArray[$equipment->id] = [
+                    'id' => $equipment->id,
+                    'name' => $equipment->name,
+                    'code' => $equipment->code,
+                    'group' => $equipment->equipmentGroup->name,
+                    'group_id' => $equipment->equipmentGroup->id,
+                    'unit' => $equipment->unit->short_name,
+                    'count' => $value['count'],
+                    'price' => $this->modifyPrice($price),
+                ];
+             }
          }
          return $resArray;
      }

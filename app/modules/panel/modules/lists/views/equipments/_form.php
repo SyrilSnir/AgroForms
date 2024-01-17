@@ -64,7 +64,6 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
     <?= $form->field($model, 'code')->textInput() ?>
     <?= $form->field($model, 'groupId')->dropDownList($model->categoriesList()) ?>                         
     <?= $form->field($model, 'unitId')->dropDownList($model->unitsList()) ?>                         
-    <?= $form->field($model, 'price')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>

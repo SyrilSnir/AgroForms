@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Nomenclature;
 
+use app\core\repositories\readModels\Nomenclature\EquipmentPriceReadRepository;
 use app\core\traits\ActiveRecord\MultilangTrait;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -111,5 +112,19 @@ class Equipment extends ActiveRecord
     public function getEquipmentGroup()
     {
         return $this->hasOne(EquipmentGroup::class, ['id' => 'group_id']);
+    }
+    
+    public function getExhibitionPrice(int $exhibitionId): ?int
+    {
+        $equipmentPrice = EquipmentPriceReadRepository::findByIds($exhibitionId, $this->id);
+        if ($equipmentPrice) {
+            return $equipmentPrice->price;
+        }
+        return null;
+    }
+    
+    public function prices() 
+    {
+        return EquipmentPrices::find()->joinWith('exhibition')->andWhere(['equipment_id' => $this->id])->all();
     }
 }

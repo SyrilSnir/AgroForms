@@ -11,6 +11,12 @@ use app\models\ActiveRecord\Nomenclature\EquipmentPrices;
  */
 class EquipmentPriceReadRepository
 {
+    /**
+     * 
+     * @param type $exhibitionId
+     * @param type $equipmentId
+     * @return EquipmentPrices|null
+     */
     public static function findByIds($exhibitionId, $equipmentId)
     {
         return EquipmentPrices::find()
