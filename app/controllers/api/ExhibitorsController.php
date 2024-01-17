@@ -36,10 +36,15 @@ class ExhibitorsController extends JsonController
         $countriesList = [];
         $result = array_map(function($el) use (&$countriesList){
             $el['show_description'] = false;
-            $el['logo_url'] = Url::base(true). 
-                    Yii::getAlias('@catalogUrl').'/'.
-                     $el['id'] . '/' .
-                    $el['logo_file'];
+            if (!empty($el['logo_file'])) {
+                $el['logo_url'] = Url::base(true). 
+                        Yii::getAlias('@catalogUrl').'/'.
+                         $el['id'] . '/' .
+                        $el['logo_file'];
+            } else {
+                $el['logo_url'] = '';
+            }
+            
             $el['capital_letter'] = mb_convert_case(mb_substr($el['company'],0,1), MB_CASE_LOWER);
             $el['capital_letter_eng'] = mb_convert_case(mb_substr($el['company_eng'],0,1), MB_CASE_LOWER);
             if (!empty($el['countries'])) {
@@ -105,11 +110,14 @@ class ExhibitorsController extends JsonController
     
     public function actionDetail($catalogId) {            
         $model = Catalog::find()->joinWith(['countries','rubrics','contacts'])->andWhere(['catalog.id' => $catalogId])->asArray()->one();
-        $model['logo_url'] = Url::base(true). 
-                    Yii::getAlias('@catalogUrl').'/'.
-                     $model['id'] . '/' .
-                    $model['logo_file'];
-        return $model;
-        
+        if (!empty($model['logo_file'])) {
+            $model['logo_url'] = Url::base(true). 
+                        Yii::getAlias('@catalogUrl').'/'.
+                         $model['id'] . '/' .
+                        $model['logo_file'];
+            } else {
+                $model['logo_url'] = '';
+            }
+        return $model;        
     }
 }
