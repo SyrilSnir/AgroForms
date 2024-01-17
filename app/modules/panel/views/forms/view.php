@@ -72,9 +72,14 @@ $anotherExhibitions = ArrayHelper::map(Exhibition::find()->andFilterWhere(['!=',
                         'value' => $model->has_file ? t('Yes') : t('No')
                     ],
                     [
+                        'attribute' => 'has_nds',
+                        'label' => Yii::t('app','Include VAT'),
+                        'value' => $model->has_nds ? t('Yes') : t('No')
+                    ],                    
+                    [
                         'attribute' => 'published',
                         'label' => Yii::t('app','Available for publication on the site'),
-                        'value' => $model->has_file ? t('Yes') : t('No')
+                        'value' => $model->published ? t('Yes') : t('No')
                     ],                    
                     [
                         'attribute' => 'status',

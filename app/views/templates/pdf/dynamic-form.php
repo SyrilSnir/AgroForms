@@ -9,6 +9,7 @@ use yii\web\View;
 /* @var $this View */
 /* @var $fields FormElementInterface[] */
 /** @var array $values */
+/** @var bool $hasNds */
 
 $this->title = '';
 ?>
@@ -58,5 +59,9 @@ $this->title = '';
             <?php endif;?>
     </tbody>
 </table>
+<?php if ($hasNds): ?>
 <p style="margin:0;font-family: Verdana;font-size: 6pt;text-align: right;font-weight:bold"><?php echo t('All prices include VAT');?> 20%.</p>
+<?php else: ?>
+<p style="margin:0;font-family: Verdana;font-size: 6pt;text-align: right;font-weight:bold"><?php echo t('All prices are excluding VAT');?></p>
+<?php endif; ?>
 <p style="padding:0;font-family: Verdana;font-size: 6pt;text-align: right;"><?php echo t('Payment is made in Russian rubles at the exchange rate of the Central Bank of the Russian Federation on the date of payment','requests'); ?>.</p>

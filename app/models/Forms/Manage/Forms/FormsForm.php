@@ -30,6 +30,7 @@ class FormsForm extends Model
     public $valute;
     public $exhibitionId; 
     public $published;
+    public $hasNds;
 
 
     public $nameEng;
@@ -55,6 +56,7 @@ class FormsForm extends Model
            $this->titleEng = $model->title_eng;
            $this->descriptionEng = $model->description_eng;
            $this->hasFile = $model->has_file;
+           $this->hasNds = $model->has_nds;
            $this->published = $model->published;
            $this->exhibitionId = $model->exhibition_id;
            $this->valute = $model->valute_id;
@@ -72,7 +74,7 @@ class FormsForm extends Model
             [['status'],'safe'],
             [['title', 'name', 'slug', 'formType'], 'required'],
             [['order', 'formType','basePrice','valute','exhibitionId'],'integer'],
-            [['hasFile','published'],'boolean'],
+            [['hasFile','published','hasNds'],'boolean'],
             [['order','basePrice'],'default','value' => 0],
             [['title', 'name', 'slug', 'description','titleEng', 'nameEng', 'descriptionEng'], 'string', 'max' => 255],
             /*['published', PublishedValidator::class],*/  // Снимаем ограничение на публикацию одной формы
@@ -95,6 +97,7 @@ class FormsForm extends Model
             'order' => Yii::t('app','Serial number'),
             'basePrice' => Yii::t('app/requests','Base price'),
             'hasFile' => Yii::t('app','File attachment available'),
+            'hasNds' => Yii::t('app','Include VAT'),
             'published' => Yii::t('app','Available for publication on the site'),
             'exhibitionId' => Yii::t('app','Available for exhibitions'),
             'valute' => Yii::t('app','Valute'),

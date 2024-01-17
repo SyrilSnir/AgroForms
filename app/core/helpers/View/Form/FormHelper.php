@@ -495,6 +495,7 @@ class FormHelper extends BaseFormHelper
             'fields' => $this->formElements,
             'values' => self::$valuesList[$this->request->id],
             'amount' => $this->getFormPrice(),
+            'hasNds' => $this->form->has_nds,
         ]);
         $header = $this->getPdfHeader();
         $footer = $this->getPdfFooter();
