@@ -13,6 +13,7 @@ export default {
         el: Element
     },        
     props: [
+        'exhibitionId',
         'fields',
         'title',
         'lang',

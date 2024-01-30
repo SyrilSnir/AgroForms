@@ -2,7 +2,7 @@
    <div class="block__group">
       <h2 v-if="showTitle">{{ titleLabel }}</h2>
         <template v-for="elem in elements">
-            <el :lang="lang" :unitData="elem" @modification="fieldChanged" :dic="dic"></el>
+            <el :lang="lang" :unitData="elem" @modification="fieldChanged"  :exhibitionId="exhibitionId" :dic="dic"></el>
         </template>         
    </div> 
 </template>
@@ -26,7 +26,8 @@ export default {
     props: [
         'params',
          'lang',
-         'dic'
+         'dic',
+         'exhibitionId',
     ],                                           
     mixins: [
          labelMixin
