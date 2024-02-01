@@ -120,6 +120,13 @@ class EquipmentPriceController extends BaseAdminController
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
-    }    
+    } 
+    
+    public function actionDelete($exhibition_id, $equipment_id) 
+    {
+        $equipment = $this->findModel($exhibition_id, $equipment_id); 
+        $this->service->delete($equipment);
+        return $this->redirect(Url::previous());
+    }
     
 }

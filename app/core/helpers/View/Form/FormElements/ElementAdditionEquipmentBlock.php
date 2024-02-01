@@ -20,9 +20,10 @@ class ElementAdditionEquipmentBlock extends FormElement implements CountableElem
          /** @var Equipment $equipment */
          $eqRepository = new EquipmentRepository();;
          $resArray = [];
+         $showDaleted = $this->getRequestId() ? true : false;
          foreach ($values as $value) {             
              $equipment = $eqRepository->get($value['id']);
-             $price = $equipment->getExhibitionPrice($exhibitionId);
+             $price = $equipment->getExhibitionPrice($exhibitionId, $showDaleted);
              if ($price) {
                 $resArray[$equipment->id] = [
                     'id' => $equipment->id,

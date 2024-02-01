@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property int $exhibition_id
  * @property int $equipment_id
  * @property int $price Стоимость
+ * @property bool $deleted Флаг удаления
  *
  * @property Equipment $equipment
  * @property Exhibition $exhibition

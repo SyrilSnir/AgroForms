@@ -27,6 +27,10 @@ class EquipmentPriceService
     
     public function create(EquipmentPricesForm $form) 
     {
+        if ($model = $this->repository->get($form->exhibitionId, $form->equipmentId)) 
+        {
+            return $this->edit($model, $form);
+        }
         $model = EquipmentPrices::create(
                 $form->exhibitionId, 
                 $form->equipmentId, 
@@ -38,6 +42,13 @@ class EquipmentPriceService
     public function edit(EquipmentPrices $model , EquipmentPricesForm $form) 
     {        
         $model->edit($form);
+        $model->deleted = false;
         $this->repository->save($model);
-    }    
+    } 
+    
+    public function delete(EquipmentPrices $model) 
+    {        
+        $this->repository->remove($model);
+    }     
+    
 }

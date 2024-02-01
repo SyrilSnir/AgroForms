@@ -114,9 +114,9 @@ class Equipment extends ActiveRecord
         return $this->hasOne(EquipmentGroup::class, ['id' => 'group_id']);
     }
     
-    public function getExhibitionPrice(int $exhibitionId): ?int
-    {
-        $equipmentPrice = EquipmentPriceReadRepository::findByIds($exhibitionId, $this->id);
+    public function getExhibitionPrice(int $exhibitionId, bool $showDeleted = false): ?int
+    {        
+        $equipmentPrice = EquipmentPriceReadRepository::findByIds($exhibitionId, $this->id, $showDeleted);
         if ($equipmentPrice) {
             return $equipmentPrice->price;
         }

@@ -37,7 +37,6 @@ $columnsConfig = [
                             'controller' => 'equipment-price',
                              'visibleButtons' => [
                                 'view' => false,
-                                'delete' => false,
                             ]  ,                          
                             
                         ],

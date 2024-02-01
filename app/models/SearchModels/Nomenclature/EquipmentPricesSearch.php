@@ -42,6 +42,7 @@ class EquipmentPricesSearch extends Model
             $query->where('0=1');
             return $dataProvider;
         }
+        $query->andFilterWhere(['deleted' => false]);
         $query->andFilterWhere(['exhibition_id' => $this->exhibitionId]);
         return $dataProvider;
     } 

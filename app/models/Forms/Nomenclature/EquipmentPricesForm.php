@@ -58,7 +58,7 @@ class EquipmentPricesForm extends Model
     {  
         /** @var Equipment $nomenclatureModel */
         //$nomenclatureModel = Equipment::findOne($this->equipmentId);
-        $filter = ArrayHelper::getColumn(EquipmentPrices::find()->andWhere(['equipment_id' => $this->equipmentId])->asArray()->all(),'exhibition_id');
+        $filter = ArrayHelper::getColumn(EquipmentPrices::find()->andWhere(['deleted' => false])->andWhere(['equipment_id' => $this->equipmentId])->asArray()->all(),'exhibition_id');
         
         $query = Exhibition::find()->orderBy('id');
         if (!empty($filter)) {

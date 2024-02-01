@@ -17,11 +17,15 @@ class EquipmentPriceReadRepository
      * @param type $equipmentId
      * @return EquipmentPrices|null
      */
-    public static function findByIds($exhibitionId, $equipmentId)
+    public static function findByIds($exhibitionId, $equipmentId, $showDeleted = false)
     {
-        return EquipmentPrices::find()
+        $query = EquipmentPrices::find()
             ->andWhere(['equipment_id' => $equipmentId])
-            ->andWhere(['exhibition_id' => $exhibitionId])
-            ->one();
+            ->andWhere(['exhibition_id' => $exhibitionId]);
+        if (!$showDeleted) {
+            $query->andWhere(['deleted' => false]);
+        }
+            
+        return $query->one();
     }
 }
