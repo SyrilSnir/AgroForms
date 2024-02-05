@@ -12,11 +12,11 @@ use app\models\ActiveRecord\Contract\ContractMediaFees;
         </tr>
     </thead>
     <tbody>
+        <?php foreach ($mediaFees as $item): ?>
         <tr>
-            <?php foreach ($mediaFees as $item): ?>
             <td><?php echo $item->mediaFeeType->name ?></td>
             <td><?php echo $item->count ?></td>        
-            <?php endforeach; ?>
         </tr>
+        <?php endforeach; ?>
     </tbody>
 </table>
