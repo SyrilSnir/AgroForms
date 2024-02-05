@@ -31,7 +31,7 @@ class m240202_082830_create_contract_media_fees_table extends Migration
             '{{%fk-contract_media_fees-contract_id}}',
             '{{%contract_media_fees}}',
             'contract_id',
-            '{{%contract_media_fees}}',
+            '{{%contracts}}',
             'id',
             'CASCADE'
         );
