@@ -25,7 +25,7 @@ $this->title = t('Document') . ' № ' .$model->id;
         ]) ?>
         <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
-
+</div>
 <div class="card">
     <div class="card-body">
         <?= DetailView::widget([

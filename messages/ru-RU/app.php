@@ -230,5 +230,7 @@ return [
     'All forms' => 'Все формы',
     'Registration fee (number of pieces)' => 'Регистрационный взнос (количество шт.)',
     'Type of media contributions' => 'Тип медиа-взносов',
+    'Media contributions' => 'Медиа-взносы',
+    'Quantity, pcs.' => 'Количество, шт.'
 ];
 

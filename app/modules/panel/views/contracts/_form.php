@@ -152,7 +152,7 @@ ActiveForm::end(); ?>
             </div>
                         <?php if ($isUpdate) :?>
             <div class="fee-types_container">
-                    <h5><?php echo t('Types of media contributions', 'title')?> </h5>
+                    <h5><?php echo t('Media contributions')?> </h5>
                 <section class="content">
                     <div class="card">
                         <div class="card-body">

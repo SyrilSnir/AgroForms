@@ -30,6 +30,7 @@ use yii\db\ActiveRecord;
  * @property Exhibition $exhibition
  * @property StandNumber $standNumber
  * @property Hall $hall
+ * @property ContractMediaFees[] $mediaFees
  */
 class Contracts extends ActiveRecord
 {
@@ -124,5 +125,10 @@ class Contracts extends ActiveRecord
     public function getHall()
     {
         return $this->hasOne(Hall::class, ['id' => 'hall_id']);  
+    }
+    
+    public function getMediaFees() 
+    {
+        return $this->hasMany(ContractMediaFees::class, ['contract_id' => 'id']);
     }
 }
