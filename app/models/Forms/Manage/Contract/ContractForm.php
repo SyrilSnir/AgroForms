@@ -24,6 +24,7 @@ class ContractForm extends ManageForm
     public $standNumber;
     public $square;
     public $exhibitionId;
+    public $registrationFee;
     public $status;
     public $isLogo;
 
@@ -44,7 +45,8 @@ class ContractForm extends ManageForm
             $this->square = $model->stand_square;
             $this->hall = $model->hall_id;
             $this->standNumber = $model->stand_number_id;
-            $this->isLogo = $model->is_logo;            
+            $this->isLogo = $model->is_logo;  
+            $this->registrationFee = $model->registration_fee;
         }
     }
     
@@ -55,7 +57,7 @@ class ContractForm extends ManageForm
     {
         return [
             [['number', 'status', 'date','companyId','exhibitionId'], 'required'],
-            [['companyId', 'standNumber', 'square','hall'], 'integer'],
+            [['companyId', 'standNumber', 'square','hall','registrationFee'], 'integer'],
             [['date'],'date'],
             [['isLogo'],'boolean'],
             [['number'], 'string', 'max' => 255]
@@ -73,7 +75,8 @@ class ContractForm extends ManageForm
             'hall' => t('Hall'),
             'companyId' => t('Company','company'),
             'exhibitionId' => t('Exhibition'),   
-            'isLogo' => t('Logo available')
+            'isLogo' => t('Logo available'),
+            'registrationFee' => t('Registration fee (number of pieces)'),
         ];
     }
 }

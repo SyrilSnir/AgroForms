@@ -68,5 +68,11 @@ return [
     'Rubricator' => 'Рубрикатор',
     'Field labels' => 'Метки полей',
     'New label' => 'Новая метка',
-    'Catalog to the site' => 'Каталог на сайт'
+    'Catalog to the site' => 'Каталог на сайт',
+    'Types of media contributions' => 'Типы медиа-взносов',
+    'New type' => 'Новый тип',
+    'Edit type' => 'Изменить тип',  
+    'New media contribution' => 'Новый медиа-взнос',
+    'Edit media contribution' => 'Изменить медиа-взнос',
+
 ];

@@ -38,6 +38,7 @@ $this->title = t('Contract', 'contracts') . ' № ' .$model->number;
                 'hall.name:text:' . t('Hall'),
                 'standNumber.number:text:' . t('Stand`s number'),
                 'stand_square:text:' . t('Stand`s square, m2'),
+                'registration_fee:text:' . t('Registration fee (number of pieces)'),
                 'date:date:' . Yii::t('app','Date'),
                 [
                     'attribute' => 'status',

@@ -15,6 +15,7 @@ $this->title = Yii::t('app/title','New contract');
     
 <?php echo $this->render('_form', [
         'model' => $model,
+        'isUpdate' => $tplVars['isUpdate'],
 ]) ?>
 
 </div>

@@ -50,5 +50,6 @@ return [
     'Rubricator' => 'Рубрикатор',
     'Сatalog field labels' => 'Метки полей каталога',    
     'Catalog' => 'Каталог',
+    'Types of media contributions' => 'Типы медиа-взносов' 
 ];
 

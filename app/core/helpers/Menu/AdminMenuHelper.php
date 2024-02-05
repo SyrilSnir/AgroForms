@@ -68,6 +68,7 @@ class AdminMenuHelper implements MenuHelperInterface
                                 ['label' => Yii::t('app/menu', 'Units measurement'), 'icon' => 'icon-units', 'url' => ['/panel/lists/units'],],
                                 ['label' => Yii::t('app/menu', 'Valutes'), 'icon' => 'icon-valutes', 'url' => ['/panel/lists/valutes'],],
                                 ['label' => Yii::t('app/menu', 'Halls'), 'icon' => 'icon-stands', 'url' => ['/panel/lists/halls'],],
+                                ['label' => Yii::t('app/menu', 'Types of media contributions'), 'icon' => 'dollar-sign', 'url' => ['/panel/lists/media-fee-types'],],
                                 ['label' => Yii::t('app/menu', 'Stand`s numbers'), 'icon' => 'icon-stand', 'url' => ['/panel/lists/stand-numbers'],],
                                 ['label' => Yii::t('app/menu', 'Rubricator'), 'icon' => 'icon-cats', 'url' => ['/panel/lists/rubricator'],],
                                 ['label' => Yii::t('app/menu', 'Сatalog field labels'), 'icon' => 'paper-plane', 'url' => ['/panel/lists/field-labels'],],

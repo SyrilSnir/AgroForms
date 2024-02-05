@@ -24,6 +24,7 @@ use yii\db\ActiveRecord;
  * @property int $stand_square Площадь стенда
  * @property int $status Статус договора
  * @property int $is_logo Доступна загрузка логотипа
+ * @property int $registration_fee Регистрационный взнос (количество)
  *
  * @property Company $company
  * @property Exhibition $exhibition
@@ -56,6 +57,7 @@ class Contracts extends ActiveRecord
         $contract->stand_square = $form->square;
         $contract->status = $form->status;
         $contract->is_logo = $form->isLogo;
+        $contract->registration_fee = $form->registrationFee;
         $contract->date =  DateTime::createFromFormat('d.m.Y', $form->date)->getTimestamp();
         return $contract;
     }
@@ -88,6 +90,7 @@ class Contracts extends ActiveRecord
         $this->stand_square = $form->square;        
         $this->status = $form->status;
         $this->is_logo = $form->isLogo;
+        $this->registration_fee = $form->registrationFee;
         $this->date =  DateTime::createFromFormat('d.m.Y', $form->date)->getTimestamp();
     }
 

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
 namespace app\modules\panel\controllers;
 
 use app\core\repositories\readModels\ReadRepositoryInterface;
@@ -38,8 +33,15 @@ class CrudController extends BaseAdminController
      * 
      * @var ManageForm
      */
-    protected $form;   
+    protected $form; 
     
+    /**
+     * 
+     * @var array Дополнительные переменные для подстановки в шаблон
+     */
+    protected $tplVars = [];
+
+
     public function __construct(
             $id, 
             $module, 
@@ -77,6 +79,7 @@ class CrudController extends BaseAdminController
         $this->prepareView($model);
         return $this->render('view', [
             'model' => $model,
+            'tplVars' => $this->tplVars
         ]);
     }
 
@@ -107,27 +110,33 @@ class CrudController extends BaseAdminController
         }
         return $this->render('create', [
             'model' => $this->form,
+            'isUpdate' => false,
+            'tplVars' => $this->tplVars
         ]);
     }  
     
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $form = $this->form::createWithModel($model);
-        $this->prepareUpdate($form);
+        $form = $this->form::createWithModel($model, $id);
+        $this->prepareUpdate($form, $id);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $this->service->edit($id, $form);
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update', [
             'model' => $form,
+            'isUpdate' => true,
+            'tplVars' => $this->tplVars
         ]);                        
     }
     
-    protected function prepareCreate() {
+    protected function prepareCreate() 
+    {
         $this->form->setScenario(ManageForm::SCENARIO_CREATE);
     }
-    protected function prepareUpdate(Model $form) {
+    protected function prepareUpdate(Model $form, $id = null) 
+    {
         $form->setScenario(ManageForm::SCENARIO_UPDATE);
     }
     protected function prepareView(Model $form) {}  

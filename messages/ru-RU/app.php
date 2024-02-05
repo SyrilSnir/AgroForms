@@ -19,6 +19,7 @@ return [
    'Delete' => 'Удалить', 
    'Reject' => 'Отклонить',
    'Exit' => 'Выход',
+   'Count' => 'Количество',
    'Role' => 'Роль',
    'Valute' => 'Валюта',
    'Edit' => 'Редактировать',
@@ -46,6 +47,7 @@ return [
    'Add application' => 'Добавить заявку',
    'Add form' => 'Добавить форму',
    'Add field' => 'Добавить поле',
+   'Add media contribution' => 'Добавить медиа-взнос',
    'Category' => 'Категория',
    'Categories' => 'Категории',
    'Add category' => 'Добавить категорию',
@@ -118,6 +120,7 @@ return [
     'Are you sure you want to delete the equipment?' => 'Вы действительно хотите удалить оборудование?',
     'Are you sure you want to delete the fields group?' => 'Вы действительно хотите удалить группу полей?',
     'Are you sure you want to delete the unit?' => 'Вы действительно хотите удалить единицу измерения?',
+    'Are you sure you want to delete the type?' => 'Вы действительно хотите удалить тип?',
     'Are you sure you want to delete the valute?' => 'Вы действительно хотите удалить валюту?',
     'Are you sure you want to delete the section with all child subsections?' => 
         'Вы действительно хотите удалить раздел со всеми дочерними подразделами?',
@@ -225,5 +228,7 @@ return [
     'Data loaded successfully' => 'Данные успешно загружены',
     'No data to upload' => 'Нет данных для выгрузки',
     'All forms' => 'Все формы',
+    'Registration fee (number of pieces)' => 'Регистрационный взнос (количество шт.)',
+    'Type of media contributions' => 'Тип медиа-взносов',
 ];
 

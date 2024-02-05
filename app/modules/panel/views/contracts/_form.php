@@ -3,8 +3,11 @@
 use app\core\helpers\View\Contract\ContractStatusHelper;
 use app\models\Forms\Manage\Contract\ContractForm;
 use kartik\date\DatePicker;
+use kartik\grid\ActionColumn;
+use kartik\grid\GridView;
 use kartik\select2\Select2;
 use kartik\switchinput\SwitchInput;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\JsExpression;
 use yii\web\View;
@@ -44,6 +47,38 @@ $selectExpression2 = new JsExpression('
 /** @var View $this */
 /** @var ActiveForm $form */
 /** @var ContractForm $model */
+/** @var bool $isUpdate */
+/** @var ?ActiveDataProvider $mediaFeeDataProvider */
+
+if ($isUpdate) {
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'content'=> 
+                                Html::a('<i class="fas fa-plus"></i>',['media-fee/create','contractId' => $contractId], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app', 'Add media contribution'),
+                                ])                            
+                        ],
+                    ],      
+                    'dataProvider' => $mediaFeeDataProvider,
+                    'columns' => [ 
+                        'mediaFeeType.name:text:' . Yii::t('app', 'Type of media contributions'),
+                        'count:text:' . Yii::t('app', 'Count'),
+                        
+                        [
+                            'class' => ActionColumn::class,
+                            'controller' => 'media-fee',
+                             'visibleButtons' => [
+                                'view' => false,
+                            ]  ,                          
+                            
+                        ],
+                    ],    
+    ];
+$gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';
+$fullGridConfig = array_merge($columnsConfig,$gridConfig);     
+}
 ?>
 
     <section class="content">
@@ -90,6 +125,7 @@ $selectExpression2 = new JsExpression('
                         ]
         ]);
     ?>
+    <?= $form->field($model, 'registrationFee')->textInput() ?>                            
     <?= $form->field($model, 'date')->widget(DatePicker::class, [
            'options' => ['placeholder' => ''],
             'value' => $model->date,
@@ -114,5 +150,17 @@ ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>
+                        <?php if ($isUpdate) :?>
+            <div class="fee-types_container">
+                    <h5><?php echo t('Types of media contributions', 'title')?> </h5>
+                <section class="content">
+                    <div class="card">
+                        <div class="card-body">
+                                <?= GridView::widget($fullGridConfig); ?>
+                        </div>
+                    </div>
+                </section>                
+                </div>
+            <?php endif; ?>
         </div>
     </section>
