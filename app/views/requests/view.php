@@ -44,6 +44,20 @@ $attributes = [
     ],    
     
     [
+        'attribute' => 'registrationFee',
+        'label' => t('Registration fee (number of pieces)'),
+        'value' => $model->contract ? $model->contract->registration_fee : ''
+    ],
+    [
+        'attribute' => 'mediaFees',
+        'label' => t('Media contributions'),
+        'value' => ($model->contract && $model->contract->mediaFees) ? 
+            $this->renderFile(Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'media-fees.php',
+            [
+                'mediaFees' => $model->contract->mediaFees
+            ]) : ''
+    ],    
+    [
         'attribute' => 'company',
         'label' => t('Company','company'),
         'value' => $model->user->company->name
