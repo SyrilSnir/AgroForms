@@ -24,6 +24,7 @@ const sassLoader = {
   }
 };
 
+const env = process.env;
 
 module.exports = {
     entry: {
@@ -33,6 +34,7 @@ module.exports = {
         'dynamic-form': './assets/scripts/dynamic-form.js',  // панель управления
         manage: './assets/scripts/manage.js'  // модуль управления
     },
+    mode: env.mode ?? 'development',
     module: {
         rules: [
           {

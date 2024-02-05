@@ -1,2 +1,26 @@
-(self.webpackChunkb_free=self.webpackChunkb_free||[]).push([[401],{739:()=>{(0,window.$)(document).ready((function(){bsCustomFileInput.init()}))}},e=>{e(e.s=739)}]);
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2NyaXB0cy9wYW5lbC5qcyIsIm1hcHBpbmdzIjoiNkVBQ0FBLEVBRFVDLE9BQU9ELEdBQ2ZFLFVBQVVDLE9BQU0sV0FDZEMsa0JBQWtCQyxNQUNwQixHIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vYXNzZXRzL3NjcmlwdHMvcGFuZWwuanMiXSwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgJCA9IHdpbmRvdy4kO1xyXG4kKGRvY3VtZW50KS5yZWFkeShmdW5jdGlvbiAoKSB7XHJcbiAgICBic0N1c3RvbUZpbGVJbnB1dC5pbml0KCk7XHJcbiAgfSkiXSwibmFtZXMiOlsiJCIsIndpbmRvdyIsImRvY3VtZW50IiwicmVhZHkiLCJic0N1c3RvbUZpbGVJbnB1dCIsImluaXQiXSwic291cmNlUm9vdCI6IiJ9
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(self["webpackChunkb_free"] = self["webpackChunkb_free"] || []).push([["panel"],{
+
+/***/ "./assets/scripts/panel.js":
+/*!*********************************!*\
+  !*** ./assets/scripts/panel.js ***!
+  \*********************************/
+/***/ (() => {
+
+eval("const $ = window.$;\n$(document).ready(function () {\n  bsCustomFileInput.init();\n});\n\n//# sourceURL=webpack://b_free/./assets/scripts/panel.js?");
+
+/***/ })
+
+},
+/******/ __webpack_require__ => { // webpackRuntimeModules
+/******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+/******/ var __webpack_exports__ = (__webpack_exec__("./assets/scripts/panel.js"));
+/******/ }
+]);
