@@ -51,6 +51,7 @@ $attributes = [
     [
         'attribute' => 'mediaFees',
         'label' => t('Media contributions'),
+        'format' => 'raw',
         'value' => ($model->contract && $model->contract->mediaFees) ? 
             $this->renderFile(Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'media-fees.php',
             [
