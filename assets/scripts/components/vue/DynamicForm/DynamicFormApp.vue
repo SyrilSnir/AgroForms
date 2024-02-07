@@ -167,7 +167,12 @@ export default {
         if (field.hasOwnProperty(constants.ATTACHMENT_ATTRIBUTE)) {
             if (field.file) {                
                 this.files[field.id] = field.file;
-            }
+            } else {
+                if (this.files.hasOwnProperty(field.id)) {
+                    delete this.files[field.id];
+                }
+            } 
+            console.log('Change field', field,this.files);
            // return;
         }
         if(field.hasOwnProperty('computed')) {
