@@ -59,6 +59,7 @@ class ExhibitorsController extends JsonController
             }
             return $el;
         },$result);
+        ArrayHelper::multisort($result, ['company', 'company_eng']);
         $rusCapitalLetters = array_unique(ArrayHelper::getColumn($result, 'capital_letter'));
         $engCapitalLetters = array_unique(ArrayHelper::getColumn($result, 'capital_letter_eng'));
         $russianAlphabet = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','э','ю','я'];
