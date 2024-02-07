@@ -110,7 +110,7 @@ switch ($model->user_type_id) {
         <?php else: ?>           
         <div class="col-md-6">  
         <?php 
-            $activateFornModel = new \app\models\Forms\User\Manage\PasswordResetForm($model->email);
+            $activateFornModel = new ActivateForm($model->email);
             $activateForm = ActiveForm::begin([
                 'action' => Url::to(['/panel/manager/users/invite', 'id' => $model->id ])
             ]);

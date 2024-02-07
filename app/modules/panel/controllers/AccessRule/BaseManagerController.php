@@ -21,5 +21,5 @@ use yii\helpers\Url;
  */
 class BaseManagerController extends ManageController
 {
-    protected $roles = ['managerMenu']; 
+    protected $roles = ['managerMenu','adminMenu']; 
 }
