@@ -50,7 +50,8 @@ class CitySearch extends Model
             $query->where('0=1');
             return $dataProvider;
         }
-        $query->andFilterWhere(['like','cities.name', $this->name]);
+        $query->orFilterWhere(['like','cities.name', $this->name])
+              ->orFilterWhere(['like','cities.name_eng', $this->name]);
         $query->andFilterWhere(['country_id' => $this->country_id]);
         $query->andFilterWhere(['region_id' => $this->region_id]);
         return $dataProvider;

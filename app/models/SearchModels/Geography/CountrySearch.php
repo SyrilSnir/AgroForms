@@ -36,7 +36,8 @@ class CountrySearch extends Model
             $query->where('0=1');
             return $dataProvider;
         }
-        $query->andFilterWhere(['like','name', $this->name]);
+        $query->orFilterWhere(['like','name', $this->name])
+              ->orFilterWhere(['like','name_eng', $this->name]);
         return $dataProvider;
     }
 }
