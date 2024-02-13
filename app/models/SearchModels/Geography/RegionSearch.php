@@ -44,7 +44,7 @@ class RegionSearch extends Model
             return $dataProvider;
         }
         $query->orFilterWhere(['like','name', $this->name])
-                ->orFilterWhere('like','name_eng', $this->name);
+              ->orFilterWhere(['like','name_eng', $this->name]);
         $query->andFilterWhere(['country_id' => $this->country_id]);
         return $dataProvider;
     }
