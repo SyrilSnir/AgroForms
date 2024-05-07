@@ -305,6 +305,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         <div id="frieze-params"<?php if ($model->elementTypeId != ElementType::ELEMENT_FRIEZE):?> class="hide"<?php endif; ?>>
             <?= $form->field($model->parameters, 'freeDigitCount')->textInput() ?>      
             <?= $form->field($model->parameters, 'digitPrice')->textInput() ?>  
+            <?= $form->field($model->parameters, 'maxDigitCount')->textInput() ?>  
             <?= $form->field($model->parameters, 'friezeFieldType')->dropDownList($model->parameters->friezeFieldTypesList()) ?>  
         </div>
         <div id="group-params"<?php if($model->elementTypeId != ElementType::ELEMENT_GROUP): ?> class="hide"<?php endif; ?>>

@@ -107,6 +107,7 @@ return [
     'Price for, m<sup>2</sup>' => 'Цена за м<sup>2</sup>',
     'The number of free characters in the frieze inscription' => 'Количество бесплатных знаков во фризовой надписи',
     'The cost of the frieze lettering symbol' => 'Стоимость символа фризовой надписи',
+    'Maximum number of characters' => 'Максимальное, количество знаков',
     'The name of the original image file' => 'Имя оригинального файла с изображением',
     'Are you sure you want to delete the exhibition?' => 'Вы действительно хотите удалить выставку?',
     'Are you sure you want to delete the user?' => 'Вы действительно хотите удалить пользователя?',

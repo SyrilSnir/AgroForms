@@ -54,6 +54,7 @@ class AllParametersForm extends BaseParametersForm
     //
     public $digitPrice;
     public $freeDigitCount; 
+    public $maxDigitCount; 
     
     /**
      * 
@@ -89,6 +90,7 @@ class AllParametersForm extends BaseParametersForm
         $this->friezeFieldType = $this->paramsArray['friezeFieldType'] ?? 0;
         $this->required = $this->paramsArray['required'] ?? false; 
         $this->freeDigitCount = $this->paramsArray['freeDigitCount'] ?? 0;
+        $this->maxDigitCount = $this->paramsArray['maxDigitCount'] ?? 0;
         $this->freeCount = $this->paramsArray['freeCount'] ?? 0;
         $this->metersPerOne = $this->paramsArray['metersPerOne'] ?? 0;
         $this->digitPrice = $this->paramsArray['digitPrice'] ?? 0;  
@@ -110,7 +112,7 @@ class AllParametersForm extends BaseParametersForm
         return [
                 [['required','isComputed','allCategories','hasCommentField'], 'boolean'],
                 [['text','textEng','htmlEng','html','commentCaption','commentCaptionEng'], 'safe'],
-                [['unit','unitPrice','specialPriceType','digitPrice','friezeFieldType', 'freeDigitCount','groupType','attachment','freeCount','metersPerOne'], 'integer'],
+                [['unit','unitPrice','specialPriceType','digitPrice','friezeFieldType','maxDigitCount', 'freeDigitCount','groupType','attachment','freeCount','metersPerOne'], 'integer'],
                 ['categories','each', 'rule' => ['integer']],            
             ];
     }         
@@ -130,6 +132,7 @@ class AllParametersForm extends BaseParametersForm
             'allCategories' => Yii::t('app/equipment', 'All categories'),
             'categories' => Yii::t('app', 'Categories'),
             'freeDigitCount' => Yii::t('app','The number of free characters in the frieze inscription'),
+            'maxDigitCount' => Yii::t('app','Maximum number of characters'),
             'digitPrice' => Yii::t('app','The cost of the frieze lettering symbol'),
             'groupType' => t('Group type'),
             'attachment' => t('Valid file types'),

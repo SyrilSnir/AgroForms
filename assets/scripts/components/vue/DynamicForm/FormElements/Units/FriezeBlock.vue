@@ -9,6 +9,7 @@
                     type="text" 
                     class="form-control"
                     v-model="val"
+                    :class="{'is-invalid' : showErrors }" 
                     @change="onChange($event)"
                     placeholder="Enter ...">  
                 <textarea 
@@ -19,13 +20,14 @@
                     :id="id"
                     type="text" 
                     class="form-control"
+                    :class="{'is-invalid' : showErrors }"                    
                     v-model="val"
                     @change="onChange($event)"
                     placeholder="Enter ..."  
                 >                  
                 </textarea>
-                        
             </div>
+            <div v-if="showErrors" class="help-block">{{ errors.overLimit.message }}</div>          
             <div  class="col-12" v-if="isPaid">
                 <div class="input-group additiomal">                
                 <span>{{dic.addSymbols}}: </span>
@@ -57,15 +59,23 @@
            return {
             id: 'id' + this.params.id,
             val: this.params.value ? this.params.value : '',
-            currentVal: this.params.value ? this.params.value : '',            
+            currentVal: this.params.value ? this.params.value : '',  
+            showErrors : false,            
             valid: true,
-           }
-       },      
-       mixins: [
+        }
+    },      
+    mixins: [
         //  unitMixin,
-           labelMixin
-       ],
-       computed: {
+        labelMixin
+    ],
+    computed: {
+        errors()  {
+            return {
+                overLimit: {
+                    message: "Количество знаков не должно превышать " + this.maxDigits
+                }
+            }
+        },                      
         symsLength() {
             return this.val.trim().length;
         },
@@ -75,6 +85,9 @@
         frizeDigitPrice() {
             return parseInt(this.params.parameters.digitPrice);
         },
+        maxDigits() {
+            return parseInt(this.params.parameters.maxDigitCount);
+        },        
         friezeFieldType() {
             return parseInt(this.params.parameters.friezeFieldType);
         },        
@@ -98,11 +111,25 @@
        created() {
            this.$emit('changeField',this.getData());
        },
-       methods: {           
+       methods: {  
+            validate() {
+                this.valid = true; // default
+                if (this.maxDigits > 0) {
+                    if (this.symsLength > this.maxDigits) {
+                        this.valid = false;
+                        this.showErrors = true;
+                    } else {
+                        this.valid = true;
+                        this.showErrors = false;
+                    }
+                }
+            },                  
            onChange(event) {
+               this.validate();
                this.$emit('changeField',this.getData());
            },
            getData() {
+               this.validate();
                return {
                    id: this.id,
                    computed: true,
@@ -110,7 +137,7 @@
                    data:  {
                        value: this.val,  
                     },
-                   valid: true
+                   valid: this.valid
                }
            }
        } 

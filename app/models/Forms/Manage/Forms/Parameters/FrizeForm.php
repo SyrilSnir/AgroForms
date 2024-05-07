@@ -14,6 +14,7 @@ class FrizeForm extends BaseParametersForm
 {
     public $digitPrice;
     public $freeDigitCount;
+    public $maxDigitCount;
     public $friezeFieldType;    
     
     public function __construct(Field $field = null, $config = [])
@@ -22,14 +23,16 @@ class FrizeForm extends BaseParametersForm
         
         if ($field) {
             $this->freeDigitCount = $this->paramsArray['freeDigitCount'] ?? 0;
+            $this->maxDigitCount = $this->paramsArray['maxDigitCount'] ?? 0;
             $this->digitPrice = $this->paramsArray['digitPrice'] ?? 0;
+            $this->friezeFieldType = $this->paramsArray['friezeFieldType'] ?? 0;
         }
     }
     
     public function rules(): array
     {
         return [
-            [['digitPrice', 'freeDigitCount','friezeFieldType'], 'integer'],
+            [['digitPrice', 'freeDigitCount','friezeFieldType','maxDigitCount'], 'integer'],
         ];
     }
 
@@ -38,7 +41,8 @@ class FrizeForm extends BaseParametersForm
         return [
             'freeDigitCount' => Yii::t('app','The number of free characters in the frieze inscription'),
             'digitPrice' => Yii::t('app','The cost of the frieze lettering symbol'),
-            'friezeFieldType' => Yii::t('app','Input field type'),            
+            'friezeFieldType' => Yii::t('app','Input field type'),  
+            'maxDigitCount' => Yii::t('app','Maximum number of characters'),            
         ];
     }
 
@@ -47,6 +51,11 @@ class FrizeForm extends BaseParametersForm
         $attributes['freeDigitCount'] = [
             'attribute' => 'freeDigitCount',
             'value' => $this->freeDigitCount
+        ];   
+        
+        $attributes['maxDigitCount'] = [
+            'attribute' => 'maxDigitCount',
+            'value' => empty($this->maxDigitCount) ? '' : $this->maxDigitCount,
         ];   
 
 

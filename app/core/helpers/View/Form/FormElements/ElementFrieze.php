@@ -93,6 +93,12 @@ class ElementFrieze extends FormElement implements CountableElementInterface
         return (int) $params['freeDigitCount'];
     }
     
+    private function getMaxDigits(): int
+    {
+        $params = $this->getParameters();        
+        return (int) $params['maxDigitCount'];
+    }    
+    
     private function getDigitPrice(): int
     {
         $params = $this->getParameters();        
