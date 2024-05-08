@@ -8,9 +8,8 @@
                     :id="id"
                     type="text" 
                     class="form-control"
-                    v-model="val"
-                    :class="{'is-invalid' : showErrors }" 
-                    @change="onChange($event)"
+                    v-model="val" 
+                    @input="onChange($event)"
                     placeholder="Enter ...">  
                 <textarea 
                     v-else
@@ -19,16 +18,15 @@
                     :rows="rows"
                     :id="id"
                     type="text" 
-                    class="form-control"
-                    :class="{'is-invalid' : showErrors }"                    
+                    class="form-control"                  
                     v-model="val"
-                    @change="onChange($event)"
+                    @input="onChange($event)"
                     placeholder="Enter ..."  
                 >                  
                 </textarea>
             </div>
-            <div v-if="showErrors" class="help-block">{{ errors.overLimit.message }}</div>          
-            <div  class="col-12" v-if="isPaid">
+            <div v-if="hasMaxDigits" class="help-block info">{{ symsLength }} {{ getName('из','of') }} {{ maxDigits }} {{ getName('знаков','signs') }}</div>          
+            <div class="col-12" v-if="isPaid">
                 <div class="input-group additiomal">                
                 <span>{{dic.addSymbols}}: </span>
                     <div class="input-group-append">
@@ -47,7 +45,8 @@
     </div>
 </template>
 <script> 
-    import { labelMixin } from './Mixins/labelMixin'  
+    import { labelMixin } from './Mixins/labelMixin';
+    import { textTranslateMixin } from './Mixins/textTranslateMixin';
     export default {        
         props: [
             'lang',
@@ -65,7 +64,7 @@
         }
     },      
     mixins: [
-        //  unitMixin,
+        textTranslateMixin,
         labelMixin
     ],
     computed: {
@@ -75,7 +74,10 @@
                     message: "Количество знаков не должно превышать " + this.maxDigits
                 }
             }
-        },                      
+        },   
+        hasMaxDigits() {
+            return this.maxDigits > 0;
+        },                
         symsLength() {
             return this.val.trim().length;
         },
@@ -95,6 +97,7 @@
             return parseInt(this.params.parameters.freeDigitCount);
         },
         isPaid() {
+            if (!(this.frizeFreeDigits > 0)) return false;
             if (!this.val) return false;
             return (this.symsLength > this.frizeFreeDigits);
         },
@@ -118,6 +121,7 @@
                     if (this.symsLength > this.maxDigits) {
                         this.valid = false;
                         this.showErrors = true;
+                        this.val = this.val.substring(0,this.maxDigits);
                     } else {
                         this.valid = true;
                         this.showErrors = false;

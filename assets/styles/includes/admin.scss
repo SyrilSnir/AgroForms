@@ -159,6 +159,9 @@
     .help-block {
         color: red;
         font-size: 10px;
+        &.info {
+            color: gray;
+        }
     }
 }
 .sidebar {
@@ -206,6 +209,9 @@
     .help-block {
         color: red;
         font-size: 10px;
+        &.info {
+            color: gray;
+        }
     } 
     .important {
         margin: 20px 20%;
