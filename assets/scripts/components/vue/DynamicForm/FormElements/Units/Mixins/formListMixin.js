@@ -44,7 +44,7 @@ export const formList = {
         blocksCount() {
             return this.formElements.length;
         },
-        nonEmptyBlocksCount() {
+        nonEmptyBlocks() {
             let elements = this.formElements.filter((item) => {
                 switch(this.name) {
                     case constants.FORM_CONTACTS: 
@@ -56,7 +56,10 @@ export const formList = {
                 }
                 return true;
             });
-            return elements.length;
+            return elements;            
+        },
+        nonEmptyBlocksCount() {
+            return this.nonEmptyBlocks.length;
         },
         freeCount() {
             return this.params.parameters.freeCount;
