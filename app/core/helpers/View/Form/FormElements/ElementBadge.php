@@ -60,7 +60,7 @@ class ElementBadge  extends FormElement implements CountableElementInterface
 
     public function renderHtml(array $valuesList = []): string
     {
-        if (key_exists('value', $valuesList)) {
+        if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {
             return $this->view->renderFile('@fields/badge.php',[
                 'values' => $valuesList['value'],
                 'title' => $this->field->name,
@@ -74,7 +74,7 @@ class ElementBadge  extends FormElement implements CountableElementInterface
 
     public function renderPDF(array $valuesList = []): string
     {
-        if (key_exists('value', $valuesList)) {
+        if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {
             return $this->view->renderFile('@fields/badge__pdf.php',[
                 'values' => $valuesList['value'],
                 'title' => $this->field->name,

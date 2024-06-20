@@ -42,7 +42,7 @@ class ElementAddressBlock extends FormElement implements CountableElementInterfa
 
     public function renderHtml(array $valuesList = []): string
     {
-        if (key_exists('value', $valuesList)) {
+        if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {
          //   dump($valuesList); die;
             $this->transformValues($valuesList);
             return $this->view->renderFile('@fields/address.php',[
@@ -69,7 +69,7 @@ class ElementAddressBlock extends FormElement implements CountableElementInterfa
     
     public function renderPDF(array $valuesList = []): string
     {
-        if (key_exists('value', $valuesList)) {
+        if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {
             $this->transformValues($valuesList);            
             return $this->view->renderFile('@fields/address__pdf.php',[
                 'values' => $valuesList['value'],

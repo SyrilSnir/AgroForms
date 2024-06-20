@@ -34,7 +34,7 @@ class ElementInformationForm extends FormElement implements CountableElementInte
 
     public function renderHtml(array $valuesList = []): string
     {
-        if (key_exists('value', $valuesList)) {
+        if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {
             return $this->view->renderFile('@fields/information.php',[
                 'values' => $valuesList['value'],
                 'price' => $this->getPrice($valuesList),
@@ -48,7 +48,7 @@ class ElementInformationForm extends FormElement implements CountableElementInte
 
     public function renderPDF(array $valuesList = []): string
     {
-        if (key_exists('value', $valuesList)) {
+        if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {
             return $this->view->renderFile('@fields/information__pdf.php',[
                 'values' => $valuesList['value'],
                 'price' => $this->getPrice($valuesList),

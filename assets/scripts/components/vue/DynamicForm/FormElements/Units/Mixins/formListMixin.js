@@ -81,7 +81,7 @@ export const formList = {
             let data = {
                 id: this.id,
                 data:  {
-                    value: this.formElements,                       
+                    value: this.nonEmptyBlocks,                       
                  },
                 valid: this.valid
             };
