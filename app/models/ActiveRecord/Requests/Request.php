@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Requests;
 
+use app\core\helpers\View\Request\RequestStatusHelper;
 use app\core\repositories\readModels\Requests\ApplicationReadRepository;
 use app\core\repositories\readModels\Requests\RequestStandReadRepository;
 use app\models\ActiveRecord\Companies\Company;
@@ -31,7 +32,7 @@ use yii\db\ActiveQuery;
  * @property int $form_id Id формы
  * @property int $contract_id Номер договора
  * @property int $company_id Id компании
- * 
+ * @property string $statusText Статус
  * @property bool $was_rejected Была отклонена
  * 
  * @property FormType $formType
@@ -336,4 +337,10 @@ class Request extends FormManipulation
     {
         return $this->hasMany(AttachedFiles::class, ['request_id' => 'id']);
     }   
+    
+    public function getStatusText():string 
+    {
+        $statusList = RequestStatusHelper::statusList();
+        return $statusList[$this->status];
+    }
 }

@@ -84,7 +84,8 @@ class RequestService
         $request = $this->requests->get($id);
         $request->accept();
         $this->applicationRejectLogService->clearActualStatusForRequest($id);
-        $request->save();        
+        $request->save();   
+        $this->sendChangeStatusNotification($request);
     }
     
     /**
@@ -103,6 +104,7 @@ class RequestService
         $request->reject();
         $logField->save();
         $request->save();
+        $this->sendChangeStatusNotification($request);
     }   
     
     /**
@@ -188,6 +190,21 @@ class RequestService
             'request' => $request,            
         ])->setTo($member->email)->setSubject($request->exhibition->title . ' - в вашем личном кабинете новый счет на оплату услуг')
                 ->send();
+    }
+    
+    private function sendChangeStatusNotification(Request $request)
+    {
+        $member = $request->company->member;
+        if (!$member) {
+            return;
+        }
+        $this->mailService->compose([
+            'html' => 'request-status-change-html',
+            'text' => 'request-status-change-text',
+        ], [
+            'request' => $request,            
+        ])->setTo($member->email)->setSubject($request->exhibition->title . ' - статус Вашей заявки изменился')
+                ->send();        
     }
     
     
