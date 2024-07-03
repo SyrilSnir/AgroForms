@@ -74,5 +74,9 @@ return [
     'Edit type' => 'Изменить тип',  
     'New media contribution' => 'Новый медиа-взнос',
     'Edit media contribution' => 'Изменить медиа-взнос',
-
+    'Roles for managers' => 'Роли для менеджеров',
+    'New role' => 'Новая роль',    
+    'New rule' => 'Новое правило', 
+    'Edit rule' => 'Изменить правило', 
 ];
+

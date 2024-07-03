@@ -1,12 +1,12 @@
 <?php
 
-use app\models\Forms\Geography\CityForm;
+use app\models\ActiveRecord\Users\ManagerRoles;
 use yii\web\View;
 
 /** @var View $this  */
-/** @var CityForm $model  */
+/** @var ManagerRoles $model  */
 
-$this->title = Yii::t('app/title','New city');
+$this->title = Yii::t('app/title', 'New role') ;
 ?>
 
 <div class="create-form">

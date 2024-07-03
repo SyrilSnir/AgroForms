@@ -21,6 +21,7 @@ return [
    'Exit' => 'Выход',
    'Count' => 'Количество',
    'Role' => 'Роль',
+   'Role name' => 'Имя роли',
    'Valute' => 'Валюта',
    'Edit' => 'Редактировать',
    'Enter' => 'Вход',
@@ -232,6 +233,11 @@ return [
     'Registration fee (number of pieces)' => 'Регистрационный взнос (количество шт.)',
     'Type of media contributions' => 'Тип медиа-взносов',
     'Media contributions' => 'Медиа-взносы',
-    'Quantity, pcs.' => 'Количество, шт.'
+    'Quantity, pcs.' => 'Количество, шт.',
+    'View applications' => 'Просмотр заявок',
+    'Accept/reject application' => 'Принять/отклонить заявку',
+    'Post an application' => 'Опубликовать заявку',
+    'Deleting applications' => 'Удаление заявок',
+    'Changing payment status' => 'Изменение статуса оплаты'
 ];
 

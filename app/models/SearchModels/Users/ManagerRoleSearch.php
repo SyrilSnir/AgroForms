@@ -1,17 +1,17 @@
 <?php
 
-namespace app\models\SearchModels\Geography;
+namespace app\models\SearchModels\Users;
 
-use app\models\ActiveRecord\Geography\Country;
+use app\models\ActiveRecord\Users\ManagerRoles;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * Description of CountrySearch
+ * Description of ManagerRoleSearch
  *
  * @author kotov
  */
-class CountrySearch extends Model
+class ManagerRoleSearch extends Model
 {
     public $name;
     
@@ -20,11 +20,11 @@ class CountrySearch extends Model
         return [
             [['name'], 'safe'],
         ];
-    }
+    }    
     
     public function search(array $params): ActiveDataProvider
     {
-        $query = Country::find();
+        $query = ManagerRoles::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
@@ -40,6 +40,5 @@ class CountrySearch extends Model
         $query->orFilterWhere(['like','name', $this->name])
               ->orFilterWhere(['like','name_eng', $this->name]);
         return $dataProvider;
-    }
+    }    
 }
-

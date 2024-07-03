@@ -1,12 +1,12 @@
 <?php
 
-use app\models\Forms\Geography\CityForm;
+use app\models\Forms\Geography\RegionForm;
 use yii\web\View;
 
 /** @var View $this  */
-/** @var CityForm $model  */
+/** @var RegionForm $model  */
 
-$this->title = Yii::t('app/title','New city');
+$this->title = Yii::t('app/title', 'New rule') ;
 ?>
 
 <div class="create-form">
@@ -16,4 +16,3 @@ $this->title = Yii::t('app/title','New city');
 ]) ?>
 
 </div>
-

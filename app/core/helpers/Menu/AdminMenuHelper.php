@@ -22,7 +22,8 @@ class AdminMenuHelper implements MenuHelperInterface
                             'icon' => 'icon-users-companies',                             
                             'items' => [
                                 ['label' => Yii::t('app/menu', 'Users'), 'icon' => 'icon-users', 'url' => ['/panel/users'],],
-                          /*      ['label' => Yii::t('app/menu', 'Roles'), 'icon' => 'universal-access', 'url' => ['/panel/roles'],],*/
+                                /*['label' => Yii::t('app/menu', 'Roles'), 'icon' => 'universal-access', 'url' => ['/panel/roles'],],*/
+                                ['label' => Yii::t('app/menu', 'Manager roles'), 'icon' => 'universal-access', 'url' => ['/panel/manager-roles'],],
                                 ['label' => Yii::t('app/menu', 'Companies'), 'icon' => 'icon-companies', 'url' => ['/panel/companies'],],
                                 ['label' => Yii::t('app/menu', 'Exhibition management'), 'icon' => 'icon-exhibitions', 'url' => ['/panel/lists/exhibitions'],],                        
                                 [

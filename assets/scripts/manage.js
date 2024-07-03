@@ -8,6 +8,8 @@ const managerActivateLink = document.getElementById('get-activare-link');
 const getFormRequestButton = document.getElementById('get-form-request');
 const fieldsConfig = document.getElementById('fields-config');
 const modalRequestInfo = document.getElementById('modal-request__information');
+const ruleCreateLink = document.getElementById('create-new-rule');
+
 if (fieldsConfig) {
     const fieldParams = new FieldParams(); 
     const enumList = new EnumList('#attributes-enum-list');
@@ -35,6 +37,10 @@ if (modalRequestInfo) {
     });
 }
 
+if (ruleCreateLink) {
+    ruleCreateLink.addEventListener('click', createLinkHandler);
+}
+
 function managerActivateHandler(e) {
     const userId = e.target.getAttribute('data-user');
     axios.get('/api/user/get-activate-link', 
@@ -47,7 +53,6 @@ function managerActivateHandler(e) {
             const link = response.data;
             $('#activate-link').html(link).attr('href',link);
             $('#show-activate-link').modal();
-          //  alert (response.data);
         });  
 }
 
@@ -56,6 +61,16 @@ function getFormRequestHandler(e) {
     let selectedValue = selectedOption.value;
     let contractId = getFormRequestButton.dataset.contract;
     location.href = '/panel/member/requests/create?formId=' + selectedValue + '&contractId=' + contractId;
+}
+
+function createLinkHandler(e) {
+    e.preventDefault();
+    const link = e.currentTarget;
+    console.log(link);
+    const formSelector = document.getElementById('frm-id');
+    const formId = formSelector.value;
+    const roleId = link.dataset.role;
+    location.href = link.href + `?formId=${formId}&roleId=${roleId}`;
 }
 
 const formManager = new FormManager();

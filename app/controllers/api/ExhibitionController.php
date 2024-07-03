@@ -14,12 +14,12 @@ use Yii;
  */
 class ExhibitionController extends JsonController
 {
-    public function actionGetForms()
+    public function actionGetForms(bool $showDeleted = true)
     {
         $exhibitionId = (int) Yii::$app->request->post('depdrop_parents')[0];
         if ($exhibitionId)
         {
-            $forms = ExhibitionHelper::getForms($exhibitionId,true);
+            $forms = ExhibitionHelper::getForms($exhibitionId,$showDeleted);
             $resArray = [
                 'output' => $forms,
             ];
