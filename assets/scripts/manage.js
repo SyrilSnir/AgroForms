@@ -68,9 +68,18 @@ function createLinkHandler(e) {
     const link = e.currentTarget;
     console.log(link);
     const formSelector = document.getElementById('frm-id');
+    const exSelector = document.getElementById('ex-id');
     const formId = formSelector.value;
+    const exId = exSelector.value;
     const roleId = link.dataset.role;
-    location.href = link.href + `?formId=${formId}&roleId=${roleId}`;
+    console.log('Select', formId,exId);
+    let queryString = `?roleId=${roleId}`;
+    if (formId) {
+        queryString += `&formId=${formId}`;
+    } else if (exId) {
+        queryString += `&exhibitionId=${exId}`;
+    }
+    location.href = link.href + queryString;
 }
 
 const formManager = new FormManager();

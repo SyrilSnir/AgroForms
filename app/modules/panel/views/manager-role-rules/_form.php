@@ -21,9 +21,15 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'roleId')->hiddenInput()->label(false) ?>
-    <?= $form->field($model, 'formId')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'formId')->hiddenInput()->label(false) ?>    
     <?= $form->field($model, 'roleName')->textInput(['disabled' => true]) ?>
+    <?php if ($model->hasExhibition()): ?>
+    <?= $form->field($model, 'exhibitionId')->hiddenInput()->label(false) ?>    
+    <?= $form->field($model, 'exhibitionName')->textInput(['disabled' => true]) ?>    
+    <?php endif; ?>
     <?= $form->field($model, 'formName')->textInput(['disabled' => true]) ?>
+                            
+                            
     <?= $form->field($model, 'view')->widget(SwitchInput::class,[
                 'pluginOptions' => [
                         'onText' => Yii::t('app', 'Yes'),

@@ -17,12 +17,12 @@ echo Select2::widget([
 ]);
 echo DepDrop::widget([
     'name' => 'form',
-    'data' => $formsHelper->formsList(),
+    'data' => $formsHelper->formsList(true),
     'options' => [
         'id'=>'frm-id',
     ],
     'pluginOptions' => [
-        'placeholder' => false,
+        'placeholder' => 'Все формы',
         'url' => '/api/exhibition/get-forms/?showDeleted=false',
         'depends' => [
             'ex-id'

@@ -12,7 +12,7 @@ use yii\widgets\DetailView;
 /* @var $model ManagerRoleRules */
 /* @var $modificationsProvider ActiveDataProvider */
 
-$this->title = $model->form->name;
+$this->title = t('Rule for role');
 ?>
 <div class="view">
     <p>
@@ -34,12 +34,16 @@ $this->title = $model->form->name;
                     [
                         'attribute' => 'exhibition',
                         'label' => Yii::t('app', 'Exhibition'),
-                        'value' => $model->form->exhibition->title,
+                        'value' => $model->form ? 
+                            $model->form->exhibition->title :
+                            t('All exhibitions'),
                     ],
                     [
                         'attribute' => 'form',
                         'label' => Yii::t('app', 'Form'),
-                        'value' => $model->form->title . ':' . $model->form->name,
+                        'value' => $model->form ? 
+                            $model->form->title . ':' . $model->form->name :
+                            t('All forms'),
                     ],
                     [
                         'attribute' => 'view',

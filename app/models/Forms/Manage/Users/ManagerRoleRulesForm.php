@@ -14,6 +14,10 @@ class ManagerRoleRulesForm extends ManageForm
 {
     public $roleId;
     
+    public $exhibitionId;
+
+    public $exhibitionName;
+    
     public $formId;
     
     public $formName;
@@ -38,6 +42,7 @@ class ManagerRoleRulesForm extends ManageForm
             $this->roleId = $model->role_id;
             $this->formId = $model->form_id;
             $this->view = $model->r_view;
+            $this->exhibitionId = $model->exhibition_id;
             if ($this->view == false) {
                 $this->accept = false;
                 $this->pay = false;
@@ -59,9 +64,9 @@ class ManagerRoleRulesForm extends ManageForm
     public function rules(): array
     {
         return [
-            [['roleId','formId'],'required'],
-            [['roleId','formId'],'integer'],
-            [['formName','roleName'],'string'],
+            [['roleId'],'required'],
+            [['roleId','formId','exhibitionId'],'integer'],
+            [['formName','roleName','exhibitionName'],'string'],
             [['accept','pay', 'delete','view', 'publicate'],'boolean'],            
         ];
     } 
@@ -71,6 +76,7 @@ class ManagerRoleRulesForm extends ManageForm
         return [
             'formName' => t('Form'),
             'roleName' => t('Role name'),
+            'exhibitionName' => t('Exhibition'),
             'view' => t('View applications'),
             'accept' => t('Accept/reject application'),
             'pay' => t('Changing payment status'),
@@ -78,5 +84,10 @@ class ManagerRoleRulesForm extends ManageForm
             'publicate' => t('Post an application'),
             
         ];
+    }
+    
+    public function hasExhibition(): bool 
+    {
+        return !empty($this->exhibitionId);
     }
 }

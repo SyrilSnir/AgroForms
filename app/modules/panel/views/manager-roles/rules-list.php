@@ -26,13 +26,23 @@ $columnsConfig = [
     'filterModel' => $searchModel,
     'columns' => [                    
         [
-            'attribute' => 'title',
+            'attribute' => 'form',
             'label' => 'Форма',
             'value' => function (ManagerRoleRules $model) {
-                return $model->form->title . ':' . $model->form->name;
+                return $model->form ? 
+                        $model->form->title . ':' . $model->form->name :
+                        t('All forms');
             }
         ],
-        'form.exhibition.title:text:Выставка',
+        [
+            'attribute' => 'exhibition',
+            'label' => 'Выставка',
+            'value' => function (ManagerRoleRules $model) {
+                return $model->exhibition ? 
+                        $model->exhibition->title : 
+                        t('All exhibitions');
+            }
+        ],                       
         [
             'attribute' => 'view',
             'label' => 'Просмотр',

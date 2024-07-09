@@ -230,14 +230,17 @@ return [
     'Data loaded successfully' => 'Данные успешно загружены',
     'No data to upload' => 'Нет данных для выгрузки',
     'All forms' => 'Все формы',
+    'All exhibitions' => 'Все выставки',
     'Registration fee (number of pieces)' => 'Регистрационный взнос (количество шт.)',
     'Type of media contributions' => 'Тип медиа-взносов',
     'Media contributions' => 'Медиа-взносы',
     'Quantity, pcs.' => 'Количество, шт.',
     'View applications' => 'Просмотр заявок',
+    'View applications' => 'Просмотр заявок',
     'Accept/reject application' => 'Принять/отклонить заявку',
     'Post an application' => 'Опубликовать заявку',
     'Deleting applications' => 'Удаление заявок',
-    'Changing payment status' => 'Изменение статуса оплаты'
+    'Changing payment status' => 'Изменение статуса оплаты',
+    'Rule for role' => 'Правило для роли',
 ];
 

@@ -2,6 +2,7 @@
 
 namespace app\modules\panel\controllers\Actions;
 
+use app\core\repositories\readModels\Exhibition\ExhibitionReadRepository;
 use app\core\repositories\readModels\Forms\FormReadRepository;
 use app\core\repositories\readModels\User\ManagerRoleReadRepository;
 use app\core\services\operations\Users\ManagerRoleRulesService;
@@ -38,6 +39,11 @@ class CreateRuleAction  extends Action
     protected $formsRepository;
     /**
      * 
+     * @var ExhibitionReadRepository
+     */    
+    protected $exhibitionsRepository;
+    /**
+     * 
      * @var ManagerRoleReadRepository
      */    
     protected $rolesRepository;
@@ -51,6 +57,7 @@ class CreateRuleAction  extends Action
             ManagerRoleRulesService $service,
             FormReadRepository $formsRepository,
             ManagerRoleReadRepository $rolesRepository,
+            ExhibitionReadRepository $exhibitionsRepository,
             $config = [])
     {
         parent::__construct($id, $controller, $config);
@@ -58,16 +65,28 @@ class CreateRuleAction  extends Action
         $this->service = $service;
         $this->formsRepository = $formsRepository;
         $this->rolesRepository = $rolesRepository;
+        $this->exhibitionsRepository = $exhibitionsRepository;
     }
     
-    public function run(int $formId, int $roleId) 
+    public function run(int $roleId,int $formId = null,int $exhibitionId = null) 
     {
         /** @var Form $form */
         /** @var ManagerRoles $role */
         $form = $this->formsRepository->findById($formId);
-        $role = $this->rolesRepository->findById($roleId);
-        $this->form->formId = $formId;
-        $this->form->formName = $form->title . ':' . $form->name;
+        $role = $this->rolesRepository->findById($roleId);        
+        if ($formId) {
+            $this->form->formId = $formId;
+            $this->form->formName = $form->title . ':' . $form->name;
+            $this->form->exhibitionId = $form->exhibition_id;
+            $this->form->exhibitionName = $form->exhibition->title;
+            
+        } else {
+            if ($exhibitionId) {
+                $ex = $this->exhibitionsRepository->findById($exhibitionId);
+                $this->form->exhibitionName = $ex->title;
+            }            
+            $this->form->formName = t('All forms');
+        }
         $this->form->roleName = $role->name;
         $this->form->roleId = $role->id;
         if ($this->form->load(Yii::$app->request->post()) && $this->form->validate()) 
