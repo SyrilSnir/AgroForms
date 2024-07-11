@@ -242,5 +242,7 @@ return [
     'Deleting applications' => 'Удаление заявок',
     'Changing payment status' => 'Изменение статуса оплаты',
     'Rule for role' => 'Правило для роли',
+    'Manager`s role' => 'Роль менеджера',
+    'Select a role' => 'Выберите роль',
 ];
 

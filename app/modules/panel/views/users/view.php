@@ -25,13 +25,16 @@ $attributes = [
                     'phone:text:' . t('Phone number','user'),
                     'company.name:text:' . t('Company','user'),
                     'userType.name:text:' . t('User type', 'user'),
-                    [
-                        'attribute' => 'active',
-                        'label' => t('Status'),
-                        'format' => 'raw',
-                        'value' => UserStatusHelper::getStatusLabel($model->active)
-                    ]
-                ];
+    ];
+if ($model->user_type_id === UserType::MANAGER_USER_ID) {
+    $attributes[] = 'role.name:text:' . t('Manager`s role');
+}
+$attributes[] = [
+                    'attribute' => 'active',
+                    'label' => t('Status'),
+                    'format' => 'raw',
+                    'value' => UserStatusHelper::getStatusLabel($model->active)
+    ];
 /*
 switch ($model->user_type_id) {
     case UserType::MEMBER_USER_ID:

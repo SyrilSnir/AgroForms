@@ -1,5 +1,6 @@
 <?php
 
+use app\models\ActiveRecord\Users\UserType;
 use app\models\Forms\Manage\Users\AdminForm;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
@@ -21,7 +22,7 @@ $action = ($update) ? Url::to(['/panel/users/update', 'id' => $model->userId ]) 
 <div class="create-form">
     
 
-    <section class="content">
+    <section id="user-create" data-manager="<?php echo UserType::MANAGER_USER_ID ?>" class="content">
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-body">
@@ -36,7 +37,13 @@ $action = ($update) ? Url::to(['/panel/users/update', 'id' => $model->userId ]) 
     <?= $form->field($model, 'email')->textInput() ?>  
                             
     <?php if ($update): ?>                        
-        <?= $form->field($model, 'userType')->dropDownList($model->typeList()) ?>             
+        <?= $form->field($model, 'userType')->dropDownList($model->typeList()) ?> 
+                            <div id="roles-list"<?php if ($model->userType != UserType::MANAGER_USER_ID):?> class="hide"<?php endif; ?>>
+    <?= $form->field($model, 'role')->widget(Select2::class,[
+        'data' => $model->rolesList(),
+        'options' => ['placeholder' => t('Select a role')],
+    ]) ?>
+</div>                            
     <?php endif; ?>                              
     <?= $form->field($model, 'gender')->dropDownList([
         0 => 'Не задано',

@@ -21,6 +21,7 @@ use yii\db\ActiveRecord;
  * @property string|null $password_reset_token
  * @property int $user_type_id Тип пользователя
  * @property int $company_id Id компании
+ * @property int $role_id Id роли менеджера
  * @property int $gender Пол
  * @property int $language Язык
  * @property UserProfileInterface $profile Профиль
@@ -37,6 +38,7 @@ use yii\db\ActiveRecord;
  * 
  * @property UserType $userType
  * @property Company $company
+ * @property ManagerRoles $role
  * 
  */
 class User extends ActiveRecord
@@ -72,6 +74,7 @@ class User extends ActiveRecord
      * @param string $position
      * @param int $gender
      * @param int $language
+     * @param int $role
      * @return \self
      */
     public static function create(
@@ -84,12 +87,16 @@ class User extends ActiveRecord
             string $birthday,
             string $position,
             int $gender,
-            int $language
+            int $language,
+            int $role = null
             ):self
     {
         $user = new User();
         $user->login = $login;
         $user->user_type_id = $userTypeId;
+        if ($userTypeId === UserType::MANAGER_USER_ID) {
+            $user->role_id = $role;
+        }
         $user->company_id = $companyId;
         $user->fio = $fio;
         $user->email = $email;
@@ -127,7 +134,8 @@ class User extends ActiveRecord
             string $birthday,
             string $position,
             int $gender,
-            int $language            
+            int $language,
+            int $role
             ) 
     {
         $this->login = $login;
@@ -139,6 +147,9 @@ class User extends ActiveRecord
         if ($birthday) {
             $this->birthday = DateTime::createFromFormat('d.m.Y',$birthday)->format('Y-m-d');
         }
+        if ($userTypeId === UserType::MANAGER_USER_ID) {
+            $this->role_id = $role;
+        }        
         $this->language = $language;
         $this->gender = $gender;
         $this->active = self::STATUS_NEW;    
@@ -239,4 +250,13 @@ class User extends ActiveRecord
         return $nameArray[0];
 
     }
+    /**
+     * 
+     * @return type
+     */
+    public function getRole() : \yii\db\ActiveQuery
+    {
+        return $this->hasOne(ManagerRoles::class, ['id' => 'role_id']);
+    }
+    
 }

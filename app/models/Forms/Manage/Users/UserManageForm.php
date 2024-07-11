@@ -4,11 +4,13 @@ namespace app\models\Forms\Manage\Users;
 
 use app\core\traits\Lists\GetGenderListTrait;
 use app\core\traits\Lists\GetLanguagesListTrait;
+use app\core\traits\Lists\GetManagerRolesTrait;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
 use DateTime;
 use yii\db\ActiveRecord;
+use yii\db\Query;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -26,6 +28,7 @@ class UserManageForm extends ActiveRecord
     public $birthday;
     public $email;
     public $userType;
+    public $role;
     public $company;
     public $gender;
     public $position;
@@ -33,8 +36,7 @@ class UserManageForm extends ActiveRecord
     public $userId;
    
 
-    use GetGenderListTrait;
-    use GetLanguagesListTrait;
+    use GetGenderListTrait, GetLanguagesListTrait, GetManagerRolesTrait;
     
     public function __construct(User $user = null, $config = array())
     {     
@@ -49,6 +51,7 @@ class UserManageForm extends ActiveRecord
             $this->userType = $user->user_type_id;
             $this->gender = $user->gender;
             $this->userId = $user->id;
+            $this->role = $user->role_id;
             if ($user->birthday) {
                 $this->birthday = DateTime::createFromFormat('Y-m-d',$user->birthday)->format('d.m.Y');
             }
@@ -73,7 +76,7 @@ class UserManageForm extends ActiveRecord
             ['email','email'],
             [['position','login'],'string'],
             [['position'],'default' ,'value' => ''],
-            [['userType','company', 'gender','language'],'integer'],
+            [['userType','company', 'gender','language','role'],'integer'],
            // [['company'], 'validateMemberUnique','on' => self::SCENARIO_DEFAULT],
             [['phone','fio'], 'string', 'max' => 255],
             [['birthday'], 'safe'],  
@@ -89,7 +92,7 @@ class UserManageForm extends ActiveRecord
                 ['login','email'],
                 'unique',
                 'targetClass'=> User::class,
-                'filter' => function(\yii\db\Query $query) {
+                'filter' => function(Query $query) {
                     return $query->andWhere(['deleted' => false])
                             ->andWhere(['!=', 'login', $this->login]);
                 },//['deleted' => false, ['!=', 'login', $this->login]],

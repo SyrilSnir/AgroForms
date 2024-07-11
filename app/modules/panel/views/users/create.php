@@ -1,5 +1,6 @@
 <?php
 
+use app\models\ActiveRecord\Users\UserType;
 use app\models\Forms\Manage\Users\CreateForm;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
@@ -16,7 +17,7 @@ $this->title = Yii::t('app/user','Create new user');
 ?>
 
 <div class="create-form">    
-    <section class="content">
+    <section id="user-create" data-manager="<?php echo UserType::MANAGER_USER_ID ?>" class="content">
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-body">
@@ -29,6 +30,11 @@ $this->title = Yii::t('app/user','Create new user');
     <?= $form->field($model, 'phone')->textInput() ?>
     <?= $form->field($model, 'email')->textInput() ?>
     <?= $form->field($model, 'userType')->dropDownList($model->typeList()) ?>
+                            <div id="roles-list"<?php if ($model->userType != UserType::MANAGER_USER_ID):?> class="hide"<?php endif; ?>>
+    <?= $form->field($model, 'role')->widget(Select2::class,[
+        'data' => $model->rolesList()
+    ]) ?>
+</div>
     <?= $form->field($model, 'company')->widget(Select2::class,[
         'data' => $model->organizationList()
             ]) ?>                          
@@ -38,7 +44,7 @@ $this->title = Yii::t('app/user','Create new user');
             'value' => $model->birthday,
             'removeButton' => false,
             'pickerIcon' => false,
-           'pluginOptions' => [
+            'pluginOptions' => [
                'autoclose'=>true,
                'format' => 'dd.mm.yyyy'
            ]

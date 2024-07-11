@@ -50,7 +50,8 @@ class UserService
                 $form->birthday, 
                 $form->position,
                 $form->gender, 
-                $form->language
+                $form->language,
+                $form->role
                 );
         $this->users->save($user);  
         $this->roleManager->setRole(UserType::ROLES[$user->user_type_id], $user->id);
@@ -92,7 +93,8 @@ class UserService
                 $form->birthday, 
                 $form->position,
                 $form->gender,                 
-                $form->language
+                $form->language,
+                $form->role
                 );
         $this->roleManager->revokeRoles($user->id);
         $this->roleManager->setRole(UserType::ROLES[$user->user_type_id], $user->id);        

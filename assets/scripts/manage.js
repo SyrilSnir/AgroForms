@@ -9,6 +9,7 @@ const getFormRequestButton = document.getElementById('get-form-request');
 const fieldsConfig = document.getElementById('fields-config');
 const modalRequestInfo = document.getElementById('modal-request__information');
 const ruleCreateLink = document.getElementById('create-new-rule');
+const createUserForm = $('#user-create');
 
 if (fieldsConfig) {
     const fieldParams = new FieldParams(); 
@@ -34,6 +35,21 @@ if (modalRequestInfo) {
         },(data) => {
             modalRequestContent.html(data);
         })
+    });
+}
+
+if (createUserForm) {
+    const manId = createUserForm.data('manager');
+    console.log(manId);
+    const userTypeSelector = $('#usermanageform-usertype').add('#adminform-usertype'); 
+    userTypeSelector.on('change', (e) => {
+        if (manId == e.target.value) {
+            $('#roles-list').removeClass('hide');
+            console.log('Медия менеджер');
+        } else {
+            $('#roles-list').addClass('hide');
+
+        }
     });
 }
 

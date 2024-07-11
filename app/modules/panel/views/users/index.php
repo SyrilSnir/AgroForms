@@ -72,6 +72,12 @@ $action = Yii::$app->getRequest()->getPathInfo();
                             'value' => 'userType.name'
                         ],
                         [
+                            'attribute' => 'role_id',
+                            'label' => t('Manager`s role'),
+                            'filter' => $searchModel->rolesList(),
+                            'value' => 'role.name'
+                        ],                        
+                        [
                             'attribute' => 'active',
                             'label' => Yii::t('app/user','Status'),
                             'width' => '100px',
