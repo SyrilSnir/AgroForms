@@ -13,7 +13,24 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name Название роли
  * @property string $name_eng Название роли (ENG)
- *
+ * 
+ * @property boolean $u_view Просмотр пользователей
+ * @property boolean $u_create Создание пользователей
+ * @property boolean $u_edit Редактирование пользователей
+ * @property boolean $u_delete Удаление пользователей
+ * @property boolean $c_view Просмотр компаний
+ * @property boolean $c_create Создание компаний
+ * @property boolean $c_edit Редактирование компаний
+ * @property boolean $c_delete Удаление компаний
+ * @property boolean $d_view Просмотр документов
+ * @property boolean $d_create Создание документов
+ * @property boolean $d_edit Редактирование документов
+ * @property boolean $d_delete Удаление документов
+ * @property boolean $co_view Просмотр договоров
+ * @property boolean $co_create Создание договоров
+ * @property boolean $co_edit Редактирование договоров
+ * @property boolean $co_delete Удаление договоров
+ *  
  * @property ManagerRoleRules[] $managerRoleRules
  */
 class ManagerRoles extends ActiveRecord
@@ -34,6 +51,47 @@ class ManagerRoles extends ActiveRecord
         $model = new self();
         $model->name = $form->name;
         $model->name_eng = $form->nameEng;
+        $model->u_view = $form->u_view;        
+        $model->c_view = $form->c_view;
+        $model->d_view = $form->d_view;
+        $model->co_view = $form->co_view;
+        if ($model->u_view) {
+            $model->u_create = $form->u_create;
+            $model->u_edit = $form->u_edit;
+            $model->u_delete = $form->u_delete;
+        } else {
+            $model->u_create = false;
+            $model->u_edit = false;
+            $model->u_delete = false;            
+        }
+        if ($model->c_view) {
+            $model->c_create = $form->c_create;
+            $model->c_edit = $form->c_edit;
+            $model->c_delete = $form->c_delete;            
+        } else {
+            $model->c_create = false;
+            $model->c_edit = false;
+            $model->c_delete = false;            
+        }
+        if ($model->d_view) {
+            $model->d_create = $form->d_create;
+            $model->d_edit = $form->d_edit;
+            $model->d_delete = $form->d_delete;            
+        } else {
+            $model->d_create = false;
+            $model->d_edit = false;
+            $model->d_delete = false;            
+        }
+        if ($model->co_view) {
+            $model->co_create = $form->co_create;
+            $model->co_edit = $form->co_edit;
+            $model->co_delete = $form->co_delete;
+            
+        } else {
+            $model->co_create = false;
+            $model->co_edit = false;
+            $model->co_delete = false;            
+        }
         return $model;        
     }
     
@@ -41,6 +99,47 @@ class ManagerRoles extends ActiveRecord
     {
         $this->name = $form->name;
         $this->name_eng = $form->nameEng;
+        $this->u_view = $form->u_view;        
+        $this->c_view = $form->c_view;
+        $this->d_view = $form->d_view;
+        $this->co_view = $form->co_view;
+        if ($this->u_view) {
+            $this->u_create = $form->u_create;
+            $this->u_edit = $form->u_edit;
+            $this->u_delete = $form->u_delete;
+        } else {
+            $this->u_create = false;
+            $this->u_edit = false;
+            $this->u_delete = false;            
+        }
+        if ($this->c_view) {
+            $this->c_create = $form->c_create;
+            $this->c_edit = $form->c_edit;
+            $this->c_delete = $form->c_delete;            
+        } else {
+            $this->c_create = false;
+            $this->c_edit = false;
+            $this->c_delete = false;            
+        }
+        if ($this->d_view) {
+            $this->d_create = $form->d_create;
+            $this->d_edit = $form->d_edit;
+            $this->d_delete = $form->d_delete;            
+        } else {
+            $this->d_create = false;
+            $this->d_edit = false;
+            $this->d_delete = false;            
+        }
+        if ($this->co_view) {
+            $this->co_create = $form->co_create;
+            $this->co_edit = $form->co_edit;
+            $this->co_delete = $form->co_delete;
+            
+        } else {
+            $this->co_create = false;
+            $this->co_edit = false;
+            $this->co_delete = false;            
+        }        
     }
 
 
@@ -52,18 +151,12 @@ class ManagerRoles extends ActiveRecord
         return [
             [['name', 'name_eng'], 'required'],
             [['name', 'name_eng'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'name_eng' => 'Name Eng',
+            [[
+                'u_view','u_create','u_edit','u_delete',
+                'c_view','c_create','c_edit','c_delete',
+                'd_view','d_create','d_edit','d_delete',
+                'co_view','co_create','co_edit','co_delete',
+              ],'boolean'],            
         ];
     }
 

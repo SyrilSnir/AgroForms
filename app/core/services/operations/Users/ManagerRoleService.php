@@ -34,7 +34,10 @@ class ManagerRoleService implements DataManqageInterface
 
     public function edit(int $id, ManageForm $form): void
     {
-        
+        /** @var ManagerRoles $role */
+        $role = $this->roles->get($id);
+        $role->edit($form);
+        $this->roles->save($role);
     }
 
     public function remove(int $id): void
