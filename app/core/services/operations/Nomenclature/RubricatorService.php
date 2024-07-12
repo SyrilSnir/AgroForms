@@ -53,7 +53,7 @@ class RubricatorService implements DataManqageInterface
         $parentNode = $rubricator->parent;
         if ($parentNode && $parentNode->id != $form->parentId) {
             $newParent = $this->rubricators->get($form->parentId);
-            $siblingsCount = count($newParent->directChildren()->asArray()->all());
+            $siblingsCount = $newParent->directChildren() ? count($newParent->directChildren()->asArray()->all()): 0;
             $rubricator->order = $siblingsCount + 1;
             $rubricator->appendTo($newParent);
             $parentNode->reindexDirectChildren();
