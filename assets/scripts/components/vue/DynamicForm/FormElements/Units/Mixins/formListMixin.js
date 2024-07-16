@@ -52,7 +52,7 @@ export const formList = {
                     case constants.FORM_ADDRESS:
                         return !(item.country == '' && item.area == '' && item.city == '' && item.index == '' && item.address == '');
                     case constants.FORM_BADGE:
-                        return !(item.name == '' && item.middleName == '' && itemsurName == '' && company == '');
+                        return !(item.name == '' && item.middleName == '' && item.surName == '' && item.company == '');
                 }
                 return true;
             });
