@@ -27,6 +27,12 @@ class SpecialPriceController extends BaseAdminController
      */
     protected $service;
     
+    /**
+     *
+     * @var SpecialPriceReadRepository
+     */
+    protected $readRepository;    
+    
      public function __construct(
             $id, 
             $module, 
@@ -72,6 +78,19 @@ class SpecialPriceController extends BaseAdminController
         ]);                        
     } 
     
+    
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
+    
     /**
      * @param integer $id
      * @return mixed
@@ -84,5 +103,18 @@ class SpecialPriceController extends BaseAdminController
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
         return $this->refresh();
+    }
+
+    /**
+     * @param integer $id
+     * @return ActiveRecord the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = $this->readRepository->findById($id)) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }    
 }
