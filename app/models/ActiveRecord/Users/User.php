@@ -2,13 +2,17 @@
 
 namespace app\models\ActiveRecord\Users;
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\ActiveRecord\Users\Profile\DefaultProfile;
+use app\models\ActiveRecord\Users\Profile\MemberProfile;
 use app\models\ActiveRecord\Users\Profile\UserProfileInterface;
 use app\models\ActiveRecord\Users\queries\UserQuery;
+use app\models\Data\Operations;
 use app\models\TimestampTrait;
 use DateTime;
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -196,7 +200,7 @@ class User extends ActiveRecord
     {
         switch ($this->user_type_id) {
             case UserType::MEMBER_USER_ID:
-                $profile = new Profile\MemberProfile();
+                $profile = new MemberProfile();
                 break;
             default :
                 $profile = new DefaultProfile();
@@ -254,9 +258,108 @@ class User extends ActiveRecord
      * 
      * @return type
      */
-    public function getRole() : \yii\db\ActiveQuery
+    public function getRole() : ActiveQuery
     {
         return $this->hasOne(ManagerRoles::class, ['id' => 'role_id']);
     }
     
+    public function canOperation(string $entity, string $operation):bool
+    {        
+        if (RolesHelper::isAdmin()) {
+            return true;
+        }
+        if ($this->role && $this->user_type_id === UserType::MANAGER_USER_ID) {
+            switch ($entity) {
+                case Operations::ENTITY_DOCUMENT:
+                    return $this->canDocumentOperations($operation);
+                case Operations::ENTITY_CONTRACT:
+                    return $this->canContractOperations($operation);
+                case Operations::ENTITY_USER:
+                    return $this->canUserOperations($operation);
+                case Operations::ENTITY_COMPANY:
+                    return $this->canCompanyOperations($operation);
+                case Operations::ENTITY_RUBRICATOR:
+                    return $this->canRubricatorOperations($operation);
+                default :
+                    return false;
+            }
+        }
+    }    
+    
+    private function canDocumentOperations(string $operation) :bool
+    {
+        switch ($operation) {
+            case Operations::OP_VIEW:
+                return $this->role->d_view;
+            case Operations::OP_CREATE:
+                return $this->role->d_create;
+            case Operations::OP_EDIT:
+                return $this->role->d_edit;
+            case Operations::OP_DELETE:
+                return $this->role->d_delete;
+            default: 
+                return false;
+        }
+    }
+    private function canContractOperations(string $operation) :bool
+    {
+        switch ($operation) {
+            case Operations::OP_VIEW:
+                return $this->role->co_view;
+            case Operations::OP_CREATE:
+                return $this->role->co_create;
+            case Operations::OP_EDIT:
+                return $this->role->co_edit;
+            case Operations::OP_DELETE:
+                return $this->role->co_delete;
+            default: 
+                return false;
+        }
+    }
+    
+    private function canUserOperations(string $operation) :bool
+    {
+        switch ($operation) {
+            case Operations::OP_VIEW:
+                return $this->role->u_view;
+            case Operations::OP_CREATE:
+                return $this->role->u_create;
+            case Operations::OP_EDIT:
+                return $this->role->u_edit;
+            case Operations::OP_DELETE:
+                return $this->role->u_delete;
+            default: 
+                return false;
+        }
+    }
+    private function canCompanyOperations(string $operation) :bool
+    {
+        switch ($operation) {
+            case Operations::OP_VIEW:
+                return $this->role->c_view;
+            case Operations::OP_CREATE:
+                return $this->role->c_create;
+            case Operations::OP_EDIT:
+                return $this->role->c_edit;
+            case Operations::OP_DELETE:
+                return $this->role->c_delete;
+            default: 
+                return false;
+        }
+    }
+    private function canRubricatorOperations(string $operation) :bool
+    {
+        switch ($operation) {
+            case Operations::OP_VIEW:
+                return $this->role->r_view;
+            case Operations::OP_CREATE:
+                return $this->role->r_create;
+            case Operations::OP_EDIT:
+                return $this->role->r_edit;
+            case Operations::OP_DELETE:
+                return $this->role->r_delete;
+            default: 
+                return false;
+        }
+    }
 }

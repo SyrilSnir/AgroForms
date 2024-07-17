@@ -190,6 +190,48 @@ use yii\widgets\ActiveForm;
         </div>
         </div>
     </div>
+    <div class="card card-default">
+        <div class="card-header">
+            <h3><?= t('Rubricator management')?></h3>
+        </div>
+        <div class="card-body">
+    <?= $form->field($model, 'r_view')->widget(SwitchInput::class,[
+                'pluginOptions' => [
+                        'onText' => Yii::t('app', 'Yes'),
+                        'offText' => Yii::t('app', 'No'),
+                    ],
+                'pluginEvents' => [
+                    "init.bootstrapSwitch" => "function(e) { console.log('aaaa'); }",
+                    "switchChange.bootstrapSwitch" => 
+                    "function(e) { e.target.checked ? $('#r-rules-container').fadeIn() :
+                        $('#r-ules-container').fadeOut(); }",
+            ]
+            ]);  ?>
+    <div id="r-rules-container" <?php if (!$model->r_view): ?>style="display: none"<?php endif; ?>>
+    <?= $form->field($model, 'r_create')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => 'Да',
+                            'offText' => 'Нет',
+                        ]
+        ]); 
+        ?>                                
+    <?= $form->field($model, 'r_edit')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => 'Да',
+                            'offText' => 'Нет',
+                        ]
+        ]); 
+        ?>                                
+    <?= $form->field($model, 'r_delete')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => 'Да',
+                            'offText' => 'Нет',
+                        ]
+        ]); 
+        ?>         
+        </div>
+        </div>
+    </div>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>

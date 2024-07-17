@@ -3,10 +3,13 @@
 use app\core\helpers\Utils\DateHelper;
 use app\models\ActiveRecord\Document\Documents;
 use app\models\ActiveRecord\Exhibition\Exhibition;
+use app\models\ActiveRecord\Users\User;
+use app\models\ActiveRecord\Users\UserType;
+use app\models\Data\Operations;
 use app\models\SearchModels\Exhibition\ExhibitionSearch;
+use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
-use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -14,11 +17,25 @@ use yii\web\View;
 /* @var $this View */
 /* @var $searchModel ExhibitionSearch */
 /* @var $dataProvider ActiveDataProvider */
+/** @var User $user */
 
 $this->title = Yii::t('app/title','List of documents');
 $this->params['breadcrumbs'][] = $this->title;
 $action = Yii::$app->getRequest()->getPathInfo();
+$user = Yii::$app->user->getIdentity()->getUser();
 $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+
+$actionColumn = [ 
+    'class' => ActionColumn::class 
+        ];
+if ($user->user_type_id === UserType::MANAGER_USER_ID && $user->role) {
+    $actionColumn['visibleButtons'] = [
+        'view' => $user->canOperation(Operations::ENTITY_DOCUMENT, Operations::OP_VIEW),
+        'update' => $user->canOperation(Operations::ENTITY_DOCUMENT, Operations::OP_EDIT),
+        'delete' => $user->canOperation(Operations::ENTITY_DOCUMENT, Operations::OP_DELETE),
+    ];
+}
+
 $columnsConfig = [
                     'toolbar' => [
                         [
@@ -72,7 +89,7 @@ $columnsConfig = [
                             }
                             
                         ],
-                        ['class' => ActionColumn::class],
+                        $actionColumn,
                     ], 
                     'options' => [
                         'data' => [

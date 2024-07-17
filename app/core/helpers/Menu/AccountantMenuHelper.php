@@ -2,6 +2,7 @@
 
 namespace app\core\helpers\Menu;
 
+use app\core\helpers\Utils\users\RolesHelper;
 use Yii;
 
 /**
@@ -13,6 +14,7 @@ class AccountantMenuHelper implements MenuHelperInterface
 {
     public static function getMenu($params = []): array
     {
+        $user = RolesHelper::getUser();
         return [     
             'items' => [
                 [

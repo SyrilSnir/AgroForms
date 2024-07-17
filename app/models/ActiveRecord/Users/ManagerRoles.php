@@ -30,6 +30,10 @@ use yii\db\ActiveRecord;
  * @property boolean $co_create Создание договоров
  * @property boolean $co_edit Редактирование договоров
  * @property boolean $co_delete Удаление договоров
+ * @property boolean $r_view Просмотр рубрикатора
+ * @property boolean $r_create Создание раздела рубрикатора
+ * @property boolean $r_edit Редактирование раздела рубрикатора
+ * @property boolean $r_delete Удаление раздела рубрикатора
  *  
  * @property ManagerRoleRules[] $managerRoleRules
  */
@@ -54,6 +58,7 @@ class ManagerRoles extends ActiveRecord
         $model->u_view = $form->u_view;        
         $model->c_view = $form->c_view;
         $model->d_view = $form->d_view;
+        $model->r_view = $form->r_view;
         $model->co_view = $form->co_view;
         if ($model->u_view) {
             $model->u_create = $form->u_create;
@@ -82,6 +87,15 @@ class ManagerRoles extends ActiveRecord
             $model->d_edit = false;
             $model->d_delete = false;            
         }
+        if ($model->r_view) {
+            $model->r_create = $form->r_create;
+            $model->r_edit = $form->r_edit;
+            $model->r_delete = $form->r_delete;            
+        } else {
+            $model->r_create = false;
+            $model->r_edit = false;
+            $model->r_delete = false;            
+        }
         if ($model->co_view) {
             $model->co_create = $form->co_create;
             $model->co_edit = $form->co_edit;
@@ -103,6 +117,7 @@ class ManagerRoles extends ActiveRecord
         $this->c_view = $form->c_view;
         $this->d_view = $form->d_view;
         $this->co_view = $form->co_view;
+        $this->r_view = $form->r_view;
         if ($this->u_view) {
             $this->u_create = $form->u_create;
             $this->u_edit = $form->u_edit;
@@ -130,6 +145,15 @@ class ManagerRoles extends ActiveRecord
             $this->d_edit = false;
             $this->d_delete = false;            
         }
+        if ($this->r_view) {
+            $this->r_create = $form->r_create;
+            $this->r_edit = $form->r_edit;
+            $this->r_delete = $form->r_delete;            
+        } else {
+            $this->r_create = false;
+            $this->r_edit = false;
+            $this->r_delete = false;            
+        }
         if ($this->co_view) {
             $this->co_create = $form->co_create;
             $this->co_edit = $form->co_edit;
@@ -155,6 +179,7 @@ class ManagerRoles extends ActiveRecord
                 'u_view','u_create','u_edit','u_delete',
                 'c_view','c_create','c_edit','c_delete',
                 'd_view','d_create','d_edit','d_delete',
+                'r_view','r_create','r_edit','r_delete',
                 'co_view','co_create','co_edit','co_delete',
               ],'boolean'],            
         ];

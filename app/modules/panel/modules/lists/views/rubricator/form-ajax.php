@@ -1,9 +1,12 @@
 <?php
 
 use app\core\helpers\Data\RubricatorHelper;
+use app\core\helpers\Utils\users\RolesHelper;
 use app\models\ActiveRecord\Nomenclature\Rubricator;
+use app\models\Data\Operations;
 use app\models\Forms\Nomenclature\RubricatorForm;
 use kartik\select2\Select2;
+use kartik\switchinput\SwitchInput;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -14,6 +17,13 @@ use yii\widgets\ActiveForm;
 /** @var ActiveForm $form */
 /** @var RubricatorForm $model */
 /** @var bool $isUpdate */
+$user = RolesHelper::getUser();
+$showAgrocomponent = true;
+if($isUpdate) {
+    $rubricator = Rubricator::findOne($model->id);
+    $showAgrocomponent = $rubricator->isLeaf();
+}
+    
 ?>
 <div class="card card-default">
     <div class="card-header">
@@ -31,18 +41,26 @@ use yii\widgets\ActiveForm;
     <?php if($model->id != 1): ?>
     <?= $form->field($model, 'parentId')->widget(Select2::class,[
         'data' => RubricatorHelper::getHierarchicalList()
-            ]) ?>
-    <?php endif; ?>                
+            ]) ?>        
+    <?php endif; ?> 
+    <?php if($showAgrocomponent): ?>
+    <?= $form->field($model, 'isAgrocomponent')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => 'Да',
+                            'offText' => 'Нет',
+                        ]
+        ]); 
+    ?>         
+    <?php endif ; ?>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
-        <?php if($isUpdate): ?>
-            <?php 
-                $rubricator = Rubricator::findOne($model->id);
+        <?php if($isUpdate):
                 $messageText = $rubricator->isLeaf() ? 
                         t('Are you sure you want to delete the section?') : 
                         t('Are you sure you want to delete the section with all child subsections?')
             
             ?>
+    <?php if ($user->canOperation(Operations::ENTITY_RUBRICATOR, Operations::OP_DELETE)): ?>
         <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -50,6 +68,7 @@ use yii\widgets\ActiveForm;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php endif; ?>
         <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
         <?php endif; ?>
     </div>

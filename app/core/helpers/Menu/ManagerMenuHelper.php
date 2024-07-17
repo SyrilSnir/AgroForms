@@ -2,6 +2,8 @@
 
 namespace app\core\helpers\Menu;
 
+use app\models\ActiveRecord\Users\User;
+use app\models\Data\Operations;
 use Yii;
 
 /**
@@ -13,8 +15,29 @@ class ManagerMenuHelper implements MenuHelperInterface
 {
     public static function getMenu($params = []): array
     {
+        /** @var User $user */
+        $user = Yii::$app->user->getIdentity()->getUser();
+                
+        $items = [];
+        
+        if ($user->canOperation(Operations::ENTITY_DOCUMENT, Operations::OP_VIEW)) {
+            $items[] = [
+                    'label' => Yii::t('app/menu', 'Documents'),
+                    'icon' => 'file',
+                    'url' => ['/panel/documents']
+                ];
+        }
+        if ($user->canOperation(Operations::ENTITY_RUBRICATOR, Operations::OP_VIEW)) {
+            $items[] = ['label' => Yii::t('app/menu', 'Rubricator'), 'icon' => 'icon-cats', 'url' => ['/panel/lists/rubricator']];
+        }
+        
+        
         return [
-                'items' => [
+                'items' => $items
+            ];
+    }
+    /*
+[
                     [
                         'label' => Yii::t('app/menu', 'Users and companies'),
                         'icon' => 'icon-users-companies',
@@ -31,8 +54,6 @@ class ManagerMenuHelper implements MenuHelperInterface
                     [
                         'label' => Yii::t('app/menu', 'Viewing requests'), 'icon' => 'icon-requests', 'url' => ['/panel/requests'],
                     ]
-                ]
-            ];
-    }
-
+                ]    
+     */
 }

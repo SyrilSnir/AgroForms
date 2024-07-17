@@ -38,7 +38,7 @@ $action = ($update) ? Url::to(['/panel/users/update', 'id' => $model->userId ]) 
                             
     <?php if ($update): ?>                        
         <?= $form->field($model, 'userType')->dropDownList($model->typeList()) ?> 
-                            <div id="roles-list"<?php if ($model->userType != UserType::MANAGER_USER_ID):?> class="hide"<?php endif; ?>>
+<div id="roles-list"<?php if ($model->userType != UserType::MANAGER_USER_ID):?> class="hide"<?php endif; ?>>
     <?= $form->field($model, 'role')->widget(Select2::class,[
         'data' => $model->rolesList(),
         'options' => ['placeholder' => t('Select a role')],

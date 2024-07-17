@@ -1,7 +1,8 @@
 <?php
 
-use app\core\helpers\View\Contract\ContractStatusHelper;
+use app\core\helpers\Utils\users\RolesHelper;
 use app\models\ActiveRecord\Document\Documents;
+use app\models\Data\Operations;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
@@ -12,10 +13,14 @@ use yii\widgets\DetailView;
 /* @var $modificationsProvider ActiveDataProvider */
 
 $this->title = t('Document') . ' № ' .$model->id;
+$user = RolesHelper::getUser();
 ?>
 <div class="category-view">
     <p>
+        <?php if ($user->canOperation(Operations::ENTITY_DOCUMENT, Operations::OP_EDIT)): ?>
         <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php endif; ?>
+        <?php if ($user->canOperation(Operations::ENTITY_DOCUMENT, Operations::OP_DELETE)): ?>
         <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -23,9 +28,9 @@ $this->title = t('Document') . ' № ' .$model->id;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php endif; ?>
         <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
-</div>
 <div class="card">
     <div class="card-body">
         <?= DetailView::widget([
@@ -45,5 +50,6 @@ $this->title = t('Document') . ' № ' .$model->id;
             ],
         ]); ?>
     </div>
+</div>
 </div>
 

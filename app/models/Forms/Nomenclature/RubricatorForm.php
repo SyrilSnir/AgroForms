@@ -23,7 +23,10 @@ class RubricatorForm extends ManageForm
     public $name;
     
     public $nameEng;
-        
+    
+    public $isAgrocomponent;
+
+
     public function __construct(Rubricator $rubricator = null, $config = [])
     {
         parent::__construct($config);
@@ -33,6 +36,7 @@ class RubricatorForm extends ManageForm
             $this->nameEng = $rubricator->nameEng;
             $this->parentId = $rubricator->parent ? $rubricator->parent->id: null;
             $this->id = $rubricator->id;
+            $this->isAgrocomponent = $rubricator->is_agrocomponent;
         }
     }
     
@@ -43,6 +47,7 @@ class RubricatorForm extends ManageForm
     {
         return [
             [['parentId'], 'integer'],
+            [['isAgrocomponent'], 'boolean'],
             [['name','nameEng'], 'string'],
             [['name','nameEng'], 'required'],
         ];
@@ -54,6 +59,7 @@ class RubricatorForm extends ManageForm
             'name' => Yii::t('app','Name'),
             'nameEng' => Yii::t('app','Name') . ' (ENG)',
             'parentId' => Yii::t('app','Parent section'),
+            'isAgrocomponent' => Yii::t('app','Agrocomponent')
             
         ];        
     }    

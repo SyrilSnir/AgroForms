@@ -1,6 +1,8 @@
 <?php
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\models\ActiveRecord\Nomenclature\Rubricator;
+use app\models\Data\Operations;
 use app\models\SearchModels\Nomenclature\RubricatorSearch;
 use wbraganca\fancytree\FancytreeWidget;
 use yii\data\ActiveDataProvider;
@@ -15,12 +17,15 @@ use yii\web\View;
 /* @var $dataProvider ActiveDataProvider */
 $tree = Rubricator::findOne(1)->sortedTree($showAll);
 //$tree = Rubricator::findOne(1)->tree();
+
+$user = RolesHelper::getUser();
 ?>
 <div class="col-md-6">            
     <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title"><?= t('Rubricator', 'title') ?></h3>
             <div class="buttons__wrappper">
+                <?php if ($user->canOperation(Operations::ENTITY_RUBRICATOR, Operations::OP_CREATE)):?>
             <?php 
     echo Html::button(t('New section'),[
                                     'class' => 'btn btn-sm btn-success',
@@ -30,7 +35,7 @@ $tree = Rubricator::findOne(1)->sortedTree($showAll);
                         }); 
                     })();'
                                 ]);            
-            ?>
+            ?><?php endif; ?>
                 <?php if ($showAll) :?>
 <a class="btn btn-sm btn-outline-secondary" href="/panel/lists/rubricator/index" title="<?php echo t('Hide deleted sections')?>"><i class="fas fa-trash-alt" aria-hidden="true"></i></a>
                 <?php else:  ?>

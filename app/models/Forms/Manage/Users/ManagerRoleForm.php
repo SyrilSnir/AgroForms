@@ -31,6 +31,11 @@ class ManagerRoleForm extends ManageForm
     public $d_edit;
     public $d_delete;
     
+    public $r_view;
+    public $r_create;
+    public $r_edit;
+    public $r_delete;
+    
     public $co_view;
     public $co_create;
     public $co_edit;
@@ -46,6 +51,7 @@ class ManagerRoleForm extends ManageForm
             $this->d_view = $model->d_view;
             $this->c_view = $model->c_view;
             $this->co_view = $model->co_view;
+            $this->r_view = $model->r_view;
             if ($model->u_view) {
                 $this->u_create = $model->u_create;
                 $this->u_edit = $model->u_edit;
@@ -60,6 +66,11 @@ class ManagerRoleForm extends ManageForm
                 $this->d_create = $model->d_create;
                 $this->d_edit = $model->d_edit;
                 $this->d_delete = $model->d_delete;
+            }
+            if ($model->r_view) {
+                $this->r_create = $model->r_create;
+                $this->r_edit = $model->r_edit;
+                $this->r_delete = $model->r_delete;
             }
             if ($model->co_view) {
                 $this->co_create = $model->co_create;
@@ -78,6 +89,7 @@ class ManagerRoleForm extends ManageForm
                 'u_view','u_create','u_edit','u_delete',
                 'c_view','c_create','c_edit','c_delete',
                 'd_view','d_create','d_edit','d_delete',
+                'r_view','r_create','r_edit','r_delete',
                 'co_view','co_create','co_edit','co_delete',
               ],'boolean'],
         ];
@@ -104,8 +116,10 @@ class ManagerRoleForm extends ManageForm
             'co_create' => t('Creating a contract'),
             'co_edit' => t('Editing a contract'),
             'co_delete' => t('Deleting a contract'),
+            'r_view' => t('View the rubricator'),
+            'r_create' => t('Creating a rubricator section'),
+            'r_edit' => t('Editing a rubricator section'),
+            'r_delete' => t('Deleting a rubricator section'),            
         ];
-    }
-        
-        
+    }                
 }

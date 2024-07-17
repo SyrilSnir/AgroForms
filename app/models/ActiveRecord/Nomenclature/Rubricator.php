@@ -20,7 +20,8 @@ use yii\db\ActiveRecord;
  * @property int $rgt
  * @property int $order
  * @property int $depth
- * @property bool $deleted
+ * @property bool $
+ * @property bool $is_agrocomponent
  * @property Rubricator $parent
  * @property Rubricator[] $siblings все соседние элементы, включая самого себя
  * 
@@ -53,12 +54,13 @@ class Rubricator extends ActiveRecord
      * @param string $name
      * @param string $nameEng
      */
-    public static function createRootNode(string $name,string $nameEng = ''): self
+    public static function createRootNode(string $name,string $nameEng = '', bool $isAgrocomponent = false): self
     {
         $model = new self();
         $model->name = $name;
         $model->nameEng = $nameEng;
         $model->order = 1;
+        $model->is_agrocomponent = $isAgrocomponent;
         $model->makeRoot();
         return $model;
                 
@@ -69,12 +71,13 @@ class Rubricator extends ActiveRecord
      * @param string $name
      * @param string $nameEng
      */
-    public static function createAnyNode(string $name,string $nameEng = '', int $order = 1): self
+    public static function createAnyNode(string $name,string $nameEng = '', int $order = 1, bool $isAgrocomponent = false): self
     {
         $model = new self();
         $model->name = $name;
         $model->nameEng = $nameEng;
-        $model->order = $order;        
+        $model->order = $order;    
+        $model->is_agrocomponent = $isAgrocomponent;
         return $model;                
     }  
     
@@ -91,6 +94,7 @@ class Rubricator extends ActiveRecord
     {
         $this->name = $form->name;
         $this->nameEng = $form->nameEng;
+        $this->is_agrocomponent = $form->isAgrocomponent;
     }
 
     public function behaviors() {
