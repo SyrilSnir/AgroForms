@@ -284,8 +284,16 @@ class User extends ActiveRecord
                     return false;
             }
         }
-    }    
+    } 
     
+    public function canRequestAccess() :bool
+    {
+        if (!$this->role) {
+            return false;
+        }
+        return $this->role->hasRequests();
+    }
+
     private function canDocumentOperations(string $operation) :bool
     {
         switch ($operation) {

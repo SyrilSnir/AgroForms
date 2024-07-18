@@ -184,7 +184,17 @@ class ManagerRoles extends ActiveRecord
               ],'boolean'],            
         ];
     }
-
+    
+    public function hasRequests(): bool
+    {
+        foreach ($this->managerRoleRules as $rule) {
+            if ($rule->r_view) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /**
      * Gets query for [[ManagerRoleRules]].
      *
