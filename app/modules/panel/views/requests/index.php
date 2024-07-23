@@ -214,14 +214,16 @@ $actionColumnsConfig = [
                             },   
                             'reject' => function ($model) {
                                 /** @var Request $model */
-                                return ($model->status === BaseRequest::STATUS_NEW || 
-                                        $model->status === BaseRequest::STATUS_CHANGED) &&
-                                        !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
+                                if (!($model->status === BaseRequest::STATUS_NEW || 
+                                        $model->status === BaseRequest::STATUS_CHANGED)) {
+                                    return false;
+                                }
+                                return $model->canAccept();
                             },
                             'update' => false,
                             'delete' => function ($model) {
                                 /** @var Request $model */
-                                return $model->canAccept();
+                                return $model->canDelete();
                             }
                         ]                        
                     ];
