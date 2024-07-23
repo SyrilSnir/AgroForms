@@ -2,6 +2,7 @@
 
 namespace app\models\ActiveRecord\Requests;
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\core\helpers\View\Request\RequestStatusHelper;
 use app\core\repositories\readModels\Requests\ApplicationReadRepository;
 use app\core\repositories\readModels\Requests\RequestStandReadRepository;
@@ -342,5 +343,85 @@ class Request extends FormManipulation
     {
         $statusList = RequestStatusHelper::statusList();
         return $statusList[$this->status];
+    }
+    
+    public function canPay(): bool 
+    {
+        if (RolesHelper::isAdmin()) {
+            return true;
+        }        
+        $user = RolesHelper::getUser();
+        if (!$user->canRequestAccess()) {
+            return false;
+        }
+        foreach($user->role->managerRoleRules as $rule) {
+            if (!$rule->exhibition_id && !$rule->form_id) {
+                return $rule->r_pay;
+            }
+            if ($rule->form_id === $this->form_id) {
+                return $rule->r_pay;
+            }
+            return false;
+        }
+    }
+    
+    public function canAccept(): bool 
+    {
+        if (RolesHelper::isAdmin()) {
+            return true;
+        }        
+        $user = RolesHelper::getUser();
+        if (!$user->canRequestAccess()) {
+            return false;
+        }
+        foreach($user->role->managerRoleRules as $rule) {
+            if (!$rule->exhibition_id && !$rule->form_id) {
+                return $rule->r_accept;
+            }
+            if ($rule->form_id === $this->form_id) {
+                return $rule->r_accept;
+            }
+            return false;
+        }
+    }
+    
+    public function canPublicate(): bool 
+    {
+        if (RolesHelper::isAdmin()) {
+            return true;
+        }        
+        $user = RolesHelper::getUser();
+        if (!$user->canRequestAccess()) {
+            return false;
+        }
+        foreach($user->role->managerRoleRules as $rule) {
+            if (!$rule->exhibition_id && !$rule->form_id) {
+                return $rule->r_publicate;
+            }
+            if ($rule->form_id === $this->form_id) {
+                return $rule->r_publicate;
+            }
+            return false;
+        }
+    }
+    
+    public function canDelete(): bool 
+    {
+        if (RolesHelper::isAdmin()) {
+            return true;
+        }        
+        $user = RolesHelper::getUser();
+        if (!$user->canRequestAccess()) {
+            return false;
+        }
+        foreach($user->role->managerRoleRules as $rule) {
+            if (!$rule->exhibition_id && !$rule->form_id) {
+                return $rule->r_delete;
+            }
+            if ($rule->form_id === $this->form_id) {
+                return $rule->r_delete;
+            }
+            return false;
+        }
     }
 }

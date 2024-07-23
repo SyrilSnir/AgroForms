@@ -1,18 +1,24 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
 use app\models\ActiveRecord\Geografy\City;
+use app\models\Data\Operations;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use yii\web\View;
+use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $model City */
-/* @var $modificationsProvider yii\data\ActiveDataProvider */
+/* @var $modificationsProvider ActiveDataProvider */
 
 $this->title = $model->name;
 ?>
 <div class="city-view">
     <p>
+        <?php if ($user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_EDIT)): ?>
         <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php endif; ?>
+        <?php if ($user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_DELETE)): ?>
         <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -20,6 +26,7 @@ $this->title = $model->name;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php endif; ?>
         <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
     </p>
     <div class="card">

@@ -26,5 +26,5 @@ class RolesHelper
     public static function isAdmin() :bool 
     {
         return self::getUser()->user_type_id === UserType::ROOT_USER_ID;
-    }
+    }    
 }

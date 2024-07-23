@@ -77,6 +77,26 @@ class UsersController extends BaseManagerController
             'update' => false
         ]);
     } 
+    
+    public function actionUpdate($id) 
+    {
+        /** @var User $model */
+        $this->viewPath = Yii::getAlias('@modules') .
+                DIRECTORY_SEPARATOR .'panel' .
+                DIRECTORY_SEPARATOR .'views' . DIRECTORY_SEPARATOR . 'users';        
+        $model = $this->findModel($id);
+        $form = new MemberForm($model); 
+        $form->setScenario(MemberForm::SCENARIO_UPDATE);        
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $this->service->edit($id, $form);
+            return $this->redirect(['view', 'id' => $model->id]);                        
+        }        
+        
+        return $this->render('create-member',[
+            'model' => $form,
+            'update' => true
+                ]);
+    }    
 
     public function actionInvite($id)
     {

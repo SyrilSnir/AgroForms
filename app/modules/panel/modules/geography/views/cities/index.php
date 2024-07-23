@@ -1,29 +1,40 @@
 <?php
-use yii\grid\ActionColumn;
-use yii\helpers\Html;
-use kartik\grid\GridView;
-use app\models\SearchModels\Geography\CitySearch;
 
-/* @var $this yii\web\View */
+use app\core\helpers\Utils\users\RolesHelper;
+use app\models\Data\Operations;
+use app\models\SearchModels\Geography\CitySearch;
+use kartik\grid\GridView;
+use yii\data\ActiveDataProvider;
+use kartik\grid\ActionColumn;
+use yii\helpers\Html;
+use yii\web\View;
+
+/* @var $this View */
 /* @var $searchModel CitySearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $dataProvider ActiveDataProvider */
 
 ?>
 <section class="content">
     <div class="card">
 <?php 
     $this->title = Yii::t('app/title','Directory of cities');
+    $user = RolesHelper::getUser();
     $action = Yii::$app->getRequest()->getPathInfo();
     $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
     $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';  
+    
+    $toolbarContent = $rowsCountTemplate;
+    if ($user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_CREATE)) {
+        $toolbarContent .= Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app', 'Add city'),
+                                ]);
+    }
     $columnsConfig = [
                     'toolbar' => [
                         [
-                            'content'=> $rowsCountTemplate .
-                                Html::a('<i class="fas fa-plus"></i>',['create'], [
-                                    'class' => 'btn btn-sm btn-success',
-                                    'title' => Yii::t('app', 'Add city'),
-                                ])                            
+                            'content'=> $toolbarContent
+                            
                         ],
                     ],      
                     'dataProvider' => $dataProvider,
@@ -54,7 +65,14 @@ use app\models\SearchModels\Geography\CitySearch;
                             ],
                             'value' => 'country.name'
                         ],
-                        ['class' => ActionColumn::class],
+                        [
+                            'class' => ActionColumn::class,
+                            'visibleButtons' => [
+                                'delete' => $user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_DELETE),
+                                'updete' => $user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_EDIT),
+                                
+                            ]
+                        ],
                     ],        
         ];
     $fullGridConfig = array_merge($columnsConfig,$gridConfig);    

@@ -54,7 +54,15 @@ class ManagerMenuHelper implements MenuHelperInterface
             $items[] = ['label' => Yii::t('app/menu', 'Rubricator'), 'icon' => 'icon-cats', 'url' => ['/panel/lists/rubricator']];
         }
         if ($user->canRequestAccess()) {
-            $items[] = ['label' => Yii::t('app/menu', 'Viewing requests'), 'icon' => 'icon-requests', 'url' => ['/panel/requests']];
+            $items[] = [
+                            'label' => Yii::t('app/menu', 'Request management'),
+                            'icon' => 'arrow-right',
+                            'items' => [
+                                ['label' => Yii::t('app/menu', 'New applications'), 'icon' => 'icon-requests', 'url' => ['/panel/requests/new'],],
+                                ['label' => Yii::t('app/menu', 'Accepted applications'), 'icon' => 'icon-requests', 'url' => ['/panel/requests/accepted'],],
+                                ['label' => Yii::t('app/menu', 'Rejected applications'), 'icon' => 'icon-requests', 'url' => ['/panel/requests/rejected'],],
+                            ]   
+                        ];
         }
         
         return [

@@ -68,12 +68,12 @@ class Catalog extends ActiveRecord
         $model = new self();
         $model->exhibition_id = $form->exhibitionId;
         $model->request_id = $form->requestId;
-        $model->company = $form->company;
-        $model->company_eng = $form->companyEng;
-        $model->description = $form->description;
-        $model->description_eng = $form->descriptionEng;
-        $model->_oldFilePath = $form->logoFile;        
-        $model->logo_file = basename($form->logoFile);
+        $model->company = trim($form->company);
+        $model->company_eng = trim($form->companyEng);
+        $model->description = trim($form->description);
+        $model->description_eng = trim($form->descriptionEng);
+        $model->_oldFilePath = trim($form->logoFile);
+        $model->logo_file = basename($model->_oldFilePath);
         $model->countries = array_unique(ArrayHelper::merge($form->country, $form->countryEng));
         $model->rubrics = $form->rubricatorIds;
         $model->stand = $form->stand;
@@ -84,10 +84,10 @@ class Catalog extends ActiveRecord
     {        
         $this->exhibition_id = $form->exhibitionId;
         $this->request_id = $form->requestId;
-        $this->company = $form->company;
-        $this->company_eng = $form->companyEng;
-        $this->description = $form->description;
-        $this->description_eng = $form->descriptionEng;
+        $this->company = trim($form->company);
+        $this->company_eng = trim($form->companyEng);
+        $this->description = trim($form->description);
+        $this->description_eng = trim($form->descriptionEng);
         $this->country = $form->country;
         $this->country_eng = $form->countryEng;
         $this->stand = $form->stand;

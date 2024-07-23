@@ -1,8 +1,10 @@
 <?php
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\core\helpers\View\User\UserStatusHelper;
 use app\models\ActiveRecord\Users\User;
 use app\models\ActiveRecord\Users\UserType;
+use app\models\Data\Operations;
 use app\models\Forms\User\Manage\ActivateForm;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
@@ -16,6 +18,7 @@ use yii\widgets\DetailView;
 /* @var $model User */
 /* @var $modificationsProvider ActiveDataProvider */
 
+$user = RolesHelper::getUser();
 $this->title = $model->login;
 
 $attributes = [
@@ -45,8 +48,20 @@ switch ($model->user_type_id) {
 ?>
 <div class="full-view">
     <p>
-        <?php //Html::a(t('Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php if ($user->canOperation(Operations::ENTITY_USER, Operations::OP_EDIT)): ?>
+        <?= Html::a(t('Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php endif; ?>
+        <?php if ($user->canOperation(Operations::ENTITY_USER, Operations::OP_DELETE)): ?>
+        <?= Html::a(t('Delete'), ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => t('Are you sure you want to delete the user?'),
+                'method' => 'post',
+            ],
+        ]) ?>  
+        <?php endif; ?>
         <?= Html::a(t('Back'), ['index'], ['class' => 'btn btn-secondary']) ?>
+        
     </p>
     <div class="row">
         <div class="col-md-6">

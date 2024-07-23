@@ -53,7 +53,11 @@ if($isUpdate) {
     ?>         
     <?php endif ; ?>
     <div class="form-group">
+    <?php if ( ($isUpdate && $user->canOperation(Operations::ENTITY_RUBRICATOR, Operations::OP_EDIT)) || 
+    (!$isUpdate && $user->canOperation(Operations::ENTITY_RUBRICATOR, Operations::OP_CREATE))): ?>
         <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
+    <?php endif; ?>
         <?php if($isUpdate):
                 $messageText = $rubricator->isLeaf() ? 
                         t('Are you sure you want to delete the section?') : 
@@ -69,7 +73,6 @@ if($isUpdate) {
             ],
         ]) ?>
         <?php endif; ?>
-        <?= Html::a(Yii::t('app','Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
         <?php endif; ?>
     </div>
 

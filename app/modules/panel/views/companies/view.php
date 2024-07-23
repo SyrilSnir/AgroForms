@@ -1,6 +1,8 @@
 <?php
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\models\ActiveRecord\Companies\Company;
+use app\models\Data\Operations;
 use kartik\detail\DetailView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -12,16 +14,19 @@ use yii\web\View;
 /* @var $modificationsProvider ActiveDataProvider */
 
 $this->title = Yii::t('app/title','Company info') . ': ' . $model->name;
+$user = RolesHelper::getUser();
 ?>
 <div class="category-view">
     <p>
+    <?php if ($user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_EDIT)) : ?>
     <?= Html::a(Yii::t('app','Change'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-    <?php if (!$model->member): ?>
+    <?php endif ;?>
+    <?php if (!$model->member && $user->canOperation(Operations::ENTITY_USER, Operations::OP_CREATE)): ?>
         <?= Html::a(Yii::t('app/user','Create new member'), ['add-member', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     <?php endif; ?>
-    <?php if (!$model->isBlocked()):?>
+    <?php if (!$model->isBlocked() && $user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_DELETE)):?>
         <?= Html::a(Yii::t('app/company','Block company'), ['block', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
-    <?php else: ?>
+    <?php elseif ($user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_DELETE)): ?>
         <?= Html::a(Yii::t('app/company','Unblock company'), ['unblock', 'id' => $model->id], ['class' => 'btn btn-default']) ?>        
     <?php endif; ?>
         <?= Html::a(Yii::t('app','Back'), ['index'], ['class' => 'btn btn-secondary']) ?>

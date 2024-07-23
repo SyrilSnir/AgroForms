@@ -1,5 +1,7 @@
 <?php
 
+use app\core\helpers\Utils\users\RolesHelper;
+use app\models\Data\Operations;
 use app\models\SearchModels\Geography\RegionSearch;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -12,17 +14,21 @@ use yii\web\View;
 /* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app/title', 'Directory of regions');
+$user = RolesHelper::getUser();
 $this->params['breadcrumbs'][] = $this->title;
 $action = Yii::$app->getRequest()->getPathInfo();
 $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+$toolbarContent = $rowsCountTemplate;
+if ($user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_CREATE)) {
+    $toolbarContent .= Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                'class' => 'btn btn-sm btn-success',
+                                'title' => Yii::t('app/title', 'Add region'),
+                            ]);
+}
 $columnsConfig = [
                     'toolbar' => [
                         [
-                            'content'=> $rowsCountTemplate .
-                                Html::a('<i class="fas fa-plus"></i>',['create'], [
-                                    'class' => 'btn btn-sm btn-success',
-                                    'title' => Yii::t('app/company', 'Add company'),
-                                ])                            
+                            'content'=> $toolbarContent
                         ],
                     ],
                     'dataProvider' => $dataProvider,
@@ -41,7 +47,14 @@ $columnsConfig = [
                             ],
                             'value' => 'country.name'
                         ],
-                        ['class' => ActionColumn::class],
+                        [
+                            'class' => ActionColumn::class,
+                            'visibleButtons' => [
+                                'delete' => $user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_DELETE),
+                                'updete' => $user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_EDIT),
+                                
+                            ]
+                        ],                        
                     ],    
     ];
 $gridConfig = require Yii::getAlias('@config') . DIRECTORY_SEPARATOR . 'kartik.gridview.php';

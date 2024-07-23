@@ -1,7 +1,9 @@
 <?php
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\models\ActiveRecord\Companies\Company;
 use app\models\SearchModels\Companies\CompanySearch;
+use app\models\Data\Operations;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -15,22 +17,26 @@ use yii\web\View;
 
 $this->title = Yii::t('app/company','Directory of companies');
 $this->params['breadcrumbs'][] = $this->title;
+$user = RolesHelper::getUser();
 $action = Yii::$app->getRequest()->getPathInfo();
 $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
-$columnsConfig = [
-                    'toolbar' => [
-                        [
-                            'content'=> $rowsCountTemplate .
+$toolbarContent = $rowsCountTemplate .
                                 Html::a('<i class="fas fa-redo"></i>', [''], [
                                     'class' => 'btn btn-outline-secondary',
                                     'title'=>t('Default sort'),
                                     'data-pjax'=> '', 
-                                ]) .                            
-                                Html::a('<i class="fas fa-plus"></i>',['create'], [
+                                ]);
+if ($user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_CREATE)) {
+    $toolbarContent .=  Html::a('<i class="fas fa-plus"></i>',['create'], [
                                     'class' => 'btn btn-success',
                                     'title' => Yii::t('app/company', 'Add company'),
-                                ])                            
-                        ],
+                                ]);
+}
+$columnsConfig = [
+                    'toolbar' => [
+                        [
+                            'content'=>  $toolbarContent                           
+                        ]
                     ],      
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
@@ -100,10 +106,13 @@ $columnsConfig = [
                                 
                             'visibleButtons' => [
                                 'delete' => Yii::$app->user->can('adminMenu'),
-                                'member' => function ($model) {
+                                'block' => $user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_DELETE),
+                                'update' => $user->canOperation(Operations::ENTITY_COMPANY, Operations::OP_EDIT),
+                                'member' => function ($model) use ($user) {
                                     /** @var Company $model */                                    
-                                    return !$model->member;
+                                    return !$model->member && $user->canOperation(Operations::ENTITY_USER, Operations::OP_CREATE);
                                 },
+                                        
                             ]                            
                         ],
                     ],

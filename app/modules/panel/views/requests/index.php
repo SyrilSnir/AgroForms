@@ -5,7 +5,9 @@ use app\core\helpers\View\Request\RequestStatusHelper;
 use app\core\manage\Auth\Rbac;
 use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
+use app\models\SearchModels\Requests\AcceptedRequestSearch;
 use app\models\SearchModels\Requests\NewRequestSearch;
+use app\models\SearchModels\Requests\RejectedRequestSearch;
 use app\models\SearchModels\Requests\RequestSearch;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
@@ -35,7 +37,7 @@ $requestsTypes = $searchModel::class;
 if ($requestsTypes === NewRequestSearch::class) {
     $requestStatusList = RequestStatusHelper::newRequestsStatusList();
 }
- elseif ($requestsTypes === \app\models\SearchModels\Requests\AcceptedRequestSearch::class) {
+ elseif ($requestsTypes === AcceptedRequestSearch::class) {
     $requestStatusList = RequestStatusHelper::acceptedRequestsStatusList();
 } else {
     $requestStatusList = RequestStatusHelper::statusList(false);
@@ -166,38 +168,60 @@ $actionColumnsConfig = [
                             },
                         ],
                         'visibleButtons' => [
-                            'change' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),
+                            'change' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),                            
+                            'withdraw' => function($model) {
+                                /** @var Request $model */
+                                if (!$model->status === BaseRequest::STATUS_PAID) {
+                                    return false;
+                                }                                
+                                return $model->canPublicate();
+                            },
                             'paid' => function($model) {
                                 /** @var Request $model */
+                                if (!$model->status === BaseRequest::STATUS_INVOICED) {
+                                    return false;
+                                }                                
+                                return $model->canPay();
+                                 /* 
                                 return (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
                                         Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)) &&
                                         ($model->status === BaseRequest::STATUS_INVOICED ||
                                         $model->status === BaseRequest::STATUS_PARTIAL_PAID);
+                                 * *
+                                 */
                             },
                             'partial_paid' => function($model) {
                                 /** @var Request $model */
-                                return (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
+                                /*return (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
                                         Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)) &&
-                                        $model->status === BaseRequest::STATUS_INVOICED;
+                                        $model->status === BaseRequest::STATUS_INVOICED;*/
+                                if (!$model->status === BaseRequest::STATUS_INVOICED) {
+                                    return false;
+                                }
+                                return $model->canPay();
+                                
                             },                                    
                             'accept' => function ($model) {
                                 /** @var Request $model */
-                                return ($model->status === BaseRequest::STATUS_NEW || 
+                                /* return ($model->status === BaseRequest::STATUS_NEW || 
                                         $model->status === BaseRequest::STATUS_CHANGED) &&
-                                        !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
+                                        !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);*/
+                                if (!($model->status === BaseRequest::STATUS_NEW || 
+                                        $model->status === BaseRequest::STATUS_CHANGED)) {
+                                    return false;
+                                }
+                                return $model->canAccept();
                             },   
                             'reject' => function ($model) {
                                 /** @var Request $model */
                                 return ($model->status === BaseRequest::STATUS_NEW || 
                                         $model->status === BaseRequest::STATUS_CHANGED) &&
                                         !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
-                            },                                     
+                            },
                             'update' => false,
                             'delete' => function ($model) {
                                 /** @var Request $model */
-                                return !Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&
-                                        !Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) &&
-                                        !Yii::$app->user->can(Rbac::PERMISSION_MANAGER_MENU);
+                                return $model->canAccept();
                             }
                         ]                        
                     ];
@@ -231,7 +255,7 @@ $columns = [
           'value' => 'header'
         ],    
 ];
-if ($requestsTypes !== \app\models\SearchModels\Requests\RejectedRequestSearch::class) {
+if ($requestsTypes !== RejectedRequestSearch::class) {
     $columns[] = [
                     'attribute' => 'status',
                     'width' => '160px',

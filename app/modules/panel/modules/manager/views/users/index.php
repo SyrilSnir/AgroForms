@@ -1,7 +1,9 @@
 <?php
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\core\helpers\View\User\UserStatusHelper;
 use app\models\ActiveRecord\Users\User;
+use app\models\Data\Operations;
 use app\models\SearchModels\Users\UserSearch;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
@@ -16,6 +18,7 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('app/user', 'Users management');
 $this->params['breadcrumbs'][] = $this->title;
+$user = RolesHelper::getUser();
 $adminList = Yii::$app->params['rootUsers'] ?? [];
 $action = Yii::$app->getRequest()->getPathInfo();
 ?>
@@ -23,16 +26,19 @@ $action = Yii::$app->getRequest()->getPathInfo();
     <div class="card">
 <?php 
 
-// Добавление нового пользователя из панели администратора не имеет смысла
     $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
+    $toolbarContent = $rowsCountTemplate;
+    if ($user->canOperation(Operations::ENTITY_USER, Operations::OP_CREATE)) {
+        $toolbarContent .=  Html::a('<i class="fas fa-plus"></i>',['create-member'], [
+                                    'class' => 'btn btn-sm btn-success',
+                                    'title' => Yii::t('app/user', 'Create new member'),
+                                ]);
+    }
+// Добавление нового пользователя из панели администратора не имеет смысла
     $columnsConfig = [                    
                     'toolbar' => [
                         [
-                            'content'=> $rowsCountTemplate .
-                                Html::a('<i class="fas fa-plus"></i>',['create-member'], [
-                                    'class' => 'btn btn-sm btn-success',
-                                    'title' => Yii::t('app/user', 'Create new member'),
-                                ])                            
+                            'content'=> $toolbarContent
                         ],
                     ],                   
                     'dataProvider' => $dataProvider,
@@ -74,8 +80,8 @@ $action = Yii::$app->getRequest()->getPathInfo();
                             'class' => ActionColumn::class,
                             'width' => '100px',                            
                              'visibleButtons' => [
-                                'update' => false,
-                                'delete' => false
+                                'update' => $user->canOperation(Operations::ENTITY_USER, Operations::OP_EDIT),
+                                'delete' => $user->canOperation(Operations::ENTITY_USER, Operations::OP_DELETE)
                             ]                    
                         ],
                     ],

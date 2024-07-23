@@ -139,7 +139,7 @@ class User extends ActiveRecord
             string $position,
             int $gender,
             int $language,
-            int $role
+            int $role = null
             ) 
     {
         $this->login = $login;
@@ -156,7 +156,7 @@ class User extends ActiveRecord
         }        
         $this->language = $language;
         $this->gender = $gender;
-        $this->active = self::STATUS_NEW;    
+        //$this->active = self::STATUS_NEW;    
         $this->position = $position;
     }
 

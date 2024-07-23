@@ -94,8 +94,7 @@ $attributes = [
     
     <?php endif; ?>   
     
-    <?php if (Yii::$app->user->can('accountantMenu') ||
-            Yii::$app->user->can('organizerMenu')):?>
+    <?php if ($model->canPay()):?>
     
         <?php echo $this->render('status-block-layouts/accountant-layout.php',[
             'statusForm' => $statusForm
