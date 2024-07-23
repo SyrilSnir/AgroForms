@@ -1,6 +1,8 @@
 <?php
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\models\ActiveRecord\Exhibition\Catalog;
+use app\models\Data\Operations;
 use app\models\SearchModels\Exhibition\CatalogSearch;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -16,6 +18,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = Yii::t('app/title','Catalog to the site');
 $this->params['breadcrumbs'][] = $this->title;
+$user = RolesHelper::getUser();
 $action = Yii::$app->getRequest()->getPathInfo();
 $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
 $columnsConfig = [
@@ -74,7 +77,8 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
     <?php endif;?>
     <?php if(Yii::$app->session->hasFlash('success')): ?>
     <div class="alert alert-info" role="alert"><?php echo Yii::$app->session->getFlash('success') ?></div>
-    <?php endif;?>    
+    <?php endif;?>
+    <?php if ($user->canOperation(Operations::ENTITY_CATALOG, Operations::OP_LOAD)): ?>
     <div class="load-data-block">
         <?php $loadDataForm = ActiveForm::begin(['action' => ['catalog-load']]); ?>
         <?php echo $loadDataForm->field($catalogLoadForm, 'exhibitionId')->dropDownList($searchModel->getExhibitionsList())->label(false); ?>
@@ -85,6 +89,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         ?>
         <?php ActiveForm::end(); ?>
     </div>    
+    <?php endif; ?>
     <div class="card">
         <div class="card-body">
 

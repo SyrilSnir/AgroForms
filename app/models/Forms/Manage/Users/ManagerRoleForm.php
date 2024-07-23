@@ -41,6 +41,10 @@ class ManagerRoleForm extends ManageForm
     public $co_edit;
     public $co_delete;
     
+    public $catalog_view;
+    public $catalog_load;
+
+
     public function __construct(ManagerRoles $model, $config = [])
     {
         parent::__construct($config);
@@ -52,6 +56,8 @@ class ManagerRoleForm extends ManageForm
             $this->c_view = $model->c_view;
             $this->co_view = $model->co_view;
             $this->r_view = $model->r_view;
+            $this->catalog_view = $model->catalog_view;
+            $this->catalog_load = $model->catalog_load;
             if ($model->u_view) {
                 $this->u_create = $model->u_create;
                 $this->u_edit = $model->u_edit;
@@ -91,6 +97,7 @@ class ManagerRoleForm extends ManageForm
                 'd_view','d_create','d_edit','d_delete',
                 'r_view','r_create','r_edit','r_delete',
                 'co_view','co_create','co_edit','co_delete',
+                'catalog_view','catalog_load',
               ],'boolean'],
         ];
     }
@@ -119,7 +126,9 @@ class ManagerRoleForm extends ManageForm
             'r_view' => t('View the rubricator'),
             'r_create' => t('Creating a rubricator section'),
             'r_edit' => t('Editing a rubricator section'),
-            'r_delete' => t('Deleting a rubricator section'),            
+            'r_delete' => t('Deleting a rubricator section'),
+            'catalog_view' => t('View catalog'),
+            'catalog_load' => t('Loading data'),
         ];
     }                
 }

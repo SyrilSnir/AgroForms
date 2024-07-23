@@ -52,11 +52,6 @@ if ($model->c_view) {
                         'label'=> t('Company management'),
                         'rowOptions'=>['class'=>'table-agro-subhead']
                     ];
-    $attributes[] = [
-                        'group'=>true,
-                        'label'=> t('Contract management'),
-                        'rowOptions'=>['class'=>'table-agro-subhead']
-                    ];
     $attributes[] = [                    
                         'attribute' => 'c_view',
                         'label' => t('View companies'),
@@ -175,6 +170,27 @@ if ($model->r_view) {
                         'value' => YesNoStatusHelper::getStatusLabel($model->r_delete),
                     ];     
 }
+
+if ($model->catalog_view) {
+    $attributes[] = [
+                        'group'=>true,
+                        'label'=> t('Catalog management'),
+                        'rowOptions'=>['class'=>'table-agro-subhead']
+                    ];    
+    $attributes[] = [                    
+                        'attribute' => 'catalog_view',
+                        'label' => t('View catalog'),
+                        'format' => 'raw',
+                        'value' => YesNoStatusHelper::getStatusLabel($model->catalog_view),
+                    ];    
+    $attributes[] = [                    
+                        'attribute' => 'catalog_load',
+                        'label' => t('Loading data'),
+                        'format' => 'raw',
+                        'value' => YesNoStatusHelper::getStatusLabel($model->catalog_load),
+                    ];         
+}
+
 ?>
 
 <div class="view">

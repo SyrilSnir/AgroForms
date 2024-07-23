@@ -33,8 +33,7 @@ class ManagerMenuHelper implements MenuHelperInterface
                                 ['label' => Yii::t('app/menu', 'Countries'), 'icon' => 'icon-countries', 'url' => ['/panel/geography/countries'],],
                             ]
                         ];               
-        }
-        
+        }        
         if ($user->canOperation(Operations::ENTITY_CONTRACT, Operations::OP_VIEW)) {
             $items[] = [
                     'label' => Yii::t('app/menu', 'Documents'),
@@ -52,6 +51,13 @@ class ManagerMenuHelper implements MenuHelperInterface
         }
         if ($user->canOperation(Operations::ENTITY_RUBRICATOR, Operations::OP_VIEW)) {
             $items[] = ['label' => Yii::t('app/menu', 'Rubricator'), 'icon' => 'icon-cats', 'url' => ['/panel/lists/rubricator']];
+        }
+        if ($user->canOperation(Operations::ENTITY_CATALOG, Operations::OP_VIEW)) {
+            $items[] = [
+                        'label' => t('Catalog','menu'),
+                        'icon' => 'list-ul',
+                        'url' => ['/panel/catalog']
+                ];
         }
         if ($user->canRequestAccess()) {
             $items[] = [

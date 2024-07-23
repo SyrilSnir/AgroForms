@@ -34,6 +34,8 @@ use yii\db\ActiveRecord;
  * @property boolean $r_create Создание раздела рубрикатора
  * @property boolean $r_edit Редактирование раздела рубрикатора
  * @property boolean $r_delete Удаление раздела рубрикатора
+ * @property boolean $catalog_view Просмотр каталога
+ * @property boolean $catalog_load Загрузка данных
  *  
  * @property ManagerRoleRules[] $managerRoleRules
  */
@@ -60,6 +62,8 @@ class ManagerRoles extends ActiveRecord
         $model->d_view = $form->d_view;
         $model->r_view = $form->r_view;
         $model->co_view = $form->co_view;
+        $model->catalog_view = $form->catalog_view;
+        $model->catalog_load = $form->catalog_load;
         if ($model->u_view) {
             $model->u_create = $form->u_create;
             $model->u_edit = $form->u_edit;
@@ -118,6 +122,8 @@ class ManagerRoles extends ActiveRecord
         $this->d_view = $form->d_view;
         $this->co_view = $form->co_view;
         $this->r_view = $form->r_view;
+        $this->catalog_view = $form->catalog_view;
+        $this->catalog_load = $form->catalog_load;
         if ($this->u_view) {
             $this->u_create = $form->u_create;
             $this->u_edit = $form->u_edit;

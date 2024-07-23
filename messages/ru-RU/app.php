@@ -270,5 +270,8 @@ return [
     'Creating a rubricator section' => 'Создание раздела рубрикатора',
     'Editing a rubricator section' => 'Изменение раздела рубрикатора',
     'Removing a rubricator section' => 'Удаление раздела рубрикатора',
+    'Catalog management' => 'Управление каталогом',
+    'View catalog' => 'Просмотр каталога',
+    'Loading data' => 'Загрузка данных'
 ];
 

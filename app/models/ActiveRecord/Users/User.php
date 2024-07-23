@@ -280,6 +280,8 @@ class User extends ActiveRecord
                     return $this->canCompanyOperations($operation);
                 case Operations::ENTITY_RUBRICATOR:
                     return $this->canRubricatorOperations($operation);
+                case Operations::ENTITY_CATALOG:
+                    return $this->canCatalogOperations($operation);
                 default :
                     return false;
             }
@@ -351,6 +353,17 @@ class User extends ActiveRecord
                 return $this->role->c_edit;
             case Operations::OP_DELETE:
                 return $this->role->c_delete;
+            default: 
+                return false;
+        }
+    }
+    private function canCatalogOperations(string $operation) :bool
+    {
+        switch ($operation) {
+            case Operations::OP_VIEW:
+                return $this->role->catalog_view;
+            case Operations::OP_LOAD:
+                return $this->role->catalog_load;
             default: 
                 return false;
         }

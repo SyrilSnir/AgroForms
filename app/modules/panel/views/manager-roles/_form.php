@@ -232,6 +232,34 @@ use yii\widgets\ActiveForm;
         </div>
         </div>
     </div>
+    <div class="card card-default">
+        <div class="card-header">
+            <h3><?= t('Catalog management')?></h3>
+        </div>
+        <div class="card-body">
+    <?= $form->field($model, 'catalog_view')->widget(SwitchInput::class,[
+                'pluginOptions' => [
+                        'onText' => Yii::t('app', 'Yes'),
+                        'offText' => Yii::t('app', 'No'),
+                    ],
+                'pluginEvents' => [
+                    "init.bootstrapSwitch" => "function(e) { console.log('aaaa'); }",
+                    "switchChange.bootstrapSwitch" => 
+                    "function(e) { e.target.checked ? $('#catalog-rules-container').fadeIn() :
+                        $('#r-ules-container').fadeOut(); }",
+            ]
+            ]);  ?>
+    <div id="catalog-rules-container" <?php if (!$model->catalog_view): ?>style="display: none"<?php endif; ?>>
+    <?= $form->field($model, 'catalog_load')->widget(SwitchInput::class,[
+                    'pluginOptions' => [
+                            'onText' => 'Да',
+                            'offText' => 'Нет',
+                        ]
+        ]); 
+        ?>        
+        </div>
+        </div>
+    </div>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>

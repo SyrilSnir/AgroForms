@@ -22,10 +22,16 @@ interface Operations
      * Создание
      */
     const OP_CREATE = 'create';
+    
     /**
      * Просмотр
      */
     const OP_DELETE = 'delete';
+    
+    /**
+     * Просмотр
+     */
+    const OP_LOAD = 'load';
     
     /**
      * Создание
@@ -56,4 +62,9 @@ interface Operations
      * Раздел рубрикатора
      */
     const ENTITY_RUBRICATOR = 'rubricator';
+    
+    /**
+     * Раздел рубрикатора
+     */
+    const ENTITY_CATALOG = 'catalog';
 }
