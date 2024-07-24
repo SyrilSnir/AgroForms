@@ -26,8 +26,7 @@ $this->title = Yii::t('app/title', 'Requests list');
 $action = Yii::$app->getRequest()->getPathInfo();
 $actionId = Yii::$app->controller->action->id;
 $isAcceptDeclineShowed = ($actionId === 'new');
-$isPayShowed = (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
-    Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU));
+$isPayShowed = ($actionId === 'accepted');
 
 $isDeleteShowed = (!Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU) &&
                                         !Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) &&
@@ -178,7 +177,7 @@ $actionColumnsConfig = [
                             },
                             'paid' => function($model) {
                                 /** @var Request $model */
-                                if (!$model->status === BaseRequest::STATUS_INVOICED) {
+                                if (!(in_array($model->status,[BaseRequest::STATUS_INVOICED,BaseRequest::STATUS_PARTIAL_PAID]))) {
                                     return false;
                                 }                                
                                 return $model->canPay();
@@ -195,7 +194,7 @@ $actionColumnsConfig = [
                                 /*return (Yii::$app->user->can(Rbac::PERMISSION_ORGANIZER_MENU) ||
                                         Yii::$app->user->can(Rbac::PERMISSION_ACCOUNTANT_MENU)) &&
                                         $model->status === BaseRequest::STATUS_INVOICED;*/
-                                if (!$model->status === BaseRequest::STATUS_INVOICED) {
+                                if (!($model->status === BaseRequest::STATUS_INVOICED)) {
                                     return false;
                                 }
                                 return $model->canPay();

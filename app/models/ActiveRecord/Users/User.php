@@ -268,6 +268,7 @@ class User extends ActiveRecord
         if (RolesHelper::isAdmin()) {
             return true;
         }
+        
         if ($this->role && $this->user_type_id === UserType::MANAGER_USER_ID) {
             switch ($entity) {
                 case Operations::ENTITY_DOCUMENT:
@@ -286,6 +287,7 @@ class User extends ActiveRecord
                     return false;
             }
         }
+        return false;
     } 
     
     public function canRequestAccess() :bool
@@ -361,9 +363,9 @@ class User extends ActiveRecord
     {
         switch ($operation) {
             case Operations::OP_VIEW:
-                return $this->role->catalog_view;
+                return boolval($this->role->catalog_view);
             case Operations::OP_LOAD:
-                return $this->role->catalog_load;
+                return boolval($this->role->catalog_load);
             default: 
                 return false;
         }
