@@ -252,7 +252,7 @@ $columns = [
         [
           'attribute' => 'form_id',
           'label' => Yii::t('app','Form'),
-          'filter' => FormsHelper::formsList(),                        
+          'filter' => $searchModel->forms(true),                        
           'value' => 'header'
         ],    
 ];

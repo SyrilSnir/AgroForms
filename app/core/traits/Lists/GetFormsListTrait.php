@@ -18,9 +18,16 @@ use yii\helpers\ArrayHelper;
  */
 trait GetFormsListTrait
 {
-    public function formsList(bool $withAllForms = false):array
+    public function formsList(bool $withAllForms = false,bool $isActive = false, int $exhibitionId = null):array
     {
-        $result = ArrayHelper::map(Form::find()->actual()->orderBy('id')->asArray()->all(),'id','name');
+        $query = Form::find()->actual()->orderBy('id');
+        if ($isActive) {
+            $query->active();
+        }
+        if ($exhibitionId) {
+            $query->byExgibition($exhibitionId);
+        }
+        $result = ArrayHelper::map($query->asArray()->all(),'id','name');
         if ($withAllForms) {
             $result = ArrayHelper::merge(['' => 'Все формы'], $result);
         }
@@ -29,6 +36,6 @@ trait GetFormsListTrait
     
     public function formsListForExhibition(int $exhibitionId):array
     {
-        return ArrayHelper::map(Form::find()->actual()->active()->byExgibition($exhibitionId)->orderBy('id')->asArray()->all(),'id','name');        
+        return ArrayHelper::map(Form::find()->actual()->active()->byExgibition($exhibitionId)->orderBy('id')->asArray()->all(),'id','name');
     }    
 }

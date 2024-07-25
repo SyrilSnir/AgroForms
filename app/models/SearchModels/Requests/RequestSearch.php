@@ -92,4 +92,12 @@ class RequestSearch extends Model
         $query->andFilterWhere(['users.company_id' => $this->company]);            
         return $dataProvider;
     }
+    
+    public function forms($active = false): array
+    {
+        if ($this->exhibition_id) {
+            return $this->formsList(true, $active, $this->exhibition_id);
+        }
+        return $this->formsList(true, $active);
+    }
 }
