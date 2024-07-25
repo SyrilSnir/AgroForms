@@ -275,6 +275,9 @@ $columns = array_merge($columns, [
                     'attribute' => 'price',
                       'label' => Yii::t('app','Price'),
                       'value' => function (Request $model) {
+                        if (!$model->requestForm) {
+                            return '-';
+                        }
                         return $model->requestForm->amount . ' ' .$model->form->valute->symbol;
                       }
                       ],
