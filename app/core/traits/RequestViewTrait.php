@@ -15,6 +15,7 @@ use app\core\helpers\View\Form\StandHelper;
 use app\core\helpers\View\Request\RequestStatusHelper;
 use app\core\manage\Auth\UserIdentity;
 use app\core\services\operations\Requests\RequestService;
+use app\models\ActiveRecord\Contract\Contracts;
 use app\models\ActiveRecord\Forms\Form;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\BaseRequest;
@@ -22,11 +23,13 @@ use app\models\ActiveRecord\Requests\Request;
 use app\models\Forms\Requests\EditRequestForm;
 use app\models\Forms\Requests\ExcelLoadForm;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Yii;
+use ZipStream\Test\TimeTest;
 
 /**
  *
@@ -116,7 +119,8 @@ trait RequestViewTrait
         $form = Form::findOne($formId);
         $langCode = Yii::$app->language;
         $userIdentity = Yii::$app->user->getIdentity(); 
-        $formHelper = FormHelper::createViaForm($userIdentity->getUser(), $langCode, $form);
+        $contract = Contracts::createDummy();
+        $formHelper = FormHelper::createViaForm($userIdentity->getUser(),$contract, $langCode, $form);
         $formName = $form->name;
         
         $fileName = preg_replace('/[^\w\d\s\+\-\_]/u','',$formName);
@@ -224,7 +228,7 @@ trait RequestViewTrait
                     ];
         $headerBGColor = 'dbdbdb';
         $sheet->mergeCells([1,1,$cellsCount+4, 1]);
-        $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A1')->getFont()->setBold(true);
         $sheet->getStyle([1,2,$cellsCount+4, $rowsCount+3])->applyFromArray($borderStyle);
         $sheet->getStyle([1,2,$cellsCount+4,3])->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB($headerBGColor);
