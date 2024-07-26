@@ -292,10 +292,33 @@ class User extends ActiveRecord
     
     public function canRequestAccess() :bool
     {
+        if (RolesHelper::isAdmin()) {
+            return true;
+        }        
         if (!$this->role) {
             return false;
         }
         return $this->role->hasRequests();
+    }    
+    
+    public function allRequestsShowed() :bool
+    {
+        if (RolesHelper::isAdmin()) {
+            return true;
+        }
+        if ($this->role) {
+            return $this->role->viewAllRequests();
+        }
+        return false;
+    }
+    
+    public function filteredForms(): array
+    {
+        $result = [];
+        if ($this->role && !RolesHelper::isAdmin()) {
+            $result = $this->role->getAvailableFormIds();
+        }
+        return $result;
     }
 
     private function canDocumentOperations(string $operation) :bool
@@ -384,5 +407,5 @@ class User extends ActiveRecord
             default: 
                 return false;
         }
-    }
+    }        
 }

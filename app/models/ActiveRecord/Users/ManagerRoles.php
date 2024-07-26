@@ -6,6 +6,7 @@ use app\core\traits\ActiveRecord\MultilangTrait;
 use app\models\Forms\Manage\Users\ManagerRoleForm;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "manager_roles".
@@ -199,7 +200,7 @@ class ManagerRoles extends ActiveRecord
             }
         }
         return false;
-    }
+    }        
     
     /**
      * Gets query for [[ManagerRoleRules]].
@@ -209,5 +210,22 @@ class ManagerRoles extends ActiveRecord
     public function getManagerRoleRules()
     {
         return $this->hasMany(ManagerRoleRules::class, ['role_id' => 'id']);
+    }
+    
+    public function viewAllRequests(): bool 
+    {
+        return ManagerRoleRules::find()
+                ->andFilterWhere(['role_id' => $this->id])
+                ->andWhere(['exhibition_id' => null])
+                ->andFilterWhere(['r_view' => true])
+                ->count() > 0;
+    }
+    
+    public function getAvailableFormIds(): array
+    {
+        return ArrayHelper::getColumn(ManagerRoleRules::find()
+                ->andFilterWhere(['role_id' => $this->id])
+                ->andWhere(['is not','form_id', null])
+                ->andFilterWhere(['r_view' => true])->asArray()->all(),'form_id');
     }
 }

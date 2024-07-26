@@ -111,7 +111,7 @@ class ManagerRoleRules extends ActiveRecord
         if (!$this->exhibition_id) {
             return null;
         }
-        return $this->hasOne(Form::class, ['id' => 'form_id']);
+        return $this->hasOne(Exhibition::class, ['id' => 'exhibition_id']);
     }
 
     /**
@@ -122,5 +122,10 @@ class ManagerRoleRules extends ActiveRecord
     public function getRole()
     {
         return $this->hasOne(ManagerRoles::class, ['id' => 'role_id']);
+    }
+    
+    public function forAllForms() :bool
+    {
+        return empty($this->exhibition);
     }
 }

@@ -361,8 +361,8 @@ class Request extends FormManipulation
             if ($rule->form_id === $this->form_id) {
                 return $rule->r_pay;
             }
-            return false;
         }
+        return false;
     }
     
     public function canAccept(): bool 
@@ -381,8 +381,8 @@ class Request extends FormManipulation
             if ($rule->form_id === $this->form_id) {
                 return $rule->r_accept;
             }
-            return false;
         }
+        return false;
     }
     
     public function canPublicate(): bool 
@@ -401,8 +401,8 @@ class Request extends FormManipulation
             if ($rule->form_id === $this->form_id) {
                 return $rule->r_publicate;
             }
-            return false;
         }
+        return false;
     }
     
     public function canDelete(): bool 
@@ -421,7 +421,7 @@ class Request extends FormManipulation
             if ($rule->form_id === $this->form_id) {
                 return $rule->r_delete;
             }
-            return false;
         }
+        return false;
     }
 }

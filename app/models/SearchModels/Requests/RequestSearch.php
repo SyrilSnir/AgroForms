@@ -22,6 +22,8 @@ class RequestSearch extends Model
     public $form_id;
     public $exhibition_id;
     public $company;
+    
+    protected $filteredFormIds = [];
 
     use GetExhibitionsTrait;
     use GetFormTypesListTrait;
@@ -57,7 +59,7 @@ class RequestSearch extends Model
 
     protected function baseSearch(array $params = [], $exhibitionId = null, $contractId = null): ActiveDataProvider
     {
-        $query = Request::find()->select(['{{%requests}}.*','{{%users}}.company_id AS company'])->joinWith(['application','form','stand','user']); //->joinWith('stands');
+        $query = Request::find()->select(['{{%requests}}.*','{{%users}}.company_id AS company'])->joinWith(['application','form','user']); //->joinWith('stands');
         if ($exhibitionId) {
             $query->forExhibition($exhibitionId,'requests');
         }
@@ -81,6 +83,9 @@ class RequestSearch extends Model
         ]);
 
         $this->load($params);
+        if (!empty($this->filteredFormIds)) {
+            $query->andFilterWhere(['requests.form_id' => $this->filteredFormIds]);
+        }
         if (!$this->validate()) {
             $query->where('0=1');
             return $dataProvider;
@@ -89,7 +94,9 @@ class RequestSearch extends Model
         $query->andFilterWhere(['requests.status' => $this->status]);
         $query->andFilterWhere(['requests.form_id' => $this->form_id]);            
         $query->andFilterWhere(['requests.exhibition_id' => $this->exhibition_id]);            
-        $query->andFilterWhere(['users.company_id' => $this->company]);            
+        $query->andFilterWhere(['users.company_id' => $this->company]); 
+        
+        
         return $dataProvider;
     }
     
@@ -100,4 +107,9 @@ class RequestSearch extends Model
         }
         return $this->formsList(true, $active);
     }
+    
+   public function appendFormsFilter(array $formIds) 
+   {
+       $this->filteredFormIds = $formIds;
+   }
 }

@@ -8,6 +8,7 @@
 
 namespace app\modules\panel\controllers;
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\core\manage\Auth\Rbac;
 use app\core\manage\Auth\UserIdentity;
 use app\core\repositories\readModels\Requests\RequestReadRepository;
@@ -26,6 +27,7 @@ use app\models\SearchModels\Requests\ManagerRequestSearch;
 use app\models\SearchModels\Requests\MediaManagerRequestSearch;
 use app\models\SearchModels\Requests\NewRequestSearch;
 use app\models\SearchModels\Requests\RejectedRequestSearch;
+use app\models\SearchModels\Requests\RequestSearch;
 use DomainException;
 use Yii;
 use yii\base\Action;
@@ -34,6 +36,7 @@ use yii\helpers\Url;
 /**
  * Description of RequestController
  *
+ * @property RequestSearch $searchModel Description
  * @author kotov
  */
 class RequestsController extends ManageController
@@ -104,7 +107,20 @@ class RequestsController extends ManageController
         }      
         if ($action->id == 'accepted') {
             $this->searchModel = new AcceptedRequestSearch();
-        }         
+        } 
+        $user = RolesHelper::getUser();
+        if (!$user->canRequestAccess()) {
+            return false;
+        }
+        if (!$user->allRequestsShowed()) {
+            
+            $filter = $user->filteredForms();
+            if (empty($filter)) {
+                return false;
+            }
+            $this->searchModel->appendFormsFilter($filter);            
+        }
+        
         return parent::beforeAction($action);
     }
 

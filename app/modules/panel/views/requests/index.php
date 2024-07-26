@@ -170,7 +170,7 @@ $actionColumnsConfig = [
                             'change' => Yii::$app->user->can(Rbac::PERMISSION_ADMINISTRATOR_MENU),                            
                             'withdraw' => function($model) {
                                 /** @var Request $model */
-                                if (!$model->status === BaseRequest::STATUS_PAID) {
+                                if (!($model->status === BaseRequest::STATUS_PUBLICATED)) {
                                     return false;
                                 }                                
                                 return $model->canPublicate();
