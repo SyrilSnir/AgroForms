@@ -74,8 +74,8 @@ class SetupApplication implements BootstrapInterface
         $container->setSingleton(MailService::class,function($container, $params, $args){
             $mailConfig = ConfigurationHelper::getConfig(Configuration::SMTP_SETTINGS_SECTION);
             $form = new MailConfigurationForm();
-            $form->setAttributes($mailConfig);
-            $smtp = false;
+            $form->setAttributes($mailConfig);  
+            $smtp = YII_DEBUG ? false : true;
             if (!$form->validate()) {
                 $mailConfig = Yii::$app->params['mailSettings'];
                 $form->setAttributes($mailConfig);
