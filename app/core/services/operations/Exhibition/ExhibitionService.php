@@ -3,16 +3,18 @@
 namespace app\core\services\operations\Exhibition;
 
 use app\core\repositories\manage\Exhibition\ExhibitionRepository;
+use app\core\services\operations\DataManqageInterface;
 use app\models\ActiveRecord\Exhibition\Exhibition;
-use app\models\Forms\Manage\Exhibition\ExhibitionForm;
+use app\models\Forms\Manage\ManageForm;
 use yii\caching\Cache;
+use yii\db\ActiveRecord;
 
 /**
  * Description of ExhibitionService
  *
  * @author kotov
  */
-class ExhibitionService
+class ExhibitionService implements DataManqageInterface
 {
     /**
      *
@@ -33,14 +35,14 @@ class ExhibitionService
     }
 
 
-    public function create(ExhibitionForm $form) 
+    public function create(ManageForm $form) : ActiveRecord
     {
         $exhibition = Exhibition::create($form);
         $this->exhibitions->save($exhibition);
         return $exhibition;
     }
     
-    public function edit($id , ExhibitionForm $form) 
+    public function edit($id , ManageForm $form) :void
     {
         /** @var Exhibition $exhibition */
         $exhibition = $this->exhibitions->get($id);
@@ -65,4 +67,8 @@ class ExhibitionService
         return $activeExhibition->id;
     }
 
+    public function remove(int $id): void
+    {
+        
+    }
 }

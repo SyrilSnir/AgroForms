@@ -5,15 +5,15 @@ namespace app\models\Forms\Manage\Exhibition;
 use app\core\helpers\Utils\DateHelper;
 use app\core\traits\Lists\GetCompanyNamesTrait;
 use app\models\ActiveRecord\Exhibition\Exhibition;
+use app\models\Forms\Manage\ManageForm;
 use Yii;
-use yii\base\Model;
 
 /**
  * Description of ExhibitionForm
  *
  * @author kotov
  */
-class ExhibitionForm extends Model
+class ExhibitionForm extends ManageForm
 {
     public $title;
     public $titleEng;

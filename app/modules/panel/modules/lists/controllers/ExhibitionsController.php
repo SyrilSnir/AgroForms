@@ -8,17 +8,15 @@ use app\core\traits\GridViewTrait;
 use app\models\ActiveRecord\Exhibition\Exhibition;
 use app\models\Forms\Manage\Exhibition\ExhibitionForm;
 use app\models\SearchModels\Exhibition\ExhibitionSearch;
-use app\modules\panel\controllers\BaseAdminController;
-use DomainException;
+use app\modules\panel\controllers\CrudController;
 use kotchuprik\sortable\actions\Sorting;
-use Yii;
 
 /**
  * Description of ExhibitionsController
  *
  * @author kotov
  */
-class ExhibitionsController extends BaseAdminController
+class ExhibitionsController extends CrudController
 {
     use GridViewTrait;
     /**
@@ -26,6 +24,8 @@ class ExhibitionsController extends BaseAdminController
      * @var ExhibitionService 
      */
     protected $service;
+    
+    
 
     public function actions()
     {
@@ -43,41 +43,11 @@ class ExhibitionsController extends BaseAdminController
             ExhibitionReadRepository $repository,
             ExhibitionService $service,
             ExhibitionSearch $searchModel,
+            ExhibitionForm $form,            
             $config = array()
             )
     {
-        parent::__construct($id, $module, $config);
-        $this->readRepository = $repository;
-        $this->service = $service;
+        parent::__construct($id, $module,$service,$repository,$form, $config);
         $this->searchModel = $searchModel;
-    }   
-    
-    public function actionCreate()
-    {
-        $form = new ExhibitionForm();
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            try {
-                $post = $this->service->create($form);
-                return $this->redirect(['view', 'id' => $post->id]);
-            } catch (DomainException $e) {
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
-        }
-        return $this->render('create', [
-            'model' => $form,
-        ]);
-    }
-    
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-        $form = new ExhibitionForm($model);
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            $this->service->edit($id, $form);
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-        return $this->render('update', [
-            'model' => $form,
-        ]);                        
-    }    
+    }          
 }
