@@ -2,6 +2,7 @@
 
 namespace app\controllers\api;
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\core\helpers\View\Form\FormHelper;
 use app\core\manage\Auth\UserIdentity;
 use app\core\repositories\manage\Forms\FormRepository;
@@ -18,6 +19,7 @@ use app\models\Forms\Requests\AttachedFilesForm;
 use app\models\Forms\Requests\DynamicForm;
 use app\models\Forms\Requests\RemoveAttachmentForm;
 use DomainException;
+use Exception;
 use Yii;
 
 /**
@@ -103,6 +105,7 @@ class ApplicationController extends FormController
         /** @var Request $request */
         /** @var UserIdentity $userIdentity */
         $formId = Yii::$app->session->get('OPENED_FORM_ID');
+        $user = RolesHelper::getUser();
         if (empty($contractId)) {
             $contract = Contracts::createDummy();
         } else {
@@ -112,16 +115,15 @@ class ApplicationController extends FormController
         if (!$formId) {
             throw new DomainException(t('The requested form was not found on the server', 'exception'));
         }
-        $userIdentity = Yii::$app->user->getIdentity(); 
         $form = $this->formRepository->get($formId);
         
         $formChangeType = Yii::$app->session->get('FORM_CHANGE_TYPE', Request::FORM_CREATE);
         if ($formChangeType === Request::FORM_UPDATE) {
             $requestId = Yii::$app->session->get('REQUEST_ID');            
-            $request = $this->requestRepository->getForUser($requestId,$userIdentity->getId());            
-            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $contract, $langCode, $request);
+            $request = $this->requestRepository->getForCompany($requestId,$user->company->id);            
+            $formHelper = FormHelper::createViaRequest($user, $contract, $langCode, $request);
         } else {     
-            $formHelper = FormHelper::createViaForm($userIdentity->getUser(), $contract, $langCode, $form);
+            $formHelper = FormHelper::createViaForm($user, $contract, $langCode, $form);
         }
         return $formHelper->getData();
     }

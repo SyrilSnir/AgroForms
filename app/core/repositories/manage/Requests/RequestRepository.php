@@ -32,4 +32,12 @@ class RequestRepository implements RepositoryInterface
                }
                return $model;        
     }
+    
+    public function getForCompany(int $id, int $companyId)
+    {
+        if (!$model = Request::findOne(['id' => $id, 'company_id' => $companyId])) {
+                   throw new NotFoundException('Заявка не найдена');
+               }
+               return $model;        
+    }
 }
