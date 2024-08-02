@@ -7,6 +7,7 @@ return [
    'Note' => 'Внимание',
    'Add' => 'Добавить',
    'File' => 'Файл',
+   'Submit' => 'Отправить',
    'Number' => 'Номер',
    'Print to PDF' => 'Печать в PDF',
    'Comment' => 'Комментарий',
@@ -272,6 +273,7 @@ return [
     'Removing a rubricator section' => 'Удаление раздела рубрикатора',
     'Catalog management' => 'Управление каталогом',
     'View catalog' => 'Просмотр каталога',
-    'Loading data' => 'Загрузка данных'
+    'Loading data' => 'Загрузка данных',
+    'Show in printed forms' => 'Показывать в печатных формах',
 ];
 

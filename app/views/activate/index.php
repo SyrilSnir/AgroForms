@@ -44,7 +44,7 @@ switch ($user->gender) {
                 <?= $form->field($model, 'token')->hiddenInput()->label(false) ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton(t('Submit'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>
