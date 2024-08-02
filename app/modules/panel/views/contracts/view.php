@@ -46,6 +46,12 @@ $attributes = ArrayHelper::merge($attributes, [
                     'label' => t('Logo available'),
                     'format' => 'raw',
                     'value' => YesNoStatusHelper::getStatusLabel($model->is_logo)
+                ],
+                [
+                    'attribute' => 'show_in_requests',
+                    'label' => t('Show in printed forms'),
+                    'format' => 'raw',
+                    'value' => YesNoStatusHelper::getStatusLabel($model->show_in_requests)
                 ] 
         ]);
 ?>

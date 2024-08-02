@@ -88,7 +88,7 @@ abstract class BaseFormHelper
     
     public abstract function renderPDF(): mixed;
 
-    public abstract function getData() :array ;  
+    public abstract function getData() :array;  
     
     public abstract function getFormPrice() :int ; 
     
@@ -104,6 +104,7 @@ abstract class BaseFormHelper
             'exhibitionName' => $this->form->exhibition->title,
             'contractNumber' => $this->getContractNumber(),
             'dateOfContract' => $this->getContractDate(),
+            'showContract' => $this->showContractInPdf(),
         ]);
     }
            

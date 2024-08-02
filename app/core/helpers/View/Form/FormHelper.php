@@ -500,7 +500,6 @@ class FormHelper extends BaseFormHelper
         $header = $this->getPdfHeader();
         $footer = $this->getPdfFooter();
         
-        //$content = 'Превед';
         $this->pdfHelper->methods = [
                 'SetHeader'=>[$header], 
                 'SetFooter'=>[$footer],
@@ -537,6 +536,11 @@ class FormHelper extends BaseFormHelper
         parent::removeRequest();
     }
 
+    protected function showContractInPdf() :bool
+    {
+        return $this->contract ? $this->contract->show_in_requests : false;
+    }
+    
     protected function getContractNumber() :string
     {
         return $this->contract ? $this->contract->number : '';

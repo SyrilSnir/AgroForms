@@ -108,12 +108,12 @@ $columnsConfig = [
                             }
                         ],
                         [
-                            'attribute' => 'is_logo',
-                            'label' => t('Logo available'),
+                            'attribute' => 'show_in_requests',
+                            'label' => t('Show in printed forms'),
                             'format' => 'raw',
                             'filter' => YesNoStatusHelper::statusList(),
                             'value' => function (Contracts $model) {
-                                return YesNoStatusHelper::getStatusLabel($model->is_logo);
+                                return YesNoStatusHelper::getStatusLabel($model->show_in_requests);
                             }
                         ],                                
                         ['class' => ActionColumn::class],

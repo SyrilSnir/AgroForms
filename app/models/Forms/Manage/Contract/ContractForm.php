@@ -27,6 +27,7 @@ class ContractForm extends ManageForm
     public $registrationFee;
     public $status;
     public $isLogo;
+    public $showInRequests;
 
     use GetCompanyNamesTrait, 
             GetExhibitionsTrait, 
@@ -36,7 +37,7 @@ class ContractForm extends ManageForm
     public function __construct(Contracts $model = null, $config = []) 
     {
         parent::__construct($config);
-        if ($model) {
+        if ($model && $model->id) {
             $this->number = $model->number;
             $this->companyId = $model->company_id;
             $this->date = DateHelper::timestampToDate($model->date);
@@ -46,7 +47,10 @@ class ContractForm extends ManageForm
             $this->hall = $model->hall_id;
             $this->standNumber = $model->stand_number_id;
             $this->isLogo = $model->is_logo;  
+            $this->showInRequests = $model->show_in_requests;
             $this->registrationFee = $model->registration_fee;
+        } else {
+            $this->showInRequests = true;
         }
     }
     
@@ -59,7 +63,7 @@ class ContractForm extends ManageForm
             [['number', 'status', 'date','companyId','exhibitionId'], 'required'],
             [['companyId', 'standNumber', 'square','hall','registrationFee'], 'integer'],
             [['date'],'date'],
-            [['isLogo'],'boolean'],
+            [['isLogo','showInRequests'],'boolean'],
             [['number'], 'string', 'max' => 255]
         ];
     }
@@ -76,6 +80,7 @@ class ContractForm extends ManageForm
             'companyId' => t('Company','company'),
             'exhibitionId' => t('Exhibition'),   
             'isLogo' => t('Logo available'),
+            'showInRequests' => t('Show in printed forms'),
             'registrationFee' => t('Registration fee (number of pieces)'),
         ];
     }

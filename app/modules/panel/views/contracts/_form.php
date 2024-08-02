@@ -117,8 +117,9 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         ]
     ]) ?>                               
     <?= $form->field($model, 'square')->textInput() ?>
+    <?= $form->field($model, 'isLogo')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'status')->dropDownList(ContractStatusHelper::statusList()) ?>                                                        
-    <?= $form->field($model, 'isLogo')->widget(SwitchInput::class,[
+    <?= $form->field($model, 'showInRequests')->widget(SwitchInput::class,[
                     'pluginOptions' => [
                             'onText' => t('Да'),
                             'offText' => t('Нет'),

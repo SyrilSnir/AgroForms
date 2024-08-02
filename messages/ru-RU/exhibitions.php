@@ -9,6 +9,7 @@ return [
     'Archive' => 'Архивная',
     'Draft' => 'Черновик',    
     'Exhibitor' => 'Экспонент',
+    'Customer' => 'Заказчик',
     'Past exhibitions' => 'Прошедшие выставки',
     'Current exhibitions' => 'Текущие выставки',
     'Upcomming exhibitions' => 'Предстоящие выставки',
