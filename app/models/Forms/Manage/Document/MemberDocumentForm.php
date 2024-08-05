@@ -3,6 +3,7 @@
 namespace app\models\Forms\Manage\Document;
 
 use app\models\ActiveRecord\Document\Documents;
+use yii\helpers\ArrayHelper;
 
 /**
  * Description of MemberDocumentForm
@@ -11,6 +12,20 @@ use app\models\ActiveRecord\Document\Documents;
  */
 class MemberDocumentForm extends BaseDocumentForm
 {
+    public $companyId;
+    public $exhibitionId;
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function rules(): array
+    {
+        $rules = [
+            [['companyId','exhibitionId'], 'required'],
+            [['companyId','exhibitionId'], 'integer'],
+        ];
+        return ArrayHelper::merge($rules, parent::rules());
+    }   
     public function __construct(int $companyId, int $exhibitionId, Documents $model = null, $config = [])
     {
         $this->companyId = $companyId;

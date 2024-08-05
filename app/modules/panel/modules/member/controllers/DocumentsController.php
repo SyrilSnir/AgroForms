@@ -64,9 +64,8 @@ class DocumentsController extends BaseMemberController
     
     public function actionCreate($exhibitionId)
     {
-        /** @var UserIdentity $userIdentity */
-        $userIdentity = Yii::$app->user->getIdentity();
-        $companyId = $userIdentity->getCompany()->id;
+        $user = \app\core\helpers\Utils\users\RolesHelper::getUser();
+        $companyId = $user->company_id;
         $form = new MemberDocumentForm($companyId, $exhibitionId);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
