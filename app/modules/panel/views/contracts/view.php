@@ -41,12 +41,12 @@ $attributes = ArrayHelper::merge($attributes, [
                     'format' => 'raw',
                     'value' => ContractStatusHelper::getStatusLabel($model->status)
                 ],
-                [
+          /*      [
                     'attribute' => 'is_logo',
                     'label' => t('Logo available'),
                     'format' => 'raw',
-                    'value' => YesNoStatusHelper::getStatusLabel($model->is_logo)
-                ],
+                    'value' => YesNoStatusHelper::getStatusLabel($model->is_logo ? $model->is_logo: 0)
+                ],*/
                 [
                     'attribute' => 'show_in_requests',
                     'label' => t('Show in printed forms'),
