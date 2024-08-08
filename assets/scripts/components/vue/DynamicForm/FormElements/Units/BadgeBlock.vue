@@ -41,12 +41,20 @@
            placeholder="">                        
        </div> 
    </div>
+   <div v-if="blocksCount == 0" class="container-fluid">
+       <div class="card card-default">
+         <div class="card-header">
+           <h3 class="card-title">{{ titleLabel }}</h3>
+          </div>
+        </div> 
+    </div> 
    <table v-if="isComputed" class="table"><tbody>
       <tr style="font-weight: 600">
           <td>{{ getName('Итого','Total') }}:</td>
           <td style="text-align: right"><span class="price">{{ total | separate }}</span> {{ dic.valute }}</td>
       </tr></tbody></table> 
-       <button @click="addFormBlock" class="btn btn-primary">{{ getName('Добавить еще', 'Add more')  }}</button>     
+       <button v-if="blocksCount > 0" @click="addFormBlock" class="btn btn-primary">{{ getName('Добавить еще', 'Add more')  }}</button>     
+       <button v-else @click="addFormBlock" class="btn btn-primary">{{ getName('Добавить форму', 'Add form')  }}</button>     
    </div> 
 </template>
  <script>
