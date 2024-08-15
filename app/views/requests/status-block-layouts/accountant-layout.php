@@ -20,7 +20,8 @@ use yii\widgets\ActiveForm;
             $form->action = \yii\helpers\Url::to(['invoice','id' => $statusForm->requestId]);
             echo Html::tag('div',Yii::t('app/requests', 'Invoice'),['data-status' => BaseRequest::STATUS_INVOICED, 'class' => 'btn bg-gradient-success status-change-btn']);
         } else {
-            echo Html::tag('div',Yii::t('app/requests', 'Application paid'),['data-status' => BaseRequest::STATUS_PAID, 'class' => 'btn bg-gradient-success status-change-btn']);            
+            echo Html::tag('div',Yii::t('app/requests', 'Application paid'),[ 'data-status' => BaseRequest::STATUS_PAID, 'class' => 'btn bg-gradient-success status-change-btn']);
+            echo Html::tag('div',Yii::t('app/requests', 'Accept for execution'),[ 'data-status' => BaseRequest::STATUS_EXECUTED, 'class' => 'btn bg-gradient-success status-change-btn']);
         }
         if ($statusForm->status == BaseRequest::STATUS_INVOICED) {
             echo Html::tag('div',Yii::t('app/requests', 'Partial payment'),['data-status' => BaseRequest::STATUS_PARTIAL_PAID, 'class' => 'btn bg-gradient-success status-change-btn']);

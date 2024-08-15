@@ -57,6 +57,7 @@ class RequestStatusHelper extends StatusHelper
             $statusList[BaseRequest::STATUS_DRAFT] = t('Draft','requests');
         }
         $statusList[BaseRequest::STATUS_INVOICED] = t('Invoiced','requests');
+        $statusList[BaseRequest::STATUS_EXECUTED] = t('For execution','requests');
         $statusList[BaseRequest::STATUS_PAID] = t('Paid','requests');
         $statusList[BaseRequest::STATUS_PARTIAL_PAID] = t('Partial paid','requests');
         $statusList[BaseRequest::STATUS_CHANGED] = t('Changed','requests');
@@ -72,6 +73,7 @@ class RequestStatusHelper extends StatusHelper
     public static function acceptedRequestsStatusList() : array
     {
         $statusList[BaseRequest::STATUS_INVOICED] = t('Invoiced','requests');
+        $statusList[BaseRequest::STATUS_EXECUTED] = t('For execution','requests');
         $statusList[BaseRequest::STATUS_PAID] = t('Paid','requests');
         $statusList[BaseRequest::STATUS_PARTIAL_PAID] = t('Partial paid','requests');
         $statusList[BaseRequest::STATUS_ACCEPTED] = t('Accepted','requests');
