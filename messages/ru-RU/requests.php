@@ -56,6 +56,8 @@ return [
    'Removed from the site' => 'Снята с публикации на сайте',
    'Publish on site' => 'Опубликовать на сайте',
    'Remove from site' => 'Снять с публикации на сайте',
-   'Restore form' => 'Восствновить форму',   
+   'Restore form' => 'Восствновить форму', 
+   'For execution' => 'Принят к исполнению',
+   'Accept for execution' => 'Принять к исполнению'
 ];
 

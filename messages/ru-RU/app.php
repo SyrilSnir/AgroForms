@@ -275,5 +275,6 @@ return [
     'View catalog' => 'Просмотр каталога',
     'Loading data' => 'Загрузка данных',
     'Show in printed forms' => 'Показывать в печатных формах',
+    'Export catalog to Excel' => 'Выгрузка данных каталога в Excel'
 ];
 
