@@ -44,6 +44,8 @@ class Catalog extends ActiveRecord
     private $_oldFilePath = '';
     
     private $addressList = [];
+    
+    private $rubricsList = [];
 
 
     /**
@@ -66,7 +68,7 @@ class Catalog extends ActiveRecord
         $model->_oldFilePath = trim($form->logoFile);
         $model->logo_file = basename($model->_oldFilePath);
         $model->addressList = $model->getAddressData($form->country, $form->countryEng);
-        $model->rubrics = $form->rubricatorIds;
+        $model->rubricsList = $form->rubricatorIds;
         $model->stand = $form->stand;
         return $model;
     }
@@ -185,8 +187,8 @@ class Catalog extends ActiveRecord
                $model->save();
             }
         }
-        if (!empty($this->rubrics)) {
-            foreach ($this->rubrics as $rubricId) {
+        if (!empty($this->rubricsList)) {
+            foreach ($this->rubricsList as $rubricId) {
                 $model = CatalogRubrics::create($this->id, $rubricId);
                 $model->save();
             }
