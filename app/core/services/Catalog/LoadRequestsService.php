@@ -89,10 +89,10 @@ class LoadRequestsService
                     $result['descriptionEng'] = $element['value'];
                     break;
                 case BaseFormHelper::COMPANY_ADDRESS_RUS:
-                    $result['country'] = $this->getCountryIds($element['value']);
+                    $result['country'] = $this->getRegionData($element['value']);
                     break;
                 case BaseFormHelper::COMPANY_ADDRESS_ENG:
-                    $result['countryEng'] = $this->getCountryIds($element['value']);
+                    $result['countryEng'] = $this->getRegionData($element['value']);
                     break;  
                 case BaseFormHelper::SITE_LOGO:
                     $result['logoFile'] = $element['file'];
@@ -119,6 +119,15 @@ class LoadRequestsService
         return [];
     }
    
+    private function getRegionData(array $data): array 
+    {
+        $result = [];
+        foreach ($data as $el) {
+            $key = (int)$el['country'];
+            $result[$key] = $el;
+        }
+        return $result;
+    }
     private function getCountryIds(array $data): array
     {
         if (!empty($data)) {

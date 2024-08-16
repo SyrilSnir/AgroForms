@@ -3,6 +3,7 @@
 use app\core\helpers\Utils\users\RolesHelper;
 use app\models\ActiveRecord\Exhibition\Catalog;
 use app\models\Data\Operations;
+use app\models\Forms\CatalogLoadForm;
 use app\models\SearchModels\Exhibition\CatalogSearch;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -15,11 +16,14 @@ use yii\widgets\ActiveForm;
 /* @var $searchModel CatalogSearch */
 /* @var $model Catalog */
 /* @var $dataProvider ActiveDataProvider */
+/* @var $currentExhibitionId int|null */
+/* @var $catalogLoadForm CatalogLoadForm */
 
 $this->title = Yii::t('app/title','Catalog to the site');
 $this->params['breadcrumbs'][] = $this->title;
 $user = RolesHelper::getUser();
 $action = Yii::$app->getRequest()->getPathInfo();
+$catalogLoadForm->exhibitionId = $currentExhibitionId;
 $rowsCountTemplate = require Yii::getAlias('@elements') . DIRECTORY_SEPARATOR . 'page-counter.php';
 $columnsConfig = [
                     'toolbar' => [
@@ -79,14 +83,31 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
     <div class="alert alert-info" role="alert"><?php echo Yii::$app->session->getFlash('success') ?></div>
     <?php endif;?>
     <?php if ($user->canOperation(Operations::ENTITY_CATALOG, Operations::OP_LOAD)): ?>
-    <div class="load-data-block">
+    <div class="catalog-actions-block">        
         <?php $loadDataForm = ActiveForm::begin(['action' => ['catalog-load']]); ?>
-        <?php echo $loadDataForm->field($catalogLoadForm, 'exhibitionId')->dropDownList($searchModel->getExhibitionsList())->label(false); ?>
+        <?php echo $loadDataForm->field($catalogLoadForm, 'exhibitionId')
+                ->dropDownList($searchModel->getExhibitionsList(),[
+                    'onchange'=>'console.log(this.value)'
+                ])
+                ->label(false); ?>
+        <div class="row">
+            <div class="col-6">
         <?php echo  Html::submitButton(t('Load data'),[
              //'id' => 'form-copy',
             'class' => 'btn btn-secondary'
             ]) 
         ?>
+                
+            </div>
+            <div class="col-6 text-right">
+        <?php 
+            echo Html::a(Yii::t('app','Export catalog to Excel') .'&nbsp;&nbsp;&nbsp;<i class="fa fa-file-excel"></i>', ['excel',], [
+                'class' => 'btn btn-success',
+                'id' => 'catalog-excel',                
+            ]) 
+        ?>
+                </div>
+            </div>
         <?php ActiveForm::end(); ?>
     </div>    
     <?php endif; ?>

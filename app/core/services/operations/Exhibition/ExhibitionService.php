@@ -50,6 +50,10 @@ class ExhibitionService implements DataManqageInterface
         $this->exhibitions->save($exhibition);
     } 
     
+    /**
+     * 
+     * @return type
+     */
     public function getActiveExhibition()
     {
         if ($this->cacheSystem) {

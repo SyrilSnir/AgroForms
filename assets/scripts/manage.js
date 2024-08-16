@@ -5,6 +5,7 @@ import FormManager from './components/manage/Requests/FormManager';
 
 const $ = window.$;
 const managerActivateLink = document.getElementById('get-activare-link');
+const exportCatalogLink = document.getElementById('catalog-excel');
 const getFormRequestButton = document.getElementById('get-form-request');
 const fieldsConfig = document.getElementById('fields-config');
 const modalRequestInfo = document.getElementById('modal-request__information');
@@ -19,6 +20,10 @@ if (fieldsConfig) {
 
 if (managerActivateLink) {
     managerActivateLink.addEventListener('click', managerActivateHandler);
+}
+
+if (exportCatalogLink) {
+    exportCatalogLink.addEventListener('click', exportCatalogHandler);
 }
 
 if (getFormRequestButton) {
@@ -82,13 +87,11 @@ function getFormRequestHandler(e) {
 function createLinkHandler(e) {
     e.preventDefault();
     const link = e.currentTarget;
-    console.log(link);
     const formSelector = document.getElementById('frm-id');
     const exSelector = document.getElementById('ex-id');
     const formId = formSelector.value;
     const exId = exSelector.value;
     const roleId = link.dataset.role;
-    console.log('Select', formId,exId);
     let queryString = `?roleId=${roleId}`;
     if (formId) {
         queryString += `&formId=${formId}`;
@@ -96,6 +99,15 @@ function createLinkHandler(e) {
         queryString += `&exhibitionId=${exId}`;
     }
     location.href = link.href + queryString;
+}
+
+function exportCatalogHandler(e) {
+    e.preventDefault();
+    const exhibitionSelector = document.getElementById('catalogloadform-exhibitionid');
+    const link = e.currentTarget;
+   // console.log('Catalog export',link.href,exhibitionSelector.value);
+    location.href =  `${link.href}?exhibitionId=${exhibitionSelector.value}`;
+
 }
 
 const formManager = new FormManager();

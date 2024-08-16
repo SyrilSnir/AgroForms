@@ -7,7 +7,7 @@ use app\core\repositories\manage\DataManipulationTrait;
 use app\core\repositories\manage\RepositoryInterface;
 use app\models\ActiveRecord\Exhibition\Catalog;
 use app\models\ActiveRecord\Exhibition\CatalogContacts;
-use app\models\ActiveRecord\Exhibition\CatalogCountries;
+use app\models\ActiveRecord\Exhibition\CatalogAddresses;
 use app\models\ActiveRecord\Exhibition\CatalogRubrics;
 use RuntimeException;
 use yii\db\ActiveRecord;
@@ -41,7 +41,7 @@ class CatalogRepository implements RepositoryInterface
     
     public function removeCountries(int $catalogId)
     {
-        CatalogCountries::deleteAll(['catalog_id' => $catalogId]);
+        CatalogAddresses::deleteAll(['catalog_id' => $catalogId]);
     }
     
     public function removeRubrics(int $catalogId)

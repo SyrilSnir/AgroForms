@@ -239,4 +239,31 @@ class Rubricator extends ActiveRecord
         });
         return $children;
     }
+    
+    public function getOrderedName() : string
+    {
+        return $this->getPrefix() . $this->name;
+    }
+    
+    public function getOrderedNameEng() : string
+    {
+        return $this->getPrefix() . $this->nameEng;
+    }
+    
+    private function getPrefix(bool $eng = false) {
+        $prefixText = $eng ? 'Group': 'Группа';
+        if ($this->isRoot()) {
+            return '';            
+        }
+        if ($this->parent->isRoot()) {
+            return $prefixText . str_pad($this->order,2,'0', STR_PAD_LEFT) . ': ';
+        }
+        $prefixText = $this->order . '. ';
+        $p = $this->parent;
+        while (!$p->parent->isRoot()) {
+            $prefixText = $p->order . '.' . $prefixText;
+            $p = $p->parent;
+        }
+        return $p->order . '.' . $prefixText;
+    }
 }

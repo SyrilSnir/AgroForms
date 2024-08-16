@@ -55,7 +55,7 @@ class CatalogForm extends ManageForm
             [['exhibitionId','requestId'], 'integer'],
             [['description', 'descriptionEng','stand'], 'string'],
             [['rubricatorIds', 'country', 'countryEng'], 'default', 'value' => []],
-            [['rubricatorIds', 'country', 'countryEng'], 'each', 'rule' => ['integer']],            
+            [['rubricatorIds'], 'each', 'rule' => ['integer']],            
             [['logoFile', 'company', 'companyEng'], 'string', 'max' => 255],
             [['exhibitionId'], 'exist', 'skipOnError' => true, 'targetClass' => Exhibition::class, 'targetAttribute' => ['exhibitionId' => 'id']],
         ];
