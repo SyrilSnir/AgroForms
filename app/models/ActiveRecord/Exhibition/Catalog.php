@@ -42,7 +42,10 @@ class Catalog extends ActiveRecord
      * @var string
      */
     private $_oldFilePath = '';
-          
+    
+    private $addressList = [];
+
+
     /**
      * {@inheritdoc}
      */
@@ -62,7 +65,7 @@ class Catalog extends ActiveRecord
         $model->description_eng = trim($form->descriptionEng);
         $model->_oldFilePath = trim($form->logoFile);
         $model->logo_file = basename($model->_oldFilePath);
-        $model->addresses = $model->getAddressData($form->country, $form->countryEng);
+        $model->addressList = $model->getAddressData($form->country, $form->countryEng);
         $model->rubrics = $form->rubricatorIds;
         $model->stand = $form->stand;
         return $model;
@@ -174,8 +177,8 @@ class Catalog extends ActiveRecord
 
     public function _actionsAfterInsert() 
     {        
-        if (!empty($this->addresses)) {
-            foreach ($this->addresses as $countryId => $el) {
+        if (!empty($this->addressList)) {
+            foreach ($this->addressList as $countryId => $el) {
                $form = new CatalogAddressForm();
                $form->setAttributes($el);
                $model = CatalogAddresses::create($this->id, $countryId,$form);
