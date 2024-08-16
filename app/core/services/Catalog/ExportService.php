@@ -189,7 +189,6 @@ class ExportService
     private function putCatalogData(array $catalogElements)
     {
         $rowIndex = 2;
-        $testLimiter = 5;
         foreach ($catalogElements as $el) {
             for($colIdx = 1; $colIdx <= $this->columnsCount; $colIdx++) {
                 $rowData = '';
@@ -295,7 +294,6 @@ class ExportService
                 $this->activeSheet->setCellValue([$colIdx, $rowIndex], $rowData);
             }
             $rowIndex++;
-            if ($testLimiter <= $rowIndex) break;
         }
         return $rowIndex;
     }
