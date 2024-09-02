@@ -145,6 +145,20 @@ class Catalog extends ActiveRecord
         return $this->hasMany(Rubricator::class, ['id' => 'rubric_id'])
                 ->viaTable($junctionTableName, ['catalog_id' => 'id']);
     }
+
+ 
+    /**
+     * Gets query for [[Rubrics]].
+     *
+     * @return ActiveQuery
+     */
+    public function getCountries()
+    {
+        $junctionTableName = CatalogAddresses::tableName();        
+        return $this->hasMany(Country::class, ['id' => 'country_id'])
+                ->viaTable($junctionTableName, ['catalog_id' => 'id']);
+    }
+
     
     public function beforeDelete()
     {
