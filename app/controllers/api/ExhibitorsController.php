@@ -9,7 +9,6 @@ use app\models\ActiveRecord\Nomenclature\Rubricator;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-use function mb_substr;
 
 /**
  * Description of ExhibitorsController
@@ -32,6 +31,7 @@ class ExhibitorsController extends JsonController
     public function actionIndex($exhibitionId)
     {
         $result = Catalog::find(['exhibition_id' => $exhibitionId])
+                ->orderBy(['company' => SORT_ASC, 'company_eng' => SORT_ASC])
                 ->joinWith(['countries','rubrics'])->asArray()->all();
         $countriesList = [];
         $result = array_map(function($el) use (&$countriesList){
@@ -59,7 +59,6 @@ class ExhibitorsController extends JsonController
             }
             return $el;
         },$result);
-        ArrayHelper::multisort($result, ['company', 'company_eng'],SORT_ASC, SORT_STRING | SORT_FLAG_CASE);
         $rusCapitalLetters = array_unique(ArrayHelper::getColumn($result, 'capital_letter'));
         $engCapitalLetters = array_unique(ArrayHelper::getColumn($result, 'capital_letter_eng'));
         $russianAlphabet = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','э','ю','я'];
