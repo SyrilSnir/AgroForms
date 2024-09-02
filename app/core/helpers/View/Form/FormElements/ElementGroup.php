@@ -204,7 +204,10 @@ class ElementGroup extends FormElement implements CountableElementInterface
             $fieldId = $element->getFieldId();
             if (key_exists($fieldId, $this->valuesList)) {
                 $val = $this->valuesList[$fieldId];
-            }             
+            }
+            if(empty($val) && $element->isDeleted()) {
+                continue;
+            }
             $result.= $element->renderHtml($val);
         }
         return $result;
@@ -228,6 +231,9 @@ class ElementGroup extends FormElement implements CountableElementInterface
             $fieldId = $element->getFieldId();
             if (key_exists($fieldId, $this->valuesList)) {
                 $val = $this->valuesList[$fieldId];
+            }
+            if(empty($val) && $element->isDeleted()) {
+                continue;
             }            
             $result.= $element->renderPDF($val);
         }        
