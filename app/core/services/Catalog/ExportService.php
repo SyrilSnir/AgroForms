@@ -38,7 +38,7 @@ class ExportService
      */
     private $xlsWriter;
     
-    private $columnsCount = 31;
+    private $columnsCount = 32;
     
     public function __construct(Spreadsheet $spreadSheet)
     {
