@@ -182,6 +182,9 @@ class Catalog extends ActiveRecord
     
     public function getLogoUrl(): string
     {
+        if (!$this->logo_file) {
+            return '';
+        }
         return Yii::getAlias('@catalogUrl') . '/' .$this->id 
                 . '/' . $this->logo_file;
     }   

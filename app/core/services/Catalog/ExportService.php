@@ -286,12 +286,16 @@ class ExportService
                     $rowData = '('. mb_substr(trim(mb_convert_case($el->company_eng, MB_CASE_TITLE)),0,1) . ')';
                     break;
                 case CatalogColumns::COLUMN_LOGO_FILE:
-                    $hyperLink = true;
-                    $rowData = Url::to($el->getLogoUrl(),'https');
+                    if ($el->logo_file) {
+                        $hyperLink = true;
+                        $rowData = Url::to($el->getLogoUrl(),'https');
+                    }
                     break;
                 case CatalogColumns::COLUMN_CATALOG_FILE:
-                    $hyperLink = true;
-                    $rowData = Url::to($el->catalog_file,'https');
+                    if ($el->catalog_file) {
+                        $hyperLink = true;
+                        $rowData = Url::to($el->catalog_file,'https');                        
+                    }                    
                     break;
                 case CatalogColumns::COLUMN_BRANDS:
                     $rowData = '';
