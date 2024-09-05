@@ -22,6 +22,7 @@ class CatalogForm extends ManageForm
     public $country;
     public $countryEng;
     public $logoFile;
+    public $catalogFile;
     public $rubricatorIds;
     public $stand;
     /**
@@ -56,7 +57,7 @@ class CatalogForm extends ManageForm
             [['description', 'descriptionEng','stand'], 'string'],
             [['rubricatorIds', 'country', 'countryEng'], 'default', 'value' => []],
             [['rubricatorIds'], 'each', 'rule' => ['integer']],            
-            [['logoFile', 'company', 'companyEng'], 'string', 'max' => 255],
+            [['logoFile','catalogFile', 'company', 'companyEng'], 'string', 'max' => 255],
             [['exhibitionId'], 'exist', 'skipOnError' => true, 'targetClass' => Exhibition::class, 'targetAttribute' => ['exhibitionId' => 'id']],
         ];
     } 

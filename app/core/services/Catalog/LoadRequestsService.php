@@ -97,6 +97,9 @@ class LoadRequestsService
                 case BaseFormHelper::SITE_LOGO:
                     $result['logoFile'] = $element['file'];
                     break;                  
+                case BaseFormHelper::CATALOG_LOGO:
+                    $result['catalogFile'] = $element['file'];
+                    break;                  
                 case BaseFormHelper::RUBRICATOR:
                     $result['rubricatorIds'] = $this->getRubricatorIds($element['value']);
                     break;

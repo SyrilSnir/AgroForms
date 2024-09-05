@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property int $request_id Номер заявки
  * @property int $exhibition_id Выставка
  * @property string|null $logo_file Файл логотипа
+ * @property string|null $catalog_file Файл для каталога
  * @property string|null $company Компания
  * @property string|null $company_eng Компания (ENG)
  * @property string|null $description Описание
@@ -66,6 +67,7 @@ class Catalog extends ActiveRecord
         $model->description = trim($form->description);
         $model->description_eng = trim($form->descriptionEng);
         $model->_oldFilePath = trim($form->logoFile);
+        $model->catalog_file = trim($form->catalogFile);
         $model->logo_file = basename($model->_oldFilePath);
         $model->addressList = $model->getAddressData($form->country, $form->countryEng);
         $model->rubricsList = $form->rubricatorIds;
@@ -182,10 +184,13 @@ class Catalog extends ActiveRecord
     {
         return Yii::getAlias('@catalogUrl') . '/' .$this->id 
                 . '/' . $this->logo_file;
-    }
+    }   
     
     public function getLogoPath(): string
     {
+        if (empty($this->logo_file)) {
+            return '';
+        }
         return Yii::getAlias('@catalogPath') . DIRECTORY_SEPARATOR .$this->id . 
                 DIRECTORY_SEPARATOR . $this->logo_file;
     }    

@@ -175,16 +175,23 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
     }
     
     public function getCatalogData(array $valuesList): array
-    {        
+    {       
+        if ($this->field->label->code == BaseFormHelper::SITE_LOGO) {
+            $label = BaseFormHelper::SITE_LOGO;
+        } else {
+            $label = BaseFormHelper::CATALOG_LOGO;
+        }
         $attachedFiles = AttachedFilesReadRepository::findByFieldAndRequest($this->field->id, $this->requestId);
         if (!empty($attachedFiles)) {
             $attachedFiles[0]->configureFileUploadParameters();
-            $filePath = $attachedFiles[0]->getUploadedFilePath('file_name');
+            $filePath = ($label == BaseFormHelper::SITE_LOGO) ? 
+                                $attachedFiles[0]->getUploadedFilePath('file_name'):
+                                $attachedFiles[0]->getUploadedFileUrl('file_name');
         } else {
             $filePath = '';
-        }
+        }       
         return [
-            'label' => BaseFormHelper::SITE_LOGO,
+            'label' => $label,
             'file' => $filePath,
         ];
     }

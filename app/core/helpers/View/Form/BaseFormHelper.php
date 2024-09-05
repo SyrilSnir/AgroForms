@@ -18,6 +18,7 @@ use Yii;
 abstract class BaseFormHelper
 {
     const SITE_LOGO = 'logo-img';
+    const CATALOG_LOGO = 'logo-catalog';
     const COMPANY_NAME_RUS = 'company-rus';
     const COMPANY_NAME_ENG = 'company-eng';
     const COMPANY_INFORMATION_RUS = 'company-info-rus';    
@@ -124,6 +125,7 @@ abstract class BaseFormHelper
     {
         return [
             self::SITE_LOGO,
+            self::CATALOG_LOGO,
             self::COMPANY_NAME_RUS,
             self::COMPANY_NAME_ENG,
             self::COMPANY_INFORMATION_RUS,

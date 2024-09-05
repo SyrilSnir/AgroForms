@@ -10,6 +10,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use yii\helpers\Url;
 
 /**
  * Description of ExportService
@@ -168,8 +169,11 @@ class ExportService
                 case CatalogColumns::COLUMN_FIRST_LETTER_ENG:
                     $title = 'First letter';
                     break;
-                case CatalogColumns::COLUMN_IS_LOGO_PRESENTED:
-                    $title = 'Есть логотип';
+                case CatalogColumns::COLUMN_LOGO_FILE:
+                    $title = 'Логотип';
+                    break;
+                case CatalogColumns::COLUMN_CATALOG_FILE:
+                    $title = 'Файл для каталога';
                     break;
                 case CatalogColumns::COLUMN_BRANDS:
                     $title = 'Бренды';
@@ -192,7 +196,8 @@ class ExportService
         foreach ($catalogElements as $el) {
             for($colIdx = 1; $colIdx <= $this->columnsCount; $colIdx++) {
                 $rowData = '';
-                switch ($colIdx) {
+                $hyperLink = false;
+                switch ($colIdx) {                    
                 case CatalogColumns::COLUMN_NAME:
                     $rowData = $el->company;
                     break;
@@ -280,8 +285,13 @@ class ExportService
                 case CatalogColumns::COLUMN_FIRST_LETTER_ENG:
                     $rowData = '('. mb_substr(trim(mb_convert_case($el->company_eng, MB_CASE_TITLE)),0,1) . ')';
                     break;
-                case CatalogColumns::COLUMN_IS_LOGO_PRESENTED:
-                    $rowData = $el->logo_file ? 'Да' : 'Нет';
+                case CatalogColumns::COLUMN_LOGO_FILE:
+                    $hyperLink = true;
+                    $rowData = Url::to($el->getLogoUrl(),'https');
+                    break;
+                case CatalogColumns::COLUMN_CATALOG_FILE:
+                    $hyperLink = true;
+                    $rowData = Url::to($el->catalog_file,'https');
                     break;
                 case CatalogColumns::COLUMN_BRANDS:
                     $rowData = '';
@@ -291,7 +301,11 @@ class ExportService
                     break;                    
                     
                 }
+                if ($hyperLink) {
+                    $this->activeSheet->getCell([$colIdx, $rowIndex])->getHyperlink()->setUrl($rowData);
+                }
                 $this->activeSheet->setCellValue([$colIdx, $rowIndex], $rowData);
+                
             }
             $rowIndex++;
         }

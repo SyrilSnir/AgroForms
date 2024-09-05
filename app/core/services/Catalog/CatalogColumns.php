@@ -56,8 +56,9 @@ interface CatalogColumns
     const COLUMN_FIRST_LETTER = 28;
     const COLUMN_FIRST_LETTER_ENG = 29;
     
-    const COLUMN_IS_LOGO_PRESENTED = 30;
+    const COLUMN_LOGO_FILE = 30;
+    const COLUMN_CATALOG_FILE = 31;
                
-    const COLUMN_BRANDS = 31;
-    const COLUMN_BRANDS_ENG = 32; 
+    const COLUMN_BRANDS = 32;
+    const COLUMN_BRANDS_ENG = 33; 
 }
