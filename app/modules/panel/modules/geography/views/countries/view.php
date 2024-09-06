@@ -1,5 +1,6 @@
 <?php
 
+use app\core\helpers\Utils\users\RolesHelper;
 use app\models\ActiveRecord\Geography\Region;
 use app\models\Data\Operations;
 use yii\data\ActiveDataProvider;
@@ -12,6 +13,7 @@ use yii\widgets\DetailView;
 /* @var $modificationsProvider ActiveDataProvider */
 
 $this->title = $model->name;
+$user = RolesHelper::getUser();
 ?>
 <div class="city-view">
     <p>
