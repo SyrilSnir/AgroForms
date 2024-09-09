@@ -199,7 +199,7 @@ trait RequestViewTrait
             $sheet->setCellValue([2,$vIndex], $request->company->name);
             $sheet->setCellValue([3,$vIndex], $request->user->email);
             $sheet->setCellValue([4,$vIndex], RequestStatusHelper::getStatusName($request->status));
-            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $langCode, $request);
+            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $request->contract,$langCode, $request);
             $fieldsList = $formHelper->getElementsForExcel();
             foreach ($fieldsList as $field) {
                 if (is_array($field)) {
