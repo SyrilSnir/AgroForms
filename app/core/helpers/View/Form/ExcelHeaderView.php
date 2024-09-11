@@ -63,6 +63,10 @@ class ExcelHeaderView
         return !empty($this->_childrenElements);
     }
     
+    /**
+     * 
+     * @return ExcelHeaderView[]
+     */
     public function getChildren(): array
     {
         return $this->_childrenElements;

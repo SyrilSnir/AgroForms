@@ -143,6 +143,7 @@ trait RequestViewTrait
         $sheet->setTitle('Данные по заявкам');
         $sheet->setCellValue([1,1],$form->getHeaderName());
         $headerElements = $formHelper->getExcelHeader(8);
+    //    dump($headerElements); die;
         $headerHeight = $this->getExcelHeaderHeight($headerElements);        
         $cellsCount = $this->prepareExcelHeader($sheet, $headerElements, $headerHeight);
         $rowsCount = $this->prepareExcelBody($sheet, $requests, $headerHeight + 2);
@@ -176,7 +177,6 @@ trait RequestViewTrait
                 }
                 if ($element->isMultiColumns()) {
                     $groupColumn = $baseHeaderRowIndex - 1;
-
                 }
                 $endIndex = $startedIndex + $lenght - 1;
                 $sheet->mergeCells([1,$groupColumn, 7, $groupColumn]); 
@@ -184,7 +184,17 @@ trait RequestViewTrait
                 $sheet->setCellValue([$startedIndex,$groupColumn], $element->getTitle());                
                 $children = $element->getChildren();
                 foreach ($children as $childElement) {
-                    $sheet->setCellValue([$startedIndex++,$groupColumn + 1], $childElement->getTitle());
+                    /** @var ExcelHeaderView $childElement */
+                    if ($childElement->isMulticolumns()) {
+                        $cLenght = $childElement->getLength();
+                        $sheet->mergeCells([$startedIndex,$groupColumn + 1, $startedIndex + $cLenght - 1, $groupColumn + 1]);
+                        $sheet->setCellValue([$startedIndex,$groupColumn + 1 ], $childElement->getTitle());                          
+                        foreach ($childElement->getChildren() as $el) {
+                            $sheet->setCellValue([$startedIndex++,$groupColumn + 2], $el->getTitle());    
+                        }
+                    } else {
+                        $sheet->setCellValue([$startedIndex++,$groupColumn + 1], $childElement->getTitle());
+                    }
                 }                
             } else {
                 $sheet->setCellValue([$startedIndex++,$headerHeight + 1], $element->getTitle());
@@ -203,6 +213,11 @@ trait RequestViewTrait
             $el = $headerElement['element'];
             if ($el->isGroup()) {
                 $hasGroups = true;
+                foreach ($el->getChildren() as $child)  {
+                    if ($child->isMultiColumns()) {
+                        $hasMultiple = true;
+                    }
+                }
             }
             if ($el->isMultiColumns()) {
                 $hasMultiple = true;
@@ -224,6 +239,7 @@ trait RequestViewTrait
         $vIndex = $defaultVIndex;
         foreach ($requests as $request) {           
             $renderedList = $this->getRenderedFieldsForRow($request);  
+          //  dump($renderedList); die;
             for ($iterator = 0; $iterator <= $renderedList['maxIterator']; $iterator++) {                
                 $hIndex = $defaultHIndex;
                 $this->renderRow($sheet, $request, $vIndex);
@@ -235,11 +251,13 @@ trait RequestViewTrait
                                 $hIndex++;
                         }
                     }
-                        else if (key_exists('rows', $field)) {                            
-                            foreach($field['rows'][$iterator] as $rowData) {
-                                $sheet->setCellValue([$hIndex,$vIndex], $rowData);
-                                $hIndex++;
-                        }
+                        else if (key_exists('rows', $field)) {  
+                            if (count($field['rows']) >= $iterator + 1) {
+                                foreach($field['rows'][$iterator] as $rowData) {
+                                    $sheet->setCellValue([$hIndex,$vIndex], $rowData);
+                                    $hIndex++;
+                                }
+                            }
                     } 
                 }                
                 else {

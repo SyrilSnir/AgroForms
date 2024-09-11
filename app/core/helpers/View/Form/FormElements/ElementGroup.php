@@ -103,7 +103,7 @@ class ElementGroup extends FormElement implements CountableElementInterface
         $result = new ExcelHeaderView($this->getField()->name, $this->getLenght(),true);
         foreach ($this->formElements as $element) {
             if ($element->isExcelExport()) {
-                $result->addChild(new ExcelHeaderView($element->getField()->name, $element->getLenght()));
+                $result->addChild($element->getExcelHeader());
             }
         }
         return $result;

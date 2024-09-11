@@ -284,6 +284,7 @@ class FormHelper extends BaseFormHelper
             'elements' => []
         ];
         foreach ($this->formElements as $element) {
+            $groupElement = false;
             if (!$element->isExcelExport() || $element->isDeleted()) {
                 continue;            
             }
@@ -300,7 +301,22 @@ class FormHelper extends BaseFormHelper
                     $maxIterator = $currentIterator;
                 }                    
             }
-            array_push($result['elements'], $excelValue);            
+            if (is_array($excelValue) && key_exists('group', $excelValue)) {
+                $groupElement = true;                
+                foreach ($excelValue['group'] as $element) {
+                    if (is_array($element) && key_exists('rows', $element)) {
+                        $currentIterator = (count($element['rows']) - 1);
+                        if($maxIterator < $currentIterator) {
+                            $result['maxIterator'] = $currentIterator;
+                            $maxIterator = $currentIterator;
+                        }                    
+                        array_push($result['elements'], $element);                                          
+                    }
+                }
+            }
+            if (!$groupElement) {
+                array_push($result['elements'], $excelValue);            
+            }
         }
         return $result;
     }

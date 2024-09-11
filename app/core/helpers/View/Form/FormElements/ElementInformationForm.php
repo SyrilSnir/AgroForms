@@ -2,6 +2,8 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\ExcelHeaderView;
+
 /**
  * Description of ElementInformationForm
  *
@@ -9,6 +11,28 @@ namespace app\core\helpers\View\Form\FormElements;
  */
 class ElementInformationForm extends FormElement implements CountableElementInterface
 {    
+    public function getExcelHeader(): ExcelHeaderView
+    {
+        $result = new ExcelHeaderView($this->getField()->name, $this->getLenght(),false,true);
+        $result->addChild(new ExcelHeaderView('Сайт',1));
+        $result->addChild(new ExcelHeaderView('Email',1));
+        $result->addChild(new ExcelHeaderView('Телефон',1));
+        return $result;
+    }
+    
+    public function getExcelValue(array $valuesList = []): array|string
+    {    
+        if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {
+            return ['rows' =>  $valuesList['value']];
+        }
+        return [];
+    }
+    
+    public function getLenght(): int
+    {
+        return 3;
+    }
+    
     protected function transformData(array $fieldList, array $valuesList): array
     {
         $data = parent::transformData($fieldList, $valuesList);

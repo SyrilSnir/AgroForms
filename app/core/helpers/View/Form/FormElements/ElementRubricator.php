@@ -34,6 +34,18 @@ class ElementRubricator extends FormElement implements CountableElementInterface
         return $unitPrice * ($blocksCount - $freeCount);
     }
 
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        $result = '';
+        if (!key_exists('value', $valuesList)) {
+            return $result;
+        }
+        foreach ($valuesList['value'] as $element) {
+            $result.= $element['name'] . ',';
+        }
+        return trim($result,',');
+    }
+    
     public function renderHtml(array $valuesList = []): string
     {
         if (key_exists('value', $valuesList)) {
