@@ -19,22 +19,29 @@ class ExcelHeaderView
      * @var int
      */
     private $_length;
+    
     /**
      * 
      * @var bool
      */
-    private $_hasChilden;
+    private $_isGroup;
+    /**
+     * 
+     * @var bool
+     */
+    private $_isMultiColumns;
     /**
      * 
      * @var self[]
      */
     private $_childrenElements = [];
     
-    public function __construct(string $_title, int $_length, bool $_hasCildren = false)
+    public function __construct(string $_title, int $_length, bool $isGroup = false,$isMultiColumns = false)
     {
         $this->_title = $_title;
         $this->_length = $_length;
-        $this->_hasChilden = $_hasCildren;
+        $this->_isGroup = $isGroup;
+        $this->_isMultiColumns = $isMultiColumns;
     }
     public function getTitle(): string
     {
@@ -60,5 +67,16 @@ class ExcelHeaderView
     {
         return $this->_childrenElements;
     }
+
+    public function isGroup(): bool 
+    {
+        return $this->_isGroup;
+    }
+    
+    public function isMultiColumns(): bool
+    {
+        return $this->_isMultiColumns;
+    }
+
 
 }

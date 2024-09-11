@@ -176,7 +176,7 @@ abstract class FormElement implements FormElementInterface
         $priceModificator->setFormElement($this);
         array_push($this->priceModificators,$priceModificator);
     }
-    
+
     public function getLenght(): int 
     {
         if ($this->isExcelExport()) {

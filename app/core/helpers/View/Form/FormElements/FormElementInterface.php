@@ -37,8 +37,8 @@ interface FormElementInterface
     
     public function isDeleted(): bool;
     
-    public function getLenght(): int;
-    
+    public function getLenght(): int;   
+
     public function isGroup():bool;
     
     public function getExcelHeader(): ExcelHeaderView;

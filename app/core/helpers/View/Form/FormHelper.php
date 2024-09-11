@@ -278,17 +278,31 @@ class FormHelper extends BaseFormHelper
    
     public function getElementsForExcel():array
     {
-        $result = [];
+        $maxIterator = 0;
+        $result = [
+            'maxIterator' => $maxIterator,
+            'elements' => []
+        ];
         foreach ($this->formElements as $element) {
-            if (!$element->isExcelExport()) {
+            if (!$element->isExcelExport() || $element->isDeleted()) {
                 continue;            
             }
             $fieldId = $element->getFieldId();
             $val = [];
             if (key_exists($fieldId, self::$valuesList[$this->request->id])) {
                 $val = self::$valuesList[$this->request->id][$fieldId];
+                $excelValue = $element->getExcelValue($val);
+                if (is_array($excelValue) && key_exists('rows', $excelValue)) {
+                    $currentIterator = (count($excelValue['rows']) - 1);
+                    if($maxIterator < $currentIterator) {
+                        $result['maxIterator'] = $currentIterator;
+                        $maxIterator = $currentIterator;
+                    }                    
+                }
+                array_push($result['elements'], $excelValue); 
             } 
-            array_push($result, $element->getExcelValue($val));            
+            
+            
         }
         return $result;
     }
@@ -514,6 +528,7 @@ class FormHelper extends BaseFormHelper
         $currentIndex = $startedIndex;
         $result = [];
         foreach ($this->formElements as $element) {
+            if (!$element->isExcelExport() || $element->isDeleted()) continue;
             $elementLenght = $element->getLenght();
             if ($elementLenght > 0) {
                 array_push($result, [

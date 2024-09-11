@@ -2,6 +2,7 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\ExcelHeaderView;
 use app\models\ActiveRecord\Contract\Contracts;
 
 /**
@@ -16,6 +17,16 @@ class ElementBadge  extends FormElement implements CountableElementInterface
      * @var Contracts
      */
     private $contract;
+    
+    public function getExcelHeader(): ExcelHeaderView
+    {
+        $result = new ExcelHeaderView($this->getField()->name, $this->getLenght(),false,true);
+        $result->addChild(new ExcelHeaderView('Имя',1));
+        $result->addChild(new ExcelHeaderView('Отчество',1));
+        $result->addChild(new ExcelHeaderView('Фамилия',1));
+        $result->addChild(new ExcelHeaderView('Компания',1));
+        return $result;
+    }    
     
     protected function transformData(array $fieldList, array $valuesList): array
     {
@@ -40,6 +51,11 @@ class ElementBadge  extends FormElement implements CountableElementInterface
             $data['value'] = $valuesList['value'];
         }        
         return $data;
+    }   
+    
+    public function getLenght(): int
+    {
+        return 4;
     }
     public function getPrice(array $valuesList = []): int
     {
@@ -72,6 +88,14 @@ class ElementBadge  extends FormElement implements CountableElementInterface
         return '';
     }
 
+    public function getExcelValue(array $valuesList = []): array|string
+    {    
+        if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {
+            return ['rows' =>  $valuesList['value']];
+        }
+        return [];
+    }
+    
     public function renderPDF(array $valuesList = []): string
     {
         if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {

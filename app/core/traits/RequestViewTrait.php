@@ -130,7 +130,8 @@ trait RequestViewTrait
                     [
                         BaseRequest::STATUS_DRAFT,
                         BaseRequest::STATUS_REJECTED,
-                        BaseRequest::STATUS_DELETE
+                        BaseRequest::STATUS_DELETE,
+                        BaseRequest::STATUS_ACCEPTED
                     ]
                         ])
                 ->all();
@@ -142,10 +143,11 @@ trait RequestViewTrait
         $sheet = $xls->getActiveSheet();
         $sheet->setTitle('Данные по заявкам');
         $sheet->setCellValue([1,1],$form->getHeaderName());
-        $cellsCount = $this->prepareExcelHeader($sheet, $formHelper);
-        $rowsCount = count($requests);
-        $this->prepareExcelBody($sheet, $requests);
-        $this->postprocessExcel($sheet,$cellsCount,$rowsCount);
+        $headerElements = $formHelper->getExcelHeader(5);
+        $headerHeight = $this->getExcelHeaderHeight($headerElements);        
+        $cellsCount = $this->prepareExcelHeader($sheet, $headerElements, $headerHeight);
+        $rowsCount = $this->prepareExcelBody($sheet, $requests, $headerHeight + 2);
+        $this->postprocessExcel($sheet,$headerHeight + 1,$cellsCount,$rowsCount - 1);
         
         $objWriter = new Xlsx($xls);
         
@@ -153,70 +155,123 @@ trait RequestViewTrait
         die();
     }
     
-    protected function prepareExcelHeader(Worksheet $sheet,BaseFormHelper $formHelper): int
+    protected function prepareExcelHeader(Worksheet $sheet,array $headerElements,int $headerHeight): int
     {
-        $headerVIndex = 3;
-        $headerGroupVIndex = $headerVIndex - 1;
-        $sheet->setCellValue([1,$headerVIndex], t('Number of contract'));
-        $sheet->setCellValue([2,$headerVIndex], t('Company', 'company'));
-        $sheet->setCellValue([3,$headerVIndex], t('Member email','user'));
-        $sheet->setCellValue([4,$headerVIndex], t('Application status'));
-        $headerElements = $formHelper->getExcelHeader(5);
+        $baseHeaderRowIndex = $headerHeight + 1;
+        $sheet->setCellValue([1,$baseHeaderRowIndex], t('Number of contract'));
+        $sheet->setCellValue([2,$baseHeaderRowIndex], t('Company', 'company'));
+        $sheet->setCellValue([3,$baseHeaderRowIndex], t('Member email','user'));
+        $sheet->setCellValue([4,$baseHeaderRowIndex], t('Application status'));
         $cellsCount = 0;
-        foreach ($headerElements as $headerElement) {
+        foreach ($headerElements as $headerElement) {            
             /** @var ExcelHeaderView $element */            
             $element = $headerElement['element'];
             $startedIndex = $headerElement['startedIndex'];
             $lenght = $element->getLength();
             if($element->hasChildren()) {
+                if ($element->isGroup()) {
+                    $groupColumn = $headerHeight === 3 ? $baseHeaderRowIndex - 2 : $baseHeaderRowIndex - 1;
+                }
+                if ($element->isMultiColumns()) {
+                    $groupColumn = $baseHeaderRowIndex - 1;
+
+                }
                 $endIndex = $startedIndex + $lenght - 1;
-                $sheet->mergeCells([$startedIndex,$headerGroupVIndex, $endIndex, $headerGroupVIndex]);                
-                $sheet->setCellValue([$startedIndex,$headerGroupVIndex], $element->getTitle());
+                $sheet->mergeCells([1,$groupColumn, 4, $groupColumn]); 
+                $sheet->mergeCells([$startedIndex,$groupColumn, $endIndex, $groupColumn]); 
+                $sheet->setCellValue([$startedIndex,$groupColumn], $element->getTitle());                
                 $children = $element->getChildren();
                 foreach ($children as $childElement) {
-                    $sheet->setCellValue([$startedIndex++,$headerVIndex], $childElement->getTitle());
-                }
+                    $sheet->setCellValue([$startedIndex++,$groupColumn + 1], $childElement->getTitle());
+                }                
             } else {
-                $sheet->setCellValue([$startedIndex,$headerVIndex], $element->getTitle());
+                $sheet->setCellValue([$startedIndex,$element->getCols()], $element->getTitle());
             }
             $cellsCount += $lenght;
         }
         return $cellsCount;
     }
     
-    protected function prepareExcelBody(Worksheet $sheet, $requests) 
+    protected function getExcelHeaderHeight(array $headerElements) : int 
     {
-        $defaultHIndex = 5;
-        $defaultVIndex = 4;
-        
-        $vIndex = $defaultVIndex;
-        $langCode = Yii::$app->language;
-        $userIdentity = Yii::$app->user->getIdentity();        
-        foreach ($requests as $request) {
-            $hIndex = $defaultHIndex;
-            /** @var Request $request */
-            $sheet->setCellValue([1,$vIndex], $request->contract->number);
-            $sheet->setCellValue([2,$vIndex], $request->company->name);
-            $sheet->setCellValue([3,$vIndex], $request->user->email);
-            $sheet->setCellValue([4,$vIndex], RequestStatusHelper::getStatusName($request->status));
-            $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $request->contract,$langCode, $request);
-            $fieldsList = $formHelper->getElementsForExcel();
-            foreach ($fieldsList as $field) {
-                if (is_array($field)) {
-                    foreach($field as $groupField) {
-                        $sheet->setCellValue([$hIndex,$vIndex], $groupField);
-                        $hIndex++;
-                    }
-                } else {
-                    $sheet->setCellValue([$hIndex,$vIndex], $field);
-                    $hIndex++;
-                }
+        $hasGroups = false;
+        $hasMultiple = false;
+        foreach ($headerElements as $headerElement) {
+        /** @var ExcelHeaderView $el */          
+            $el = $headerElement['element'];
+            if ($el->isGroup()) {
+                $hasGroups = true;
             }
-            $vIndex++;
-        }        
+            if ($el->isMultiColumns()) {
+                $hasMultiple = true;
+            }
+        }
+        if ($hasGroups && $hasMultiple) {
+            return 3;
+        }
+        if ($hasGroups || $hasMultiple) {
+            return 2;
+        }
+        return 1;
     }
     
-    protected function postprocessExcel(Worksheet $sheet, int $cellsCount,int $rowsCount) 
+    protected function prepareExcelBody(Worksheet $sheet, $requests, $defaultVIndex = 4):int 
+    {
+        $defaultHIndex = 5;
+        $renderedList = [];
+        $vIndex = $defaultVIndex;
+        foreach ($requests as $request) {           
+            $renderedList = $this->getRenderedFieldsForRow($request);  
+            for ($iterator = 0; $iterator <= $renderedList['maxIterator']; $iterator++) {                
+                $hIndex = $defaultHIndex;
+                $this->renderRow($sheet, $request, $vIndex);
+                foreach ($renderedList['elements'] as $field) {
+                    if (is_array($field)) {
+                        if (key_exists('group', $field)) {
+                            foreach($field['group'] as $groupField) {
+                                $sheet->setCellValue([$hIndex,$vIndex], ($iterator === 0) ? $groupField : '');
+                                $hIndex++;
+                        }
+                    }
+                        else if (key_exists('rows', $field)) {                            
+                            foreach($field['rows'][$iterator] as $rowData) {
+                                $sheet->setCellValue([$hIndex,$vIndex], $rowData);
+                                $hIndex++;
+                        }
+                    } 
+                }                
+                else {
+                    $sheet->setCellValue([$hIndex,$vIndex], $field);
+                    $hIndex++;
+                }                        
+                    }
+                    $vIndex++;
+                }
+        }
+        return $vIndex;                
+    }
+    
+    protected function renderRow(Worksheet $sheet, Request $request, int $vIndex) 
+    {
+        $sheet->setCellValue([1,$vIndex], $request->contract->number);
+        $sheet->setCellValue([2,$vIndex], $request->company->name);
+        $sheet->setCellValue([3,$vIndex], $request->user->email);
+        $sheet->setCellValue([4,$vIndex], RequestStatusHelper::getStatusName($request->status));        
+    }
+    
+    protected function getRenderedFieldsForRow(Request $request) :array
+    {
+        $langCode = Yii::$app->language;
+        $contract = Contracts::createDummy();
+        $userIdentity = Yii::$app->user->getIdentity();  
+        $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $contract,$langCode, $request); 
+        $fieldsList = $formHelper->getElementsForExcel();
+        
+        return $fieldsList;
+    }
+
+
+    protected function postprocessExcel(Worksheet $sheet,int $headerVIndex, int $cellsCount,int $rowsCount) 
     {
         $borderStyle = [
                         'borders' => [
@@ -230,9 +285,9 @@ trait RequestViewTrait
         $sheet->mergeCells([1,1,$cellsCount+4, 1]);
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A1')->getFont()->setBold(true);
-        $sheet->getStyle([1,2,$cellsCount+4, $rowsCount+3])->applyFromArray($borderStyle);
-        $sheet->getStyle([1,2,$cellsCount+4,3])->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB($headerBGColor);
-        $sheet->getStyle([1,2,$cellsCount+4,3])->getFont()->setBold(true);
+        $sheet->getStyle([1,2,$cellsCount+4, $rowsCount ])->applyFromArray($borderStyle);
+        $sheet->getStyle([1,2,$cellsCount+4,$headerVIndex])->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB($headerBGColor);
+        $sheet->getStyle([1,2,$cellsCount+4,$headerVIndex])->getFont()->setBold(true);
         foreach ($sheet->getColumnIterator() as $column) {
             $sheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
         }        

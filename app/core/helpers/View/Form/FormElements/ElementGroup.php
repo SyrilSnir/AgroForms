@@ -111,7 +111,9 @@ class ElementGroup extends FormElement implements CountableElementInterface
     
     public function getExcelValue(array $valuesList = []): array|string
     {
-        $result = [];
+        $result = [
+            'group' => [],
+        ];
         foreach ($this->formElements as $element) {
             if ($element->isExcelExport()) {            
                 $fieldId = $element->getFieldId();
@@ -119,7 +121,7 @@ class ElementGroup extends FormElement implements CountableElementInterface
                 if (key_exists($fieldId, $this->valuesList)) {
                     $val = $this->valuesList[$fieldId];
                 }            
-                array_push($result, $element->getExcelValue($val));
+                array_push($result['group'], $element->getExcelValue($val));
             }
         }
         return $result;
