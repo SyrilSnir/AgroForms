@@ -142,7 +142,7 @@ trait RequestViewTrait
         $sheet = $xls->getActiveSheet();
         $sheet->setTitle('Данные по заявкам');
         $sheet->setCellValue([1,1],$form->getHeaderName());
-        $headerElements = $formHelper->getExcelHeader(5);
+        $headerElements = $formHelper->getExcelHeader(8);
         $headerHeight = $this->getExcelHeaderHeight($headerElements);        
         $cellsCount = $this->prepareExcelHeader($sheet, $headerElements, $headerHeight);
         $rowsCount = $this->prepareExcelBody($sheet, $requests, $headerHeight + 2);
@@ -158,11 +158,12 @@ trait RequestViewTrait
     {
         $baseHeaderRowIndex = $headerHeight + 1;
         $sheet->setCellValue([1,$baseHeaderRowIndex], t('Number of contract'));
-        $sheet->setCellValue([2,$baseHeaderRowIndex], t('Stand`s square, m2'));
-        $sheet->setCellValue([3,$baseHeaderRowIndex], t('Рег. взнос, шт.'));
-        $sheet->setCellValue([4,$baseHeaderRowIndex], t('Company', 'company'));
-        $sheet->setCellValue([5,$baseHeaderRowIndex], t('Member email','user'));
-        $sheet->setCellValue([6,$baseHeaderRowIndex], t('Application status'));
+        $sheet->setCellValue([2,$baseHeaderRowIndex], t('Stand`s number'));
+        $sheet->setCellValue([3,$baseHeaderRowIndex], t('Stand`s square, m2'));
+        $sheet->setCellValue([4,$baseHeaderRowIndex], t('Рег. взнос, шт.'));
+        $sheet->setCellValue([5,$baseHeaderRowIndex], t('Company', 'company'));
+        $sheet->setCellValue([6,$baseHeaderRowIndex], t('Member email','user'));
+        $sheet->setCellValue([7,$baseHeaderRowIndex], t('Application status'));
         $cellsCount = 0;
         foreach ($headerElements as $headerElement) {            
             /** @var ExcelHeaderView $element */            
@@ -178,7 +179,7 @@ trait RequestViewTrait
 
                 }
                 $endIndex = $startedIndex + $lenght - 1;
-                $sheet->mergeCells([1,$groupColumn, 4, $groupColumn]); 
+                $sheet->mergeCells([1,$groupColumn, 7, $groupColumn]); 
                 $sheet->mergeCells([$startedIndex,$groupColumn, $endIndex, $groupColumn]); 
                 $sheet->setCellValue([$startedIndex,$groupColumn], $element->getTitle());                
                 $children = $element->getChildren();
@@ -218,7 +219,7 @@ trait RequestViewTrait
     
     protected function prepareExcelBody(Worksheet $sheet, $requests, $defaultVIndex = 4):int 
     {
-        $defaultHIndex = 7;
+        $defaultHIndex = 8;
         $renderedList = [];
         $vIndex = $defaultVIndex;
         foreach ($requests as $request) {           
@@ -255,11 +256,12 @@ trait RequestViewTrait
     protected function renderRow(Worksheet $sheet, Request $request, int $vIndex) 
     {
         $sheet->setCellValue([1,$vIndex], $request->contract->number);
-        $sheet->setCellValue([2,$vIndex], $request->contract->stand_square);
-        $sheet->setCellValue([3,$vIndex], $request->contract->registration_fee);
-        $sheet->setCellValue([4,$vIndex], $request->company->name);
-        $sheet->setCellValue([5,$vIndex], $request->user->email);
-        $sheet->setCellValue([6,$vIndex], RequestStatusHelper::getStatusName($request->status));        
+        $sheet->setCellValue([2,$vIndex], $request->contract->standNumber ? $request->contract->standNumber->number: '');
+        $sheet->setCellValue([3,$vIndex], $request->contract->stand_square);
+        $sheet->setCellValue([4,$vIndex], $request->contract->registration_fee);
+        $sheet->setCellValue([5,$vIndex], $request->company->name);
+        $sheet->setCellValue([6,$vIndex], $request->user->email);
+        $sheet->setCellValue([7,$vIndex], RequestStatusHelper::getStatusName($request->status));        
     }
     
     protected function getRenderedFieldsForRow(Request $request) :array
@@ -285,12 +287,12 @@ trait RequestViewTrait
                         ],
                     ];
         $headerBGColor = 'dbdbdb';
-        $sheet->mergeCells([1,1,$cellsCount+4, 1]);
+        $sheet->mergeCells([1,1,$cellsCount+7, 1]);
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A1')->getFont()->setBold(true);
-        $sheet->getStyle([1,2,$cellsCount+4, $rowsCount ])->applyFromArray($borderStyle);
-        $sheet->getStyle([1,2,$cellsCount+4,$headerVIndex])->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB($headerBGColor);
-        $sheet->getStyle([1,2,$cellsCount+4,$headerVIndex])->getFont()->setBold(true);
+        $sheet->getStyle([1,2,$cellsCount+7, $rowsCount ])->applyFromArray($borderStyle);
+        $sheet->getStyle([1,2,$cellsCount+7,$headerVIndex])->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB($headerBGColor);
+        $sheet->getStyle([1,2,$cellsCount+7,$headerVIndex])->getFont()->setBold(true);
         foreach ($sheet->getColumnIterator() as $column) {
             $sheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
         }        
