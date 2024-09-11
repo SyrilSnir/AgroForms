@@ -310,8 +310,8 @@ class FormHelper extends BaseFormHelper
                             $result['maxIterator'] = $currentIterator;
                             $maxIterator = $currentIterator;
                         }                    
-                        array_push($result['elements'], $element);                                          
                     }
+                    array_push($result['elements'], $element);                                          
                 }
             }
             if (!$groupElement) {
