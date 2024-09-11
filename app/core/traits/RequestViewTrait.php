@@ -158,9 +158,11 @@ trait RequestViewTrait
     {
         $baseHeaderRowIndex = $headerHeight + 1;
         $sheet->setCellValue([1,$baseHeaderRowIndex], t('Number of contract'));
-        $sheet->setCellValue([2,$baseHeaderRowIndex], t('Company', 'company'));
-        $sheet->setCellValue([3,$baseHeaderRowIndex], t('Member email','user'));
-        $sheet->setCellValue([4,$baseHeaderRowIndex], t('Application status'));
+        $sheet->setCellValue([2,$baseHeaderRowIndex], t('Stand`s square, m2'));
+        $sheet->setCellValue([3,$baseHeaderRowIndex], t('Рег. взнос, шт.'));
+        $sheet->setCellValue([4,$baseHeaderRowIndex], t('Company', 'company'));
+        $sheet->setCellValue([5,$baseHeaderRowIndex], t('Member email','user'));
+        $sheet->setCellValue([6,$baseHeaderRowIndex], t('Application status'));
         $cellsCount = 0;
         foreach ($headerElements as $headerElement) {            
             /** @var ExcelHeaderView $element */            
@@ -216,7 +218,7 @@ trait RequestViewTrait
     
     protected function prepareExcelBody(Worksheet $sheet, $requests, $defaultVIndex = 4):int 
     {
-        $defaultHIndex = 5;
+        $defaultHIndex = 7;
         $renderedList = [];
         $vIndex = $defaultVIndex;
         foreach ($requests as $request) {           
@@ -253,9 +255,11 @@ trait RequestViewTrait
     protected function renderRow(Worksheet $sheet, Request $request, int $vIndex) 
     {
         $sheet->setCellValue([1,$vIndex], $request->contract->number);
-        $sheet->setCellValue([2,$vIndex], $request->company->name);
-        $sheet->setCellValue([3,$vIndex], $request->user->email);
-        $sheet->setCellValue([4,$vIndex], RequestStatusHelper::getStatusName($request->status));        
+        $sheet->setCellValue([2,$vIndex], $request->contract->stand_square);
+        $sheet->setCellValue([3,$vIndex], $request->contract->registration_fee);
+        $sheet->setCellValue([4,$vIndex], $request->company->name);
+        $sheet->setCellValue([5,$vIndex], $request->user->email);
+        $sheet->setCellValue([6,$vIndex], RequestStatusHelper::getStatusName($request->status));        
     }
     
     protected function getRenderedFieldsForRow(Request $request) :array
