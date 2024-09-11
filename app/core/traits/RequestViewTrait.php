@@ -131,7 +131,6 @@ trait RequestViewTrait
                         BaseRequest::STATUS_DRAFT,
                         BaseRequest::STATUS_REJECTED,
                         BaseRequest::STATUS_DELETE,
-                        BaseRequest::STATUS_ACCEPTED
                     ]
                         ])
                 ->all();
