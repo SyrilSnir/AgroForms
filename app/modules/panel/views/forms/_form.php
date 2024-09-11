@@ -1,5 +1,6 @@
 <?php
 
+use app\core\helpers\View\YesNoStatusHelper;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\ActiveRecord\Forms\FormType;
 use app\models\Forms\Manage\Forms\FormsForm;
@@ -141,7 +142,6 @@ $columnsConfig = [
                             }
                         ],*/
                         'description:text:' . Yii::t('app','Description'),
-                        
                         [
                             'label' => Yii::t('app','Element type'),
                             'attribute' => 'elementTypeId',
@@ -150,6 +150,42 @@ $columnsConfig = [
                                     return $model->elementType->name;
                                 }
                             ],
+                        [
+                            'attribute' => 'showInRequest',
+                            'label' => Yii::t('app', 'Show in application'),
+                            'format' => 'raw',
+                            'filter' => YesNoStatusHelper::statusList(),
+                            'value' => function (Field $model) {
+                                return YesNoStatusHelper::getStatusLabel($model->showed_in_request);
+                            }
+                        ],                                                            
+                        [
+                            'attribute' => 'showInPdf',
+                            'label' => Yii::t('app', 'Show in printed form'),
+                            'format' => 'raw',
+                            'filter' => YesNoStatusHelper::statusList(),
+                            'value' => function (Field $model) {
+                                return YesNoStatusHelper::getStatusLabel($model->showed_in_pdf);
+                            }
+                        ],                                                            
+                        [
+                            'attribute' => 'toExport',
+                            'label' => Yii::t('app', 'Add to export'),
+                            'format' => 'raw',
+                            'filter' => YesNoStatusHelper::statusList(),
+                            'value' => function (Field $model) {
+                                return YesNoStatusHelper::getStatusLabel($model->to_export);
+                            }
+                        ],                                                            
+                        [
+                            'attribute' => 'published',
+                            'label' => Yii::t('app', 'Available for publication on the site'),
+                            'format' => 'raw',
+                            'filter' => YesNoStatusHelper::statusList(),
+                            'value' => function (Field $model) {
+                                return YesNoStatusHelper::getStatusLabel($model->published);
+                            }
+                        ],                                                            
                         [
                             'class' => ActionColumn::class,
                             'template' => '{view} {update} {delete} {restore}',

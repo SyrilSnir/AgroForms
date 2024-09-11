@@ -27,16 +27,24 @@ class FieldSearch extends Model
     public $fieldGroupId;
     
     public $elementTypeId;
+    
+    public $showInRequest;
+    
+    public $showInPdf;
+    
+    public $toExport;
 
     public $formId;
 
     public $deleted;
     
+    public $published;
+    
     public function rules(): array
     {
         return [
             [['name', 'description'], 'safe'],
-            [['deleted'], 'boolean'],
+            [['deleted','toExport','showInRequest','showInPdf','published'], 'boolean'],
             [['fieldGroupId','formId','elementTypeId'], 'number'],
         ];
     } 
@@ -75,6 +83,10 @@ class FieldSearch extends Model
         $query->andFilterWhere(['field_group_id' => $this->fieldGroupId]);
         $query->andFilterWhere(['element_type_id' => $this->elementTypeId]);
         $query->andFilterWhere(['form_id' => $this->formId]);
+        $query->andFilterWhere(['showed_in_request' => $this->showInRequest]);
+        $query->andFilterWhere(['showed_in_pdf' => $this->showInPdf]);
+        $query->andFilterWhere(['to_export' => $this->toExport]);
+        $query->andFilterWhere(['published' => $this->published]);
      //   $query->orderBy('order');
         return $dataProvider;
     }
