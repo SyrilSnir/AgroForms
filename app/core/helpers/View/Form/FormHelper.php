@@ -291,18 +291,16 @@ class FormHelper extends BaseFormHelper
             $val = [];
             if (key_exists($fieldId, self::$valuesList[$this->request->id])) {
                 $val = self::$valuesList[$this->request->id][$fieldId];
-                $excelValue = $element->getExcelValue($val);
-                if (is_array($excelValue) && key_exists('rows', $excelValue)) {
-                    $currentIterator = (count($excelValue['rows']) - 1);
-                    if($maxIterator < $currentIterator) {
-                        $result['maxIterator'] = $currentIterator;
-                        $maxIterator = $currentIterator;
-                    }                    
-                }
-                array_push($result['elements'], $excelValue); 
-            } 
-            
-            
+            }
+            $excelValue = $element->getExcelValue($val);
+            if (is_array($excelValue) && key_exists('rows', $excelValue)) {
+                $currentIterator = (count($excelValue['rows']) - 1);
+                if($maxIterator < $currentIterator) {
+                    $result['maxIterator'] = $currentIterator;
+                    $maxIterator = $currentIterator;
+                }                    
+            }
+            array_push($result['elements'], $excelValue);            
         }
         return $result;
     }

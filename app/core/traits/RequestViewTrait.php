@@ -187,7 +187,7 @@ trait RequestViewTrait
                     $sheet->setCellValue([$startedIndex++,$groupColumn + 1], $childElement->getTitle());
                 }                
             } else {
-                $sheet->setCellValue([$startedIndex,$element->getLength()], $element->getTitle());
+                $sheet->setCellValue([$startedIndex++,$headerHeight + 1], $element->getTitle());
             }
             $cellsCount += $lenght;
         }
