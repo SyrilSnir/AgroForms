@@ -14,6 +14,16 @@ use app\models\Forms\Manage\Forms\Parameters\AttachmentField;
  */
 class ElementFileInput extends FormElement  implements CountableElementInterface
 {
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        $fileList = $this->getFilesUrl();
+        $fileUrls = array_map(function($item) {
+            return \yii\helpers\Url::to($item,'https');
+        }, $fileList);
+        return implode(',', $fileUrls);
+    }
+
+
     public function getData(array $valuesList = []): array
     {
         /** @var AttachedFiles $attached */

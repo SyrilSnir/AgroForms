@@ -40,6 +40,12 @@ class ElementType extends ActiveRecord
     
     const DEFAULT_ELEMENT_TYPE = self::ELEMENT_CHECKBOX;
     
+    const NO_EXPORT_ELEMENTS = [
+        self::ELEMENT_INFORMATION,
+        self::ELEMENT_INFORMATION_IMPORTANT,
+        self::ELEMENT_HEADER
+    ];
+    
     const HAS_ENUM_ATTRIBUTES = [
         self::ELEMENT_SELECT,
         self::ELEMENT_SELECT_MULTIPLE,

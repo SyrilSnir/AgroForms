@@ -107,6 +107,7 @@ class CatalogController extends CrudController
         \Yii::$app->session->setFlash('error', t('No data to upload'));        
         return Yii::$app->response->redirect(Url::previous());
     }
+    
     public function actionExcel(int $exhibitionId = null) 
     {
         if (empty($exhibitionId)) {
