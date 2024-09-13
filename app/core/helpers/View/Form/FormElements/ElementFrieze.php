@@ -58,7 +58,7 @@ class ElementFrieze extends FormElement implements CountableElementInterface
         
     }
 
-        protected function transformData(array $fieldList, array $valuesList = []): array
+    protected function transformData(array $fieldList, array $valuesList = []): array
     {
         $fieldList['parameters'] = $this->buildParameters($fieldList);
         if (!empty($valuesList)) {
