@@ -52,7 +52,8 @@ class EquipmentForm extends Model
     {
         return [
             [['groupId', 'unitId', 'price'], 'integer'],
-            [['name', 'unitId', 'price'], 'required'],
+            [['name', 'unitId'], 'required'],
+            ['price','default','value' => 0],
             [['description'], 'string'],
             [['code', 'name','nameEng','descriptionEng'], 'string', 'max' => 255],
             [['unitId'], 'exist', 'skipOnError' => true, 'targetClass' => Unit::className(), 'targetAttribute' => ['unitId' => 'id']],

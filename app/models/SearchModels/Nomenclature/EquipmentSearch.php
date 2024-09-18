@@ -61,9 +61,9 @@ class EquipmentSearch extends Model
             $query->where('0=1');
             return $dataProvider;
         }
-        $query->andFilterWhere(['like','name', $this->name]);
+        $query->andFilterWhere(['like','{{%additional_equipment}}.name', $this->name]);
         $query->andFilterWhere(['like','code', $this->code]);
-        $query->andFilterWhere(['like','description', $this->description]);
+        $query->andFilterWhere(['like','{{%additional_equipment}}.description', $this->description]);
         $query->andFilterWhere(['group_id' => $this->group_id]);
         $query->andFilterWhere(['unit_id' => $this->unit_id]);
         return $dataProvider;
