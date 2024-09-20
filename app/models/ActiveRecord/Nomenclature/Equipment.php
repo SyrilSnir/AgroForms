@@ -22,6 +22,7 @@ use yii\db\ActiveRecord;
  *
  * @property Unit $unit
  * @property EquipmentGroup $equipmentGroup
+ * @property EquipmentPrices[] $equipmentPrices
  */
 class Equipment extends ActiveRecord
 {
@@ -42,8 +43,8 @@ class Equipment extends ActiveRecord
      * @param int $price
      * @param string $description
      * @param string $code
-     * @param string $name_eng
-     * @param string $description_eng
+     * @param string $nameEng
+     * @param string $descriptionEng
      * @return \self
      */
     public static function create(
@@ -53,8 +54,8 @@ class Equipment extends ActiveRecord
             int $price,
             string $description = null,
             string $code = null,
-            string $nameEng,
-            string $descriptionEng
+            string $nameEng = null,
+            string $descriptionEng = null
             ):self 
     {
         $equipment = new static();
@@ -121,6 +122,15 @@ class Equipment extends ActiveRecord
             return $equipmentPrice->price;
         }
         return null;
+    }
+    /**
+     * Gets query for [[EquipmentPrices]].
+     *
+     * @return ActiveQuery
+     */    
+    public function getEquipmentPrices()
+    {
+        return $this->hasMany(EquipmentPrices::class,['equipment_id' => 'id']);
     }
     
     public function prices() 

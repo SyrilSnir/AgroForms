@@ -121,7 +121,7 @@ abstract class FormElement implements FormElementInterface
     {
         return [];
     }
-
+    
     public function getTranslatableParameter(string $parameterName): string 
     {
         if (!key_exists($parameterName, $this->fieldParameters)) {
@@ -177,7 +177,7 @@ abstract class FormElement implements FormElementInterface
         array_push($this->priceModificators,$priceModificator);
     }
 
-    public function getLenght(): int 
+    public function getLenght($equipment = false): int 
     {
         if ($this->isExcelExport()) {
             return 1;
@@ -185,7 +185,7 @@ abstract class FormElement implements FormElementInterface
         return 0;
     }
     
-    public function getExcelHeader(): ExcelHeaderView 
+    public function getExcelHeader($equipment = false): ExcelHeaderView 
     {
         return new ExcelHeaderView($this->getField()->name, $this->getLenght());
     }
@@ -247,4 +247,14 @@ abstract class FormElement implements FormElementInterface
             'value' => $value,
         ];
     }
+    
+    public function hasExcelExportNonEquipmentElements(): bool 
+    {
+        return false;
+    }
+    
+    public function hasExcelExportEquipmentElements(): bool 
+    {
+        return false;
+    }  
 }

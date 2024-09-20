@@ -191,5 +191,31 @@ class Form extends ActiveRecord
     public function isStatusShowed(): bool 
     {
         return ($this->status === self::STATUS_DRAFT || $this->status === self::STATUS_ACTIVE);
-    }        
+    }  
+    
+    public function hasEquipmentFieldsToExcelExport(): bool
+    {
+        foreach ($this->formFields as $field) {
+            if (!$field->deleted && 
+                    $field->element_type_id === ElementType::ELEMENT_ADDITIONAL_EQUIPMENT &&
+                    $field->to_export
+                ) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function hasFieldsToExcelExportWithoutEquipment(): bool
+    {
+        foreach ($this->formFields as $field) {
+            if (!$field->deleted && 
+                    $field->element_type_id !== ElementType::ELEMENT_ADDITIONAL_EQUIPMENT &&
+                    $field->to_export
+                ) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -126,7 +126,7 @@ class FormHelper extends BaseFormHelper
             case ElementType::ELEMENT_CHECK_NUMBER_INPUT:
                 $formElement = new ElementCheckNumberInput($field, null, $langCode);
                 break;
-            case ElementType::ELEMET_ADDITIONAL_EQUIPMENT:
+            case ElementType::ELEMENT_ADDITIONAL_EQUIPMENT:
                 $formElement = new ElementAdditionEquipmentBlock($field, null, $langCode);
                 break;
             case ElementType::ELEMENT_SELECT_MULTIPLE:
@@ -537,17 +537,24 @@ class FormHelper extends BaseFormHelper
         return $this->pdfHelper->render();
     }
 
-    public function getExcelHeader($startedIndex = 1): array 
+    public function getExcelHeader($startedIndex = 1, $isEquipment = false): array 
     {
         $currentIndex = $startedIndex;
         $result = [];
         foreach ($this->formElements as $element) {
             if (!$element->isExcelExport() || $element->isDeleted()) continue;
-            $elementLenght = $element->getLenght();
+            if ($element->isGroup()) {
+                if ($isEquipment && !$element->hasExcelExportEquipmentElements()) continue;
+                if (!$isEquipment && !$element->hasExcelExportNonEquipmentElements()) continue;
+            } else {
+                if (!$isEquipment && $element->getField()->element_type_id === ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) continue;
+                if ($isEquipment && $element->getField()->element_type_id !== ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) continue;
+            }
+            $elementLenght = $element->getLenght($isEquipment);
             if ($elementLenght > 0) {
                 array_push($result, [
                         'startedIndex' => $currentIndex,
-                        'element' => $element->getExcelHeader(),
+                        'element' => $element->getExcelHeader($isEquipment),
                     ]);
                     $currentIndex+= $elementLenght;
             }
@@ -578,5 +585,5 @@ class FormHelper extends BaseFormHelper
     protected function getContractDate() :string
     {
         return $this->contract ? $this->contract->translateDateField('date') : '';
-    }     
+    }
 }

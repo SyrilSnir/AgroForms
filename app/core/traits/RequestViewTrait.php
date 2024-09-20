@@ -116,7 +116,17 @@ trait RequestViewTrait
     
     protected function printExcelDocument(int $formId)
     {
+        $equipmentToExport = false;
+        $fieldsToExport = false;
+        
         $form = Form::findOne($formId);
+        if ($form->hasEquipmentFieldsToExcelExport()) {
+            $equipmentToExport = true;
+        }
+        if ($form->hasFieldsToExcelExportWithoutEquipment()) {
+            $fieldsToExport = true;
+        }
+        
         $langCode = Yii::$app->language;
         $userIdentity = Yii::$app->user->getIdentity(); 
         $contract = Contracts::createDummy();
@@ -138,21 +148,38 @@ trait RequestViewTrait
         header('Content-Disposition: attachment;filename="'. $fileName .date('d.m.Y').'.xlsx"');
         header('Cache-Control: max-age=0'); 
         $xls = new Spreadsheet();
-        $xls->setActiveSheetIndex(0);
-        $sheet = $xls->getActiveSheet();
-        $sheet->setTitle('Данные по заявкам');
-        $sheet->setCellValue([1,1],$form->getHeaderName());
-        $headerElements = $formHelper->getExcelHeader(8);
-    //    dump($headerElements); die;
-        $headerHeight = $this->getExcelHeaderHeight($headerElements);        
-        $cellsCount = $this->prepareExcelHeader($sheet, $headerElements, $headerHeight);
-        $rowsCount = $this->prepareExcelBody($sheet, $requests, $headerHeight + 2);
-        $this->postprocessExcel($sheet,$headerHeight + 1,$cellsCount,$rowsCount - 1);
+        $sheetIndex = 0;
+        if ($fieldsToExport) {
+            $this->createExcelSheet($xls, $sheetIndex++, $formHelper, $requests);
+        }
+        if ($equipmentToExport) {
+            $this->createExcelSheet($xls, $sheetIndex, $formHelper, $requests, true);
+        }
         
         $objWriter = new Xlsx($xls);
         
         $objWriter->save('php://output'); 
         die();
+    }
+    
+    protected function createExcelSheet(Spreadsheet $spreadSheet, int $worksheetIndex, FormHelper $formHelper, array $requests, bool $isEquipment = false) 
+    {
+        if ($worksheetIndex > 0 ) {
+            $spreadSheet->createSheet($worksheetIndex);
+        }
+        $spreadSheet->setActiveSheetIndex($worksheetIndex);
+        $sheet = $spreadSheet->getActiveSheet();
+        $sheet->setTitle($isEquipment ? 'Дополнительное оборудование' : 'Данные по заявкам');
+        $sheet->setCellValue([1,1],$formHelper->getForm()->getHeaderName());
+        $headerElements = $formHelper->getExcelHeader(8, $isEquipment);
+        if ($isEquipment) {
+         //   dump($headerElements); die;
+        }
+        $headerHeight = $this->getExcelHeaderHeight($headerElements);        
+        $cellsCount = $this->prepareExcelHeader($sheet, $headerElements, $headerHeight);
+        $rowsCount = $this->prepareExcelBody($sheet, $requests, $headerHeight + 2);
+        $this->postprocessExcel($sheet,$headerHeight + 1,$cellsCount,$rowsCount - 1);        
+        
     }
     
     protected function prepareExcelHeader(Worksheet $sheet,array $headerElements,int $headerHeight): int

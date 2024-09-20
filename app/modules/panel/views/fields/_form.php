@@ -78,7 +78,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
         data-comment="<?php echo json_encode(ElementType::HAS_COMMENT)?>"
         data-enums="<?php echo json_encode(ElementType::HAS_ENUM_ATTRIBUTES)?>"
         data-attachment="<?php echo json_encode(ElementType::HAS_ATTACHMENT)?>"
-        data-equipment="<?php echo json_encode(ElementType::ELEMET_ADDITIONAL_EQUIPMENT)?>"
+        data-equipment="<?php echo json_encode(ElementType::ELEMENT_ADDITIONAL_EQUIPMENT)?>"
         data-group="<?php echo json_encode(ElementType::ELEMENT_GROUP)?>"
         data-frieze="<?php echo json_encode(ElementType::ELEMENT_FRIEZE) ?>"
         data-badge="<?php echo json_encode(ElementType::ELEMENT_BADGE) ?>"
@@ -277,7 +277,7 @@ $fullGridConfig = array_merge($columnsConfig,$gridConfig);
             <?= $form->field($model->parameters, 'attachment')->dropDownList(BaseParametersForm::attachmentTypesList()) ?> 
         </div>        
         
-        <div id="additional-equipment"<?php if ($model->elementTypeId != ElementType::ELEMET_ADDITIONAL_EQUIPMENT):?> class="hide"<?php endif; ?>>
+        <div id="additional-equipment"<?php if ($model->elementTypeId != ElementType::ELEMENT_ADDITIONAL_EQUIPMENT):?> class="hide"<?php endif; ?>>
             <?= $form->field($model->parameters, 'allCategories')->widget(SwitchInput::class,[
                     'pluginOptions' => [
                             'onText' => Yii::t('app', 'Yes'),

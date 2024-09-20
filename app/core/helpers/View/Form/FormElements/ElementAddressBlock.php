@@ -13,7 +13,7 @@ use app\models\ActiveRecord\Geography\Country;
  */
 class ElementAddressBlock extends FormElement implements CountableElementInterface
 {    
-    public function getExcelHeader(): ExcelHeaderView
+    public function getExcelHeader($equipment = false): ExcelHeaderView
     {
         $result = new ExcelHeaderView($this->getField()->name, $this->getLenght(),false,true);
         $result->addChild(new ExcelHeaderView('Страна',1));
@@ -32,7 +32,7 @@ class ElementAddressBlock extends FormElement implements CountableElementInterfa
         return [];
     }
     
-    public function getLenght(): int
+    public function getLenght($equipment = false): int
     {
         return 5;
     }

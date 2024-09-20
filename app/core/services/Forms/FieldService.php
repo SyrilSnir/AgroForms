@@ -180,7 +180,7 @@ class FieldService
         
         if (key_exists($id, $valuesList)) {
             $value = $valuesList[$id]['value'];
-            if($element['element_type_id'] == ElementType::ELEMET_ADDITIONAL_EQUIPMENT) {
+            if($element['element_type_id'] == ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) {
                 $value = $this->processEquipmentValues($value);
             }            
             $element['value'] = $value;

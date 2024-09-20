@@ -11,7 +11,7 @@ use app\core\helpers\View\Form\ExcelHeaderView;
  */
 class ElementInformationForm extends FormElement implements CountableElementInterface
 {    
-    public function getExcelHeader(): ExcelHeaderView
+    public function getExcelHeader($equipment = false): ExcelHeaderView
     {
         $result = new ExcelHeaderView($this->getField()->name, $this->getLenght(),false,true);
         $result->addChild(new ExcelHeaderView('Сайт',1));
@@ -28,7 +28,7 @@ class ElementInformationForm extends FormElement implements CountableElementInte
         return [];
     }
     
-    public function getLenght(): int
+    public function getLenght($equipment = false): int
     {
         return 3;
     }

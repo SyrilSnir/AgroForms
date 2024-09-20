@@ -18,7 +18,7 @@ class ElementBadge  extends FormElement implements CountableElementInterface
      */
     private $contract;
     
-    public function getExcelHeader(): ExcelHeaderView
+    public function getExcelHeader($equipment = false): ExcelHeaderView
     {
         $result = new ExcelHeaderView($this->getField()->name, $this->getLenght(),false,true);
         $result->addChild(new ExcelHeaderView('Имя',1));
@@ -53,7 +53,7 @@ class ElementBadge  extends FormElement implements CountableElementInterface
         return $data;
     }   
     
-    public function getLenght(): int
+    public function getLenght($equipment = false): int
     {
         return 4;
     }

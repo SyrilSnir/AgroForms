@@ -6,6 +6,7 @@ use app\core\helpers\View\Form\ExcelHeaderView;
 use app\core\helpers\View\Form\FormElementsManagementTrait;
 use app\core\helpers\View\Form\FormHelper;
 use app\core\providers\Data\FieldEnumProvider;
+use app\models\ActiveRecord\Forms\ElementType;
 use app\models\ActiveRecord\Forms\Field;
 use app\models\Data\Languages;
 use app\models\Forms\Manage\Forms\Parameters\BaseParametersForm;
@@ -80,6 +81,27 @@ class ElementGroup extends FormElement implements CountableElementInterface
         return $this->formElements;
     }
 
+    public function hasExcelExportNonEquipmentElements(): bool 
+    {
+        foreach ($this->formElements as $el) {
+            if (!$el->isDeleted() && $el->isExcelExport() && $el->getField()->element_type_id !== ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) 
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function hasExcelExportEquipmentElements(): bool 
+    {
+        foreach ($this->formElements as $el) {
+            if (!$el->isDeleted() && $el->isExcelExport() && $el->getField()->element_type_id === ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) 
+            {
+                return true;
+            }
+        }
+        return false;        
+    }    
 
     public function getData(array $valuesList = []): array
     {
@@ -89,22 +111,26 @@ class ElementGroup extends FormElement implements CountableElementInterface
         return parent::getData($valuesList);
     }
     
-    public function getLenght(): int 
+    public function getLenght($equipment = false): int 
     {
         $elementsCount = 0;
         foreach ($this->formElements as $element) {
+            if (!$element->isExcelExport() || $element->isDeleted()) continue;
+            if ($equipment && $element->getField()->element_type_id !== ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) continue;
+            if (!$equipment && $element->getField()->element_type_id === ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) continue;
             $elementsCount+= $element->getLenght();
         }
         return $elementsCount;
     }
     
-    public function getExcelHeader(): ExcelHeaderView
+    public function getExcelHeader($equipment = false): ExcelHeaderView
     {
-        $result = new ExcelHeaderView($this->getField()->name, $this->getLenght(),true);
+        $result = new ExcelHeaderView($this->getField()->name, $this->getLenght($equipment),true);
         foreach ($this->formElements as $element) {
-            if ($element->isExcelExport()) {
-                $result->addChild($element->getExcelHeader());
-            }
+            if (!$element->isExcelExport() || $element->isDeleted()) continue;
+            if ($equipment && $element->getField()->element_type_id !== ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) continue;
+            if (!$equipment && $element->getField()->element_type_id === ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) continue;            
+            $result->addChild($element->getExcelHeader());            
         }
         return $result;
     }

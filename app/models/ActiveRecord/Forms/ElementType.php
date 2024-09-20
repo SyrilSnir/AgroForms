@@ -28,7 +28,7 @@ class ElementType extends ActiveRecord
     const ELEMENT_INFORMATION_IMPORTANT = 12;  
     const ELEMENT_INFORMATION = 13;  
     const ELEMENT_HEADER = 14;
-    const ELEMET_ADDITIONAL_EQUIPMENT = 15;
+    const ELEMENT_ADDITIONAL_EQUIPMENT = 15;
     const ELEMENT_GROUP = 16;
     const ELEMENT_FRIEZE = 17; // Фризовая надпись
     const ELEMENT_DATE_TIME = 18; // Выбор даты или времени
@@ -56,7 +56,7 @@ class ElementType extends ActiveRecord
         self::ELEMENT_SELECT,
         self::ELEMENT_SELECT_MULTIPLE,
         self::ELEMENT_RADIO_BUTTON,
-        self::ELEMET_ADDITIONAL_EQUIPMENT
+        self::ELEMENT_ADDITIONAL_EQUIPMENT
     ];
     const HAS_FREE_COUNTER = [
         self::ELEMENT_ADDRESS_BLOCK,
@@ -99,7 +99,7 @@ class ElementType extends ActiveRecord
         self::ELEMENT_SELECT,
         self::ELEMENT_SELECT_MULTIPLE,
         self::ELEMENT_RADIO_BUTTON,
-        self::ELEMET_ADDITIONAL_EQUIPMENT,
+        self::ELEMENT_ADDITIONAL_EQUIPMENT,
         self::ELEMENT_BADGE,
         self::ELEMENT_ADDRESS_BLOCK,
         self::ELEMENT_IFORMATION_FORM,

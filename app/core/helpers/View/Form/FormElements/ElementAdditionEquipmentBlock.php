@@ -2,9 +2,12 @@
 
 namespace app\core\helpers\View\Form\FormElements;
 
+use app\core\helpers\View\Form\ExcelHeaderView;
 use app\core\repositories\manage\Nomenclature\EquipmentRepository;
+use app\core\repositories\readModels\Nomenclature\EquipmentReadRepository;
 use app\models\ActiveRecord\Nomenclature\Equipment;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * Description of ElementAdditionEquipmentBlock
@@ -13,12 +16,73 @@ use Yii;
  */
 class ElementAdditionEquipmentBlock extends FormElement implements CountableElementInterface
 {
-     private function processEquipmentValues($values)
+    public function getLenght($equipment = false): int
+    {
+        $params = $this->getParameters();
+        $defLenght = 0;
+        $exhibitionId = $this->getField()->form->exhibition_id;
+        if (key_exists('categories', $params)) {
+            foreach ($params['categories'] as $categoryId) {
+                $defLenght+= EquipmentReadRepository::countForExhibition($exhibitionId,$categoryId);
+               // $defLenght += 1;
+            }
+        }
+        return $defLenght;
+    }
+
+    public function getExcelHeader($equipment = true): ExcelHeaderView
+    {
+        $result = new ExcelHeaderView($this->getField()->name, $this->getLenght(),false,true);
+        $params = $this->getParameters();
+        $exhibitionId = $this->getField()->form->exhibition_id;        
+        if (key_exists('categories', $params)) {
+            foreach ($params['categories'] as $categoryId) {
+        //         $defLenght+= EquipmentReadRepository::countForExhibition($exhibitionId,$categoryId);
+                $eqList = EquipmentReadRepository::findForExhibition($exhibitionId,$categoryId);
+                foreach ($eqList as $el) {
+                    $result->addChild(new ExcelHeaderView($el->name,1));
+                }
+            }
+        }        
+        return $result;
+    }  
+    
+    public function getExcelValue(array $valuesList = []): array|string
+    {
+        
+        if (!key_exists('value', $valuesList) || empty($valuesList['value'])) {
+            return [];
+        }
+        
+        $rows = [];
+        $exhibitionId = $this->getField()->form->exhibition_id;
+        $eqData = ArrayHelper::map($valuesList['value'],'id','count');
+        $params = $this->getParameters();
+        if (key_exists('categories', $params)) {
+            foreach ($params['categories'] as $categoryId) {
+        //         $defLenght+= EquipmentReadRepository::countForExhibition($exhibitionId,$categoryId);
+                $eqList = EquipmentReadRepository::findForExhibition($exhibitionId,$categoryId);
+                foreach ($eqList as $el) {
+                    if (key_exists($el->id, $eqData)) {
+                        $rows[] = $eqData[$el->id];
+                    } else {
+                        $rows[] = '';
+                    }
+                }
+            }
+        }        
+        return ['rows' => [
+                0 => $rows
+            ] 
+        ];
+    }
+
+    private function processEquipmentValues($values)
      {
          $exhibitionId = $this->field->form->exhibition_id;
                  
          /** @var Equipment $equipment */
-         $eqRepository = new EquipmentRepository();;
+         $eqRepository = new EquipmentRepository();
          $resArray = [];
          $showDaleted = $this->getRequestId() ? true : false;
          foreach ($values as $value) {             

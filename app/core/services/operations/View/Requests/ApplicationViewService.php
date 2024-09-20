@@ -71,7 +71,7 @@ class ApplicationViewService implements RequestViewInterface
                 continue;
             }
             if(in_array($fieldModel->element_type_id, ElementType::HAS_ENUM_VALUES)) {
-                if ($fieldModel->element_type_id === ElementType::ELEMET_ADDITIONAL_EQUIPMENT) {                                            
+                if ($fieldModel->element_type_id === ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) {                                            
                     $value = $this->getEquipmentValues($field['value'],$valute);
                 } else {
                     $value = $this->getEnumValues($id, $field['value']);

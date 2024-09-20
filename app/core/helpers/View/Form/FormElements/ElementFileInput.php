@@ -167,8 +167,10 @@ class ElementFileInput extends FormElement  implements CountableElementInterface
         }
         $attachedFiles = AttachedFilesReadRepository::findByFieldAndRequest($this->field->id, $this->requestId);
         foreach ($attachedFiles as $file) {
-            $file->configureFileUploadParameters();
-            $result[] = $file->getUploadedFileUrl('file_name');
+            if ($file->file_name && str_contains($file->field_id, '.')) {
+                $file->configureFileUploadParameters();
+                $result[] = $file->getUploadedFileUrl('file_name');
+            }
         }
         return $result;
     }

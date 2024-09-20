@@ -32,16 +32,20 @@ interface FormElementInterface
     public function isShowInPdf():bool ;
     
     public function isExcelExport(): bool ;
+    
+    public function hasExcelExportNonEquipmentElements(): bool;
+    
+    public function hasExcelExportEquipmentElements(): bool;
 
     public function isComputed(): bool; 
     
     public function isDeleted(): bool;
     
-    public function getLenght(): int;   
+    public function getLenght(bool $equipment): int;   
 
     public function isGroup():bool;
     
-    public function getExcelHeader(): ExcelHeaderView;
+    public function getExcelHeader(bool $isEquipment): ExcelHeaderView;
     
     public function getExcelValue(array $valuesList = []): array|string;
     

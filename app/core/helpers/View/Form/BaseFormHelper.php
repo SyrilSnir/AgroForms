@@ -93,8 +93,8 @@ abstract class BaseFormHelper
     
     public abstract function getFormPrice() :int ; 
     
-    public abstract function getPrintedElementsCount(): int;    
-
+    public abstract function getPrintedElementsCount(): int;
+        
     public abstract function getExcelHeader(): array;  
     
     public abstract function getCatalogData(): array;
@@ -146,5 +146,10 @@ abstract class BaseFormHelper
             return true;
         }
         return false;
-    }    
+    } 
+    
+    public function getForm(): Form
+    {
+        return $this->form;
+    }
 }
