@@ -141,6 +141,7 @@ class ElementGroup extends FormElement implements CountableElementInterface
             'group' => [],
         ];
         foreach ($this->formElements as $element) {
+            if ($element->isDeleted()) continue;
             if ($element->isExcelExport()) {            
                 $fieldId = $element->getFieldId();
                 $val = [];

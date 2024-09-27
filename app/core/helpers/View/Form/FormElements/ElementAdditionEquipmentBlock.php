@@ -49,14 +49,9 @@ class ElementAdditionEquipmentBlock extends FormElement implements CountableElem
     
     public function getExcelValue(array $valuesList = []): array|string
     {
-        
-        if (!key_exists('value', $valuesList) || empty($valuesList['value'])) {
-            return [];
-        }
-        
         $rows = [];
-        $exhibitionId = $this->getField()->form->exhibition_id;
-        $eqData = ArrayHelper::map($valuesList['value'],'id','count');
+        $exhibitionId = $this->getField()->form->exhibition_id;        
+        $eqData = (key_exists('value', $valuesList) && !empty($valuesList['value'])) ? ArrayHelper::map($valuesList['value'],'id','count'): [];
         $params = $this->getParameters();
         if (key_exists('categories', $params)) {
             foreach ($params['categories'] as $categoryId) {

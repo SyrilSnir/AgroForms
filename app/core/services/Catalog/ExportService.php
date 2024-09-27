@@ -262,10 +262,10 @@ class ExportService
                     $rowData = '';
                     break;
                 case CatalogColumns::COLUMN_EMAILS:
-                    $title = $el->getEmails();
+                    $rowData = $el->getEmails();
                     break;
                 case CatalogColumns::COLUMN_SITES:
-                    $title = $el->getSites();
+                    $rowData = $el->getSites();
                     break;
                 case CatalogColumns::COLUMN_CATEGORIES:
                     $rowData = $el->getCategories();
