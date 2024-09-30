@@ -177,7 +177,7 @@ trait RequestViewTrait
         }
         $headerHeight = $this->getExcelHeaderHeight($headerElements);        
         $cellsCount = $this->prepareExcelHeader($sheet, $headerElements, $headerHeight);
-        $rowsCount = $this->prepareExcelBody($sheet, $requests, $headerHeight + 2);
+        $rowsCount = $this->prepareExcelBody($sheet, $requests, $headerHeight + 2,$isEquipment);
         $this->postprocessExcel($sheet,$headerHeight + 1,$cellsCount,$rowsCount - 1);        
         
     }
@@ -259,13 +259,13 @@ trait RequestViewTrait
         return 1;
     }
     
-    protected function prepareExcelBody(Worksheet $sheet, $requests, $defaultVIndex = 4):int 
+    protected function prepareExcelBody(Worksheet $sheet, $requests, $defaultVIndex = 4, $isEquipment = false):int 
     {
         $defaultHIndex = 8;
         $renderedList = [];
         $vIndex = $defaultVIndex;
         foreach ($requests as $request) {           
-            $renderedList = $this->getRenderedFieldsForRow($request);  
+            $renderedList = $this->getRenderedFieldsForRow($request, $isEquipment);
           //  dump($renderedList); die;
             for ($iterator = 0; $iterator <= $renderedList['maxIterator']; $iterator++) {                
                 $hIndex = $defaultHIndex;
@@ -309,13 +309,13 @@ trait RequestViewTrait
         $sheet->setCellValue([7,$vIndex], RequestStatusHelper::getStatusName($request->status));        
     }
     
-    protected function getRenderedFieldsForRow(Request $request) :array
+    protected function getRenderedFieldsForRow(Request $request, $isEquipment = false) :array
     {
         $langCode = Yii::$app->language;
         $contract = Contracts::createDummy();
         $userIdentity = Yii::$app->user->getIdentity();  
         $formHelper = FormHelper::createViaRequest($userIdentity->getUser(), $contract,$langCode, $request); 
-        $fieldsList = $formHelper->getElementsForExcel();
+        $fieldsList = $formHelper->getElementsForExcel($isEquipment);
         
         return $fieldsList;
     }

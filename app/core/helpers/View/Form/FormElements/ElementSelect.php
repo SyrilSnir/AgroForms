@@ -46,7 +46,7 @@ class ElementSelect extends FormElement implements CountableElementInterface
         return $text  . '</div></div>';
     }
     
-    public function getExcelValue(array $valuesList = []): array|string
+    public function getExcelValue(array $valuesList = [],$equipment = false): array|string
     {
         $fieldText = '';
         if (key_exists('value', $valuesList) && intval($valuesList['value'])) {

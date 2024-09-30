@@ -47,7 +47,7 @@ interface FormElementInterface
     
     public function getExcelHeader(bool $isEquipment): ExcelHeaderView;
     
-    public function getExcelValue(array $valuesList = []): array|string;
+    public function getExcelValue(array $valuesList = [], bool $equipment = false): array|string;
     
     public function setRequestId(int $requestId): void;
     

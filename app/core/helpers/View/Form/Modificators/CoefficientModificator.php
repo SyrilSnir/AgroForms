@@ -17,7 +17,7 @@ class CoefficientModificator extends PriceModificator
         if ($specialPrice) {
             $price = $specialPrice->price * $price; 
         }        
-        return $price;
+        return floor($price);
     }
 
 }

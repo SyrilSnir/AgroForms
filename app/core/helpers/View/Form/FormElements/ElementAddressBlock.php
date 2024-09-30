@@ -24,7 +24,7 @@ class ElementAddressBlock extends FormElement implements CountableElementInterfa
         return $result;
     }
     
-    public function getExcelValue(array $valuesList = []): array|string
+    public function getExcelValue(array $valuesList = [],$equipment = false): array|string
     {    
         if (key_exists('value', $valuesList) && !empty($valuesList['value'])) {
             return ['rows' =>  $valuesList['value']];

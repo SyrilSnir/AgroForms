@@ -276,7 +276,7 @@ class FormHelper extends BaseFormHelper
         return $result;
     }
    
-    public function getElementsForExcel():array
+    public function getElementsForExcel(bool $isEquipment = false):array
     {
         $maxIterator = 0;
         $result = [
@@ -288,12 +288,19 @@ class FormHelper extends BaseFormHelper
             if (!$element->isExcelExport() || $element->isDeleted()) {
                 continue;            
             }
+            if ($element->isGroup()) {
+                if ($isEquipment && !$element->hasExcelExportEquipmentElements()) continue;
+                if (!$isEquipment && !$element->hasExcelExportNonEquipmentElements()) continue;
+            } else {
+                if (!$isEquipment && $element->getField()->element_type_id === ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) continue;
+                if ($isEquipment && $element->getField()->element_type_id !== ElementType::ELEMENT_ADDITIONAL_EQUIPMENT) continue;
+            }            
             $fieldId = $element->getFieldId();
             $val = [];
             if (key_exists($fieldId, self::$valuesList[$this->request->id])) {
                 $val = self::$valuesList[$this->request->id][$fieldId];
             }
-            $excelValue = $element->getExcelValue($val);
+            $excelValue = $element->getExcelValue($val, $isEquipment);
             if (is_array($excelValue) && key_exists('rows', $excelValue)) {
                 $currentIterator = (count($excelValue['rows']) - 1);
                 if($maxIterator < $currentIterator) {

@@ -58,7 +58,7 @@ class ElementCheckNumberInput extends FormElement implements CountableElementInt
         return $result;
     }
     
-    public function getExcelValue(array $valuesList = []): array|string
+    public function getExcelValue(array $valuesList = [],$equipment = false): array|string
     {
         if (key_exists('checked', $valuesList) && $valuesList['checked'] == true) {        
             $unitTitle = '';

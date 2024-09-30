@@ -47,7 +47,7 @@ class ElementAdditionEquipmentBlock extends FormElement implements CountableElem
         return $result;
     }  
     
-    public function getExcelValue(array $valuesList = []): array|string
+    public function getExcelValue(array $valuesList = [],$equipment = false): array|string
     {
         $rows = [];
         $exhibitionId = $this->getField()->form->exhibition_id;        

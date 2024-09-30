@@ -49,7 +49,7 @@ class ElementFrieze extends FormElement implements CountableElementInterface
         return $text.= "</td></tr>";;
     }
 
-    public function getExcelValue(array $valuesList = []): array|string
+    public function getExcelValue(array $valuesList = [],$equipment = false): array|string
     {
         if (key_exists('value', $valuesList)) {
             return $valuesList['value'] ??= '';

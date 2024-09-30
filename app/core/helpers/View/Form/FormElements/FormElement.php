@@ -190,7 +190,7 @@ abstract class FormElement implements FormElementInterface
         return new ExcelHeaderView($this->getField()->name, $this->getLenght());
     }
     
-    public function getExcelValue(array $valuesList = []): array|string
+    public function getExcelValue(array $valuesList = [], $equipment = false): array|string
     {
         return '';
     }
