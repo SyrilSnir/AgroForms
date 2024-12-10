@@ -1,8 +1,9 @@
 <?php
 
-use app\core\helpers\Data\FormsHelper;
 use app\core\helpers\View\Request\RequestStatusHelper;
 use app\core\manage\Auth\Rbac;
+use app\models\ActiveRecord\Forms\Form;
+use app\models\ActiveRecord\Forms\FormType;
 use app\models\ActiveRecord\Requests\BaseRequest;
 use app\models\ActiveRecord\Requests\Request;
 use app\models\SearchModels\Requests\RequestSearch;
@@ -23,21 +24,36 @@ use yii\web\View;
 
 $this->title = Yii::t('app/title','My requests');
 
-//$formsList = FormsHelper::formsList();
-//dump($formsList); die();
 ?>
 
 <div class="request-view">
     <?php if ($isExhibitionActive):?>
     <p>
+<?php 
+$opts = [];
+foreach ($availableForms as $key => $v) {
+    /** @var Form $frm */
+    $frm = Form::findOne($key);
+
+    $opts[$key] = ['data-type' => $frm->form_type_id];
+}
+$sendContent = ($opts[array_key_first($opts)]['data-type'] === FormType::DYNAMIC_ORDER_FORM) ?
+        '<span id="send-app">'. t('Add application') .'</span>' . 
+        '<span id="send" style="display:none">'. t('Add') .'</span>' :
+'<span id="send-app" style="display:none">'. t('Add application') .'</span>' . 
+        '<span id="send">'. t('Add') .'</span>';    
+?>
         <?= Html::dropDownList('requests-list', 0, $availableForms,[
-            'class' => 'form-control'
+            'class' => 'form-control',
+            'id' => 'request-list',
+            'options' => $opts
         ]) ?>
-        <?= Html::button(t('Add application'),[
+        <?= Html::button($sendContent,[
             'id' => 'get-form-request',
             'data-contract' => $contractId,
             'class' => 'btn btn-secondary'
             ]) ?>
+
     </p>
     <?php endif; ?>
 </div>

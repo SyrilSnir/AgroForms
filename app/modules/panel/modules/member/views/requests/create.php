@@ -11,7 +11,8 @@ use app\widgets\Forms\StandWidget;
 /** @var int $contractId */
 /** @var UserIdentity $user */
 
-$this->title = Yii::t('app/title','Add request');
+$this->title = $form->form_type_id === 11 ? Yii::t('app/title','Add request'):
+    t('Add');
 $widgetConfig = [
             'user' => $user,
             'formId' => $form->id,

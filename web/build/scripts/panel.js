@@ -14,7 +14,7 @@
   \*********************************/
 /***/ (() => {
 
-eval("const $ = window.$;\n$(document).ready(function () {\n  bsCustomFileInput.init();\n});\n\n//# sourceURL=webpack://b_free/./assets/scripts/panel.js?");
+eval("const $ = window.$;\r\n$(document).ready(function () {\r\n    bsCustomFileInput.init();\r\n  })\n\n//# sourceURL=webpack://b_free/./assets/scripts/panel.js?");
 
 /***/ })
 
