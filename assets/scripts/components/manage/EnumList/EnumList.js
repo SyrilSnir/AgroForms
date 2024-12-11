@@ -81,7 +81,7 @@ export default class EnumList {
       method: "POST",
       body: fd,
     }).then((res) => {
-      console.log(res.data);
+      alert("Значение по умолчанию установлено");
     });
   }
 
