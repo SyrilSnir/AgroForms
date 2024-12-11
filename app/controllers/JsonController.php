@@ -11,7 +11,7 @@ use Yii;
  * @author kotov
  */
 abstract class JsonController extends Controller
-{    
+{        
     public function init()
     {
         parent::init();

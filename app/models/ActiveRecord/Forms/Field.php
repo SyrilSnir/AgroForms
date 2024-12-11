@@ -234,6 +234,12 @@ class Field extends ActiveRecord
                 ->all();
     }
 
+    public function setDefaultValue($defaultValue): self 
+    {
+        $this->default_value = $defaultValue;
+        return $this;
+    }
+    
     public static function find(): FieldQuery
     {
         return new FieldQuery(static::class);

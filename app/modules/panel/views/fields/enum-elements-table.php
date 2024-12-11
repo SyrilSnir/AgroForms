@@ -1,5 +1,6 @@
 <?php
 
+use app\models\ActiveRecord\Forms\FieldEnum;
 use kartik\grid\ActionColumn;
 use kartik\grid\EditableColumn;
 use kartik\grid\GridView;
@@ -7,11 +8,13 @@ use kotchuprik\sortable\grid\Column;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
-use app\models\ActiveRecord\Forms\FieldEnum;
+use yii\web\View;
+use yii\bootstrap4\ActiveForm;
 
 /** @var array $enumsList */
-/** @var array FieldEnum $model */
+/** @var FieldEnum $model */
+/** @var View $this */
+
 ?>
 
         <?php 
@@ -30,8 +33,12 @@ use app\models\ActiveRecord\Forms\FieldEnum;
                     $model->disableMultilang();
                     return $model->name;
                 },
+                'filterInputOptions' => [
+                    'class' => 'nnnn',
+                ],
                 'editableOptions' => function ($model, $key, $index) {
                     return [                
+                        'editableValueOptions'=>['class'=>'element-name kv-editable-link'],
                         'formOptions' => [
                             'action' => Url::toRoute(['/api/enum-elements/edit','id' => $model->id])
                         ]  
@@ -56,6 +63,7 @@ use app\models\ActiveRecord\Forms\FieldEnum;
                 'attribute'=>'value',
                 'editableOptions' => function ($model, $key, $index) {
                     return [                
+                        'editableValueOptions'=>['class'=>'element-value kv-editable-link'],                        
                         'formOptions' => [
                             'action' => Url::toRoute(['/api/enum-elements/edit','id' => $model->id])
                         ]  
@@ -86,7 +94,9 @@ use app\models\ActiveRecord\Forms\FieldEnum;
     ]);
         ?>
                               <?php 
-                            $newEnumItemForm = ActiveForm::begin();
+                            $newEnumItemForm = ActiveForm::begin([
+                                'enableClientValidation' => false
+                            ]);
                           ?>
     
                   <div class="container">
@@ -105,6 +115,19 @@ use app\models\ActiveRecord\Forms\FieldEnum;
         <?= Html::submitButton(Yii::t('app','Add'), ['class' => 'btn btn-block btn-success enum-field-add-button']) ?>                             
                           </div>
 
+                      </div>
+        <?php
+        $field = \app\models\ActiveRecord\Forms\Field::findOne($enumsForm->fieldId);
+        $defVal = $field->default_value;
+                
+
+        ?>
+                      <div class="row align-items-end">
+                          <div class="field-default-selector"><p>Значение по умолчанию</p>
+                              <select name="def-value" id="default-value-selector" data-default="<?= $defVal ?>">
+                          </select>
+                              <button id="set-default-value" data-field="<?php echo $enumsForm->fieldId ?>" type="button" class="btn btn-sm ml-2 btn-info">Установить</button>
+                              </div>
                       </div>
                   </div> 
                   

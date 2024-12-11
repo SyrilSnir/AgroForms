@@ -1,25 +1,43 @@
 const $ = window.$;
 export default class EnumList {
-    constructor(selector) {
-        const $container = $(selector);
-        this.$addEnumFieldButton = $container.find('.enum-field-add-button');
-        this.$enumList = $container.find('.attributes-enum-table tbody');
-        this.$enumFieldName = $container.find('.enum-field-name');
-        this.$enumFieldNameEng = $container.find('.enum-field-name-eng');
-        this.$enumFieldValue = $container.find('.enum-field-value');
-        this.enumsArray = [];
-    }
-    init() {
-        this.initEnumsList();
-        this.$addEnumFieldButton.on('click',this.addEnumeFieldHandler.bind(this));
-        this.$enumList.on('click','.delete-enum-field', this.deleteEnumFieldHandler.bind(this));
-    }
-    addEnumeFieldHandler() {
-        const name = this.$enumFieldName.val();
-        const nameEng = this.$enumFieldNameEng.val();
-        const value = this.$enumFieldValue.val();
-        const index = this.$enumList.find('tr').length + 1;
-        const template = `<tr data-number="${index}">
+  constructor(selector) {
+    const $container = $(selector);
+    this.$addEnumFieldButton = $container.find(".enum-field-add-button");
+    this.$enumList = $container.find(".attributes-enum-table tbody");
+    this.$enumFieldName = $container.find(".enum-field-name");
+    this.$enumFieldNameEng = $container.find(".enum-field-name-eng");
+    this.$enumFieldValue = $container.find(".enum-field-value");
+    this.$setDefaultButton = $("#set-default-value");
+    this.$defaultValueSelector = $("#default-value-selector");
+    this.enumsArray = [];
+    this.defaultValuesArray = [];
+  }
+  init() {
+    this.defaultValuesArray.push({
+      name: "не задано",
+      value: null,
+    });
+    document.querySelectorAll("tr.w3").forEach((el) => {
+      this.defaultValuesArray.push({
+        name: el.querySelector(".element-name").textContent,
+        value: el.querySelector(".element-value").textContent,
+      });
+    });
+    this.$addEnumFieldButton.on("click", this.addEnumeFieldHandler.bind(this));
+    this.$setDefaultButton.on("click", this.setDefaultEventHandler.bind(this));
+    this.$enumList.on(
+      "click",
+      ".delete-enum-field",
+      this.deleteEnumFieldHandler.bind(this)
+    );
+    this.initDelaultSelector();
+  }
+  addEnumeFieldHandler() {
+    const name = this.$enumFieldName.val();
+    const nameEng = this.$enumFieldNameEng.val();
+    const value = this.$enumFieldValue.val();
+    const index = this.$enumList.find("tr").length + 1;
+    const template = `<tr data-number="${index}">
                             <td>${index}.</td>
                             <td class="attribute-enum-name">${name}</td>
                             <td class="attribute-enum-name">${nameEng}</td>
@@ -30,61 +48,60 @@ export default class EnumList {
                                 </a> 
                             </td>
                         </tr>`;
-        if (
-            name.trim() !== '' &&
-            value.trim() !== ''
-            ) {
-            this.enumsArray.push({
-                'name': name,
-                'name_eng': nameEng,
-                'value': value,
-            });
-            this.saveToSession();
-            this.$enumList.append(template);            
-        }
+    if (name.trim() !== "" && value.trim() !== "") {
+      this.enumsArray.push({
+        name: name,
+        name_eng: nameEng,
+        value: value,
+      });
+      this.$enumList.append(template);
     }
-    deleteEnumFieldHandler(e) {
-        const $targetRow = $(e.target).closest('tr');
-        let lastRow = false;
-        if ($targetRow.next('tr').length == 0) {
-            lastRow = true;
-        }
-        let arrayIndex = $targetRow.data('number') - 1;        
-        this.enumsArray.splice(arrayIndex,1);
-        console.log(this.enumsArray);
-        $targetRow.remove();
-        this.saveToSession();
-        if (!lastRow) {
-            this.indexRerender();
-        }
+  }
+  deleteEnumFieldHandler(e) {
+    const $targetRow = $(e.target).closest("tr");
+    let lastRow = false;
+    if ($targetRow.next("tr").length == 0) {
+      lastRow = true;
+    }
+    let arrayIndex = $targetRow.data("number") - 1;
+    this.enumsArray.splice(arrayIndex, 1);
+    $targetRow.remove();
+    if (!lastRow) {
+      this.indexRerender();
+    }
+  }
 
-    }
-    initEnumsList() {
-        const $rows = this.$enumList.find('tr');
-        this.enumsArray = $rows.map(function(index,row) {
+  setDefaultEventHandler() {
+    const val = this.$defaultValueSelector.find("option:selected").val();
+    const fieldId = this.$setDefaultButton.data("field");
+    const fd = new FormData();
+    fd.append("defaultValue", val);
+    fd.append("fieldId", fieldId);
+    fetch("/api/fields/set-default", {
+      method: "POST",
+      body: fd,
+    }).then((res) => {
+      console.log(res.data);
+    });
+  }
 
-            return {                
-                'name' : $(row).find('.attribute-enum-name').text(),
-                'name_eng' : $(row).find('.attribute-enum-name-eng').text(),
-                'value' : $(row).find('.attribute-enum-value').text()                
-            }
-        }).get();
-    }
-    indexRerender() {
-        const $trs = this.$enumList.find('tr');
-        $trs.each(function(index,tr){
-            $(tr).data('number',index+1);
-            $(tr).find('td:first').text(index+1);
-        });
-    }
-    saveToSession() {
-        $.ajax({
-            url: '/api/parameters/save-enums-list',
-            type: 'POST',
-            dataType: "json",
-            data: { 
-                list : this.enumsArray                                               
-            }
-        });
-    }
+  initDelaultSelector() {
+    this.defaultValuesArray.forEach((el) => {
+      const template = `<option value="${el.value}">${el.name}</option>`;
+      this.$defaultValueSelector.append(template);
+    });
+    const defVal = this.$defaultValueSelector.data("default");
+    this.$defaultValueSelector
+      .find(`option[value="${defVal}"]`)
+      .prop("selected", "selected");
+  }
+  indexRerender() {
+    const $trs = this.$enumList.find("tr");
+    $trs.each(function (index, tr) {
+      $(tr).data("number", index + 1);
+      $(tr)
+        .find("td:first")
+        .text(index + 1);
+    });
+  }
 }

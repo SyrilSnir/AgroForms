@@ -1,276 +1,295 @@
-@import '../_variables';
+@import "../_variables";
 .agrosalon-logo {
-    display: block;
+  display: block;
 }
 .agrosalon-small-logo {
-    display: none;
+  display: none;
 }
 .sidebar-collapse {
-    .main-sidebar {
-        .agrosalon-logo {
-            display: none;
-        }
-        .agrosalon-small-logo {
-            display: block;
-        }      
-        &:hover {
-            .agrosalon-logo {
-                display: block;
-            } 
-            .agrosalon-small-logo {
-                display: none;
-            }      
-        }
+  .main-sidebar {
+    .agrosalon-logo {
+      display: none;
     }
-}
-.agro {   
-    .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: $base-agrosalon-color;
-        border-color: $base-agrosalon-color;
-    }         
-    .content-wrapper {
-        background-color: $bg-agrosalon-color;
+    .agrosalon-small-logo {
+      display: block;
     }
-    .card {
-        background-color: $bg-agrosalon-color;
-        .card-header {
-            &.bg-agro {
-                background-color: $base-agrosalon-color;
-                color: #fff;
-            }
-        }
-        .card-info {
-            .card-header {
-                background-color: black;            
-                color: $base-agrosalon-color;
-                font-weight: 600;
-            }
-        }
-    }
-    .table-agro-head {
-        th, tr {
-            background-color:  lighten($base-agrosalon-color,8);
-            color: #fff;
-        }
-    }
-    .table-agro-subhead {
-        th, tr {
-            background-color: lighten($base-agrosalon-color,24);
-            color: #fff;
-        }
-    }    
-}
-.sidebar-mini.sidebar-collapse .main-sidebar.sidebar-focused, .sidebar-mini.sidebar-collapse .main-sidebar:hover {
-    width: $sidebar-size!important;
-  }
-
-
-[class*="sidebar-black-"] {    
-    background-color: #000;
-    .sidebar {
-        a {
-            color: #fff;
-            &.user-dropdown {
-                color: #000;
-            }
-            &:hover {
-                color: $base-agrosalon-color;
-            }
-            &.user-dropdown:hover {
-                color: #fff;                
-            }
-        }
-        .nav-pills {
-            .nav-link  {
-                color: #fff;
-                &:not(.active):hover {
-                    color: $base-agrosalon-color;
-                }
-            }
-            .active:not(.has-treeview) {
-                > .nav-link  {
-                    color: $base-agrosalon-color;                    
-                } 
-            }
-        }
-    }
-    .has-treeview {
-        > a {
-            border-bottom: 1px solid gray;            
-        }
-    }
-  }
-  .menu-is-opening {
-     > .nav-link i.arrow {
-        transform: rotate(135deg);
-        top: .5rem;
+    &:hover {
+      .agrosalon-logo {
+        display: block;
       }
+      .agrosalon-small-logo {
+        display: none;
+      }
+    }
   }
-  .arrow {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-    background: transparent;
-    border-top: .2rem solid $base-agrosalon-color;
-    border-right: .2rem solid $base-agrosalon-color;
-    box-shadow: 0 0 0 lightgray;
-    transition: all 200ms ease;   
-    transform: translate(-40%, -60%) rotate(45deg)       
-  }
-.contract {
-    margin: 0;
-    padding: 0 1rem;
-    font-size: .8em;
-    color: white;
 }
-@media screen and (min-width: map_get($grid-breakpoints,'lg')) {
-    .wrapper {
-        .main-sidebar, .main-sidebar::before {
-            transition: margin-left .3s ease-in-out,width .3s ease-in-out;
-            width: $sidebar-size;
-        }
-        .content-wrapper, nav.main-header {
-            margin-left: $sidebar-size!important;
-        }
-    }    
+.agro {
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: $base-agrosalon-color;
+    border-color: $base-agrosalon-color;
+  }
+  .content-wrapper {
+    background-color: $bg-agrosalon-color;
+  }
+  .card {
+    background-color: $bg-agrosalon-color;
+    .card-header {
+      &.bg-agro {
+        background-color: $base-agrosalon-color;
+        color: #fff;
+      }
+    }
+    .card-info {
+      .card-header {
+        background-color: black;
+        color: $base-agrosalon-color;
+        font-weight: 600;
+      }
+    }
+  }
+  .table-agro-head {
+    th,
+    tr {
+      background-color: lighten($base-agrosalon-color, 8);
+      color: #fff;
+    }
+  }
+  .table-agro-subhead {
+    th,
+    tr {
+      background-color: lighten($base-agrosalon-color, 24);
+      color: #fff;
+    }
+  }
+}
+.sidebar-mini.sidebar-collapse .main-sidebar.sidebar-focused,
+.sidebar-mini.sidebar-collapse .main-sidebar:hover {
+  width: $sidebar-size !important;
 }
 
-.create-form, .update-form, .dynamic-form {
-    width: 100%;
-    .nav-tabs {
-        margin-bottom: 2rem;
+[class*="sidebar-black-"] {
+  background-color: #000;
+  .sidebar {
+    a {
+      color: #fff;
+      &.user-dropdown {
+        color: #000;
+      }
+      &:hover {
+        color: $base-agrosalon-color;
+      }
+      &.user-dropdown:hover {
+        color: #fff;
+      }
     }
-    .form-group.required label::after {
-        color: red;
-        padding-left: 2px;
+    .nav-pills {
+      .nav-link {
+        color: #fff;
+        &:not(.active):hover {
+          color: $base-agrosalon-color;
+        }
+      }
+      .active:not(.has-treeview) {
+        > .nav-link {
+          color: $base-agrosalon-color;
+        }
+      }
     }
+  }
+  .has-treeview {
+    > a {
+      border-bottom: 1px solid gray;
+    }
+  }
 }
-.agrosalon-logo, .full-view {
-    width: 100%;
+.menu-is-opening {
+  > .nav-link i.arrow {
+    transform: rotate(135deg);
+    top: 0.5rem;
+  }
+}
+.arrow {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: transparent;
+  border-top: 0.2rem solid $base-agrosalon-color;
+  border-right: 0.2rem solid $base-agrosalon-color;
+  box-shadow: 0 0 0 lightgray;
+  transition: all 200ms ease;
+  transform: translate(-40%, -60%) rotate(45deg);
+}
+.contract {
+  margin: 0;
+  padding: 0 1rem;
+  font-size: 0.8em;
+  color: white;
+}
+@media screen and (min-width: map_get($grid-breakpoints,"lg")) {
+  .wrapper {
+    .main-sidebar,
+    .main-sidebar::before {
+      transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+      width: $sidebar-size;
+    }
+    .content-wrapper,
+    nav.main-header {
+      margin-left: $sidebar-size !important;
+    }
+  }
+}
+
+.create-form,
+.update-form,
+.dynamic-form {
+  width: 100%;
+  .nav-tabs {
+    margin-bottom: 2rem;
+  }
+  .form-group.required label::after {
+    color: red;
+    padding-left: 2px;
+  }
+}
+.agrosalon-logo,
+.full-view {
+  width: 100%;
 }
 
 .form-group.has-error {
-    .form-control {
-        border: 1px solid red;        
+  .form-control {
+    border: 1px solid red;
+  }
+  .help-block {
+    color: red;
+    font-size: 10px;
+    &.info {
+      color: gray;
     }
-    .help-block {
-        color: red;
-        font-size: 10px;
-        &.info {
-            color: gray;
-        }
-    }
+  }
 }
 .sidebar {
-    .user-panel {
-        overflow: visible;
-    }    
-    .nav-item {
-        .nav-link {
-            width: calc(#{$sidebar-size} - .5rem * 2)!important;
-        }
-        .nav-treeview {
-           margin-left: 1rem;
-       }
-    }    
-    .user-dropdown.dropdown-item:hover {
-        background-color: #E4461E;
-    } 
+  .user-panel {
+    overflow: visible;
+  }
+  .nav-item {
+    .nav-link {
+      width: calc(#{$sidebar-size} - 0.5rem * 2) !important;
+    }
+    .nav-treeview {
+      margin-left: 1rem;
+    }
+  }
+  .user-dropdown.dropdown-item:hover {
+    background-color: #e4461e;
+  }
 }
 .sidebar-collapse {
-    .sidebar {
-        .nav-item {
-            .nav-treeview {
-                margin-left: 0;
-            }
-        }
+  .sidebar {
+    .nav-item {
+      .nav-treeview {
+        margin-left: 0;
+      }
     }
+  }
 }
 .dynamic-form {
-    .price {
-        margin: 0 5px;
-    }
-    margin: 0 20px;
-    > .card-body {
-        padding: 0 20px;
-    }
-    .align-right {
-        .desc-block, .help-block {
-            text-align: right;
-        }
-    }
-    .desc-block {
-        font-size: 10px;
-
-    }
+  .price {
+    margin: 0 5px;
+  }
+  margin: 0 20px;
+  > .card-body {
+    padding: 0 20px;
+  }
+  .align-right {
+    .desc-block,
     .help-block {
-        color: red;
-        font-size: 10px;
-        &.info {
-            color: gray;
-        }
-    } 
-    .important {
-        margin: 20px 20%;
-        padding: 20px;
-        border: 1px solid red;
-        text-align: center;
+      text-align: right;
     }
-    .proposal-summary {
-        width: 100%;
-        padding: 50px 0 0 6px;
-        box-sizing: border-box;
-    }    
-    .proposal-summary__title {
-        padding: 0;
-        font-size: 24px;
-        line-height: 24px;
-        clear: both;        
+  }
+  .desc-block {
+    font-size: 10px;
+  }
+  .help-block {
+    color: red;
+    font-size: 10px;
+    &.info {
+      color: gray;
     }
-    .proposal-summary__total {
-        font-size: 24px;
-        line-height: 16px;
-        font-family: MyriadPro-Semibold;
-        margin-bottom: 2rem;
-        margin-right: 2rem;
-        float: right;
-        text-align: right;        
-    } 
-    hr {
-        display: block; 
-        clear: both;
-    }
+  }
+  .important {
+    margin: 20px 20%;
+    padding: 20px;
+    border: 1px solid red;
+    text-align: center;
+  }
+  .proposal-summary {
+    width: 100%;
+    padding: 50px 0 0 6px;
+    box-sizing: border-box;
+  }
+  .proposal-summary__title {
+    padding: 0;
+    font-size: 24px;
+    line-height: 24px;
+    clear: both;
+  }
+  .proposal-summary__total {
+    font-size: 24px;
+    line-height: 16px;
+    font-family: MyriadPro-Semibold;
+    margin-bottom: 2rem;
+    margin-right: 2rem;
+    float: right;
+    text-align: right;
+  }
+  hr {
+    display: block;
+    clear: both;
+  }
 
-    .flex__wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        input {
-            padding-right: 2rem;
-        }    
+  .flex__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    input {
+      padding-right: 2rem;
     }
+  }
 }
 table {
-    tr.active-exhibition {
-        background-color: #cdf2e6;
-        font-weight: 600;        
-    }
+  tr.active-exhibition {
+    background-color: #cdf2e6;
+    font-weight: 600;
+  }
 }
 
 .section__important {
-    border: 1px solid red;
-    padding: 20px;
-    text-align: center;    
+  border: 1px solid red;
+  padding: 20px;
+  text-align: center;
 }
 
 .card-header {
-    .buttons__wrappper {
-        text-align: right;
-    }
-    button, a {
-        margin-right: .5rem;
-    }
+  .buttons__wrappper {
+    text-align: right;
+  }
+  button,
+  a {
+    margin-right: 0.5rem;
+  }
+}
+.field-default-selector {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+  p {
+    margin: 0;
+    padding-right: 1rem;
+  }
 }
